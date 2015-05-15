@@ -14,7 +14,6 @@ Ext.define('myApp.Application', {
     
     launch: function () {
         // TODO - Launch the application
-        // TODO - Launch the application
     },
 
     onAppUpdate: function () {
@@ -22,7 +21,7 @@ Ext.define('myApp.Application', {
             function (choice) {
                 if (choice === 'yes') {
                     window.location.reload();
-                    // window.location.reload();
+                    //window.location.reload();
                 }
             }
         );
