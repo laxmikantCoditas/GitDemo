@@ -22,6 +22,7 @@ Ext.define('myApp.Application', {
             function (choice) {
                 if (choice === 'yes') {
                     window.location.reload();
+                    // window.location.reload();
                 }
             }
         );
