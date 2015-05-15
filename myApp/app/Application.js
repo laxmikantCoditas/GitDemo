@@ -14,6 +14,7 @@ Ext.define('myApp.Application', {
     
     launch: function () {
         // TODO - Launch the application
+        // TODO - Launch the application
     },
 
     onAppUpdate: function () {
