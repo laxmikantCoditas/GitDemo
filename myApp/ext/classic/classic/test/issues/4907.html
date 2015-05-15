@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EXTJSIV-4907 Test Case</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+    <script type="text/javascript" src="../../ext.js"></script>
+
+    <script src="app.js"></script>
+    <style>
+        body{
+            padding: 20px;
+        }
+        .icon-feed {
+            background-image: url(../../examples/shared/icons/fam/feed_add.png) !important;
+        }
+    </style>
+    <script>
+
+Ext.require([
+    'Ext.panel.Panel'
+]);
+
+Ext.onReady(function() {
+
+    Ext.create('Ext.Container', {
+        renderTo: Ext.getBody(),
+        layout: {
+            type: 'hbox',
+            defaultMargins: {
+                right: 10
+            }
+        },
+        items: [
+            {
+                xtype: 'panel',
+                height: 50,
+                width: 200,
+                title: 'The Quick Brown Fox Jumps',
+                html: 'over the lazy dog'
+            }, {
+                xtype: 'panel',
+                iconCls: 'icon-feed',
+                height: 50,
+                width: 200,
+                title: 'The Quick Brown Fox Jumps',
+                html: 'over the lazy dog'
+            }, {
+                xtype: 'panel',
+                tools:[
+                    { type:'refresh' },
+                    { type:'help' }
+                ],
+                height: 50,
+                width: 200,
+                title: 'The Quick Brown Fox Jumps',
+                html: 'over the lazy dog'
+            }, {
+                xtype: 'panel',
+                iconCls: 'icon-feed',
+                tools:[
+                    { type:'refresh' },
+                    { type:'help' }
+                ],
+                height: 50,
+                width: 200,
+                title: 'The Quick Brown Fox Jumps',
+                html: 'over the lazy dog'
+            }
+        ]
+    });
+
+});
+
+    </script>
+
+</head>
+<body>
+    <p style="padding-bottom: 15px;">The below panels' headers should all have a height of 26px, their icons, header text, and tools should be vertically aligned consistently across browsers, and the icon should have a height of 16 pixels (the top and bottom pixel should not be truncated).</p>
+</body>
+</html>

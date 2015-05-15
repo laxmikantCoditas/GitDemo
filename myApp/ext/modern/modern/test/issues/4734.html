@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4734</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.setup({
+            requires: [
+                'Ext.form.Panel',
+                'Ext.field.Text'
+            ],
+            onReady:function () {
+                var form = Ext.create('Ext.form.Panel', {
+	                items   : [
+		                {
+			                xtype : 'textfield',
+			                name  : 'id',
+			                label : 'What'
+		                }
+	                ]
+                });
+                Ext.Viewport.add(form);
+            }
+        });
+    </script>
+
+	<script>
+		var confirmOnPageExit = function (e) {
+			return 'Any text will block the navigation and display a prompt';
+		};
+		window.onbeforeunload = confirmOnPageExit;
+	</script>
+</head>
+<body>
+<!--	<form id="myForm">
+		<input name="id">
+		<input type="submit" style="visibility: hidden">
+	</form>-->
+</body>
+</html>

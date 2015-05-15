@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TOUCH-3079</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script type="text/javascript" src="../../sencha-touch.js"></script>
+        
+        <script type="text/javascript">
+            Ext.application({
+                name : 'Test',
+
+                launch : function () {
+
+                    Ext.create('Ext.Container', {
+                        fullscreen : true,
+                        items      : [
+                            {
+                                xtype      : 'panel',
+                                id         : 'panel',
+                                height     : 200,
+                                width      : 200,
+                                scrollable : {
+                                    direction : 'horizontal' //changing it to vertical goes to the bottom
+                                },
+                                html       : '<div style="width: 2000px; height: 2000px">Text text text text text text text text text text text text text text text text text text text text text</div>'
+                            },
+                            {
+                                xtype     : 'button',
+                                text      : 'To the end',
+                                listeners : {
+                                    tap : function () {
+                                        Ext.getCmp('panel').getScrollable().getScroller().scrollToEnd(true);
+                                    }
+                                }
+                            }
+                        ]
+                    });
+
+                }
+            });
+	</script>
+    </head>
+    <body>
+        
+    </body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>TOUCH-4892</title>
+    <style></style>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+    <script src="../../sencha-touch-all-debug.js"></script>
+    <script>
+        Ext.require(['Ext.chart.*', 'Ext.Toolbar']);
+        Ext.setup({
+            onReady: function () {
+                var chart, align = 0,
+                        alignments = [undefined, 'right', 'center', 'left'],
+                        baselines = [undefined, 'top', 'hanging', 'middle', 'alphabetic', 'ideographic', 'bottom'],
+                        alignment,
+                        baseline,
+                        labelLeft,
+                        labelBottom;
+
+                Ext.Viewport.add({
+                    xtype: 'toolbar',
+                    docked: 'top',
+                    items: [
+                        {
+                            xtype: 'button',
+                            text: 'Cycle textAlign options',
+                            handler: function () {
+                                align++;
+                                updateChart();
+                                this.setText("textAlign=" + alignment + " / baseline=" + baseline);
+                            }
+                        }
+                    ]
+                });
+
+                function updateChart() {
+                    Ext.Viewport.remove(chart, true);
+
+                    alignment = alignments[align % alignments.length];
+                    baseline = baselines[align % baselines.length];
+                    labelLeft = (baseline ? {fontSize:20, textBaseline:baseline} : {fontSize:20});
+                    labelBottom = (alignment ? {textAlign:alignment} : {});
+
+                    chart = Ext.create('Ext.chart.CartesianChart', {
+                        fullscreen: true,
+                        store: {
+                            fields: ['name', 'value'],
+                            data: [
+                                {
+                                    name: 'Multi\nline\nstring',
+                                    value: 1
+                                },
+                                {
+                                    name: 'A\nis\nfor\napple',
+                                    value: 2
+                                },
+                                {
+                                    name: 'Two\ndimensions',
+                                    value: 3
+                                }
+                            ]
+                        },
+                        axes: [
+                            {
+                                type: 'numeric',
+                                position: 'left',
+                                minimum: 0,
+                                maximum: 4,
+                                majorTickSteps: 4,
+                                label: labelLeft
+                            },
+                            {
+                                type: 'category',
+                                position: 'bottom',
+                                label: labelBottom
+                            }
+                        ],
+                        series: {
+                            type: 'bar',
+                            xField: 'name',
+                            yField: 'value',
+                            style: {
+                                fill: 'green'
+                            }
+                        }
+                    });
+                }
+
+                updateChart();
+
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

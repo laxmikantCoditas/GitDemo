@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Infinite grid</title>
+
+        <link rel="stylesheet" href="../../../resources/css/ext-all.css" />
+        <script src="../../../ext-all-debug.js"></script>
+
+		<script>
+			Ext.Loader.setConfig({
+				enabled: true
+			});
+            Ext.onReady(function() {
+                var store = Ext.create('Ext.data.Store', {
+                            buffered: true,
+                            remoteSort: true,
+                            pageSize: 25,
+                            fields: [
+                                'col1',
+                                'col2',
+                                'col3',
+                                'col4',
+                                'col5',
+                                'col6'
+                            ],
+                            proxy: {
+                                type: 'ajax',
+                                url: 'infinite-grid-data.php',
+                                reader: {
+                                    type: 'json',
+                                    root: 'data'
+                                }
+                            }
+                        }),
+                        grid = Ext.create('Ext.grid.Panel', {
+                            title: 'Infinite grid example',
+                            height: 400,
+                            store: store,
+                            loadMask: true,
+                            plugins: 'bufferedrenderer',
+                            columns: [
+                                {
+                                    header: 'Column 1',
+                                    dataIndex: 'col1'
+                                }, {
+                                    header: 'Column 2',
+                                    dataIndex: 'col2'
+                                }, {
+                                    header: 'Column 3',
+                                    dataIndex: 'col3'
+                                }, {
+                                    header: 'Column 4',
+                                    dataIndex: 'col4'
+                                }, {
+                                    header: 'Column 5',
+                                    dataIndex: 'col5'
+                                }, {
+                                    header: 'Column 6',
+                                    dataIndex: 'col6'
+                                }
+                            ],
+                            layout: 'fit',
+                            buttons: [
+                                 {
+                                    text: 'store.sort()',
+                                    handler: function() {
+                                        // Sort without the optional parameters will clear the data from the
+                                        // store.
+                                        grid.getStore().sort();
+                                    }
+                                }
+                            ],
+                            renderTo: Ext.getBody()
+                        });
+                store.loadPage(1);
+            });
+		</script>
+	</head>
+	<body></body>
+</html>

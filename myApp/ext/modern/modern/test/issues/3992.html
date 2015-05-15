@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>3992</title>
+        <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+        <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+
+		<script type="text/javascript">
+            Ext.Loader.setConfig({
+                enabled: true
+            });
+
+            Ext.application({
+                name: 'SenchaFiddle',
+
+                launch: function() {
+                    var p = Ext.create('Ext.form.Panel', {
+                        items: [
+                            {
+                                xtype: 'panel',
+                                modal: true,
+                                items: [
+                                    {
+                                        xtype: 'button', text: 'click',
+                                        listeners: {
+                                            tap: function() {
+                                                ct.removeAll(true, true);
+                                            }
+                                        }
+                                    }
+                                ]
+
+                            }
+                        ]
+                    });
+
+                    var ct = Ext.Viewport.add({
+                        xtype: 'container',
+                        layout: 'fit'
+                    });
+                    ct.add(p);
+
+                }
+            });
+		</script>
+	</head>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>1938</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <script src="../../sencha-touch.js"></script>
+
+    <script>
+
+        Ext.Loader.setConfig({
+            enabled: true
+        });
+
+        Ext.define('Test.controller.ContactController2', {
+            extend: 'Ext.app.Controller',
+
+            // Get the device type
+            config: {
+
+                // Setup the listeners
+                control: {
+                    // Custom map events
+                    'mapview': {
+                        location: 'onLocation',
+                        geocode: function() {console.log("geocode event")},
+                    }
+                }
+            },
+
+            onLocation: function() {
+                console.log("location event")
+            },
+
+            launch: function() {
+debugger;
+                console.log('controller launch called');
+
+                var main = Ext.create('Test.view.Main'),
+                    mapview = this.buildMapView();
+
+
+                //main.add(mapview);
+            },
+
+            buildMapView: function() {
+
+                var mapView = Ext.create('Test.view.Map2', {flex: 1});
+
+                return mapView;
+            }
+        });
+
+        Ext.define('Test.view.Map2', {
+            extend: 'Ext.Map',
+            xtype: 'mapview',
+
+            config: {
+                layout: 'fit',
+                mapOptions: {
+                    disableDefaultUI: true,
+                    zoomControl: true,
+                    zoom: 10
+                },
+                listeners: {
+                    maprender: function(view) {
+
+                        view.getGeoLocation();
+                    }
+                }
+            },
+
+            // Reverse geocode lat/lng positions
+            geocode: function(latLng, callback) {
+
+                var me = this;
+
+                console.log("firing geocode event", me.fireEvent('geocode'), me);
+                me.fireEvent('geocode');
+            },
+
+            // Handle location updates
+            onGeoUpdate: function(pos) {
+                debugger;
+
+                var me = this,
+                    coords;
+
+                // Get the new location
+                if (pos) {
+                    coords = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+                }
+                else {
+                    // TODO: Handle error with message box
+                    console.error("onGeoUpdate: invalid coordinates", pos);
+                }
+
+                console.log("firing location event", me);
+                me.fireEvent('location', coords.lat(), coords.lng());
+
+                me.geocode(coords);
+            },
+
+            // Use default location if an error occurs
+            onGeoError: function(error) {
+
+                var me = this,
+                    pos, title, msg;
+                    //msgDiv = null,
+                    //pTag = null,
+                    //textNode = null;
+
+
+                title = "Location Error";
+
+                if (error.code === 1) {
+                    msg = "Permission denied, using default location.";
+                }
+                else if (error.code === 2) {
+                    msg = "Position unavailable, using default location.";
+                }
+                else if (error.code === 3) {
+                    msg = "Geolocation request timed-out, using default location.";
+                }
+                else {
+                    msg = "Unknown error.";
+                }
+
+                console.log("firing popup event", me);
+                me.fireEvent('popup', title, msg);
+                console.log("firing location event", me);
+                me.fireEvent('location');
+            },
+
+            // Send a Google maps geolocation request
+            getGeoLocation: function() {
+
+                var me = this;
+
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        function(position) {
+                            me.onGeoUpdate(position);
+                        },
+                        function(error) {
+                            me.onGeoError(error);
+                        },
+                        {maximumAge:5000}
+                    );
+                }
+            }
+        });
+        Ext.define('Test.view.Main', {
+            id: 'mainPanel',
+            extend: 'Ext.Panel',
+            config: {
+                title: 'Test'
+            }
+        });
+
+        Ext.application({
+            name: 'Test',
+            appFolder: 'app',  // Only required if the app folder has a different name
+
+            views: ['Main', 'Map2'],
+            controllers: ['ContactController2'],
+
+
+            launch: function() {
+                console.log("Test application launched.");
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

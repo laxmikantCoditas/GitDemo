@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4816</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript">
+	    Ext.setup({
+		    onReady: function() {
+			    var store = Ext.create('Ext.data.Store', {
+				    fields: ['name', 'img', 'text'],
+				    data: []
+			    });
+
+			    Ext.create('Ext.dataview.List', {
+				    fullscreen: true,
+
+				    store: store,
+				    emptyText: 'I am empty', //Comment out emptyText and it works
+
+				    itemTpl: ['<img src="{img}" alt="{name} photo" />', '<div class="tweet"><b>{name}:</b> {text}</div>']
+			    });
+		    }
+	    });
+    </script>
+</head>
+<body>
+</body>
+</html>

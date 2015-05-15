@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Test Case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all-gray.css" />
+<!-- page specific -->
+<style type="text/css">
+</style>
+<script type="text/javascript" charset="utf-8" src="../../ext-all.js"></script>
+
+<script type="text/javascript" src="../../examples/shared/examples.js"></script>
+<link rel="stylesheet" type="text/css" href="../../examples/shared/example.css" />
+
+
+<script type="text/javascript">
+
+
+Ext.require([
+    'Ext.data.*',
+    'Ext.data.reader.*',
+    'Ext.form.*',
+    'Ext.grid.*',
+    'Ext.tree.*',
+    'Ext.window.MessageBox',
+    'Ext.tip.*',
+    'Ext.chart.*',
+    
+    'Ext.data.Store',
+    'Ext.grid.Panel',
+    
+    'Ext.container.Viewport',
+    'Ext.form.field.HtmlEditor',
+    'Ext.Array',
+    'Ext.panel.Panel',
+    'Ext.layout.container.Border',
+    'Ext.DomHelper',
+    'Ext.String'
+]);
+
+Ext.onReady(function() {
+
+
+
+Ext.tip.QuickTipManager.init();  // enable tooltips
+Ext.create('Ext.form.HtmlEditor', {
+    width: 580,
+    height: 250,
+    style: { padding: '80px'},
+    renderTo: Ext.getBody(),
+    value:'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.replace(/(.)/g, '$1$1$1$1<br>')
+});
+    
+
+
+});
+
+
+</script>
+</head>
+<body>
+
+<div style="padding:20px">
+You should be able to scroll down the text, click past the letter O and select text upwards.
+</div>
+
+</body>
+</html>

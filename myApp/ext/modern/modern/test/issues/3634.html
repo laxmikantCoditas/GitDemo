@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3634</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.define('MyListItem', {
+            extend: 'Ext.dataview.component.ListItem',
+            xtype: 'myitemtype',
+            config: {
+                dataMap: {
+                    getName: {
+                        setHtml: 'name'
+                    }
+                },
+                name: true,
+                items: [
+                    { xtype: 'component', itemId: 'name' }
+                ]
+            },
+            applyName: function() {
+                return this.child('#name');
+            }
+        });
+
+        Ext.setup({
+            requires: [
+                'Ext.dataview.List', 'Ext.data.Store'
+            ],
+            onReady: function() {
+                Ext.create("Ext.data.Store", {
+                    storeId: "mystore",
+
+                    fields: [
+                        {name: 'name', type: 'string'}
+                    ],
+                    data: [
+                        {name: "Duder McCheese"},
+                        {name: "Duder McCheese"},
+                        {name: "Duder McCheese"},
+                        {name: "Duder McCheese"},
+                        {name: "Duder McCheese"},
+                        {name: "Duder McCheese"}
+                    ]
+                });
+
+
+                Ext.Viewport.add({
+                    xtype: 'list',
+                    defaultType: 'myitemtype',
+                    store: "mystore",
+                    useComponents: true,
+                    listeners: {
+                        itemtap: function(s, index, target, record) {
+                            record.set('name', 'newname');
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

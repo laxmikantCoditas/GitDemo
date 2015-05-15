@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Field Layout Example</title>
+<link rel="stylesheet" type="text/css" href="../../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../../ext.js"></script>
+<script type="text/javascript">
+
+Ext.require([
+    'Ext.panel.Panel',
+    'Ext.container.Viewport',
+    'Ext.perf.Monitor',
+    'Ext.form.*',
+    'Ext.layout.*'
+]);
+
+function go () {
+    var start = new Date();
+    
+    new Ext.panel.Panel({
+        title: 'Field test',
+        height: 650,
+        width: 600,
+        renderTo: document.body,
+        bodyPadding: 5,
+        layout: 'anchor',
+        defaults: {
+            anchor: '70%',
+            allowBlank: false,
+            labelWidth: 200
+        },
+        items: [{
+            xtype: 'textfield',
+            labelAlign: 'left',
+            fieldLabel: 'Left label, msgTarget: "side"',
+            msgTarget: 'side'
+        }, {
+            xtype: 'textfield',
+            labelAlign: 'top',
+            fieldLabel: 'Top label, msgTarget: "side"',
+            msgTarget: 'side'
+        }, {
+            xtype: 'textfield',
+            labelAlign: 'right',
+            fieldLabel: 'Right label, msgTarget: "side"',
+            msgTarget: 'side'
+        }, {
+            xtype: 'textfield',
+            labelAlign: 'left',
+            fieldLabel: 'Left label, msgTarget: "under"',
+            msgTarget: 'under'
+        }, {
+            xtype: 'textfield',
+            labelAlign: 'top',
+            fieldLabel: 'Top label, msgTarget: "under"',
+            msgTarget: 'under'
+        }, {
+            xtype: 'textfield',
+            labelAlign: 'right',
+            fieldLabel: 'Right label, msgTarget: "under"',
+            msgTarget: 'under'
+        }, {
+            xtype: 'textfield',
+            labelAlign: 'left',
+            fieldLabel: 'Left label'
+            
+        }, {
+            xtype: 'textfield',
+            labelAlign: 'top',
+            fieldLabel: 'Top label'
+            
+        }, {
+            xtype: 'textfield',
+            labelAlign: 'right',
+            fieldLabel: 'Right label'
+            
+        }, {
+            xtype: 'htmleditor',
+            name: 'bio',
+            fieldLabel: 'Biography',
+            labelAlign: 'top',
+            height: 200
+        }, {
+            xtype: 'slider',
+            minValue: 0,
+            hideLabel: true,
+            useTips: false,
+            maxValue: 100
+        }, {
+            xtype: 'combobox',
+            queryMode: 'local',
+            store: ['foo', 'bar'],
+            fieldLabel: 'Combo'
+        }]
+    }).show();
+
+    var dt = new Date() - start;
+    Ext.log('totalTime = ' + dt);
+}
+
+Ext.onReady(function () {
+    Ext.Perf.setup();
+    Ext.Perf.monitor('go', function () {
+        go();
+    });
+    Ext.Perf.report();
+})
+</script>
+</head>
+<body style="padding:10px">
+</body>
+</html>

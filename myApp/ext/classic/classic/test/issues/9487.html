@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css">
+    <script type="text/javascript" src="../../ext-all-debug.js"></script>
+    <script type="text/javascript">
+
+        Ext.define('NS.view.MyFormPanel', {
+            extend: 'Ext.form.Panel',
+            alias: 'widget.MyFormPanel',
+            border: false,
+            bodyPadding: 8,
+            bodyCls: 'my-panel-background',
+            fieldDefaults: {
+                labelAlign:     'right',
+                labelWidth:     240,
+                labelSeparator: '',
+                labelClsExtra:  'tco-label-background',
+                fieldBodyCls:   'align-top'
+            }
+        });
+
+        Ext.onReady(function () {
+            var dlg = Ext.create('NS.view.MyFormPanel', {
+            border:  true,
+            title:   'Import assessment model data from Excel',
+            items:   [{
+                xtype:      'filefield',
+                name:       'excelfile',
+                fieldLabel: 'Excel file',
+                msgTarget:  'side',
+                allowBlank: false,
+                buttonText: 'Select file...',
+                width:      800
+            }]
+        });
+
+        Ext.create('Ext.Container', {
+            renderTo: Ext.getBody(),
+            items: [
+                dlg,
+                {
+                    xtype: 'filefield'
+                }
+            ]
+        });
+    });
+
+    </script>
+
+</head>
+<body></body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3901</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+
+    Ext.application({
+
+        requires: [
+            'Ext.form.Panel',
+            'Ext.Button'
+        ],
+
+        launch: function() {
+
+            var x = Ext.Viewport.add({
+                xtype : 'panel',
+                items: [{
+                    xtype: 'panel',
+                    action: 'testing',
+                    disabled: true,
+                    title: 'My Fieldset',
+                    items: [
+                        { xtype: 'button', text: 'Name' }
+                    ]
+                }]
+            });
+            x.disable();
+        }
+    });
+    </script>
+</head>
+<body>
+</body>
+</html>

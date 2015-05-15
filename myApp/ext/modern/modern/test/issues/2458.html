@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <link href="../../resources/css/sencha-touch.css" rel="stylesheet" type="text/css" />
+    <style>
+    .bad {
+        color: red;
+    }
+    .good {
+        color: green;
+    }
+    </style>
+</head>
+<body>
+    
+    <script src="../../sencha-touch-all.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        Ext.Loader.require(['Ext.form.Panel', 'Ext.form.FieldSet']);
+        Ext.application({
+            launch: function () {
+                Ext.create('Ext.form.Panel', {
+                    fullscreen: true,
+                    items: [{
+                        xtype: 'fieldset',
+                        style: 'color: green;',
+                        items: [{
+                            xtype: 'textfield',
+                            label: 'labelAlign = left:',
+                            labelAlign: 'left',
+                            labelCls: 'good'
+                        }]
+                    }, {
+                        xtype: 'fieldset',
+                        items: [{
+                            xtype: 'textfield',
+                            label: 'labelAlign = right:',
+                            labelAlign: 'right',
+                            labelCls: 'good'
+                        }]
+                    }, {
+                        xtype: 'fieldset',
+                        items: [{
+                            xtype: 'textfield',
+                            label: 'labelAlign = top:',
+                            labelAlign: 'top',
+                            labelCls: 'good'
+                        }]
+                    }, {
+                        xtype: 'fieldset',
+                        items: [{
+                            xtype: 'textfield',
+                            label: 'labelAlign = bottom:',
+                            labelAlign: 'bottom',
+                            labelCls: 'bad'
+                        }]
+                    }]
+                }); // create()
+            } // launch
+        }); // application()
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2240</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+
+    <script>
+        Ext.application({
+            launch:function () {
+                Ext.define('Project.view.About.Content', {
+                    extend: 'Ext.Container',
+                    xtype: 'aboutContent',
+                    config: {
+                        layout: 'vbox',
+                        scrollable: {
+                            direction: 'vertical',
+                            directionLock: true
+                        },
+                        items: [
+                            {
+                                html: 'Lorem Ipsum',
+                                style: 'font-weight: bold',
+                                margin: '0 0 5 0'
+                            },
+                            {
+                                xtype: 'container',
+                                items:[
+                                    {
+                                        id: 'box1Content',
+                                        style : 'font-size: 11pt;',
+                                        showAnimation: {type: 'slide', direction: 'down'},
+                                        hideAnimation: {type: 'slide', direction: 'up', out: true},
+                                        hidden: true,
+                                        html : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tristique quam eu nulla scelerisque sodales. In feugiat nulla sit amet sapien mattis interdum. Curabitur eros nisl, elementum vel luctus non, laoreet vel metus. Mauris ligula lacus, condimentum eu semper a, cursus eget dui. Fusce vitae nisi nisi. Duis vel mauris eros. Vivamus a est velit, nec dapibus massa. Donec feugiat purus id ipsum tempor ac dapibus ante imperdiet. Pellentesque suscipit bibendum ultrices.'
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                });
+                Ext.Viewport.add({ xtype: 'aboutContent'});
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

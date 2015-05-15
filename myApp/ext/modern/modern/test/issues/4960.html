@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4960</title>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<div id="clearRect"></div>
+<div id="resetWidth"></div>
+<script type="text/javascript">
+    var canvas = document.getElementById('canvas');
+    var w = canvas.width = 400;
+    var h = canvas.height = 400;
+    var now = Date.now;
+
+    var n = 200;
+
+    var ctx = canvas.getContext('2d');
+
+    var clearRectNode = document.getElementById('clearRect');
+    var resetWidthNode = document.getElementById('resetWidth');
+
+    function repeat(times, what, callback) {
+        var count = 0;
+        (function again() {
+            if (count < times) {
+                what(count++);
+                setTimeout(again, 1);
+            } else {
+                callback();
+            }
+        })();
+    }
+
+    function drawCircle(ctx) {
+        ctx.beginPath();
+        ctx.arc(w/2, h/2, h/2, 0, 2*Math.PI, false);
+        ctx.fillStyle = 'green';
+        ctx.strokeStyle = 'black';
+        ctx.fill();
+        ctx.stroke();
+    }
+
+    function applyDefaults(ctx) {
+        ctx.strokeStyle = 'rgba(0,0,0,0)';
+        ctx.fillStyle = 'rgba(0,0,0,0)';
+        ctx.textAlign = 'start';
+        ctx.textBaseline = 'top';
+        ctx.miterLimit = 1;
+    }
+
+    function clearRectTest(callback) {
+        var clearRectTime = now();
+        repeat(n, function (index) {
+            if (index % 2 === 0) {
+                ctx.setTransform(1, 0, 0, 1, 0, 0);
+                ctx.clearRect(0, 0, w, h);
+            } else {
+                drawCircle(ctx);
+            }
+        }, function () {
+            clearRectTime = now() - clearRectTime;
+            clearRectNode.textContent = 'clearRect time: ' + clearRectTime;
+            callback && callback();
+        });
+    }
+
+    function resetWidthTest(callback) {
+        var resetWidthTime = now();
+        repeat(n, function (index) {
+            if (index % 2 === 0) {
+                canvas.width = canvas.width;
+                applyDefaults(ctx);
+            } else {
+                drawCircle(ctx);
+            }
+        }, function () {
+            resetWidthTime = now() - resetWidthTime;
+            resetWidthNode.textContent = 'resetWidth time: ' + resetWidthTime;
+            callback && callback();
+        });
+    }
+
+    var rand = Math.floor(Math.random() * 2);
+    if (rand) {
+        clearRectTest(resetWidthTest);
+    } else {
+        resetWidthTest(clearRectTest);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+body {
+    margin: 0;
+    padding: 15px;
+}
+h3 {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.feed {
+    background-image: url(../../../examples/shared/icons/fam/feed_add.png);
+}

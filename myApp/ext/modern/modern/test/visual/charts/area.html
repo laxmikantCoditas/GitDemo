@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Chart</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <link rel="stylesheet" href="../../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../../sencha-touch-all.js"></script>
+    <script src="data.js"></script>
+    <script>
+        Ext.require([
+            'Ext.chart.CartesianChart',
+            'Ext.chart.series.Line',
+            'Ext.chart.series.Area',
+            'Ext.chart.axis.Numeric',
+            'Ext.chart.axis.Time',
+            'Ext.chart.interactions.PanZoom',
+            'Ext.Toolbar',
+            'Ext.TitleBar',
+            'Ext.Button']);
+        Ext.setup({
+            onReady: function () {
+                var colors = ["#43ffff", "#5bbbbb", "#538888", "#5da64e", "#e3e32e", "#878746", "#d5821d", "#d04646", "#6e4273", "#3e8aa8"],
+                        store = new OrderItems(),
+                        cmp = new Ext.create("Ext.chart.CartesianChart", {
+                            store: store,
+                            colors: colors,
+                            interactions: ['panzoom', 'itemhighlight'],
+                            series: [
+                                {
+                                    type: 'area',
+                                    xField: 'id',
+                                    yField: ['g1', 'g2', 'g3', 'g4', 'g5'],
+                                    style: {
+                                        stroke: 'black'
+                                    },
+                                    highlightCfg: {
+                                        scale: 2,
+                                        shadowBlur: 5,
+                                        shadowOffsetX: 3,
+                                        shadowOffsetY: 3,
+                                        shadowColor: 'black'
+                                    },
+                                    marker: {
+                                        type: 'circle',
+                                        stroke: colors.map(function(a){return Ext.draw.Color.fly(a).getDarker(0.2).toString();}),
+                                        fill: colors.map(function(a){return Ext.draw.Color.fly(a).getLighter(0.1).toString();}),
+                                        r: 3,
+                                        fx: {
+                                            duration: 200
+                                        }
+                                    }
+                                }
+                            ],
+                            axes: [
+                                {
+                                    type: 'numeric',
+                                    position: 'left',
+                                    grid: true,
+                                    fields: 'g1'
+                                },
+                                {
+                                    type: 'numeric',
+                                    position: 'bottom',
+                                    grid: true,
+                                    fields: 'id',
+                                    visibleRange: [0, 0.5]
+                                }
+                            ]
+                        });
+                Ext.Viewport.add({
+                    layout: 'fit',
+                    items: [
+                        {
+                            xtype: 'titlebar',
+                            docked: 'top',
+                            title: 'Area Chart',
+                            items: {
+                                text: 'Refresh',
+                                handler: function () {
+                                    store.generateData(100);
+                                }
+                            }
+                        },
+                        cmp
+                    ]
+                });
+
+                Ext.ComponentQuery.query('titlebar')[0].add(
+                        Ext.ComponentQuery.query('interaction')[0].getModeToggleButton()
+                );
+            }
+        });
+
+    </script>
+</head>
+<body>
+</body>
+</html>

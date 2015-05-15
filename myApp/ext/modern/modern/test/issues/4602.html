@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Test Case</title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+
+    <script type="text/javascript">
+        Ext.setup({
+            requires : [],
+            onReady  : function () {
+                Ext.create('Ext.form.Panel', {
+                    fullscreen: true,
+                    items: [
+                        {
+                            xtype: 'fieldset',
+                            title: 'MyFieldSet',
+                            items: [
+                                {
+                                    xtype: 'textfield',
+                                    label: 'Field'
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    label: 'Field1'
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'fieldset',
+                            title: 'MyFieldSet1',
+                            items: [
+                                {
+                                    xtype: 'textfield',
+                                    label: 'Field2'
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    label: 'Field3'
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'fieldset',
+                            title: 'MyFieldSet2',
+                            items: [
+                                {
+                                    xtype: 'textfield',
+                                    label: 'Field4'
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    label: 'Field5'
+                                }
+                            ]
+                        }
+                    ]
+                })
+            }
+        });
+         /*
+        Ext.Loader.setConfig({
+            enabled: true
+        });
+
+        Ext.application({
+            name: 'MyApp',
+            launch: function () {
+            }
+        });
+        */
+    </script>
+</head>
+<body></body>
+</html>
+
+
+

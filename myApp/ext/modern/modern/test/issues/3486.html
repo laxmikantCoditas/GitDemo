@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3451</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.application({
+            name : 'Test',
+            launch : function () {
+                Ext.Viewport.add({
+                    xtype: 'tabpanel',
+                    items: [{
+                        xtype: 'list',
+                        id: 'test-list',
+                        title: 'Inifinte List',
+                        data: [
+                            { text: 'Item 1' },
+                            { text: 'Item 2' },
+                            { text: 'Item 3' },
+                            { text: 'Item 4' },
+                            { text: 'Item 5' },
+                            { text: 'Item 6' },
+                            { text: 'Item 7' }
+                        ],
+                        itemTpl: [
+                            '<div style="height: 90px; line-height: 90px;">{text}</div>'
+                        ]
+                    },{
+                        xtype: 'container',
+                        title: 'Card 2',
+                        items: [{
+                            xtype: 'button',
+                            text: 'Reload List',
+                            handler: function() {
+                                Ext.getCmp('test-list').getStore().load();
+                            }
+                        }]
+                    }]
+                });
+            }
+        });
+
+    </script>
+</head>
+<body>
+</body>
+</html>

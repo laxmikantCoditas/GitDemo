@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="../../../resources/css/sencha-touch.css" type="text/css">
+        <script type="text/javascript" src="../../../sencha-touch-all.js"></script>
+        
+        <script type="text/javascript">
+
+        Ext.application({
+            launch: function() {
+                // Basic
+                
+                Ext.create('Ext.Panel', {
+                    floating: true,
+                    width: 150,
+                    height: 150,
+                    top: 20,
+                    left: 20,
+                    html: 'simple html'
+                }).show();
+
+                Ext.create('Ext.Panel', {
+                    floating: true,
+                    width: 150,
+                    height: 150,
+                    top: 20,
+                    left: 190,
+                    items: [
+                        {
+                            html: 'item with html'
+                        }
+                    ]
+                }).show();
+
+                Ext.create('Ext.Panel', {
+                    floating: true,
+                    width: 150,
+                    height: 150,
+                    top: 20,
+                    left: 360,
+                    layout: 'fit',
+                    items: [
+                        {
+                            html: 'layout:`fit`, item with html'
+                        }
+                    ]
+                }).show();
+
+                // Scrollable
+
+                Ext.create('Ext.Panel', {
+                    floating: true,
+                    width: 150,
+                    height: 150,
+                    top: 190,
+                    left: 20,
+                    scrollable: true,
+                    html: 'simple scrollable html'
+                }).show();
+
+                Ext.create('Ext.Panel', {
+                    floating: true,
+                    width: 150,
+                    height: 150,
+                    top: 190,
+                    left: 190,
+                    layout: 'fit',
+                    items: [
+                        {
+                            scrollable: true,
+                            html: 'layout:`fit`, item with scrollable html'
+                        }
+                    ]
+                }).show();
+
+                // Docked
+
+                Ext.create('Ext.Panel', {
+                    floating: true,
+                    width: 150,
+                    height: 150,
+                    top: 360,
+                    left: 20,
+                    html: 'simple html',
+                    items: [
+                        {
+                            xtype: 'toolbar',
+                            title: 'toolbar',
+                            docked: 'top'
+                        }
+                    ]
+                }).show();
+
+                Ext.create('Ext.Panel', {
+                    floating: true,
+                    width: 150,
+                    height: 150,
+                    top: 360,
+                    left: 190,
+                    items: [
+                        {
+                            xtype: 'toolbar',
+                            title: 'toolbar',
+                            docked: 'top'
+                        },
+                        {
+                            html: 'docked item, item html'
+                        }
+                    ]
+                }).show();
+
+                Ext.create('Ext.Panel', {
+                    floating: true,
+                    width: 150,
+                    height: 150,
+                    top: 360,
+                    left: 360,
+                    layout: 'fit',
+                    items: [
+                        {
+                            xtype: 'toolbar',
+                            title: 'toolbar',
+                            docked: 'top'
+                        },
+                        {
+                            html: 'docked item, scrollable html',
+                            scrollable: true
+                        }
+                    ]
+                }).show();
+
+                Ext.create('Ext.MessageBox', {
+                    title: 'Title',
+                    message: 'A test messagebox',
+                    modal: false,
+                    top: 540,
+                    left: 20
+                }).show();
+            }
+        });
+
+        </script>   
+    </head>
+    <body></body>
+</html>

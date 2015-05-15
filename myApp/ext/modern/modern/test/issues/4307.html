@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TOUCH-4307</title>
+
+	<script src="../../sencha-touch-debug.js"></script>
+	<link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+	<script type="text/javascript">
+		Ext.setup({
+			requires: [
+				'Ext.tab.Panel'
+			],
+			onReady: function() {
+				Ext.Viewport.add({
+					xtype: 'tabpanel',
+					fullscreen: true,
+					tabBarPosition: 'bottom',
+
+					defaults: {
+						styleHtmlContent: true
+					},
+
+					items: [
+						{
+							tab: {
+								title: 'Home',
+								iconCls: 'home',
+								docked: 'left'
+							},
+							html: 'Home Screen'
+						},
+						{
+							tab: {
+								title: 'Compose',
+								iconCls: 'compose'
+							},
+							html: 'Compose Screen'
+						},
+						{
+							tab: {
+								title: 'Contact',
+								iconCls: 'user',
+								docked: 'right'
+							},
+							html: 'Contact Screen'
+						}
+					]
+				});
+			}
+		});
+	</script>
+</head>
+<body>
+</body>
+</html>

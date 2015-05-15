@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>TOUCH-4475</title>
+    <style></style>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+    <script src="../../sencha-touch-all-debug.js"></script>
+    <script>
+        Ext.require(['Ext.chart.*', 'Ext.Toolbar']);
+        Ext.define('Extras.ToggleButton', {
+            extend: 'Ext.Button',
+            xtype: 'togglebtn',
+            config: {
+                isPressed: false
+            },
+            initialize: function () {
+                this.callParent( arguments );
+                this.on('tap', this.onButtonPress, this);
+                this.getIsPressed() ? this.addCls( this.getPressedCls() ) : this.removeCls( this.getPressedCls() );
+            },
+
+            onButtonPress: function () {
+                this.setIsPressed( ! this.getIsPressed() );
+                this.getIsPressed() ? this.addCls( this.getPressedCls() ) : this.removeCls( this.getPressedCls() );
+            }
+
+        });
+        Ext.setup({
+            onReady: function () {
+                var imageSprite, circleSprite;
+                function renderer(sprite, config, rendererData, spriteIndex) {
+                    var surface = this.getParent(),
+                        value = sprite.attr.dataY[spriteIndex];
+
+                    if (!imageSprite) {
+                        imageSprite = Ext.create('Ext.draw.sprite.Image', {
+                            width: 110,
+                            height: 40,
+                            src: '../../SenchaLogo.png',
+                            scalingY: -1
+                        });
+                    }
+
+                    if (!circleSprite) {
+//                        circleSprite = surface.add({type: 'circle'});
+                        circleSprite = Ext.create('Ext.draw.sprite.Circle');
+//                        surface.add(circleSprite);
+                    }
+                    circleSprite.setAttributes({
+                        x: config.x,
+                        y: config.y,
+                        r: value / 2,
+                        fillStyle: 'pink',
+                        strokeStyle: 'black'
+                    });
+                    imageSprite.setAttributes({
+                        x: config.x + 20,
+                        y: config.y - 10
+                    });
+
+                    // Adding sprites to the surface will require multiple instances to get the same result,
+                    // and they will only be rendered on Surface's next renderFrame call (i.e. wrong positions).
+                    // The sprites will be rendered on top of the series if zIndex of the sprites is high enough.
+
+                    // Not adding sprites to the surface requires us to apply attributes to the context manually,
+                    // as well as managing context's state. The sprites will also be rendered _under_ the correpsonding
+                    // series' sprite.
+
+                    // If we want to add sprites and then update their attributes, so that they are rendered on top of
+                    // the series and as a part of the current renderFrame call, we would need something like
+                    // a composite sprite with a high enough zIndex, that guarantees that it renders after the series' sprites.
+                    // So we'd add all custom sprites to it, be able to modify their attributes inside this renderer,
+                    // and still get them rendered on top of the series.
+                    // We can implement this manually here, but shouldn't really expect users to be knowledgeable enough
+                    // about the framework to do the same.
+
+                    try {
+                        surface.contexts[0].save();
+                        circleSprite.useAttributes(surface.contexts[0]);
+                        circleSprite.render(surface, surface.contexts[0]);
+                    } finally {
+                        surface.contexts[0].restore();
+                    }
+
+                    try {
+                        surface.contexts[0].save();
+                        imageSprite.useAttributes(surface.contexts[0]);
+                        imageSprite.render(surface, surface.contexts[0]);
+                    } finally {
+                        surface.contexts[0].restore();
+                    }
+
+
+                }
+
+                function generateData(start, n) {
+                    var data = [];
+                    for (var i = 0; i < n; i++) {
+                        data.push({
+                            year: start + i,
+                            amount: 10 + (Math.random() * 100) | 0
+                        });
+                    }
+                    return data;
+                }
+
+                var animate = true;
+
+                var toolbar = Ext.Viewport.add({
+                    xtype: 'toolbar',
+                    docked: 'top',
+                    items: [
+                        {
+                            xtype: 'button',
+                            text: 'Reload',
+                            handler: function () {
+                                chart.getStore().setData(generateData(2010, 6));
+                            }
+                        },
+                        {
+                            xtype: 'togglebtn',
+                            text: 'Animate',
+                            isPressed: true,
+                            handler: function () {
+                                chart.setAnimate(animate = !animate);
+                            }
+                        }
+                    ]
+                });
+
+                var chart = Ext.Viewport.add({
+                    xtype: 'chart',
+                    store: {
+                        data: generateData(2010, 6)
+                    },
+                    axes: [
+                        {
+                            type: 'numeric',
+                            position: 'right'
+                        },
+                        {
+                            type: 'category',
+                            position: 'bottom'
+                        }
+                    ],
+                    series: [
+                        {
+                            type: 'bar',
+                            style: {
+                                fillStyle: 'orange',
+                                strokeStyle: 'black'
+                            },
+                            label: {
+                                field: 'amount',
+                                display: 'insideStart',
+                                font: '16px Verdana'
+                            },
+                            xField: 'year',
+                            yField: 'amount',
+
+                            renderer: renderer
+                        }
+                    ],
+                    listeners: {
+                        afterrender: function () {
+                            console.log('Inside afterrender call.'); // doesn't work
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

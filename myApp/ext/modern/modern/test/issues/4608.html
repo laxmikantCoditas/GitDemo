@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>TOUCH-4608</title>
+
+	<link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+	<script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+
+	<script type="text/javascript">
+		Ext.define('ModelA', {
+			extend: 'Ext.data.Model',
+
+
+			config: {
+				idProperty: 'id',
+				fields: [
+					'id',
+					'name'
+				],
+
+
+				associations: {
+					type: 'hasOne',
+					model: 'ModelB'
+				}
+			}
+		});
+
+		Ext.define('ModelB', {
+			extend: 'Ext.data.Model',
+
+
+			config: {
+				fields: [
+					'category',
+					'name',
+					'type'
+				],
+
+
+				proxy: {
+					type: 'rest',
+					url: 'http://schematic-ipsum.herokuapp.com/?n=15',
+
+					extraParams: {
+						"type": "object",
+						"properties[category][type]":"string",
+						"properties[category][ipsum]":"word",
+						"properties[name][type]":"string",
+						"properties[name][ipsum]":"first name",
+						"properties[type][type]":"string",
+						"properties[type][ipsum]":"word"
+					}
+				}
+			}
+		});
+
+
+
+		Ext.setup({
+			requires: ["Ext.data.proxy.Rest"],
+			onReady: function() {
+				Ext.override(Ext.data.proxy.Rest, {
+					getMethod: function(){
+						return 'POST';
+					}
+				});
+
+
+
+
+				var modelA = Ext.create("ModelA");
+
+				modelA.getModelB({
+					reload: true,
+					callback: function(modelB, op) {
+						console.log("callback");
+						console.log(arguments);
+
+					},
+					success: function(modelB, op) {
+						console.log("success");
+						console.log(arguments);
+
+					}
+				})
+			}
+		});
+	</script>
+</head>
+<body></body>
+</html>
+
+
+

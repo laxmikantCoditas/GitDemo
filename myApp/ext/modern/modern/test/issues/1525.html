@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>1525</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script src="../../sencha-touch.js"></script>
+
+        <script type="text/javascript">
+            Ext.setup({
+                onReady : function() {
+                    var actions = Ext.create('Ext.ActionSheet', {
+//                        enterAnimation: null,
+//                        exitAnimation: null,
+                        items: [
+                            {
+
+                                text   : 'Delete draft',
+                                ui     : 'decline',
+                                handler: Ext.emptyFn
+                            },
+                            {
+                                text   : 'Save draft',
+                                handler: Ext.emptyFn
+                            },
+                            {
+                                xtype: 'button',
+                                text   : 'Cancel',
+                                scope  : this,
+                                handler: function() {
+                                    actions.hide();
+                                }
+                            }
+                        ]
+                    });
+
+                    actions.show();
+                }
+            });
+
+        </script>
+    </head>
+    <body></body>
+</html>

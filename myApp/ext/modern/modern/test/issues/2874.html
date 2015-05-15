@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2874</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.setup({
+            requires: [
+                'Ext.data.TreeStore',
+                'Ext.dataview.NestedList',
+                'Ext.TitleBar'
+            ],
+            onReady:function () {
+                Ext.define('ListItems', {
+                    extend: 'Ext.data.Model',
+                    config: {
+                        idProperty: 'id',
+                        fields: [
+                            {name: 'id', type: 'string'},
+                            {name: 'label', type: 'string'}
+                        ]
+                    }
+                });
+
+                var store = Ext.create('Ext.data.TreeStore', {
+                    autoLoad: true,
+                    storeId: 'Sections',
+                    model: 'ListItems',
+                    clearOnLoad: false,
+                    proxy: {
+                        type: 'ajax',
+                        url: '2874.json',
+                        reader: {
+                            type: 'json',
+                            rootProperty: 'children'
+                        }
+                    }
+                });
+
+                var nestedList = Ext.create('Ext.NestedList', {
+                    fullscreen: true,
+                    title: 'Groceries',
+                    displayField: 'label',
+                    toolbar: {
+                        items: [
+                            {
+                                xtype: 'button',
+                                text: 'Refresh',
+                                listeners: {
+                                    tap: function (button, e, eOpts) {
+                                        var listStore = nestedList.getStore();
+                                        listStore.load();
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    store: store
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

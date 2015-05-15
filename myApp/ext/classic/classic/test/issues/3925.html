@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Test</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+    <script type="text/javascript" src="../../ext-all.js"></script>
+    <script type="text/javascript">
+Ext.require('*');
+
+Ext.onReady(function() {
+    Ext.create('Ext.data.Store', {
+        storeId:'simpsonsStore',
+        fields:['name', 'email', 'phone'],
+        data:{'items':[
+            { 'name': 'Lisa',  "email":"lisa@simpsons.com",  "phone":"555-111-1224"  },
+            { 'name': 'Bart',  "email":"bart@simpsons.com",  "phone":"555--222-1234" },
+            { 'name': 'Homer', "email":"home@simpsons.com",  "phone":"555-222-1244"  }
+        ]},
+        proxy: {
+            type: 'memory',
+            reader: {
+                type: 'json',
+                root: 'items'
+            }
+        }
+    });
+
+    var grid = Ext.create('Ext.grid.Panel', {
+        title: 'Simpsons',
+        store: Ext.data.StoreManager.lookup('simpsonsStore'),
+        columns: [
+            { header: 'Name',  dataIndex: 'name' },
+            { header: 'Email', dataIndex: 'email', flex: 1 },
+            { header: 'Phone', dataIndex: 'phone' }
+        ],
+        scroll: 'both',
+        height: 200,
+        width: 400,
+
+        listeners: {
+            itemcontextmenu: function(view, record, item, index, e) {
+                 // Stop the browser getting the event
+                e.preventDefault();
+
+               var menu = Ext.create('Ext.menu.Menu', {
+                    items: [
+                        Ext.create('Ext.Action', {
+                            text: 'Click me!',
+                            handler: function(button, e) {
+                                // Think this only happens when launching a modal dialog...
+                                var win = Ext.create('Ext.window.Window', {
+                                    width: 100,
+                                    modal: true,
+                                    html: 'Cloe me!',
+                                    buttons: [{
+                                        text: 'Close',
+                                        handler: function(button, e) {
+                                           win.close();
+                                        }
+                                    }]
+                                });
+
+
+                                // And only happens when animated...
+                                win.show(button.getEl());
+                            }
+                        })
+                    ]
+                });
+
+                 // Ensure menu gets destroyed when hidden
+                menu.on('hide', function(component) {
+                    component.destroy();     // <-- Error occurs inside here
+
+
+                    delete record.contextMenuOpen;
+                });
+
+
+                // Store flag in node saying we have a menu open
+                record.contextMenuOpen = true;
+
+
+                menu.showAt(e.getPageX(), e.getPageY());
+            }
+        }
+
+
+    });
+
+
+    Ext.create('Ext.container.Viewport', {
+        items: [grid]
+    });
+});
+</script>
+</head>
+<body style="padding:10px">
+</body>
+</html>

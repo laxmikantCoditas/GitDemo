@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test case template</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script src="../../sencha-touch-all-debug.js"></script>
+        
+        <script>
+            Ext.setup({
+               onReady: function() {
+                   var store = Ext.create('Ext.data.Store', {
+                       fields: [
+                           {name: 'time', type: 'date', dateFormat: 'time'},
+                           'value'
+                       ],
+                       data: [
+                           {"time": 1136073600000, "value": 0.8446},
+                           {"time": 1136160000000, "value": 0.8445},
+                           {"time": 1136246400000, "value": 0.8444},
+                           {"time": 1136332800000, "value": 0.8451},
+                           {"time": 1136419200000, "value": 0.8418},
+                           {"time": 1136505600000, "value": 0.8264},
+                           {"time": 1136592000000, "value": 0.8258},
+                           {"time": 1136678400000, "value": 0.8232},
+                           {"time": 1136764800000, "value": 0.8233},
+                           {"time": 1136851200000, "value": 0.8258},
+                           {"time": 1136937600000, "value": 0.8283},
+                           {"time": 1137024000000, "value": 0.8278},
+                           {"time": 1137110400000, "value": 0.8256},
+                           {"time": 1137196800000, "value": 0.8292},
+                           {"time": 1137283200000, "value": 0.8239},
+                           {"time": 1137369600000, "value": 0.8239},
+                           {"time": 1137456000000, "value": 0.8245},
+                           {"time": 1137542400000, "value": 0.8265},
+                           {"time": 1137628800000, "value": 0.8261},
+                           {"time": 1137715200000, "value": 0.8269},
+                           {"time": 1137801600000, "value": 0.8273},
+                           {"time": 1137888000000, "value": 0.8244},
+                           {"time": 1137974400000, "value": 0.8244},
+                           {"time": 1138060800000, "value": 0.8172},
+                           {"time": 1138147200000, "value": 0.8139},
+                           {"time": 1138233600000, "value": 0.8146},
+                           {"time": 1138320000000, "value": 0.8164},
+                           {"time": 1138406400000, "value": 0.82},
+                           {"time": 1138492800000, "value": 0.8269},
+                           {"time": 1138579200000, "value": 0.8269},
+                           {"time": 1138665600000, "value": 0.8269},
+                           {"time": 1138752000000, "value": 0.8258},
+                           {"time": 1138838400000, "value": 0.8247},
+                           {"time": 1138924800000, "value": 0.8286},
+                           {"time": 1139011200000, "value": 0.8289},
+                           {"time": 1139097600000, "value": 0.8316},
+                           {"time": 1139184000000, "value": 0.832},
+                           {"time": 1139270400000, "value": 0.8333},
+                           {"time": 1139356800000, "value": 0.8352},
+                           {"time": 1139443200000, "value": 0.8357},
+                           {"time": 1139529600000, "value": 0.8355},
+                           {"time": 1139616000000, "value": 0.8354},
+                           {"time": 1139702400000, "value": 0.8403},
+                           {"time": 1139788800000, "value": 0.8403},
+                           {"time": 1139875200000, "value": 0.8406},
+                           {"time": 1139961600000, "value": 0.8403},
+                           {"time": 1140048000000, "value": 0.8396},
+                           {"time": 1140134400000, "value": 0.8418},
+                           {"time": 1140220800000, "value": 0.8409},
+                           {"time": 1140307200000, "value": 0.8384}
+                       ]
+                       
+                   });
+                   
+                   var panel = Ext.create('Ext.Panel', {                      
+                       cls: 'card1',
+                       layout: 'fit',
+                       items: [
+                           {
+                               xtype: 'toolbar',
+                               top: 0,
+                               right: 0,
+                               zIndex: 50,
+                               style: {
+                                   background: 'none'
+                               },
+                               items: [
+                                   {
+                                       xtype: 'spacer'
+                                   }
+                               ]
+                           },
+                           {
+                               xtype: 'chart',
+                               store: store,
+                               background: 'white',
+                               series: [
+                                   {
+                                       type: 'bar',
+                                       xField: 'time',
+                                       yField: 'value',
+                                       style: {
+                                           fill: '#ddd',
+                                           stroke: 'green'
+                                       }
+                                   }
+                               ],
+                               axes: [
+                                   {
+                                       type: 'numeric',
+                                       position: 'left',
+                                       fields: ['value'],
+                                       title: {
+                                           text: 'Value',
+                                           fontSize: 20
+                                       }
+                                   },
+                                   {
+                                       type: 'time',
+                                       dateFormat: 'Y-m-d',
+                                       visibleRange: [0, 1],
+                                       position: 'bottom',
+                                       fields: 'time',
+                                       title: {
+                                           text: 'Date',
+                                           fontSize: 20
+                                       }
+                                   }
+                               ]
+                           }
+                       ]
+                      
+                   });
+                   Ext.Viewport.add(panel);
+               } 
+            });
+        </script>
+    </head>
+    <body>
+        
+    </body>
+</html>

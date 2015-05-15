@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Store.sync should support callbacks</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+<style>
+body {
+    margin: 50px;
+}
+h1 {
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+#msg {
+    border: 1px solid blue;
+    padding: 20px;
+    background: #eee;
+}
+#msg p {
+    margin-bottom: 5px;
+}
+</style>
+<script type="text/javascript" charset="utf-8">
+Ext.require(['Ext.data.*']);
+
+Ext.onReady(function() {    
+    var log = function(msg) {
+        Ext.DomHelper.append('msg', {
+            tag: 'p',
+            html: msg
+        });
+    };
+    
+    var update = function() {
+        store.sync({
+            success: function() {
+                log: 'Success fn executed in scope ' + this.id
+            },
+            failure: function() {
+                log: 'Failure fn executed in scope ' + this.id
+            },
+            callback: function() {
+                log: 'Callback fn executed in scope ' + this.id
+            },
+            scope: {
+                id: 'foo'
+            }
+        });
+    };
+    
+    Ext.data.Batch.prototype.pauseOnException = false;
+    
+    Ext.data.AbstractStore.prototype.onProxyWrite = Ext.Function.createInterceptor(Ext.data.AbstractStore.prototype.onProxyWrite, function(operation) {
+        log('onProxyWrite: success = ' + operation.wasSuccessful());
+    });
+    
+    Ext.data.AbstractStore.prototype.onBatchException = Ext.Function.createInterceptor(Ext.data.AbstractStore.prototype.onBatchException, function(batch, operation) {
+        log('onBatchException: success = ' + operation.wasSuccessful());
+    });
+    
+    var store = Ext.create('Ext.data.Store', {
+        fields: ['id', 'name'],
+        proxy: {
+            type: 'ajax',
+            url: '3462.php',
+            noCache: false,
+            reader: {
+                type: 'json',
+                root: 'data'
+            }
+        },
+        data: [{
+            id: 1, name: 'Brian'
+        },{
+            id: 2, name: 'Ed'
+        }]
+    });
+    
+    var rec = store.getAt(0);
+    log('Name: ' + rec.data.name);
+    rec.set('name', 'Aaron');
+    update();
+
+    rec = store.getAt(1);
+    log('Name: ' + rec.data.name);
+    rec.set('name', 'Tommy');
+    update();
+});
+</script>
+</head>
+<body>
+    <h1>Store.sync Callback Support</h1>
+    <div id="msg"></div>
+</body>
+</html>

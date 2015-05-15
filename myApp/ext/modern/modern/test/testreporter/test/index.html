@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>Sencha Test Reporter 0.0.1 - Test Reporter</title>
+
+        <link rel="stylesheet" type="text/css" href="../resources/reporter.css">
+
+        <script type="text/javascript" src="../src/reporter/Namespace.js"></script>
+
+        <script type="text/javascript" src="../src/lib/jasmine/src/base.js"></script>
+        <script type="text/javascript" src="../src/lib/jasmine/src/util.js"></script>
+        <script type="text/javascript" src="../src/lib/jasmine/src/PrettyPrinter.js"></script>
+        <script type="text/javascript" src="../src/shared/PrettyPrinter-more.js"></script>
+        <script type="text/javascript" src="../src/shared/Dom.js"></script>
+        <script type="text/javascript" src="../src/shared/browser.js"></script>
+        <script type="text/javascript" src="../src/shared/array.js"></script>
+        
+        <script type="text/javascript" src="../src/reporter/Options.js"></script>
+        <script type="text/javascript" src="../src/reporter/SandBox.js"></script>
+        <script type="text/javascript" src="../src/reporter/CodeHighLighter.js"></script>
+
+
+        <script type="text/javascript" src="../src/reporter/BadGlobals.js"></script>
+        <script type="text/javascript" src="../src/reporter/jsCoverage.js"></script>
+        <script type="text/javascript" src="../src/reporter/panel/Namespace.js"></script>
+        <script type="text/javascript" src="../src/reporter/panel/Blocks.js"></script>
+        <script type="text/javascript" src="../src/reporter/panel/Sandbox.js"></script>
+        <script type="text/javascript" src="../src/reporter/panel/Infos.js"></script>
+        <script type="text/javascript" src="../src/reporter/panel/jsCoverage.js"></script>
+        <script type="text/javascript" src="../src/reporter/panel/jsCoverageSummary.js"></script>
+        <script type="text/javascript" src="../src/reporter/panel/StackTrace.js"></script>
+
+        <script type="text/javascript" src="../src/reporter/panel/TabPanel.js"></script>
+        <script type="text/javascript" src="../src/reporter/panel/TreeGrid.js"></script>
+        <script type="text/javascript" src="../src/reporter/Reporter.js"></script>
+        
+                
+    </head>
+    <body>
+        <script type="text/javascript">
+                Test.SandBox.setup({
+                    includes: [{
+                            type: "js",
+                            src: "../deploy/testreporter/pkgs/jasmine.js"
+
+                        },{
+                            type: "js",
+                            src: "spec/example.js"
+                    }]
+                });
+        </script>
+    </body>
+</html>

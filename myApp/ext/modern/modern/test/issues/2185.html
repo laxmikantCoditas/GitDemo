@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2185</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.application({
+            name:'Demo',
+            launch:function () {
+                Ext.create('Ext.TabPanel', {
+                    fullscreen : true,
+                    tabBarPosition : 'bottom',
+                    layout         : {
+                        type  : 'vbox',
+                        align : 'stretch'
+                    },
+                    defaults       : { flex : 1},
+                    items          : [
+                        {
+                            title   : 'Screen 1',
+                            iconCls : 'user',
+                            style   : 'background-color: #DDF',
+                            html    : 'First screen'
+                        },
+                        {
+                            title : 'Screen 2',
+                            style : 'background-color: #FDD',
+                            html  : 'Second Screen'
+                        }
+                    ]
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <title>Specs - Layout</title>
+    <meta charset="UTF-8">
+    <meta id="extViewportMeta" name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <style type="text/css">
+        body {
+            height: 100%;
+            position: relative;
+            background-color: #FFF;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        #specsContainer {
+            -webkit-box-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+            position: relative;
+            overflow: auto;
+        }
+
+        #specs {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+
+        #specs.highlighting > .spec {
+            opacity: 0.2;
+        }
+
+        #specs.highlighting > .spec.highlighted {
+            opacity: 1;
+        }
+
+        .spec {
+            border: 10px solid gray;
+            width: 246px;
+            height: 246px;
+            margin: 5px;
+            float: left;
+            position: relative;
+        }
+
+        .spec.failed {
+            border-color: red;
+        }
+
+        .spec.passed {
+            border-color: green;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            pointer-events: none;
+        }
+
+        #status {
+            color: #FFF;
+            background-color: #000;
+            font-size: 1.2em;
+            padding: 0.4em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        #status.allPassed {
+            background-color: green;
+        }
+
+        #status.someFailed {
+            background-color: red;
+        }
+
+        #progress {
+            background-color: gray;
+            height: 2em;
+            display: table;
+            table-layout: fixed;
+            width: 100%;
+        }
+
+        #progress > * {
+            display: table-cell;
+        }
+
+        #progress > .passed {
+            background-color: green;
+        }
+
+        #progress > .failed {
+            background-color: red;
+        }
+
+        #tooltip {
+            font-size: 1.2em;
+            position: relative;
+            z-index: 999;
+            border-radius: 0.4em;
+            border: 0.2em solid #adff2f;
+            background-color: #FFFFCC;
+        }
+
+        #tooltip > * {
+            padding: 0.5em;
+        }
+
+        #tooltipTitle {
+            background-color: #adff2f;
+        }
+
+        #tooltip.failed {
+            border-color: red;
+        }
+
+        #tooltip.failed #tooltipTitle {
+            color: #fff;
+            background-color: red;
+        }
+
+        #toolbar {
+            position: relative;
+        }
+
+        #status a {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: orange;
+        }
+    </style>
+
+    <script type="text/javascript" src="../lib/jasmine-1.2.0/jasmine.js"></script>
+    <script type="text/javascript" src="../../../microloader/development.js"></script>
+    <script type="text/javascript" src="../lib/helpers.js"></script>
+    <script type="text/javascript" src="../lib/runner.js"></script>
+</head>
+<body>
+    <div class="x-center">
+        <div id="tooltip" style="display: none">
+            <div id="tooltipTitle"></div>
+            <div id="tooltipContent"></div>
+        </div>
+    </div>
+    <div id="toolbar">
+        <div id="status">Loading...</div>
+        <div id="progress"></div>
+    </div>
+    <div id="specsContainer">
+        <div id="specs"></div>
+    </div>
+</body>
+</html>

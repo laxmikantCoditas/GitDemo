@@ -1,0 +1,164 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8" />
+    <title>Test DOM Events</title>
+    <script type="text/javascript" src="../../../sencha-touch.js"></script>
+    <script type="text/javascript" src="sencha.js"></script>
+    <script type="text/javascript">
+        document.write('<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />');
+
+        Ext.require([
+            'Ext.env.OS',
+            'Ext.env.Browser',
+            'Ext.event.Dispatcher',
+            'Ext.event.publisher.Dom',
+            'Ext.event.publisher.TouchGesture',
+            'Ext.event.recognizer.Tap',
+            'Ext.event.recognizer.HorizontalSwipe',
+            'Ext.event.recognizer.DoubleTap',
+            'Ext.event.recognizer.LongPress',
+            'Ext.event.recognizer.Pinch',
+            'Ext.event.recognizer.Rotate'
+        ],
+        function() {
+            var dispatcher = Ext.event.Dispatcher.getInstance(),
+                touchGesturePublisher = new Ext.event.publisher.TouchGesture({
+                    buffering: {
+                        enabled: false,
+                        interval: 40
+                    }
+                });
+
+            touchGesturePublisher.registerRecognizer(new Ext.event.recognizer.Tap());
+            touchGesturePublisher.registerRecognizer(new Ext.event.recognizer.HorizontalSwipe());
+            touchGesturePublisher.registerRecognizer(new Ext.event.recognizer.Pinch());
+            touchGesturePublisher.registerRecognizer(new Ext.event.recognizer.Rotate());
+            touchGesturePublisher.registerRecognizer(new Ext.event.recognizer.LongPress());
+            touchGesturePublisher.registerRecognizer(new Ext.event.recognizer.DoubleTap({
+                maxDuration: 500
+            }));
+
+            dispatcher.registerPublisher(new Ext.event.publisher.Dom());
+            dispatcher.registerPublisher(touchGesturePublisher);
+
+            var osName = Ext.os.name,
+                viewportName, viewportClassName;
+
+            switch (osName) {
+                case 'Android':
+                    viewportName = 'Android';
+                    break;
+
+                case 'iOS':
+                    viewportName = 'Ios';
+
+                    break;
+
+                default:
+                    viewportName = 'Viewport';
+            }
+
+            viewportClassName = 'Ext.viewport.' + viewportName;
+
+            Ext.require(viewportClassName, function() {
+                Ext.viewport = Ext.create(viewportClassName);
+
+                Ext.onDocumentReady = function(fn, scope) {
+                    Ext.viewport.on('ready', fn, scope);
+                };
+
+                Ext.onReady(function() {
+                    Ext.viewport.maximize();
+
+                    Ext.viewport.addListener('orientationchange', function(orientation) {
+                        Ext.viewport.maximize();
+                    });
+
+                    window.addEventListener('resize', function() {
+                        if (Ext.os.is.Android) {
+                            document.body.scrollTop = 1000;
+                        }
+                    }, false);
+
+                    function draw(fn) {
+                        fn();
+                    }
+
+                    dispatcher.addListener('element', '#test', 'touchstart', function(e) {
+                        document.title = 'touchstart';
+                        var target = e.target;
+
+
+                        draw(function() {
+                            target.className = 'pressed';
+                        });
+                        //                        target.style.position = 'absolute';
+//                        target.style.webkitPerspective = '1';
+                    });
+
+                    dispatcher.addListener('element', '#test', 'touchmove', function(e) {
+//                        document.title = ['touchmove', e.touch.point.x, e.touch.point.y];
+                        var target = e.target,
+                            x = e.touch.point.x - 100,
+                            y = e.touch.point.y - 100;
+//
+                        draw(function() {
+                            target.style.webkitTransform = 'translate3d('+x+'px, '+y+'px, 0px)';
+                        });
+//                        target.style.left = e.touch.point.x+'px';
+//                        target.style.top = e.touch.point.y+'px';
+                    });
+
+                    dispatcher.addListener('element', '#test', 'touchend', function(e) {
+                        document.title = 'touchend';
+                        var target = e.target;
+
+                        draw(function() {
+                            target.className = '';
+                        });
+                    });
+//
+//                    var test = document.getElementById('test');
+//
+//                    test.addEventListener('touchstart', function(e) {
+//                        e.preventDefault();
+//                        test.className = 'pressed';
+//                    });
+//
+//                    test.addEventListener('touchstart', function(e) {
+//                        e.preventDefault();
+//                    });
+//                    test.addEventListener('touchend', function(e) {
+//                        e.preventDefault();
+//                    });
+//                    test.addEventListener('touchmove', function(e) {
+//                        document.title = ['touchmove', e.changedTouches[0].pageX, e.changedTouches[0].pageY];
+//                        e.preventDefault();
+////                        test.style.webkitTransform = 'translate3d('+e.changedTouches[0].pageX+'px, '+e.changedTouches[0].pageY+'px, 0px)';
+//                    });
+//
+//                    test.addEventListener('touchend', function(e) {
+//                        e.preventDefault();
+//                        test.className = '';
+//                    });
+                });
+            });
+        });
+    </script>
+    <style type="text/css">
+        #test {
+            background: blue;
+        }
+
+        #test.pressed {
+            background: green;
+        }
+    </style>
+</head>
+<body>
+    <div id="test" style="width:200px; height: 200px">
+
+    </div>
+</body>
+</html>

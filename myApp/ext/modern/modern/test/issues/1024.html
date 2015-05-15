@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>TOUCH-1024</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+
+    <script type="text/javascript">
+
+        Ext.require('Ext.tab.Panel');
+
+        Ext.setup({
+            onReady: function() {
+                Ext.create('Ext.tab.Panel', {
+                    fullscreen: true,
+                    layout: {
+                        animation: {
+                            // This causes a JS error. Other animation types do not error.
+                            type: 'flip'
+                        }
+                    },
+
+                    items: [
+                        {
+                            title: 'One',
+                            html: 'Tab One'
+                        },
+                        {
+                            title: 'Two',
+                            html: 'Tab Two'
+                        }
+                    ]
+                });
+            }
+        });
+
+    </script>
+</head>
+<body>
+</body>
+</html>

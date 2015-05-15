@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+
+        Ext.onReady(function () {
+            Ext.create('Ext.form.Panel', {
+                title      : 'Form',
+                labelWidth : 75,
+                frame      : true,
+                resizable  : true,
+                width      : 550,
+                height     : 150,
+                autoScroll : true,
+                renderTo   : Ext.getBody(),
+                layout     : {
+                    type  : 'vbox',
+                    align : 'stretch'
+                },
+                items      : [
+                    { xtype : 'textfield', fieldLabel : 'Field'},
+                    {
+                        xtype      : 'fieldset',
+                        title      : 'f1',
+                        collapsible: true,
+                        layout     : {
+                            type  : 'vbox',
+                            align : 'stretch'
+                        },
+                        items      : [
+                            { xtype : 'textfield', fieldLabel : 'Field'},
+                            {
+                                xtype      : 'fieldcontainer',
+                                fieldLabel : 'Field Container',
+//                                width: 100,           //SETTING THE WIDTH TEMP WORKAROUND
+                                layout     : {
+                                    type  : 'hbox',
+                                    align : 'stretch'
+                                },
+                                items      : [{
+                                    xtype : 'textfield',
+                                    flex  : 1
+                                },{
+                                    xtype : 'combobox',
+                                    flex:1,
+                                    forceSelection : true,
+                                    editable       : false
+                                }]
+                            },
+                            { xtype : 'textfield', fieldLabel : 'Field'},
+                            { xtype : 'textfield', fieldLabel : 'Field'},
+                            { xtype : 'textfield', fieldLabel : 'Field'},
+                            { xtype : 'textfield', fieldLabel : 'Field'}]
+                    }]
+            });
+
+        });
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4022</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.setup({ 
+            requires: [
+                'Ext.tab.Panel'
+            ],
+            onReady: function() {
+	            Ext.define('Main', {
+		            extend: 'Ext.tab.Panel',
+		            config: {
+			            fullscreen: true,
+			            tabBarPosition: 'top',
+			            width: '100%',
+			            height: '100%',
+			            items: [{
+				            title: 'first',
+				            html: 'first'
+			            }, {
+				            title: 'second',
+				            html: 'second'
+			            }]
+		            }
+	            });
+
+	            var main = Ext.create('Main');
+	            main.setTabBarPosition('bottom');
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

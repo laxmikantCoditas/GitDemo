@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>3042</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.application({
+            requires : [
+                'Ext.Button',
+                'Ext.Panel'
+            ],
+
+            launch : function () {
+                var panel = new Ext.Panel({
+                    centered : true,
+                    modal    : true,
+                    width    : 400,
+                    height   : 400,
+                    items    : [
+                        {
+                            xtype   : 'button',
+                            text    : 'Set hideOnMaskTap true',
+                            handler : function () {
+                                panel.setHideOnMaskTap(true);
+                            }
+                        },
+                        {
+                            xtype   : 'button',
+                            text    : 'Set hideOnMaskTap false',
+                            handler : function () {
+                                panel.setHideOnMaskTap(false);
+                            }
+                        }
+                    ]
+                });
+
+                Ext.Viewport.add(panel);
+                panel.hide();
+
+                new Ext.Container({
+                    fullscreen : true,
+                    items      : [
+                        {
+                            xtype   : 'button',
+                            text    : 'Open Floater',
+                            handler : function () {
+                                panel.show();
+                            }
+                        }
+                    ]
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+Ext.onReady(function() {
+    Ext.create('Ext.container.Viewport', {
+	layout: "auto",
+	items: [{
+	    border: true,
+	    title : "2 columns of the same height",
+	    layout : {
+		type: "hbox",
+		align : "stretchmax"
+	    },
+	    items : [{
+		xtype: "container",
+		id: "column1Id",
+		layout: "vbox",
+		flex : 1,
+		items: [{
+		    xtype : "component",
+		    id : "child1",
+		    html : "child 1 content"
+		}, {
+		    xtype : "component",
+		    id : "column1Child2Id",
+		    html : "child 2 content"
+		}]
+	    }, {
+		xtype: "container",
+		id: "test",
+		layout: "vbox",
+		flex : 1
+	    }]
+	}]
+    });
+
+    // containers will not shrink
+    Ext.getCmp("column1Id").remove("column1Child2Id");
+});
+    </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH 2816</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+    <script type="text/javascript">
+
+        Ext.application({
+            name : 'Test',
+
+            requires : [
+                'Ext.navigation.View'
+            ],
+
+            launch : function () {
+                new Ext.navigation.View({
+                    fullscreen : true,
+                    items      : [
+                        {
+                            html : 'one'
+                        },
+                        {
+                            html : 'ComponentQuery Test, did you get here?',
+                            foo  : 'bar'
+                        },
+                        {
+                            html : 'Normal pop should get you here'
+                        },
+                        {
+                            items : [
+                                {
+                                    xtype   : 'button',
+                                    text    : 'Pop Back One (normal)',
+                                    handler : function (button) {
+                                        var view = button.up('navigationview');
+
+                                        view.pop();
+                                    }
+                                },
+                                {
+                                    xtype   : 'button',
+                                    text    : 'Pop Using ComponentQuery',
+                                    handler : function (button) {
+                                        var view = button.up('navigationview');
+
+                                        view.pop('[foo=bar]');
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                });
+            }
+        });
+
+    </script>
+</head>
+<body>
+</body>
+</html>

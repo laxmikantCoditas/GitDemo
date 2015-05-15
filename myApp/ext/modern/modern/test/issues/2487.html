@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2487</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.application({
+            launch: function() {
+                Ext.create("Ext.navigation.View", {
+                    fullscreen: true,
+                    navigationBar: {
+                       items: {
+                          xtype: 'button',
+                          text: 'Test'
+                       }
+                    },
+                    items: [{
+                        xtype: 'container',
+                        title: 'A very long title, that keeps going, and going, and going, like a duracell bunny, or like life itself, if you want to be metaphysical about it, which obviously we do, because we are programmers, and programmers are weird people',
+                        html: 'test long title'
+                    }]
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Issue</title>
+	<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+	<script type="text/javascript" src="../../ext.js"></script>
+	<script type="text/javascript">
+		Ext.require([
+			'Ext.button.Button',
+			'Ext.form.Panel', 
+			'Ext.form.field.Text'
+		]);
+
+		Ext.onReady(function() {
+			
+			//create form with menu button 
+			var form = Ext.create('Ext.form.Panel',{
+				title: 'Form Issue',
+				renderTo: document.body,
+				width: 500,
+				height: 100,
+				items: [{
+					xtype: 'component',
+					html: 'When we remove a container, all fields inside the container are still referenced by BasicForm'
+				},{
+					xtype: 'container',
+					id: 'container-1',
+					text: 'Test',
+					items: [{
+						id: 'textfield-1',
+						xtype: 'textfield'
+					}]
+				},{
+					xtype: 'toolbar',
+					items: [{
+						xtype: 'button',
+						id: 'button-1',
+						menu: [{
+							id: 'textfield-2',
+							xtype: 'textfield'
+						}]
+					}]
+				}]
+			});
+			
+			function printFields() {
+				var ids = [];
+				form.getForm().getFields().each(function(cmp) {
+					ids.push(cmp.getId());
+				});
+				return ids.join(', ');
+			}
+			
+			var textfield1 = Ext.getCmp('textfield-1'),
+				textfield2 = Ext.getCmp('textfield-2');
+			
+			console.log('textfield1 is destroyed? ' + textfield1.isDestroyed);
+			console.log('textfield2 is destroyed? ' + textfield2.isDestroyed);
+			console.log('Form Fields = ' + printFields());
+	
+			// destroy container and button
+			console.log('container and button destroyed');
+			Ext.getCmp('container-1').destroy();
+			Ext.getCmp('button-1').destroy();
+			
+			console.log('textfield1 is destroyed? ' + textfield1.isDestroyed);
+			console.log('textfield2 is destroyed? ' + textfield2.isDestroyed);
+			console.log('Form Fields = ' + printFields());
+		});
+	</script>
+</head>
+<body>
+</body>
+</html>

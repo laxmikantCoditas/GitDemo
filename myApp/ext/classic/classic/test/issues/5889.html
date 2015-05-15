@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+Ext.application({
+    name: 'TEST',
+
+    launch: function () {
+	Ext.create('Ext.container.Viewport', {
+	    title: 'Fit Layout',
+	    layout:'fit',
+	    items: {
+		title: 'Inner Panel',
+		bodyPadding: 20,
+		border: true,
+		defaults: {
+		    margin: 10,
+		},
+		items: [{
+		    xtype: 'button',
+		    text: 'push me for a wonderful surprise!',
+		    handler: function () {
+			Ext.create('Ext.window.Window', {
+			    title: 'Hello',
+			    height: 200,
+			    width: 400,
+			    x: 100
+			}).show();
+		    }
+		}, {
+		    xtype: 'button',
+		    text: '\u0048\u0065\u006C\u006C\u006F\u002C\u0020\u0057\u006F\u0072\u006C\u0064\u0021',
+		    handler: function () {
+			Ext.create('Ext.window.Window', {
+			    title: 'World',
+			    height: 200,
+			    width: 400
+			}).show();
+		    }
+		}]
+	    },
+	    renderTo: Ext.getBody()
+	});
+    }
+});
+        
+    </script>
+</body>
+</html>

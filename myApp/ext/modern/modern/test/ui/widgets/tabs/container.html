@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Tab Bar</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <link rel="stylesheet" href="../../../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../../../sencha-touch.js"></script>
+    <script>
+        Ext.setup({
+            onReady: function(){
+                var tabs1 = Ext.create('Ext.tab.Panel', {
+                    height: 150,
+                    docked: 'top',
+                    tabBar: {
+                        docked: 'bottom',
+                        items: [
+                            {title: 'Download', iconCls: 'download'},
+                            {title: 'Bookmarks', iconCls: 'bookmarks'}
+                        ]
+                    },
+                    items: [{
+                        html: 'Card 1',
+                        style: 'background-color: rgba(255, 0, 0, 0.5)'
+                    }, {
+                        html: 'Card 2',
+                        style: 'background-color: rgba(0, 255, 0, 0.5)'
+                    }]
+                });
+                tabs1.setActiveTab(1);
+
+                var tabs2 = Ext.create('Ext.tab.Panel', {
+                    height: 150,
+                    docked: 'top',
+                    tabBar: {
+                        docked: 'bottom'
+                    },
+                    items: [{
+                        html: 'Card 1',
+                        style: 'background-color: rgba(255, 0, 0, 0.5)',
+                        tab: {title: 'Download', iconCls: 'download'}
+                    }, {
+                        html: 'Card 2',
+                        style: 'background-color: rgba(0, 255, 0, 0.5)',
+                        tab: {title: 'Bookmarks', iconCls: 'bookmarks'}
+                    }]
+                });
+                tabs2.setActiveTab(1);
+
+                var tabs3 = Ext.create('Ext.tab.Panel', {
+                    height: 150,
+                    docked: 'top',
+                    activeTab: 1,
+                    tabBar: {
+                        docked: 'bottom'
+                    },
+                    items: [{
+                        html: 'Card 1',
+                        style: 'background-color: rgba(255, 0, 0, 0.5)',
+                        title: 'Download',
+                        iconCls: 'download'
+                    }, {
+                        html: 'Card 2',
+                        style: 'background-color: rgba(0, 255, 0, 0.5)',
+                        title: 'Bookmarks',
+                        iconCls: 'bookmarks'
+                    }]
+                });
+
+                var tabs4 = Ext.create('Ext.tab.Panel', {
+                    height: 150,
+                    docked: 'top',
+                    tabBar: {
+                        docked: 'bottom'
+                    }
+                });
+
+                tabs4.setActiveTab({
+                    html: 'Card 1',
+                    style: 'background-color: rgba(0, 255, 0, 0.5)',
+                    title: 'Bookmarks',
+                    iconCls: 'bookmarks'
+                });
+
+                var tabs5 = Ext.create('Ext.tab.Panel', {
+                    height: 150,
+                    docked: 'top',
+                    tabBar: {
+                        docked: 'bottom'
+                    }
+                });
+
+                tabs6 = Ext.create('Ext.tab.Panel', {
+                    height: 150,
+                    docked: 'top',
+                    activeTab: 1,
+                    tabBarPosition: 'top',
+                    items: [{
+                        html: 'Card 1',
+                        style: 'background-color: rgba(255, 0, 0, 0.5)',
+                        title: 'Download',
+                        iconCls: 'download'
+                    }, {
+                        html: 'Card 2',
+                        style: 'background-color: rgba(0, 255, 0, 0.5)',
+                        title: 'Bookmarks',
+                        iconCls: 'bookmarks'
+                    }]
+                });
+
+                tabs6.insert(1, {
+                    html: 'Card 3',
+                    style: 'background-color: rgba(0, 255, 0, 0.5)',
+                    title: 'Users',
+                    iconCls: 'user'
+                });
+
+                tabs6.setActiveItem(1);
+
+                Ext.Viewport.add(tabs1, tabs2, tabs3, tabs4, tabs5, tabs6);
+
+                tabs5.setActiveTab(Ext.create('Ext.Container', {
+                    html: 'Card 1',
+                    style: 'background-color: rgba(0, 255, 0, 0.5)',
+                    title: 'Bookmarks',
+                    iconCls: 'bookmarks'
+                }));
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3974</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+
+    Ext.application({
+
+        requires: [
+            'Ext.form.Panel',
+            'Ext.field.Radio',
+            'Ext.field.Checkbox'
+        ],
+
+        launch: function() {
+            // Destroy the #appLoadingIndicator element
+            Ext.fly('appLoadingIndicator').destroy();
+
+            var x = Ext.Viewport.add({
+                xtype: 'panel',
+                fullscreen: true,
+                layout: 'vbox',
+                items: [{
+                    flex: 1,
+                    xtype : 'formpanel',
+                    disabled: true,
+                    items: [{
+                        xtype: 'radiofield',
+                        label: 'Test',
+                        name: 'test',
+                        value: 'test'
+                    }]
+                }, {
+                    flex: 1,
+                    disabled: true,
+                    xtype: 'carousel',
+                    items: [{
+                        html: 'page 1'
+                    }, {
+                        html: 'page 2'
+                    }]
+                }]
+            });
+
+            x.down('carousel').setDisabled(true);
+        }
+    });
+    </script>
+</head>
+<body>
+</body>
+</html>

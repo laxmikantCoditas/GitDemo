@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+Ext.Loader.setConfig({
+    enabled: true
+});
+Ext.Loader.setPath('Ext.ux', '../../examples/ux');
+
+Ext.require([
+    'Ext.grid.*',
+    'Ext.data.*',
+    'Ext.ux.RowExpander',
+    'Ext.selection.CheckboxModel'
+]);
+
+Ext.onReady(function(){
+    Ext.define('Company', {
+        extend: 'Ext.data.Model',
+        fields: [
+            {name: 'company'},
+            {name: 'price', type: 'float'},
+            {name: 'change', type: 'float'},
+            {name: 'pctChange', type: 'float'},
+            {name: 'lastChange', type: 'date', dateFormat: 'n/j h:ia'},
+            {name: 'industry'},
+            {name: 'desc'}
+         ]
+    });
+    // Array data for the grids
+    Ext.grid.dummyData = [
+        ['3m Co',71.72,0.02,0.03,'9/1 12:00am', 'Manufacturing'],
+        ['Alcoa Inc',29.01,0.42,1.47,'9/1 12:00am', 'Manufacturing'],
+        ['Alcoa Inc',29.01,0.42,1.47,'9/1 12:00am', 'Manufacturing'],
+        ['Alcoa Inc',29.01,0.42,1.47,'9/1 12:00am', 'Manufacturing'],
+        ['Alcoa Inc',29.01,0.42,1.47,'9/1 12:00am', 'Manufacturing'],
+        ['Alcoa Inc',29.01,0.42,1.47,'9/1 12:00am', 'Manufacturing'],
+        ['Alcoa Inc',29.01,0.42,1.47,'9/1 12:00am', 'Manufacturing'],
+        ['Alcoa Inc',29.01,0.42,1.47,'9/1 12:00am', 'Manufacturing'],
+        ['Alcoa Inc',29.01,0.42,1.47,'9/1 12:00am', 'Manufacturing'],
+        ['Alcoa Inc',29.01,0.42,1.47,'9/1 12:00am', 'Manufacturing']
+    ];
+
+    // add in some dummy descriptions
+    for(var i = 0; i < Ext.grid.dummyData.length; i++){
+        Ext.grid.dummyData[i].push('Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed metus nibh, sodales a, porta at, vulputate eget, dui. Pellentesque ut nisl. ');
+    }
+
+
+    Ext.QuickTips.init();
+
+    var getLocalStore = function() {
+        return Ext.create('Ext.data.ArrayStore', {
+            model: 'Company',
+            data: Ext.grid.dummyData
+        });
+    };
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+    // Grid 1
+    ////////////////////////////////////////////////////////////////////////////////////////
+    // row expander
+
+    var grid1 = Ext.create('Ext.grid.Panel', {
+        store: getLocalStore(),
+        columns: [
+            {text: "Company", flex: 1, dataIndex: 'company'},
+            {text: "Price", renderer: Ext.util.Format.usMoney, dataIndex: 'price'},
+            {text: "Change", dataIndex: 'change'},
+            {text: "% Change", dataIndex: 'pctChange'},
+            {text: "Last Updated", renderer: Ext.util.Format.dateRenderer('m/d/Y'), dataIndex: 'lastChange'}
+        ],
+        width: 600,
+        height: 300,
+        plugins: [{
+            ptype: 'rowexpander',
+            rowBodyTpl : [
+                '<p><b>Company:</b>{company}</p><br>',
+                '<p><b>Summary:</b>{desc}</p>'
+            ]
+        }],
+        collapsible: true,
+        animCollapse: false,
+        title: 'Expander Rows in a Collapsible Grid',
+        iconCls: 'icon-grid',
+        renderTo: Ext.getBody(),
+        viewConfig: {
+            listeners: {
+                expandbody: function (row, record, rowbody, options) {
+                    if (!arguments.callee.initialized) {
+			if (Ext.fly(row.parentNode).getHeight() > this.getHeight()) {
+			    this.refresh();
+			    arguments.callee.initialized = true;
+			}
+                    }
+                }
+            }
+        }
+    });
+
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        //your test case goes here
+        Ext.require(['Ext.data.Store', 'Ext.data.Model', 'Ext.grid.Panel', 'Ext.panel.Panel', 'Ext.Viewport', 'Ext.layout.container.Anchor' ]);
+
+
+        	Ext.onReady(function(){
+
+        		Ext.define("myModel", {
+        			extend: "Ext.data.Model",
+        			idProperty: 'id',
+        			fields: [
+        				{name: 'id', type: 'int'},
+        				{name: 'name', type: 'string'}
+        			]
+        		});
+
+        		Ext.define("myModel2", {
+        			extend: "Ext.data.Model",
+        			idProperty: 'id2',
+        			fields: [
+        				{name: 'id2', type: 'int'},
+        				{name: 'name2', type: 'string'}
+        			]
+        		});
+
+        	var myStore = new Ext.data.Store({
+        		model: 'myModel',
+        		id: 'myStore',
+        		proxy: {
+        			type: 'ajax',
+        			url : '3908-data.json',
+        			reader: {
+        			type: 'json',
+        			root: 'data'
+        			}
+        		}
+        	});
+        	myStore.load();
+
+        	var myStore2 = new Ext.data.Store({
+        		model: 'myModel2',
+        		id: 'myStore2',
+        		proxy: {
+        			type: 'ajax',
+        			url : '3908-data2.json',
+        			reader: {
+        			type: 'json',
+        			root: 'data'
+        			}
+        		}
+
+        	});
+        	myStore2.load();
+
+        	var myGrid = Ext.create('Ext.grid.Panel', {
+        		id: 'myGrid',
+        		frame: true,
+        		boxMinWidth : 1000, 
+        		autoHeight: true,
+        		store: myStore,
+        		columns: [
+        			{
+        			text: "Name - Grid 1",
+        			dataIndex: 'name',
+        			width: 250,
+        			menuDisabled: true,
+        			}
+        		],
+        		columnLines: true,
+        		animCollapse: false,
+        		viewConfig: {
+        			stripeRows: true
+        		}
+        	});
+
+        	var myGrid2 = Ext.create('Ext.grid.Panel', {
+        		id: 'myGrid2',
+        		frame: true,
+        		boxMinWidth : 1000, 
+        		autoHeight: true,
+        		store: myStore2,
+        		columns: [
+        			{
+        			text: "Name - Grid 2",
+        			dataIndex: 'name2',
+        			width: 250,
+        			menuDisabled: true,
+        			}
+        		],
+        		columnLines: true,
+        		animCollapse: false,
+        		viewConfig: {
+        			stripeRows: true
+        		}
+        	});
+
+        	var myContent = Ext.create('Ext.panel.Panel', {
+        		id: 'myContent',
+        		border : false,
+        		minWidth : 600,
+        		bodyPadding: 10,
+        		layout: 'anchor',
+        		items:[
+        			myGrid,
+        			myGrid2
+        		]
+        	});
+
+        	Ext.create('Ext.Viewport', {
+                 layout: 'auto',
+                 items: [
+        			myContent
+        		]
+        	});
+        });
+        
+    </script>
+</body>
+</html>

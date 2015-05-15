@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Failed test case</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css"/>
+    <script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+<script type="text/javascript" charset="utf-8">
+
+       Ext.onReady(function() {
+
+            var accordion = Ext.create('Ext.Panel', {
+            region:'west',
+            margins:'5 0 5 5',
+            split:true,
+            width: 210,
+            layout:'accordion',
+            items: [{
+                title: 'Accordion Item 1',
+                itemId: 'panel1',
+                html: '&lt;empty panel&gt;',
+                buttons: [{
+                    text: 'Show Item 2',
+                    listeners: {
+                        click: function(button) {
+                            var panel = button.up('panel[region=west]');
+                            panel.down('#panel2').show();
+                        }
+                    }
+                }]
+                }, {
+                    title: 'Accordion Item 2',
+                    itemId: 'panel2',
+                    html: '&lt;empty panel&gt;',
+                    hidden:true
+                }]
+            });
+
+            var viewport = Ext.create('Ext.Viewport', {
+                layout: 'border',
+                items: [
+                    accordion,
+                {
+                    region:'center',
+                    margins:'5 5 5 0',
+                    cls:'empty',
+                    bodyStyle:'background:#f1f1f1',
+                    html:'<br/><br/>&lt;empty center panel&gt;'
+                }]
+            });
+
+        });
+
+</script>
+</body>
+</html>

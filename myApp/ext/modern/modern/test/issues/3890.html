@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3890</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.setup({ 
+            requires: [
+                'Ext.data.Store','Ext.dataview.List','Ext.plugin.PullRefresh'
+            ],
+            onReady: function() {
+                var store = Ext.create('Ext.data.Store', {
+                    fields: ['name', 'img', 'text'],
+	                data: [
+		                {
+			                name: 'edpsencer',
+			                img: 'http://a2.twimg.com/profile_images/1175591906/Ed-presenting-cropped_reasonably_small.jpg',
+			                text: 'Read about Sencha Touch'
+		                },{
+			                name: 'rdougan',
+			                img: 'http://a0.twimg.com/profile_images/1261180556/171265_10150129602722922_727937921_7778997_8387690_o_reasonably_small.jpg',
+			                text: 'Javascript development'
+		                }
+	                ]
+                });
+
+                var list = Ext.create('Ext.dataview.List', {
+                    fullscreen: true,
+
+                    store: store,
+	                variableHeights: true,
+
+                    plugins: [
+                        {
+                            xclass: 'Ext.plugin.PullRefresh',
+                            pullRefreshText: 'Pull down for more new Tweets!',
+                            lastUpdatedDateFormat: "m. d. Y H:i"
+                        }
+                    ],
+
+                    itemTpl: [
+                        '<img src="{img}" alt="{name} photo" />',
+                        '<div class="tweet"><b>{name}:</b> {text}</div>'
+                    ]
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

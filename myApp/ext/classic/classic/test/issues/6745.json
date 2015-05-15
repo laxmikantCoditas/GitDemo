@@ -1,0 +1,6 @@
+{
+  "success": false,
+  "errors": {
+    "field1": "required"
+  }
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-5063</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+	    Ext.application({
+		    launch: function() {
+			    this.formPanel = Ext.Viewport.add({
+				    xtype: 'formpanel',
+				    items: [{
+					    xtype: 'textfield',
+					    name: 'name',
+					    label: 'Name'
+				    },{
+					    xtype: 'toolbar',
+					    docked: 'bottom',
+					    items: [{
+						    text: 'Submit',
+						    scope: this,
+						    handler: function() {
+							    this.formPanel.submit({
+								    url: '/some/backend/script.php',
+								    scope: this // Passing scope here for success and failure functions
+							    });
+						    }
+					    }]
+				    }]
+			    });
+		    }
+	    });
+    </script>
+</head>
+<body>
+</body>
+</html>

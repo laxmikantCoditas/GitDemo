@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3845</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.setup({
+            requires: [
+                'Ext.form.Panel',
+                'Ext.field.Text',
+                'Ext.field.Password'
+            ],
+            onReady:function () {
+                var form = Ext.create('Ext.form.Panel', {
+                    width:"100%",
+                    height:"100%",
+                    items: [
+                        {
+                            xtype: 'textfield',
+                            name: 'name',
+                            label: 'Name'
+                        },
+                        {
+                            itemId: 'middleInitial',
+                            xtype: 'textfield',
+                            name: 'middleInitial',
+                            label: 'Middle Initial',
+                            placeHolder: 'Enter Middle Initial',
+                            maxLength: 1,
+                            required: true
+                        },
+                        {
+                            xtype: 'passwordfield',
+                            name: 'password',
+                            label: 'Password'
+                        }
+                    ]
+                });
+                Ext.Viewport.add(form);
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

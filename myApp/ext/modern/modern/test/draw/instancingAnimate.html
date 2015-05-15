@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../sencha-touch-all.js"></script>
+    <script type="text/javascript">
+
+        Ext.require([
+            'Ext.draw.Component',
+            'Ext.Panel'
+        ]);
+        var seed = .5;
+
+        function random() {
+            seed *= 15.1;
+            seed -= Math.floor(seed);
+            return seed - 0.5;
+        }
+        Ext.setup({
+            onReady: function () {
+                if (location.search.match('svg')) {
+                    Ext.draw.Component.prototype.engine = 'Ext.draw.engine.Svg';
+                }
+
+                var cmp = new Ext.draw.Component({
+                            background: 'white',
+                            sprites: [
+                                {
+                                    type: 'instancing'
+                                }
+                            ]
+                        }),
+                        instancing = cmp.getSurface().getItems().getAt(0),
+                        items = [];
+                instancing.setTemplate({
+                    type: 'rect',
+                    x: -1,
+                    y: -1,
+                    width: 2,
+                    height: 2,
+                    fill: 'gray',
+                    translate: {
+                        x: 30,
+                        y: 90
+                    }
+                });
+                instancing.getTemplate().fx.setDuration(1500);
+                for (var i = 0; i < 1000; i++) {
+                    var attr = items[i] = instancing.createInstance({});
+                    instancing.setAttributesFor(i, {translate: {x: Math.random() * 500, y: Math.random() * 400}});
+                }
+                Ext.Viewport.setLayout('fit');
+                Ext.Viewport.add(cmp);
+                setInterval(function () {
+                    for (var i = 0; i < 1000; i++) {
+                        var r = Math.random() * 3 + 2;
+                        instancing.setAttributesFor(i, {
+                            scaleX: r,
+                            scaleY: r,
+                            translate: {x: Math.random() * 500, y: Math.random() * 400}
+                        });
+                    }
+                    cmp.renderFrame();
+                }, 1000);
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

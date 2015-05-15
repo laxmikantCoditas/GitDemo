@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+var storeChart6;
+Ext.require('Ext.chart.*');
+Ext.require(['Ext.Window','Ext.layout.container.Fit','Ext.fx.target.Sprite']);
+function Chart6Format(val) {
+console.log(val);
+return Ext.util.Format.usMoney(val,'$',0);
+}
+
+
+fieldsChart6 = [{ name: "PaymentType", type: 'string'},{name:"Sum", type: 'float' }];
+storeChart6 = Ext.create('Ext.data.ArrayStore', {
+	fields: fieldsChart6,
+	data: [
+["ECheck",100],
+["Visa",9]
+]
+
+    });
+Ext.define('Ext.app.ChartChart6',{
+
+	extend: 'Ext.panel.Panel',
+	initComponent: function() {
+	    Ext.apply(this,{
+	    layout: 'fit',
+	     renderTo: Ext.getBody(),
+	    width: 600,
+	    height: 600,
+	    items: {
+		xtype: 'chart',
+
+
+		store: storeChart6,
+		legend: {
+		    position: 'right',
+		    labelFont: '10px Arial'
+		},
+		axes: [{
+			type: "Numeric",
+			position: "left",
+			fields: "Sum",
+			title: "Amount" ,
+
+			label: {
+			    renderer: Chart6Format
+			},
+			roundToDecimal: false,
+			//minimum: 0
+		    }, {
+			type: 'Category',
+			position: 'bottom',
+			fields: ["PaymentType"],
+			title: "Payment Type"
+
+		    }],
+series: [{
+		    type: 'column',
+
+
+axis: 'left',
+			gutter: 80,
+			xField: 'PaymentType',
+			yField: "Sum",
+			stacked: false,
+			showInLegend: false
+
+		}]
+	    }
+    });
+	    this.callParent(arguments);
+     }
+
+});
+
+
+
+Ext.onReady(function () {
+portal = Ext.create('Ext.app.ChartChart6');
+Ext.Loader.setConfig({enable:true});
+
+});
+</script>
+</body>
+</html>

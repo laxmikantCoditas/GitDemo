@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Parse - Simple Test</title>
+
+	<script src="http://www.parsecdn.com/js/parse-1.2.9.min.js"></script>
+	<script src="../../../sencha-touch-debug.js"></script>
+	<link rel="stylesheet" href="../../../resources/css/sencha-touch.css">
+
+	<script type="text/javascript">
+		Parse.initialize("6RfVEOtN8WIbsyR2mLhDtfCx6cVmh0skVEsr8kGN", "Yf1TTAXDuvDBDF21nc8ZBZJwokXyFukhaKXaGGD7");
+
+		Ext.setup({
+			requires: [
+				'Ext.ux.parse.Model',
+				'Ext.ux.parse.Store',
+				'Ext.dataview.List',
+				'Ext.Toolbar'
+			],
+
+			onReady: function() {
+				//Define Parse Model
+				Ext.define("MyApp.models.Test", {
+					extend: "Ext.ux.parse.Model",
+					config: {
+						fields: [
+							{name: "label", type: "string"},
+							{name: "duration",  type: "int"}
+						]
+					}
+				});
+
+				var parseStore = Ext.create('Ext.ux.parse.Store', {
+					model: "MyApp.models.Test",
+//					remoteFilter: true,
+
+					pageSize: null,
+					autoLoad: true,
+					filters: [
+						{
+							property: "label",
+							value: "tHeRe",
+							anyMatch: true,
+							caseSensitive: false
+						}
+					],
+					sorters: [
+						{
+							property: "label",
+							direction: "DESC"
+						}
+					]
+				});
+
+				window.p = parseStore;
+
+				parseStore.on("load", function() {
+					console.log("loaded: " + parseStore.getCount() + " items");
+				});
+
+				var list = Ext.create("Ext.dataview.List", {
+					fullscreen:true,
+					store: parseStore,
+					itemTpl: "Label: {label}"
+				});
+
+
+				var addItem = function() {
+					for (var i = 0; i < 10; i++) {
+						var item = Ext.create("MyApp.models.Test", {label:"Hello there", duration:400});
+						 parseStore.add(item);
+					}
+
+					 parseStore.sync({
+						 success: function(batch, batchOptions){
+							 console.log("Store has synced with server, added: " + batchOptions.operations.create.length + " items");
+						 }
+					 });
+				};
+
+				var editItem = function() {
+					var model = list.getStore().getAt(0);
+
+
+					if(model){
+						model.set("label", "New Time: " + Ext.Date.format(new Date(), 'h:m:s'));
+						parseStore.sync({
+							success: function(batch, batchOptions){
+								console.log("Store has synced with server, updated: " + batchOptions.operations.update.length + " items");
+							}
+						});
+					}else {
+						console.log("no data to edit!");
+					}
+				};
+
+
+				var removeItem = function() {
+					var model = list.getStore().getAt(0);
+					if(model){
+						model.erase();
+						parseStore.sync({
+							success: function(batch, batchOptions){
+								console.log("Store has synced with server, deleted: " + batchOptions.operations.destroy.length + " items");
+							}
+						});
+					}else {
+						console.log("no data to remove!");
+					}
+				};
+
+				var toolbar = Ext.create("Ext.Toolbar", {
+					docked:"top",
+					items: [
+						{
+							text: "Add",
+							handler: addItem
+						},
+						{
+							text: "Edit",
+							handler: editItem
+						},
+						{
+							text: "Remove",
+							handler: removeItem
+						}
+					]
+				});
+
+
+				Ext.Viewport.add(toolbar);
+				Ext.Viewport.add(list);
+			}
+		});
+	</script>
+</head>
+<body>
+</body>
+</html>

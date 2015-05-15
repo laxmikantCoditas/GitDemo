@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+Ext.onReady(function () {
+
+    Ext.define('User', {
+        extend: 'Ext.data.Model',
+        fields: [
+        { name: 'firstName', type: 'string' },
+        { name: 'age', type: 'int' }
+    ]
+    });
+
+    var store1 = new Ext.data.Store({
+        model: 'User',
+        data: [
+        { firstName: 'Ed', age: '10' },
+        { firstName: 'Tommy', age: '30' },
+        { firstName: 'Aaron', age: '20' },
+        { firstName: 'Jamie', age: '40' }
+    ]
+    });
+
+
+	Ext.create('Ext.container.Viewport', {
+        layout: 'border',
+        renderTo: Ext.getBody(),
+        items: [{
+            region: 'north',
+            title: 'North Region',
+            collapsible: true,
+            width: 150,
+            Height: 50,
+            margins: '0 0 5 0'
+        }, {
+            region: 'west',
+            collapsible: true,
+            title: 'West Region',
+            split: true,
+            width: 150
+        }, {
+            region: 'south',
+            title: 'South Region',
+            collapsible: true,
+            html: '<h1> Information goes here </h1>',
+            split: true,
+            height: 300
+        }, {
+            region: 'east',
+            title: 'East Region',
+            collapsible: true,
+            split: true,
+            width: 150
+        }, {
+            region: 'center',
+            title: 'Center Region',
+            collapsible: true,
+            xtype: 'tabpanel', // TabPanel itself has no title
+            activeTab: 0,      // First tab active by default
+            items: [
+            {
+                title: 'Tab 1',
+                layout: 'fit',
+                dockedItems: {
+                    xtype: 'toolbar',
+                    dock: 'top',
+                    items: [
+                    {
+                        xtype: 'button',
+                        text: 'ToggleLegend',
+                        handler: function () {
+                            var chartCtrl = Ext.getCmp('chartCmp');
+                            var pieChart = chartCtrl.series.first();
+                            legend = chartCtrl.legend;
+
+                            pieChart.showInLegend = !pieChart.showInLegend;
+
+                            if (pieChart.showInLegend) {
+                                legend.boxSprite.show(true);
+                                legend.create();
+                                legend.visible = true;
+                            } else {
+                                var items = legend.items;
+                                for (var i = 0, l = items.length; i < l; i++) {
+                                    items[i].destroy();
+                                }
+                                legend.boxSprite.hide(true);
+                                legend.visible = false;
+                            }
+                            chartCtrl.refresh();
+                        }
+                    }
+                    ]
+                },
+                items: [
+                {
+                    xtype: 'chart',
+                    id: 'chartCmp',
+                    animate: true,
+                    store: store1,
+                    shadow: true,
+                    legend: {
+                        position: 'right'
+                    },
+                    insetPadding: 60,
+                    theme: 'Base:gradients',
+                    series: [{
+                        type: 'pie',
+                        field: 'age',
+                        showInLegend: true,
+                        tips: {
+                            trackMouse: true,
+			    hideDelay: 0,
+                            font: '10px Arial',
+                            layout: {
+                                type: 'fit',
+                                align: 'stretch'
+                            },
+                            renderer: function (storeItem, item) {
+                                //calculate percentage.
+                                var total = 0;
+                                store1.each(function (rec) {
+                                    total += rec.get('age');
+                                });
+                                this.update(storeItem.get('firstName') + ': ' + Math.round(storeItem.get('age') / total * 100) + '%');
+                            }
+                        },
+                        highlight: {
+                            segment: {
+                                margin: 20
+                            }
+                        },
+                        label: {
+                            field: 'firstName',
+                            display: 'rotate',
+                            contrast: true,
+                            font: '18px Arial'
+                        }
+                    }]
+                }]
+            },
+            {
+                title: 'Tab 2',
+                html: 'The first tab\'s content. Others may be added dynamically'
+            },
+            {
+                title: 'Tab 3',
+                html: 'The first tab\'s content. Others may be added dynamically'
+            }
+            ]
+        }]
+    });
+});
+        
+    </script>
+</body>
+</html>

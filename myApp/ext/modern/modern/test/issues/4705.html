@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4705</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.setup({
+
+            requires: [
+                'Ext.Button'
+            ],
+            onReady: function() {
+                Ext.Viewport.setLayout("card");
+	            Ext.Viewport.add({
+		            layout:"vbox",
+		            items:[
+			            {
+				            xtype:"button",
+				            text:"remove",
+				            handler: function() {
+					            var c = Ext.Viewport.getItems().getAt(1);
+					            Ext.Viewport.remove(c);
+				            }
+			            },
+			            {
+				            xtype:"button",
+				            text:"next",
+				            handler: function() {
+					            Ext.Viewport.setActiveItem(1);
+				            }
+			            }
+		            ]
+	            });
+                Ext.Viewport.add(
+	                {
+		                layout:"vbox",
+		                listeners: {
+			                show: function() {
+				                console.log("you see me!");
+			                }
+		                },
+		                items: [
+			                {
+				                xtype:"button",
+				                text:"prev",
+				                handler: function() {
+					                Ext.Viewport.setActiveItem(0);
+				                }
+			                }
+		                ]
+	                }
+                );
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

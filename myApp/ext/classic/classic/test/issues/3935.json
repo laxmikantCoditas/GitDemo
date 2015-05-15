@@ -1,0 +1,46 @@
+{
+  "output": [{
+    "className": "ClassSourceOfInformation",
+    "data": {
+      "tree_data": [{
+        "checked": false,
+        "id": 7,
+        "text": "Official Source",
+        "leaf": true,
+        "expanded": false
+      }, {
+        "checked": false,
+        "id": 8,
+        "text": "Project Prism",
+        "leaf": true,
+        "expanded": false
+      }, {
+        "checked": false,
+        "id": 9,
+        "text": "Media Report",
+        "leaf": false,
+        "tree_data": [{
+          "checked": false,
+          "id": 11,
+          "text": "Confirmed",
+          "leaf": true,
+          "expanded": false
+        }, {
+          "checked": false,
+          "id": 12,
+          "text": "Unconfirmed",
+          "leaf": true,
+          "expanded": false
+        }],
+        "expanded": false
+      }, {
+        "checked": false,
+        "id": 13,
+        "text": "Other specify",
+        "leaf": true,
+        "expanded": false
+      }]
+    },
+    "action": "load_tree"
+  }]
+}

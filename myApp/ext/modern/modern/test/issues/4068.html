@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4068</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.setup({ 
+            requires: [
+                'Ext.Container', 'Ext.field.Select'
+            ],
+            onReady: function() {
+	            Ext.define('Test', {
+		            extend: 'Ext.Container',
+		            config: {
+			            fullscreen: true,
+			            items: [{
+				            xtype: 'selectfield',
+				            options: [
+					            {text: 'one', value: 'one'},
+					            {text: 'two', value: 'two'}
+				            ]
+			            }]
+		            }
+	            });
+
+	            var test = Ext.create('Test');
+	            var field = test.down('selectfield');
+	            console.log(field.getValue()); // "one"
+	            field.setValue(null);
+	            console.log(field.getValue()); // null
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,10 @@
+$grid-row-cell-alt-background-color: $neutral-light-color !dynamic;
+$grid-row-cell-border-color: $neutral-color !dynamic;
+$grid-row-cell-over-background-color: mix($neutral-light-color, $base-light-color, 75%) !dynamic;
+$grid-row-cell-over-border-color: $grid-row-cell-border-color !dynamic;
+
+$grid-row-cell-selected-background-color: #f2f5ca !dynamic;
+$grid-row-cell-selected-border-color: $grid-row-cell-border-color !dynamic;
+$grid-row-cell-focus-border-color: $base-color !dynamic;
+$grid-row-cell-line-height: round($grid-row-cell-font-size * 1.45) !dynamic;
+$grid-cell-inner-padding: 7px 10px 6px !dynamic;

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2414</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+
+        Ext.define('MyApp.view.MyPanel', {
+            extend:'Ext.Panel',
+            xtype:'myList',
+            config:{
+                id:'',
+                layout:{
+                    type:'card'
+                },
+                items:[
+                    {
+                        xtype:'list',
+                        itemTpl:[
+                            '<div>List Item: {name}</div>'
+                        ],
+                        store:'MyStore',
+                        title:'myList',
+                        action:'addPanel'
+                    }
+                ]
+            }
+
+
+        });
+
+        Ext.define('MyApp.view.Canvas', {
+            extend:'Ext.Container',
+            xtype:'canvas',
+            config:{
+                fullscreen: true,
+                layout:{
+                    type:'card'
+                },
+                items:[
+                    {
+                        xtype:'toolbar',
+                        docked:'top',
+                        title:'MyList',
+                        layout:{
+                            pack:'center',
+                            type:'hbox'
+                        }
+                    },
+                    {
+                        xtype:'myList'
+                    }
+                ]
+            }
+        });
+
+        Ext.define('MyApp.view.MyNewPanel', {
+            extend:'Ext.Panel',
+            xtype:'mypanel',
+            config:{
+                html:'<h1>Test123</h1>',
+                styleHtmlContent:true
+            }
+        });
+
+        Ext.define('MyApp.store.MyStore', {
+            extend:'Ext.data.Store',
+            config:{
+                autoLoad:true,
+                data:[
+                    {
+                        value:'1',
+                        name:'One'
+                    },
+                    {
+                        value:'2',
+                        name:'Two'
+                    },
+                    {
+                        value:'3',
+                        name:'Three'
+                    },
+                    {
+                        value:'4',
+                        name:'Four'
+                    },
+                    {
+                        value:'5',
+                        name:'Five'
+                    }
+                ],
+                storeId:'MyStore',
+                fields:[
+                    {
+                        name:'value'
+                    },
+                    {
+                        name:'name'
+                    }
+                ]
+            }
+        });
+
+        Ext.define('MyApp.controller.MyController', {
+            extend:'Ext.app.Controller',
+            config:{
+                refs:{
+                    canvas:'canvas',
+                    myList:'myList',
+                    myPanel:'mypanel'
+                }
+            },
+            init:function () {
+                this.control({
+                    'list[action=addPanel]':{
+                        'itemtap':this.onListClick
+                    }
+                });
+            },
+            onListClick:function (record, btn, index) {
+                var canvas = this.getCanvas();
+                var list = this.getMyList();
+                canvas.add({xtype:'mypanel'});
+                canvas.remove(list);
+            }
+        });
+
+        Ext.application({
+            name: 'MyApp',
+            controllers: ['MyApp.controller.MyController'],
+            views: ['MyApp.view.Canvas', 'MyApp.view.MyPanel', 'MyApp.view.MyNewPanel'],
+            stores: ['MyApp.store.MyStore'],
+            launch: function() {
+                Ext.create('MyApp.view.Canvas');
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

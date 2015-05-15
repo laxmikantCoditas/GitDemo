@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+Ext.onReady(function() {
+    var container = Ext.create('Ext.container.Container', {
+        id: 'div-editable',
+        html: '<div contenteditable="true">Select text and then activate the Right Click Menu.  WebKit-based browsers will not maintain the selection.</div>',
+        renderTo: Ext.getBody(),
+        listeners: {
+            afterrender: function(c) {
+                c.getEl().on('contextmenu', function(eventObj, elRef) {
+                    var x = eventObj.browserEvent.pageX,
+                        y = eventObj.browserEvent.pageY;
+
+                    eventObj.preventDefault();
+
+                    if (!this.ctxMenu) {
+                        this.ctxMenu = Ext.create('Ext.menu.Menu', {
+                            focusOnToFront: false,
+                            animated: false,
+                            items: [{
+                                text: '<b>Bold</b>'
+                            }, {
+                                text: '<i>Italic</i>'
+                            }, {
+                                text: '<u>Underline</u>'
+                            }, {
+                                text: 'Copy'
+                            }, {
+                                text: 'Paste'
+                            }, {
+                                text: 'Pick a Color'
+                            }, {
+                                text: 'Pick a Highlight Color'
+                            }, {
+                                text: 'Size'
+                            }]
+                        });
+                    }
+                    this.ctxMenu.showAt(x, y, false);
+                });
+            }
+        }
+    });
+});
+        
+    </script>
+</body>
+</html>

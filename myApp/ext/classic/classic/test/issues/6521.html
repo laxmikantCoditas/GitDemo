@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>6521</title>
+<!--
+<link rel="stylesheet" type="text/css" href="../../../../extjs-4.1.0/resources/css/ext-all.css" />
+<script type="text/javascript" src="../../../../extjs-4.1.0/ext.js"></script>
+-->
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        Ext.Loader.setConfig({
+            enabled: true
+        });
+
+    Ext.require([
+        'Ext.data.*',
+        'Ext.data.reader.*',
+        'Ext.form.*',
+        'Ext.grid.*',
+        'Ext.tree.*',
+        'Ext.window.MessageBox',
+        'Ext.tip.*',
+        'Ext.chart.*',
+        
+        'Ext.data.Store',
+        'Ext.grid.Panel',
+        
+        'Ext.container.Viewport',
+        'Ext.form.field.HtmlEditor',
+        'Ext.Array',
+        'Ext.panel.Panel',
+        'Ext.layout.container.Border',
+        'Ext.DomHelper',
+        'Ext.String'
+    ]);
+
+
+         Ext.onReady(function (){
+
+
+            Ext.create('Ext.panel.Panel', {
+                width: 600,
+                items: [
+                    {
+                        xtype: 'textfield',
+                        id: 'myField',
+                        width: 500,
+                        margin: 20,
+                    },
+                    {
+                        xtype: 'button',
+                        text: 'Focus',
+                        margin: 20,
+                        handler: function()
+                        {
+                            var textField = Ext.ComponentQuery.query('#myField')[0];
+                            textField.focus();
+                        }
+                    },
+                    {
+                        xtype: 'button',
+                        text: 'Select All',
+                        margin: 20,
+                        handler: function()
+                        {
+                            var textField = Ext.ComponentQuery.query('#myField')[0];
+                            textField.focus(true);
+                        }
+                    }
+                ],
+                renderTo: Ext.getBody()
+            });
+
+
+
+         }) ;
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TOUCH-4760</title>
+
+	<script src="../../../sencha-touch-debug.js"></script>
+	<link rel="stylesheet" href="../../../resources/css/sencha-touch.css">
+
+	<script type="text/javascript">
+		Ext.setup({
+			requires: ["Ext.device.FileSystem", "Ext.Ajax"],
+			onReady: function() {
+				var success = function(fs) {
+					console.log('downloading ...');
+					Ext.Ajax.request({
+	//		            url: 'http://commondatastorage.googleapis.com/researchsource/sampletestdata/mvp/journals/stroke/issues/44_7/1825.epub',
+						url: 'http://upload.wikimedia.org/wikipedia/commons/e/e5/NASA_logo.svg',
+						useDefaultXhrHeader: false,
+						method: 'GET',
+						binaryData: [],
+						success: function(response) {
+							var fe = new Ext.device.filesystem.FileEntry("/1825.epub", fs);
+							fe.getEntry(
+									{
+										file: '1825.epub',
+										options: {create: true},
+										success: function(entry) {
+											console.log(entry)
+										},
+										failure: function(error) {
+											console.log(error)
+										}
+									});
+							console.log(fe);
+							fe.write(
+									{
+										data: response.responseBytes,
+										append: true,
+										success: function() {
+											console.log(fe)
+										},
+										failure: function(error) {
+											console.log(error)
+										}
+									});
+						}
+					});
+				};
+
+				Ext.device.FileSystem.requestFileSystem({
+					type: window.PERSISTENT,
+					size: 1024 * 1024,
+					success: success,
+					failure: function(err) {
+						console.log("FileSystem Failure: " + err.code);
+					}
+				});
+			}
+		});
+	</script>
+</head>
+<body>
+</body>
+</html>

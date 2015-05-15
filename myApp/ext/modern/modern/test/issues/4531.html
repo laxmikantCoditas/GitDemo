@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4531</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script type="text/javascript" src="../../sencha-touch.js"></script>
+
+    <script type="text/javascript">
+        Ext.application({
+            name : 'Test',
+
+            requires : [
+                'Ext.form.Panel',
+                'Ext.field.Radio',
+                'Ext.Button'
+            ],
+
+            launch : function() {
+                Ext.Viewport.add({
+                    xtype : 'formpanel',
+                    items : [
+                        {
+                            xtype   : 'button',
+                            text    : 'getSameGroupFields',
+                            handler : function() {
+                                var field = Ext.Viewport.down('radiofield'),
+                                    comps = field.getSameGroupFields();
+
+                                console.log(comps);
+                            }
+                        },
+                        {
+                            xtype   : 'radiofield',
+                            label   : 'foo',
+                            name    : 'foo',
+                            baseCls : 'foo x-field',
+                            value   : 1
+                        },
+                        {
+                            xtype   : 'radiofield',
+                            label   : 'bar',
+                            name    : 'foo',
+                            baseCls : 'foo x-field',
+                            value   : 2
+                        }
+                    ]
+                });
+            }
+        });
+    </script>
+</head>
+</html>

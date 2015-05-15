@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>1945</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <script src="../../sencha-touch.js"></script>
+
+    <script>
+        Ext.define('myApp.view.Map', {
+            extend:'Ext.Panel',
+            xtype:'rcc_map',
+            id:'rcc_map',
+
+            config:{
+                layout:'fit',
+                items:[
+                    {
+                        xtype:'toolbar',
+                        docked:'top',
+                        title:'Map'
+                    },
+                    {
+                        xtype:'map',
+                        id:'gmap',
+                        useCurrentLocation: {
+                            autoUpdate: false // does not work?
+                        },
+                        getLocation:true,
+                        mapOptions:{
+                            zoom:12,
+                            maptype:'hybrid',
+                            disableDefaultUI:true
+                        }
+                    }
+                ]
+            }
+        });
+        Ext.setup({
+            onReady:function () {
+                Ext.Viewport.add({
+                    xtype:'tabpanel',
+                    items:[
+                        {
+                            title:'Panel',
+                            xtype:'panel'
+                        },
+                        {
+                            title:'Map',
+                            xtype:'rcc_map'
+                        }
+                    ]
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

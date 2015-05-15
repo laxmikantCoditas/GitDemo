@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!-- add-field-ie.html -->
+<html>
+<head><title>Example by Saki</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="../../resources/css/ext-all.css" type="text/css">
+    <link rel="shortcut icon" type="image/png" href="../Icon.png">
+    <script type="text/javascript" src="../../ext-all.js"></script>
+    <script type="text/javascript">
+        Ext.application({
+            name:'simpleIEExample',
+            launch:function () {
+                Ext.create('Ext.panel.Panel', {
+                    layout:'fit',
+                    renderTo:Ext.getBody(),
+                    title:'test',
+                    items:[
+                        {
+                            xtype:'form',
+                            id:'paramForm',
+                            title:'Parameters',
+                            layout:'form',
+                            standardSubmit:true,
+                            method:'get',
+                            url:'/',
+                            items:[
+                                {
+                                    xtype:'textfield',
+                                    emptyValue:'test',
+                                    fieldLabel:'test1'
+                                },
+                                {
+                                    xtype:'textfield',
+                                    emptyValue:'test',
+                                    fieldLabel:'test2'
+                                }
+                            ],
+                            tbar:[
+                                {
+                                    text:'Add Field',
+                                    handler:function (btn) {
+//                                        debugger;
+                                        btn.up('form').add({
+                                            xtype:'textfield',
+                                            name:'textfield',
+                                            fieldLabel:'Added Field'
+                                        });
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html><!-- eof -->

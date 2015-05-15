@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TOUCH-3003</title>
+        
+        <script src="../../sencha-touch-debug.js"></script>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+        <script type="text/javascript">
+
+            Ext.application({
+                name: 'Test',
+
+                requires : [
+                    'Ext.navigation.View'
+                ],
+            
+                launch: function() {
+                    new Ext.navigation.View({
+                        fullscreen    : true,
+                        layout        : {
+                            type       : 'card',
+                            animation  : false
+                        },
+                        navigationBar : {
+                            animation  : false,
+                            docked     : 'top'
+                        },
+                        items         : [
+                            {
+                                title : 'Home',
+                                items : [
+                                    {
+                                        xtype   : 'button',
+                                        text    : 'Push',
+                                        handler : function (button) {
+                                            var navView = button.up('navigationview');
+
+                                            navView.push({
+                                                title : 'New View',
+                                                html  : 'this is a new view'
+                                            });
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    });
+                }
+            });
+            
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

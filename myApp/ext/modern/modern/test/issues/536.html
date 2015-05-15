@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TOUCH-536</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script src="../../sencha-touch.js"></script>
+        <script>
+
+Ext.require([
+    'Ext.tab.Panel'
+]);
+Ext.setup({
+    onReady : function() {
+
+        new Ext.tab.Panel({
+            fullscreen : true,
+            items      : [
+                {
+                    xtype  : 'toolbar',
+                    docked : 'top',
+                    items  : [
+                        {
+                            text : 'Add Tab 1',
+                            ui   : 'confirm',
+                            handler : function(btn) {
+                                var tabpanel = btn.up('tabpanel'),
+                                    tab      = tabpanel.add({
+                                        title : 'Test',
+                                        html  : 'New Tab'
+                                    });
+
+                                tabpanel.setActiveItem(tab);
+                            }
+                        },
+                        {
+                            text : 'Add Tab 1',
+                            ui   : 'confirm',
+                            handler : function(btn) {
+                                var tabpanel = btn.up('tabpanel'),
+                                    tab      = {
+                                        title : 'Test',
+                                        html  : 'New Tab'
+                                    };
+
+                                tabpanel.setActiveItem(tab);
+                            }
+                        }
+                    ]
+                },
+                {
+                    title   : 'Home',
+                    iconCls : 'home',
+                    html    : 'Test'
+                }
+            ]
+        });
+
+    }
+});
+
+        </script>
+    </head>
+    <body>
+
+    </body>
+</html>

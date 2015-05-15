@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4058</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.setup({ 
+            requires: [
+                'Ext.tab.Panel', 'Ext.mixin.Observable'
+            ],
+            onReady: function() {
+	            Ext.Component.prototype.fireEvent =Ext.Function.createInterceptor(Ext.Component.prototype.fireEvent, function() {
+		            console.log(this.$className, ": ", arguments[0]);
+		            return true;
+	            });
+
+
+
+	            Ext.Viewport.add({
+                    xtype: 'tabpanel',
+                    items: [{
+                        xtype: 'toolbar',
+                        docked: 'top'
+                    }, {
+                        title: 'One',
+                        html: 'One'
+                    }]
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

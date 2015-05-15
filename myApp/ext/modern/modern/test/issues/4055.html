@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4055</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.setup({ 
+            requires: [
+                'Ext.form.Panel'
+            ],
+            onReady: function() {
+                Ext.Viewport.add({
+                    xtype: 'formpanel',
+	                fullscreen: true,
+					items: [{
+			            xtype: 'fieldset',
+			            title: 'Select',
+			            items: [
+				            {
+					            xtype: 'selectfield',
+					            label: 'Choose one',
+					            options: [
+						            {text: 'First Option',  value: 'first'},
+						            {text: 'Second Option', value: 'second'},
+						            {text: 'Third Option',  value: 'third'}
+					            ]
+				            }
+			            ]
+		            }
+	            ]
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

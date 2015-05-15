@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sencha Touch Issue Template</title>
+		<link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+		<script type="text/javascript" src="../../sencha-touch.js"></script>
+
+		<script type="text/javascript">
+			Ext.application({
+				name : 'Test',
+
+				requires : [
+
+				],
+
+				launch : function () {
+                    Ext.Viewport.add({
+                        docked: 'top',
+                        xtype: 'toolbar',
+                        title: 'Overview',
+                        items: [
+                            {
+                                xtype: 'spacer'
+                            },
+                            {
+                                xtype: 'button',
+                                iconCls: 'home'
+                            }
+                        ]
+                    });
+				}
+			});
+		</script>
+	</head>
+</html>

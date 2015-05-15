@@ -1,0 +1,157 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Draw</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../sencha-touch-all.js"></script>
+    <script>
+        Ext.require(['Ext.chart.CartesianChart', 'Ext.chart.series.Line', 'Ext.chart.axis.Numeric',
+            'Ext.Button']);
+        Ext.setup({
+            onReady: function () {
+                var seed = .5;
+
+                function random() {
+                    seed *= 15.1;
+                    seed -= Math.floor(seed);
+                    return seed;
+                }
+
+                var fps = Ext.Element.create({html: '0fps'}),
+                    items = [
+                        {
+                            type: 'rect',
+                            x: 10,
+                            y: 0,
+                            width: 90,
+                            height: 90,
+                            radius: 10,
+                            stroke: 'black',
+                            "stroke-width": 1,
+                            translate: {
+                                x: 30,
+                                y: 90
+                            },
+                            scale: {
+                                x: 1.1,
+                                y: 3
+                            },
+                            rotate: {
+                                degrees: 35
+                            }
+                        },
+                        {
+                            type: 'ellipse',
+                            x: 55,
+                            y: 45,
+                            radiusX: 45,
+                            radiusY: 45,
+                            transformFillStroke: false,
+                            stroke: 'black',
+                            fill: {
+                                type: 'linear',
+                                degrees: 90,
+                                stops: [
+                                    {color: 'rgba(255,0,0,0.1)', offset: 0.1},
+                                    {color: 'rgb(70,70,70)', offset: 0.695},
+                                    {color: 'white', offset: 0.7},
+                                    {color: 'gray', offset: 1}
+                                ]
+                            },
+                            translate: {
+                                x: 30,
+                                y: 90
+                            },
+                            scale: {
+                                x: 1.1,
+                                y: 3
+                            },
+                            rotate: {
+                                degrees: 0
+                            }
+                        },
+                        {
+                            type: 'text',
+                            x: 45,
+                            y: 45,
+                            font: '15px Arial',
+                            text: 'Test Message',
+                            fill: 'black',
+                            translate: {
+                                x: 30,
+                                y: 90
+                            },
+                            scale: {
+                                x: 1.1,
+                                y: 3
+                            },
+                            rotate: {
+                                degrees: 35
+                            }
+                        },
+                        {
+                            type: 'image',
+                            x: 0,
+                            y: 0,
+                            width: 870,
+                            height: 312,
+                            src: '../visual/draw/banner.jpg',
+                            translate: {
+                                x: 30,
+                                y: 50
+                            },
+                            scale: {
+                                x: 0.7,
+                                y: 0.3
+                            },
+                            rotate: {
+                                degrees: 35
+                            }
+                        }
+                    ], cmp;
+                cmp = new Ext.draw.Component({
+                    width: 1000,
+                    height: 600,
+                    items: items});
+                fps.setStyle({
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    zIndex: 100000,
+                    background: 'white'
+                });
+                Ext.getBody().appendChild(fps);
+                cmp.renderFrame();
+                var start = +new Date(),
+                    count = 0;
+                setInterval(function () {
+                    cmp.getSurface().getItems().getAt(0).setAttributes({
+                        rotation: {
+                            degrees: 360 * random()
+                        }
+                    });
+                    cmp.getSurface().setDirty(true);
+                    cmp.renderFrame();
+                    count++;
+                }, 1);
+                setInterval(function () {
+                    var now = +new Date();
+                    fps.dom.innerHTML = (count / (now - start) * 1000).toFixed(2) + 'fps';
+                    start = now;
+                    count = 0;
+                }, 1000);
+                Ext.Viewport.add(cmp);
+                for (var i = 0; i < 100; i++) {
+                    cmp.getSurface().setDirty(true);
+                    cmp.getSurface().renderFrame();
+                }
+            }
+        });
+
+    </script>
+</head>
+<body>
+</body>
+</html>

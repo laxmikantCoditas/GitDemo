@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>removeAll() test case</title>
+    <link href="../../resources/css/sencha-touch.css" rel="stylesheet" />
+    <script src="../../sencha-touch-all.js"></script>
+    <script type="text/javascript">
+        Ext.setup({
+            onReady:function () {
+            	var component = Ext.create('Ext.draw.Component', {
+            		height: 150,
+	           		  items: [{
+	           		    type: 'path',
+	           		    path: 'M75,75 c0,-25 50,25 50,0 c0,-25 -50,25 -50,0',
+	           		    fillStyle: 'blue'
+	           		  }]
+	           		});
+            	var button = Ext.create('Ext.Button', {
+            	    text: 'Clear',
+            	    handler: function(btn) {
+             	    	component.getSurface().removeAll();
+             	    	component.getSurface().renderFrame();
+            	    }
+            	});
+           		Ext.Viewport.setLayout('vbox');
+           		Ext.Viewport.add(component);
+           		Ext.Viewport.add(button);
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

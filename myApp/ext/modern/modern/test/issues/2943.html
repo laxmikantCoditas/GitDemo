@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2943</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.application({
+            launch:function () {
+                Ext.define('User', {
+                    extend: 'Ext.data.Model',
+                    config: {
+                        fields: [
+                            {name: 'firstName', type: 'string'},
+                            {name: 'lastName',  type: 'string'}
+                        ]
+                    }
+                });
+
+
+                var data = [
+                        {firstName: 'Ed',    lastName: 'Spencer'},
+                        {firstName: 'Tommy', lastName: 'Maintz'},
+                        {firstName: 'Aaron', lastName: 'Conran'},
+                        {firstName: 'Jamie', lastName: 'Avins'}
+                    ];
+
+                var store1 = Ext.create('Ext.data.Store', {
+                    model: 'User',
+                    storeId: 'test-store-1',
+                    data : data
+                });
+
+
+
+
+                var view = Ext.create('Ext.DataView', {
+                    fullscreen: true,
+                    store: store1,
+                    itemTpl: '{firstName} {lastName}'
+                });
+
+
+                Ext.Viewport.setActiveItem(view);
+
+
+                var secondItemId = view.container.getViewItems()[1].id;
+
+
+                console.log(secondItemId);
+
+
+                Ext.Element.cache // secondItemId is in cache
+
+
+                store1.removeAt(1); // view is updated accordingly, obly 3 items are dispalyed now
+
+
+                Ext.Element.cache // secondItemId wasn't removed from cache
+
+
+                view.destroy();
+
+
+                Ext.Element.cache // all items are removed from cache, but secondItemId is still there keeping dom reference, though its owner is already destroyed
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

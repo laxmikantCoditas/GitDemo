@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+
+        Ext.onReady(function() {
+            var w = new ExampleWindow();
+            w.show();
+        });
+
+        ExampleWindow = Ext.extend(Ext.Window, {
+
+            panelCount: 1,
+
+            initComponent: function() {
+                Ext.apply(this, {
+                    height : 500,
+                    width : 700,
+                    layout: 'fit',
+                    items: {
+                        html:
+                                '<div>' +
+                                        '<p>Editor will be rendered below</p>' +
+                                        '<div id="comment-panel-wrap"></div>' +
+                                        '<div id="my-output"></div>' +
+                                        '</div>'
+                    },
+                    buttons: [
+                        {
+                            text: 'Add/Replace Panel',
+                            handler: this.addOrReplaceCommentPanel,
+                            scope: this
+                        }
+                    ]
+                });
+                ExampleWindow.superclass.initComponent.call(this);
+            },
+
+            addOrReplaceCommentPanel: function() {
+                //if the reply comment panel appears elsewhere, get rid of it
+                if(this.replyCommentPanel) {
+                    Ext.destroy(this.replyCommentPanel);
+                    delete this.replyCommentPanel;
+                }
+
+                this.replyCommentPanel = new Ext.Container({
+                    cls: 'j-comment-panel j-reply-comment-panel',
+                    border: false,
+                    height: 189,
+                    items: [
+                        this.createReplyCommentText()
+                    ],
+                    renderTo: 'comment-panel-wrap'
+                });
+
+                //debug output
+                Ext.getDom('my-output').innerHTML += '<br />Editor ' + this.panelCount + '... ';
+                this.panelCount++;
+            },
+
+
+            createReplyCommentText: function() {
+                this.replyCommentText = new Ext.form.HtmlEditor({
+                    height: 150,
+                    width: 250,
+                    hideLabel: true,
+                    enableAlignments: false,
+                    enableColors: false,
+                    enableFont: false,
+                    enableFontSize: false,
+                    enableSourceEdit: false,
+                    allowBlank: false,
+                    invalidText: 'You must enter a comment before you can submit',
+                    validateOnBlur: false,
+                    disabled: false,
+                    listeners: {
+                        initialize: this.onEditorInit
+                    }
+                });
+
+                return this.replyCommentText;
+            },
+
+            onEditorInit: function(component) {
+                component.focus(false, 1000);
+
+                //debug output
+                Ext.getDom('my-output').innerHTML += ' initialized!';
+            }
+
+        });
+
+    </script>
+</body>
+</html>

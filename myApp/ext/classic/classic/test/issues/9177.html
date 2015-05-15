@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Layout Context Leak</title>
+	<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+	<script type="text/javascript" src="../../ext.js"></script>
+	<script type="text/javascript">
+		
+		Ext.enableGarbageCollector = false;
+		
+		Ext.require([
+			'Ext.data.Store',
+			'Ext.form.Panel',
+			'Ext.grid.Panel',
+			'Ext.toolbar.Toolbar'
+		]);
+		
+		Ext.onReady(function() {
+			
+			var gridStore = Ext.create('Ext.data.Store', {
+			    storeId:'simpsonsStore',
+			    fields:['name', 'email', 'phone'],
+			    data:{'items':[
+			        {"name":"Lisa", "email":"lisa@simpsons.com", "phone":"555-111-1224"},
+			        {"name":"Bart", "email":"bart@simpsons.com", "phone":"555-222-1234"},
+			        {"name":"Homer", "email":"home@simpsons.com", "phone":"555-222-1244"},
+			        {"name":"Marge", "email":"marge@simpsons.com", "phone":"555-222-1254"}
+			    ]},
+			    proxy: {
+			        type: 'memory',
+			        reader: {
+			            type: 'json',
+			            root: 'items'
+			        }
+			    }
+			});
+			
+			var form = Ext.create('Ext.form.Panel', {
+				layout: 'fit',
+				renderTo: Ext.getBody(),
+				width: 500,
+				height: 300,
+				dockedItems: [{
+					xtype: 'toolbar',
+					dock: 'top',
+					items: [{
+						text: 'Create',
+						handler: function(btn) {
+							
+							console.log('before created - form managedListeners length = ' + form.managedListeners.length);
+							
+							// add item to center
+							btn.up('form').add({
+								xtype: 'gridpanel',
+								title: 'Simpsons',
+							    store: Ext.data.StoreManager.lookup('simpsonsStore'),
+							    columns: [
+							        {header: 'Name',  dataIndex: 'name', editor: 'textfield'}
+							    ]
+							});
+							
+							console.log('after created - form managedListeners length = ' + form.managedListeners.length);
+						}
+					},{
+						text: 'Destroy All',
+						handler: function(btn) {
+							
+							console.log('before destroyed - form managedListeners length = ' + form.managedListeners.length);
+							
+							btn.up('form').removeAll();
+							
+							console.log('after created - form managedListeners length = ' + form.managedListeners.length);
+							
+							console.log('last managedListener is for a destroyed component = ');
+							console.log(form.managedListeners[form.managedListeners.length - 1])
+						}
+					}]
+				}]
+			});
+			
+		});
+	</script>	
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>TOUCH-xxxx</title>
+    <style></style>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+    <script src="../../sencha-touch-all-debug.js"></script>
+    <script>
+        Ext.require(['Ext.Panel', 'Ext.Toolbar']);
+        Ext.setup({
+            onReady: function () {
+                var counter = 0;
+                Ext.Viewport.add({
+                    xtype: 'toolbar',
+                    docked: 'top',
+                    title: 'The number should increment on every resize.'
+                });
+                Ext.Viewport.add({
+                    xtype: 'panel',
+                    height: 300,
+                    style: 'font-size: 30px; text-align: center; line-height: 300px;',
+                    listeners: {
+                        resize: function () {
+                            this.setHtml(counter++);
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

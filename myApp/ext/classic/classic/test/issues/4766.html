@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        //your test case goes here
+        Ext.Loader.setConfig({
+            enabled: true
+        });
+
+        Ext.require(["Ext.tip.*"]);
+
+        Ext.onReady(function(){
+
+            Ext.tip.QuickTipManager.init();
+
+            Ext.create('Ext.Window', {
+                title: 'Standard',
+                closable: false,
+                height:250,
+                width: 200,
+                bodyStyle: 'padding:10px',
+                autoScroll: true,
+                tbar: Ext.create('Ext.toolbar.Toolbar', {
+                    enableOverflow: true,
+                    items: [
+                    {
+                        xtype:'button',
+                        iconCls: 'add16',
+                        text:'Cut',
+                        tooltip:{
+                            text:'Cut Operation',
+                            autoHide:true
+                        }
+                    },{
+                        xtype:'button',
+                        iconCls: 'add16',
+                        text:'Copy',
+                        tooltip:{
+                            text:'Copy Operation',
+                            autoHide:true
+                        }
+                    },{
+                        xtype:'button',
+                        iconCls: 'add16',
+                        text:'Paste',
+                        tooltip:{
+                            text:'Paste Operation',
+                            autoHide:true
+                        }
+                    },{
+                        xtype:'button',
+                        iconCls: 'add16',
+                        text:'Help',
+                        tooltip:{
+                            text:'Help Operation',
+                            autoHide:true
+                        }
+                    },
+                    {
+                        xtype:'button',
+                        iconCls: 'add16',
+                        text:'some',
+                        tooltip:{
+                            text:'Some  Operation',
+                            autoHide:true
+                        }
+                    }
+                    ]
+                })
+            }).show();
+        });
+
+    </script>
+</body>
+</html>

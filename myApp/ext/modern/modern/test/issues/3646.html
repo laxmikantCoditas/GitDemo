@@ -1,0 +1,166 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Nested List Issue</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch-all-debug.js"></script>
+    <script type="text/javascript">
+        Ext.setup({
+            requires: [
+                'Ext.Panel',
+                'Ext.data.TreeStore',
+                'Ext.dataview.NestedList'
+            ],
+            onReady:function () {
+                var data = {
+                    text: 'Groceries',
+                    items: [{
+                        text: 'Drinks',
+                        items: [{
+                            text: 'Water',
+                            items: [{
+                                text: 'Sparkling',
+                                leaf: true
+                            }, {
+                                text: 'Still',
+                                leaf: true
+                            }]
+                        }, {
+                            text: 'Coffee',
+                            leaf: true
+                        }, {
+                            text: 'Espresso',
+                            leaf: true
+                        }, {
+                            text: 'Redbull',
+                            leaf: true
+                        }, {
+                            text: 'Coke',
+                            leaf: true
+                        }, {
+                            text: 'Diet Coke',
+                            leaf: true
+                        }]
+                    }, {
+                        text: 'Fruit',
+                        items: [{
+                            text: 'Bananas',
+                            leaf: true
+                        }, {
+                            text: 'Lemon',
+                            leaf: true
+                        }]
+                    }, {
+                        text: 'Snacks',
+                        items: [{
+                            text: 'Nuts1',
+                            leaf: true
+                        }, {
+                            text: 'Pretzels1',
+                            leaf: true
+                        }, {
+                            text: 'Wasabi Peas1',
+                            leaf: true
+                        },{
+                            text: 'Nuts2',
+                            leaf: true
+                        }, {
+                            text: 'Pretzels2',
+                            leaf: true
+                        }, {
+                            text: 'Wasabi Peas2',
+                            leaf: true
+                        },{
+                            text: 'Nuts3',
+                            leaf: true
+                        }, {
+                            text: 'Pretzels3',
+                            leaf: true
+                        }, {
+                            text: 'Wasabi Peas3',
+                            leaf: true
+                        },{
+                            text: 'Nuts',
+                            leaf: true
+                        }, {
+                            text: 'Pretzels',
+                            leaf: true
+                        }, {
+                            text: 'Wasabi Peas',
+                            leaf: true
+                        },{
+                            text: 'Nuts',
+                            leaf: true
+                        }, {
+                            text: 'Pretzels',
+                            leaf: true
+                        }, {
+                            text: 'Wasabi Peas',
+                            leaf: true
+                        },{
+                            text: 'Nuts',
+                            leaf: true
+                        }, {
+                            text: 'Pretzels',
+                            leaf: true
+                        }, {
+                            text: 'Wasabi Peas',
+                            leaf: true
+                        },{
+                            text: 'Nuts',
+                            leaf: true
+                        }, {
+                            text: 'Pretzels',
+                            leaf: true
+                        }, {
+                            text: 'Wasabi Peas',
+                            leaf: true
+                        },{
+                            text: 'Nuts',
+                            leaf: true
+                        }, {
+                            text: 'Pretzels',
+                            leaf: true
+                        }, {
+                            text: 'Wasabi Peas',
+                            leaf: true
+                        }]
+                    }]
+                };
+
+                Ext.define('ListItem', {
+                    extend: 'Ext.data.Model',
+                    config: {
+                        fields: [{
+                            name: 'text',
+                            type: 'string'
+                        }]
+                    }
+                });
+
+                var store = Ext.create('Ext.data.TreeStore', {
+                    model: 'ListItem',
+                    defaultRootProperty: 'items',
+                    root: data
+                });
+
+                var nestedList = Ext.create('Ext.NestedList', {
+                    title: 'Groceries',
+                    displayField: 'text',
+                    store: store,
+                    flex: 3
+                });
+
+                var mainPanel = Ext.create('Ext.Container', {
+                    fullscreen: true,
+                    layout: 'fit',
+                    items: [
+                        nestedList
+                    ]
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

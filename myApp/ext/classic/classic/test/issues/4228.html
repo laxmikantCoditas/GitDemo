@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+    <style>
+      .add16 {
+          background-image: url( ../script/ext-4.0.6/resources/themes/images/default/dd/drop-add.gif ) !important;
+      }
+    </style>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+    Ext.require('Ext.*');
+    Ext.onReady(function() {
+        Ext.create('Ext.data.Store', {
+          storeId:'simpsonsStore',
+          fields:['name', 'email', 'mixed'],
+          data:{'items':[
+            { 'name': 'Lisa',  "email":"lisa@simpsons.com",  "mixed":"1224"  },
+            { 'name': 'Bart',  "email":"bart@simpsons.com",  "mixed":"555" },
+            { 'name': 'Homer', "email":"home@simpsons.com",  "mixed":"center"  },
+            { 'name': 'Marge', "email":"marge@simpsons.com", "mixed":"222"  }
+          ]},
+          proxy: {
+            type: 'memory',
+            reader: {
+              type: 'json',
+              root: 'items'
+            }
+          }
+        });
+
+        Ext.create('Ext.grid.Panel', {
+          title: 'Simpsons',
+          store: Ext.data.StoreManager.lookup('simpsonsStore'),
+          columns: [
+            { header: 'Name',  dataIndex: 'name' },
+            { header: 'Email', dataIndex: 'email', flex: 1 },
+            { header: 'Mixed Context', dataIndex: 'mixed',
+              align:'right',
+              //align:'', // set column align to '' will allow cell level 'text-align" to work
+              renderer: function(value, metaData) {
+                if (value == 'center') {
+                  metaData.style = 'text-align:' + value +' !important';
+                }
+                return value;
+              } }
+          ],
+          height: 200,
+          width: 400,
+          renderTo: Ext.getBody()
+        });
+      });
+    </script>
+</body>
+</html>

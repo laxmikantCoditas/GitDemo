@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2647</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.application({
+            name:'Bug',
+
+            requires:[
+                'Ext.dataview.List',
+                'Ext.data.Store'
+            ],
+
+
+            launch:function () {
+                var me = this;
+
+                Ext.create('Ext.dataview.List', {
+                    fullscreen:true,
+                    itemTpl:'{title}',
+                    singleSelect:true,
+                    allowDeselect:false,
+                    listeners:{
+                        'selectionchange':'onSelectionChange',
+                        scope:me
+                    },
+                    data:[
+                        { title:'Item 1' },
+                        { title:'Item 2' },
+                        { title:'Item 3' },
+                        { title:'Item 4' }
+                    ]
+                });
+            },
+
+
+            /*
+             * As per documentation .....
+             * @param {Ext.mixin.Selectable} selectable
+             * @param {Ext.data.Model[]} records The records whose selection has changed
+             */
+            onSelectionChange:function (selectable, records) {
+                // this fires
+                // - once on first selection
+                // - twice on change of selection
+                //      - once when initial item is deselected
+                //      - once when new item is selected
+                //
+                //  But array of records is now an empty oject
+                //  Workaround - can use selectable.getSelection() to get the records
+                console.log('selectionchange ' + selectable.getSelectionCount() + ' items selected ', selectable, records);
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

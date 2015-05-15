@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Test case harness</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<script type="text/javascript" charset="utf-8">
+Ext.require(['*']);
+
+Ext.onReady(function () {
+
+    Ext.define("myModel", {
+        extend: "Ext.data.Model",
+        idProperty: 'id',
+        fields: [{
+            name: 'id',
+            type: 'int'
+        }, {
+            name: 'name',
+            type: 'string'
+        }, {
+            name: 'type',
+            type: 'string'
+        }, {
+            name: 'op',
+            type: 'string'
+        }, {
+            name: 'tg',
+            type: 'string'
+        }, {
+            name: 'm',
+            type: 'string'
+        }, {
+            name: 'lc',
+            type: 'string'
+        }, {
+            name: 'en',
+            type: 'string'
+        }, {
+            name: 'as',
+            type: 'string'
+        }]
+    });
+
+
+    var myStore = new Ext.data.Store({
+        model: 'myModel',
+        proxy: {
+            type: 'ajax',
+            url: '3587.json',
+            reader: {
+                type: 'json',
+                root: 'data'
+            }
+        }
+
+    });
+    myStore.load();
+
+    var mySelectionModel = Ext.create('Ext.selection.CheckboxModel', {});
+
+    var myGrid = Ext.create('Ext.grid.Panel', {
+        title: 'Autoheight Grid',
+        id: 'myGrid',
+        width: 600,
+        store: myStore,
+        selModel: mySelectionModel,
+        renderTo: document.body,
+        columns: [{
+            text: "Name",
+            dataIndex: 'name',
+            width: 250,
+            menuDisabled: true
+        }, {
+            text: "Type",
+            dataIndex: 'type'
+        }, {
+            text: "OP",
+            dataIndex: 'op'
+        }, {
+            text: "TG",
+            dataIndex: 'tg'
+        }, {
+            text: "M",
+            dataIndex: 'm'
+        }, {
+            text: "LC",
+            dataIndex: 'lc'
+        }, {
+            text: "EN",
+            dataIndex: 'en'
+        }, {
+            text: "AS",
+            dataIndex: 'as'
+        }],
+        columnLines: true,
+        animCollapse: false,
+        viewConfig: {
+            stripeRows: true
+        }
+    });
+
+});
+</script>
+<body style="padding:10px">
+</body>
+</html>

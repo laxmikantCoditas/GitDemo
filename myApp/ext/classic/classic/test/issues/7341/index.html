@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css">
+    <script type="text/javascript" src="../../ext.js"></script>
+    <script type="text/javascript">
+        Ext.onReady(function() {
+            Ext.define('Task', {
+                extend: 'Ext.data.Model',
+                fields: [
+                    {name: 'text',     type: 'string'}
+                ]
+            });
+
+            var store = Ext.create('Ext.data.TreeStore', {
+                model: 'Task',
+                proxy: {
+                    type: 'ajax',
+                    url: 'get-nodes.php'
+                }
+            });
+
+            var tree = Ext.create('Ext.tree.Panel', {
+                title: 'Core Team Projects',
+                width: 500,
+                height: 300,
+                renderTo: Ext.getBody(),
+                collapsible: true,
+                rootVisible: false,
+                store: store,
+                columns: [{
+                    xtype: 'treecolumn',
+                    text: 'Task',
+                    flex: 2,
+                    sortable: true,
+                    dataIndex: 'text'
+                }],
+                listeners: {
+                    selectionchange: function(selectionModel, selected) {
+                        if (selected[0]) {
+                            if (!(selected[0].isLeaf() || selected[0].isLoaded() || this.store.isLoading())) {
+                                this.store.load({node: selected[0]});
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</head>
+<body></body>
+</html>

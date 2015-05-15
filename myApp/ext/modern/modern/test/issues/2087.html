@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2087</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script src="../../sencha-touch.js"></script>
+
+        <script>
+            Ext.define('Test.controller.ContactController', {
+                extend: 'Ext.app.Controller',
+
+                // Get the device type
+                config: {
+
+                    // Use refs to simplify controller access to views
+                    refs: {
+                        main: {
+                            selector: 'mainview',
+                            xtype: 'mainview',
+                            autoCreate: true
+                        },
+                        contactList: {
+                            selector: 'contactlistview',
+                            xtype: 'contactlistview',
+                            autoCreate: true
+                        },
+                        contact: {
+                            selector: 'contactview',
+                            xtype: 'contactview',
+                            autoCreate: true
+                        },
+                        splitView: 'splitview',
+                        mapView: 'mapview',
+                        settings: 'settingsview'
+                    },
+
+                    // Setup the listeners
+                    control: {
+                        'contactlistview': {
+                            painted: 'onRender'
+                        },
+                        'contactlistview list': {
+                            itemtap: 'onItemTap'
+                        },
+                        'contactlistview #SettingsButton': {
+                            tap: 'onSettings'
+                        },
+                        'settingsview toolbar button': {
+                            tap: 'onBackButtonTap'
+                        }
+                    }
+                },
+
+                launch: function() {
+
+                    console.log('controller launch called');
+
+                    var main = this.getMain(),
+                        contacts = this.getContactList(),
+                        settings = this.buildSettings(),
+                        mapView = this.buildMapView(),
+                        splitView = Ext.create('Test.view.SplitView');
+
+                    splitView.add(settings);
+                    splitView.add(mapView);
+                    main.add(contacts);
+                    //main.setActiveItem(mapview);
+
+                },
+
+
+                onSettings: function() {
+
+                    var main = this.getMain(),
+                        splitView = this.getSplitView();
+
+
+                    //this.loadSettings(settings);
+                    main.setActiveItem(splitView);
+                },
+
+                onBackButtonTap: function() {
+
+                    var main = this.getMain(),
+                        settingsView = this.getSettings(),
+                        contacts = this.getContactList();
+
+                    //this.saveSettings(settingsView);
+                    main.setActiveItem(contacts);
+                },
+
+                onItemTap: function(view, index, item, event) {
+
+                    var main = this.getMain(),
+                        contact = this.getContact(),
+                        name = view.getStore().getAt(index).data;
+
+
+                    console.log("onItemTap", contact);
+                    contact.setHtml("Hello " + name.firstName + " " + name.lastName);
+                    main.add(contact);
+                    main.setActiveItem(contact);
+                },
+
+                buildSettings: function() {
+
+                    var settings = Ext.create('Test.view.Settings', {flex: 1});
+
+                    settings.on({'show': function() {
+                            console.log("settingsView.show()");
+                        },
+                        scope: this
+                    });
+
+                    settings.on({'hide': function() {
+                            console.log("settingsView.hide()");
+                        },
+                        scope: this
+                    });
+
+                    return settings;
+                },
+
+                buildMapView: function() {
+
+                    var mapView = Ext.create('Test.view.Map', {flex: 1});
+                        //globals = Test.globals.mapGlobals;
+
+
+                    // Perform the map dependent initialization
+                    mapView.on({'painted': function(view) {
+                            view.getGeoLocation();
+                        },
+                        scope: this
+                    });
+
+                    return mapView;
+                }
+            });
+            Ext.define('Test.view.MainView', {
+                extend: 'Ext.Panel',
+                xtype: 'mainview'
+            });
+            Ext.define('Test.view.ContactListView', {
+                extend: 'Ext.Panel',
+                xtype: 'contactlistview'
+            });
+            Ext.define('Test.view.ContactView', {
+                extend: 'Ext.Panel',
+                xtype: 'contactview'
+            });
+            Ext.define('Test.view.MainView', {
+                extend: 'Ext.Panel',
+                xtype: 'mainview'
+            });
+            Ext.define('Test.view.SplitView', {
+                extend: 'Ext.Panel',
+                xtype: 'splitview'
+            });
+            Ext.define('Test.view.Settings', {
+                extend: 'Ext.Panel',
+                xtype: 'settingsview'
+            });
+            Ext.define('Test.view.Map', {
+                extend: 'Ext.Map',
+                xtype: 'mapview'
+            });
+            Ext.application({
+                name:'Test',
+
+                views: ['MainView', 'ContactListView', 'ContactView', 'SplitView', 'Settings', 'Map'],
+                controllers: ['ContactController']
+            });
+        </script>
+    </head>
+    <body></body>
+</html>

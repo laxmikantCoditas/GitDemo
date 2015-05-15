@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Absolute Layout Example</title>
+<link rel="stylesheet" type="text/css" href="../../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../../ext.js"></script>
+<script type="text/javascript">
+Ext.require(['Ext.panel.Panel']);
+Ext.onReady(function() {
+    var start = new Date(),
+        panel = Ext.create('Ext.panel.Panel', createPanel({
+            width: Ext.Element.getViewWidth() - Ext.getScrollbarSize().width,
+            height: 2000,
+            renderTo: document.body
+        }));
+    alert(new Date() - start);
+});
+var panelCounter = 0;
+function createPanel(config) {
+    var width = config.width || 0,
+        height = config.height || 0,
+        title = 'Panel ' + (++panelCounter),
+        dockPos,
+        dockSize,
+        size,
+        result = Ext.apply({
+            dockedItems: [],
+            title: title,
+            id: title
+        }, config);
+
+    if (width > height) {
+        dockPos = ['left', 'right'];
+        dockSize = {
+            width: size = width/2,
+            height: height - 25
+        };
+    } else {
+        dockPos = ['top', 'bottom'];
+        dockSize = {
+            height: size = (height - 27)/2,
+            width: width
+        };
+    }
+
+    // If there is space, go ahead and create the docked items
+    if (size > 100) {
+        result.dockedItems.push(
+            {dock: dockPos[0]},
+            {dock: dockPos[1]}
+        );
+        Ext.apply(result.dockedItems[0], dockSize);
+        Ext.apply(result.dockedItems[1], dockSize);
+        result.dockedItems[0] = createPanel(result.dockedItems[0]);
+        result.dockedItems[1] = createPanel(result.dockedItems[1]);
+    }
+    return result;
+}
+</script>
+</head>
+<body>
+</body>
+</html>

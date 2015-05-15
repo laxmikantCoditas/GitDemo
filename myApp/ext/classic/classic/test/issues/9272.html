@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Anchor AutoScroll Issue</title>
+	<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+	<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+	<script type="text/javascript" charset="utf-8">
+		Ext.require([
+			'Ext.container.Viewport',
+			'Ext.data.TreeStore',
+			'Ext.layout.container.Border',
+			'Ext.layout.container.Anchor',
+			'Ext.tree.Panel'
+		]);
+		
+		Ext.onReady(function() {
+			Ext.create('Ext.container.Viewport', {
+				layout: 'border',
+				items: [{
+					xtype: 'panel',
+					region: 'west',
+					layout: 'anchor',
+					title: 'West Panel with anchor layout + autoScroll',
+					autoScroll: true,
+					width: 300,
+					items: [{
+						xtype: 'panel',
+						html: '...content...',
+						title: 'anchor:0',
+						anchor: '0'
+					},{
+						xtype: 'treepanel',
+						title: 'no anchor',
+						managedHeight: false,
+						rootVisible: false,
+						store: Ext.create('Ext.data.TreeStore', {
+						    root: {
+						        expanded: true,
+						        children: [
+						            { text: "detention", leaf: true },
+						            { text: "homework", expanded: true, children: [
+						                { text: "book report", leaf: true },
+						                { text: "algebra", leaf: true}
+						            ] },
+						            { text: "buy lottery tickets", leaf: true }
+						        ]
+						    }
+						})
+					}]
+				}]
+			});
+		});
+	</script>
+</body>
+</html>

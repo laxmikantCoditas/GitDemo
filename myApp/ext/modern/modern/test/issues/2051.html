@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2051</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+        <script>
+            Ext.application({
+                name:'Sencha',
+
+
+                launch:function () {
+                    //The whole app UI lives in this tab panel
+                    Ext.Viewport.add({
+                        xtype:'tabpanel',
+                        fullscreen:true,
+                        tabBarPosition:'bottom',
+                        items:[
+                            {
+                                title:'Home',
+                                iconCls:'home',
+                                items:[
+                                    { html:'Home Screen' },
+                                    {
+                                        xtype:'button',
+                                        text:'GO to tab [1]',
+                                        listeners:{
+                                            tap:function () {
+                                                var tp = Ext.Viewport.down('tabpanel');
+                                                tp.setActiveItem(1);
+                                            }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                title:'Contact',
+                                iconCls:'user',
+                                html:'Contact Screen'
+                            }
+                        ]
+                    });
+                }
+            });
+        </script>
+</head>
+<body></body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+	<object type="application/x-java-applet" width="500" height="500">
+    <param name="codebase" value='http://www.w3.org/People/mimasa/test/object/java/applets/' />
+    <param name="code" value='tz.class' />
+     <param name='tz' value='EST'>
+    <param name='language' value='en'>
+    <param name='country' value='US'>
+    <param name='bgcolor' value='ffffff'>
+    <param name='color' value='0000ff'>
+    <param name='textcolor' value='000000'>
+    <param name='daycolor' value='fff030'>
+    <param name='nightcolor' value='6040a0'>
+    <param name='seconds' value='off'>
+    A clock with the time at MIT
+</object>
+
+    <script type="text/javascript" charset="utf-8">
+    Ext.require('Ext.window.MessageBox')
+    Ext.Loader.setConfig({enabled: true});
+    Ext.onReady(function() {
+        Ext.Msg.show({
+            title:'Save Changes?',
+            msg: 'You are closing a tab that has unsaved changes. Would you like to save your changes?',
+            buttons: Ext.Msg.YESNOCANCEL,
+            icon: Ext.Msg.QUESTION,
+            x:'20',
+            y:'200'
+        });
+    });
+        
+    </script>
+</body>
+</html>

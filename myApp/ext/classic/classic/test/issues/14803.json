@@ -1,0 +1,6 @@
+{
+    success: true,
+    data: {
+        cbTest: "AL", first: "Michi", last: "Muster"
+    }
+}

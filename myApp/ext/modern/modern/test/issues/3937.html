@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript">
+        Ext.setup({
+            requires: [
+                'Ext.data.Store',
+                'Ext.dataview.List'
+            ],
+            onReady:function () {
+                var myStore = Ext.create("Ext.data.Store", {
+                    data: [
+                        {
+                            "firstName": "Tommy",
+                            "lastName": "Maintz",
+                            "age": 24,
+                            "eyeColor": "green"
+                        },
+                        {
+                            "firstName": "Aaron",
+                            "lastName": "Conran",
+                            "age": 26,
+                            "eyeColor": "blue"
+                        },
+                        {
+                            "firstName": "Jamie",
+                            "lastName": "Avins",
+                            "age": 37,
+                            "eyeColor": "brown"
+                        }
+                    ],
+                    fields: [
+                        {name: "firstName", type: "string"},
+                        {name: "lastName",  type: "string"},
+                        {name: "age",       type: "int"},
+                        {name: "eyeColor",  type: "string"}
+                    ]
+                });
+
+                var touchTeam = Ext.create('Ext.List', {
+                    fullscreen: true,
+                    store: {
+                        fields: ['name', 'age'],
+                        data: [
+                            {name: 'Jamie',  age: 100},
+                            {name: 'Rob',   age: 21},
+                            {name: 'Tommy', age: 24},
+                            {name: 'Jacky', age: 24},
+                            {name: 'Ed',   age: 26}
+                        ]
+                    },
+                    itemTpl: '<div>{name} is {age} years old</div>',
+                    scrollable: {
+                        direction: 'horizontal',
+                        directionLock: true
+                    },
+                    inline: { wrap: false }
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

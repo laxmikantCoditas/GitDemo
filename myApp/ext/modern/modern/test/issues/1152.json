@@ -1,0 +1,26 @@
+{
+    "items": [
+        {
+            "text": "Drinks",
+            "items": [
+                {
+                    "text": "Water",
+                    "items": [
+                        {
+                            "text": "Sparkling",
+                            "leaf": true
+                        },
+                        {
+                            "text": "Still",
+                            "leaf": true
+                        }
+                    ]
+                },
+                {
+                    "text": "Coffee",
+                    "leaf": true
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+    Ext.define('LoadObject', {
+        extend:'Ext.data.Model',
+        fields:[ 'column1' ]
+    });
+
+    var COLUMNS = [
+        {dataIndex:'column1', width:100}
+    ];
+
+    var counter = 0;
+
+    Ext.require([
+        'Ext.data.reader.Json',
+        'Ext.data.Store'
+    ]);
+    Ext.onReady(function () {
+
+        var panelRows = new Array();
+
+        for (var i = 0; i < 20; i++) {
+            var grids = new Array();
+
+            for (var j = 0; j < 1; j++) {
+                var grid = Ext.create('Ext.grid.Panel', {
+
+                    title:'row' + (i + 1),
+                    viewConfig:{
+                        plugins:{
+                            ptype:'gridviewdragdrop',
+                            dragGroup:'ddGroup',
+                            dropGroup:'ddGroup',
+                            containerScroll:true
+                        }
+                    },
+                    selType:'rowmodel',
+                    multiSelect:true,
+                    width:300,
+                    height:100,
+                    hideHeaders:true,
+                    columnLines:true,
+                    columns:COLUMNS,
+                    store:Ext.create('Ext.data.Store', {
+                        model:'LoadObject',
+                        data:[
+                            {column1:'item ' + counter++}
+                        ]
+                    })
+
+                });
+
+                grids.push(grid);
+            }
+
+
+            var panel = Ext.create('Ext.Panel', {
+
+                width:500,
+                height:200,
+                autoScroll:true,
+                title:'Another PANEL',
+
+                layout:{
+                    type:'hbox',
+                    padding:0
+                },
+
+                items:grids
+
+            });
+
+            panelRows.push(panel);
+
+        }
+
+        Ext.create('Ext.Panel', {
+            width:700,
+            height:500,
+            autoScroll:true,
+
+            title:'drag, scroll and drop problem',
+            layout:{
+                type:'vbox',
+                padding:0
+            },
+            renderTo:Ext.getBody(),
+            items:panelRows
+        });
+    });
+
+        
+    </script>
+</body>
+</html>

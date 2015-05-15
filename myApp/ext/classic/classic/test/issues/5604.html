@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+        <title>EXTJSIV-5604</title>
+        <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css"/>
+        <script type="text/javascript" src="../../ext.js"></script>
+
+		<script>
+		
+		var COLUMN = true;              // true for Column chart, false for Bar chart
+		var RANDOM_VALUES = true;       // true for random data set, false for fixed values
+		var NEGATIVE_VALUES = false;    // true to randomly turn some values negative, false for only positive values
+		var DATA_COUNT = 5;             // number of values in each series
+		var GUTTER = 400;               // percent ratio between column width and space between columns
+		var SERIES_MARGIN = 40;         // x-offset of the first series
+		var SERIES_OFFSET = 30;         // x-offset between series
+
+        Ext.onReady(function() {
+            displayChart(COLUMN);
+        });
+
+		var displayChart = function(column) {
+		    var nameFields = ['name1', 'name2'],
+		        dataFields = ['data1', 'data2'],
+		        fields = nameFields.concat(dataFields),
+		        axes = [],
+		        rowCount = DATA_COUNT,
+		        data = [],
+		        series = [],
+		        sign, max;
+ 
+            // generate random data
+		    for (var i = 0; i < rowCount; i++) {
+		        var row = {};
+		        Ext.each(nameFields, function(item, index, allItems) {
+		            row[item] = 'metric '+ (index+1) + '.' + (i+1);
+		        });
+		        Ext.each(dataFields, function(item, index, allItems) {
+		            sign = (NEGATIVE_VALUES ? (Math.random() < 0.5 ? -1 : 1) : 1);
+		            if (RANDOM_VALUES) {
+                        row[item] = Math.random() * (10 + index * 5) * sign;
+		            } else {
+                        row[item] = +(2*i+1.567) * sign;
+		            }
+		        });
+		        data.push(row);
+		    }
+ 
+		    // generate the axes
+            Ext.each(dataFields, function(item, index, allItems) {
+                max = 10 + index * 5;
+                axes.push({
+                    type: 'Numeric',
+                    position: index % 2 == 0 ? (column ? 'left' : 'bottom') : (column ? 'right' : 'top'),
+                    fields: [item],
+                    title: 'Sample Values '+(index+1),
+                    grid: index % 2 == 0 ? { even: { fill: '#e8ffe8' } } : {},
+                    gridColor: index % 2 == 0 ? '#94ee00' : '#88e8ff',
+                    label: {
+                        renderer: Ext.util.Format.numberRenderer('0.0')
+                    },
+                    maximum: max,
+                    minimum: (NEGATIVE_VALUES ? -max : 0),
+                    steps: (NEGATIVE_VALUES ? max * 2 : max)
+                })
+            });
+            Ext.each(nameFields, function(item, index, allItems) {
+                axes.push({
+                    type: 'Category',
+                    position: index % 2 == 0 ? (column ? 'top' : 'right') : (column ? 'bottom' : 'left'),
+                    fields: [item],
+                    grid:true,
+                    gridColor: index % 2 == 0 ? '#94b000' : '#00a8ff',
+                    title: 'Sample Metrics '+ (index+1)
+                });
+            });
+
+		    // generate the series
+		    for (var j = 0; j < nameFields.length; j++) {
+		        var seriesCfgObj = {
+		            type: (column ? 'column' : 'bar'),
+		            axis: j % 2 == 0 ? (column ? 'left' : 'bottom') : (column ? 'right' : 'top'),
+		            // use xPadding to display the 2 series with a small offset so the columns don't overlap.
+                    xPadding: column ? (j % 2 == 0 ? {left: SERIES_MARGIN, right:SERIES_MARGIN*2} :  {left: SERIES_MARGIN+SERIES_OFFSET, right:SERIES_MARGIN*2-SERIES_OFFSET}) : 0,
+                    yPadding: column ? 0 : (j % 2 == 0 ? {bottom: SERIES_MARGIN, top:SERIES_MARGIN*2} :  {bottom: SERIES_MARGIN+SERIES_OFFSET, top:SERIES_MARGIN*2-SERIES_OFFSET}),
+                    gutter: GUTTER,
+		            highlight: true,
+		            tips: {
+		                trackMouse: true,
+		                width: 140,
+		                height: 28,
+		                renderer: function(storeItem, item) {
+                            this.setTitle(item.value[0] + ' = ' + Ext.util.Format.number(item.value[1],'0.00'));
+                        }
+		            },
+		            label: {
+		                display: 'insideEnd',
+		                field: dataFields[j],
+		                renderer: Ext.util.Format.numberRenderer('0.0'),
+		                orientation: (column ? 'vertical' : 'horizontal'),
+		            },
+		            xField: nameFields[j],
+		            yField: dataFields[j],
+		            renderer: j % 2 == 0 ? 
+		                        function(sprite, record, attr, index, store) {
+		                            return Ext.apply(attr, {fill: '#72de64'})
+		                        } :
+		                        function(sprite, record, attr, index, store) {
+		                            return Ext.apply(attr, {fill: '#03bcf7'})
+		                        }
+		        };
+		        series.push(seriesCfgObj);
+		    }
+ 
+	        var store = Ext.create('Ext.data.Store', {
+			    fields: fields,
+			    data: data
+			});
+ 
+ 
+			var chartCfgObj = {
+			    renderTo: Ext.getBody(),
+			    width: (COLUMN ? 800 : 600),
+			    height: (COLUMN ? 600 : 800),
+			    animate: true,
+			    store: store,
+			    axes: axes,
+			    series: series
+			};
+ 
+			Ext.create('Ext.chart.Chart', chartCfgObj);
+		};
+		</script>
+	</head>
+	<body>
+	</body>
+</html>

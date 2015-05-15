@@ -1,0 +1,114 @@
+<html>
+<head>
+<title>7923</title>
+<script type="text/javascript" src="../../ext-all.js"></script>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css"/>
+<script>
+// shrinkwrap panel:
+Ext.define('foo.SPanel', {
+    extend:'Ext.panel.Panel',
+    alias:'widget.spanel',
+    shrinkWrap: 3,
+    layout:{
+        columns:1,
+        tdAttrs:{
+            style:{"vertical-align":"top"}
+        },
+        type:'table'
+    },
+    defaults:{
+        xtype:'spanel' // recursion
+    },
+
+    initComponent:function () {
+        if (this.columns) {
+            this.layout.columns = this.columns; // single or multi columns
+        }
+        this.callParent(arguments);
+    }
+});
+
+
+Ext.onReady(function () {
+    var emptyStoreConfig = {
+        fields:['name', 'email', 'phone'],
+        proxy:{
+            type:'memory',
+            reader:{
+                type:'json',
+                root:'items'
+            }
+        }
+    };
+
+    var storeConfig = Ext.apply(emptyStoreConfig, {
+        data:{'items':[
+            { 'name':'Lisa', "email":"lisa@simpsons.com", "phone":"555-111-1224"  },
+            { 'name':'Bart', "email":"bart@simpsons.com", "phone":"555-222-1234" },
+            { 'name':'Homer', "email":"home@simpsons.com", "phone":"555-222-1244"  },
+            { 'name':'Marge', "email":"marge@simpsons.com", "phone":"555-222-1254"  }
+        ]}
+    });
+
+    var simpsonsStore = Ext.create('Ext.data.Store', storeConfig);
+
+    var pGridBig = {
+        title:'Contacts',
+        xtype:'grid',
+        store:simpsonsStore,
+        shrinkWrap: 3,
+        shrinkWrapDock: 2, // width contibutes to shrinkwrap panel width
+        columns:[
+            { header:'Name', dataIndex:'name', width: null, minWidth:100 },
+            { header:'Email', dataIndex:'email', width: null },
+            { header:'Phone', dataIndex:'phone', width: null },
+            { header:'Phone 2', dataIndex:'phone', width: null },
+            { header:'Phone 3', dataIndex:'phone', width: null },
+            { header:'Phone 4', dataIndex:'phone', width: null }
+        ]
+    };
+
+    var pFormPanel = {
+        title:'Details',
+        columns:1,
+        bodyPadding: 10,
+        items:[
+            {fieldLabel:'Date', xtype:'textfield'},
+            {fieldLabel:'Location', xtype:'textfield'},
+            {fieldLabel:'Description', xtype:'textfield'},
+            {
+                fieldLabel: 'Labellable Grid',
+                xtype:'fieldcontainer',
+                layout: {
+                    type: 'auto',
+                    columns: 1
+                }, 
+                items: pGridBig
+            }
+        ]
+    };
+
+    var viewport = {
+        xtype:'viewport',
+        layout:'border',
+        items:[{
+            region:'west',
+            width:200,
+            margin: '5 5 5 5'
+        }, {
+            region: 'center',
+            bodyPadding: 10,
+            xtype: 'spanel',
+            columns: 1,
+            items: pFormPanel,
+            margin: '5 5 5 0'
+        }]
+    };
+
+    Ext.ComponentManager.create(viewport);
+});
+</script>
+</head>
+<body>
+</body>
+</html>

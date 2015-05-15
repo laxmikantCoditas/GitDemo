@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TOUCH-2994</title>
+
+        <script src="../../sencha-touch-debug.js"></script>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+        <script type="text/javascript">
+
+            Ext.application({
+                name: 'Test',
+
+                requires : [
+                    'Ext.data.Store'
+                ],
+
+                launch: function() {
+                    Ext.JSON.encodeDate = Ext.Function.createInterceptor(Ext.JSON.encodeDate, function (date) {
+                        console.log('Ext.JSON.encodeDate was fired!');
+                        return date;
+                    });
+
+                    var store = new Ext.data.Store({
+                        autoLoad  : true,
+                        fields    : [
+                            'text',
+                            { name : 'date', type : 'date', dateFormat : 'Y-m-d' }
+                        ],
+                        proxy     : {
+                            type   : 'ajax',
+                            url    : '2994.json',
+                            reader : 'json',
+                            writer : 'json'
+                        },
+                        listeners : {
+                            load  : function (store, recs) {
+                                var rec = recs[0];
+                                rec.set('date', new Date());
+                                debugger;
+                                store.sync();
+                            },
+                            write : function (store) {
+                                console.log('write');
+                                var rec = store.getAt(0);
+
+                                console.log(rec);
+                            }
+                        }
+                    });
+                }
+            });
+
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

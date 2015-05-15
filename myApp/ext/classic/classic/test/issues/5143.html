@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+Ext.require(['Ext.data.Store', 'Ext.toolbar.Toolbar', 'Ext.chart.Chart', 'Ext.chart.series.Series',
+'Ext.chart.theme.Base', 'Ext.chart.theme.Theme', 'Ext.chart.series.Line', 'Ext.chart.axis.Time']);
+var useNull = false;
+var nullOrUndefined = function() { return useNull ? null : undefined; };
+//var defaultTo = function(v){ return (Ext.isNumeric(v)) ? parseFloat(v) : 0; };
+var defaultTo = function(v){ return (Ext.isNumeric(v)) ? parseFloat(v) : nullOrUndefined(); };
+
+Ext.onReady(function() {
+//Ext.require("Ext.chart.theme.Base");
+	fakeData = [],
+		fakeDataWithNull = [],
+		fakeDataWithUndef = [],
+		dateCtx = new Date();
+	for(var i = 0; i < 11; ++i) {
+		fakeData.push({date: dateCtx, p1 : 1.0, p2 : 2.0 });
+		fakeDataWithNull.push({date: dateCtx, p1 : 1.0, p2 : (i % 2 == 1) ? null : 2.0 });
+		fakeDataWithUndef.push({date: dateCtx, p1 : 1.0, p2 : (i % 2 == 1) ? undefined : 2.0 });
+		dateCtx = Ext.Date.add(dateCtx, Ext.Date.DAY, 1);
+	}
+	var chartStore = Ext.create("Ext.data.Store", {
+		fields: [
+			{ type: 'date',  name: 'date'},
+			{ type: 'float', name: 'p1'},
+			{ type: 'float', name: 'p2', convert: defaultTo}
+		],
+		data: fakeDataWithUndef
+	});
+	chartCfg = {
+			id : 'mychart',
+			xtype: 'chart',
+			store: chartStore,
+			listeners: {
+			    afterrender: function (chart) {
+			        //debugger;
+				//this.series.hideAll();
+			    }
+			},
+			axes: [{
+				type: 'Time',
+				position: 'bottom',
+				fields: ['date'],
+				title: 'Date',
+				dateFormat: 'M-d'
+			}, {
+				type: 'Numeric',
+				position: 'left',
+				fields: ['p1', 'p2'],
+				title: 'Number'
+			}],
+			series: [{
+				type: 'line',
+				axis: 'bottom',
+				highlight: true,
+				xField: 'date',
+				yField: 'p1',
+				markerConfig: {
+					type: 'circle',
+					size: 1,
+					radius: 10,
+					'stroke-width': 0
+				}
+			},{
+				type: 'line',
+				axis: 'bottom',
+				highlight: true,
+				xField: 'date',
+				yField: 'p2',
+				markerConfig: {
+					type: 'circle',
+					size: 1,
+					radius: 10,
+					'stroke-width': 0
+				}
+			}]
+		};
+	var tb = Ext.create('Ext.toolbar.Toolbar');
+	//tb.suspendLayout = true;
+	//tb.render('toolbar');
+	tb.add({
+		text: 'Numeric',
+		handler: function(){
+			chartStore.clearData();
+			chartStore.loadData(fakeData);
+			Ext.getCmp('main-win').remove('mychart');
+			Ext.getCmp('main-win').add(chartCfg);
+		}
+	});
+	tb.add('-', {
+		text: 'Undefined',
+		handler: function(){
+			chartStore.clearData();
+			useNull = false;
+			chartStore.loadData(fakeDataWithUndef);
+			Ext.getCmp('main-win').remove('mychart');
+			Ext.getCmp('main-win').add(chartCfg);
+		}
+    });
+	tb.add('-', {
+		text: 'Null',
+		handler: function(){
+			chartStore.clearData();
+			useNull = true;
+			chartStore.loadData(fakeDataWithNull);
+			Ext.getCmp('main-win').remove('mychart');
+			Ext.getCmp('main-win').add(chartCfg);
+		}
+	});
+	win = Ext.create('Ext.Window', {
+		id : "main-win",
+		title: 'Missing points for (i % 2 == 1) ',
+		width: 1000,
+		height: 400,
+		layout: 'fit',
+		items : [chartCfg],
+		tbar : tb
+	}).show();
+});
+        
+    </script>
+</body>
+</html>

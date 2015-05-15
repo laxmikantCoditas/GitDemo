@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css">
+    <script type="text/javascript" src="../../ext-all-debug.js"></script>
+    <script type="text/javascript">
+
+        Ext.onReady(function () {
+            Ext.define('Ext.ux.form.SearchField', {
+                extend:'Ext.form.field.Trigger',
+                alias:'widget.searchfield'
+            });
+
+            Ext.create('Ext.window.Window', {
+                width:600,
+                height:600,
+                layout:'accordion',
+
+                items:[
+                    {
+                        xtype:'panel',
+                        title:'panel1',
+                        region:'center',
+                        flex:1
+                    },
+                    {
+                        xtype:'panel',
+                        title:'panel2',
+                        region:'south',
+                        flex:1,
+                        collapsible:true,
+                        collapsed:true,
+                        animCollapse:false,
+                        collapseDirection:Ext.Component.DIRECTION_BOTTOM,
+                        titleCollapse:false,
+                        collapseMode: 'header',
+                        tools:[
+                            {
+                                xtype:'searchfield',
+                                listeners: {
+
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }).show();
+        });
+    </script>
+
+</head>
+<body></body>
+</html>

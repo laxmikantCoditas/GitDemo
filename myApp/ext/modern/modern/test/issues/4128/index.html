@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Test case template</title>
+    <link rel="stylesheet" href="../../../resources/css/sencha-touch.css"/>
+    <script src="../../../sencha-touch-debug.js"></script>
+    <script>
+        Ext.define('Order', {
+            extend:'Ext.data.Model',
+            config:{
+                fields:[
+                    { name:'id', type:'int' },
+                    { name:'name', type:'string' },
+                    { name:'status_id', type:'int'}
+                ],
+                associations: {
+                    type: 'hasOne',
+                    model: 'Status'
+                }
+            }
+        });
+
+        Ext.define('Status', {
+            extend: 'Ext.data.Model',
+            config: {
+                fields:[
+                    { name:'id', type: 'int' },
+                    { name:'statustype', type:'string' }
+                ]
+            }
+        });
+
+        var myStore = Ext.create("Ext.data.Store", {
+            model: "Order",
+            proxy:{
+                type: "ajax",
+                url: "mydata.json",
+                reader: {
+                    type:"json"
+                }
+            },
+            autoLoad:false
+        });
+
+        Ext.application({
+            launch:function () {
+                var button1 = Ext.create('Ext.Button', {
+                    text:'Works when I create models and call setter',
+                    handler:function () {
+                        var myOrder = Ext.create('Order', {
+                            id:1,
+                            name:'gum'
+                        });
+
+                        var myStatus = Ext.create('Status', {
+                            id:100,
+                            statustype:'received'
+                        });
+                        myOrder.setStatus(myStatus);   // When I do this way statusID auto set
+
+                        console.log('status_id set by setStatus: ' + myOrder.data.status_id)
+                    }
+                });
+
+                var button2 = Ext.create('Ext.Button', {
+                    text: 'Does not set status_id when i load from JSON',
+                    handler: function () {
+                        myStore.load({
+                            callback: function(rec,operation,success){
+                                console.log('rec[0].data.status_id: ' + rec[0].data.status_id);
+                            }
+                        });
+                    }
+                });
+                Ext.Viewport.add({ xtype:'container', padding:10, items:[button2,button1] });
+            } //launch
+        }); //Ext.application
+
+
+    </script>
+</head>
+
+<body></body>
+
+</html>

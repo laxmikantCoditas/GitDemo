@@ -1,0 +1,192 @@
+<!DOCTYPE HTML>
+<html dir="ltr" lang="en">
+    <head id="head">
+        <title>Legend Problem</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" >
+        <meta charset="UTF-8">
+
+        <link rel="stylesheet" type="text/css" href="../../../resources/css/ext-all.css" />
+        <style type="text/css" media="screen">
+            @font-face {  
+              font-family: Silkscreen;  
+              src: url('slkscr.ttf') format('truetype');
+            }
+        </style>        
+        <!--[if IE]>
+        <style type="text/css" media="screen">
+
+            @font-face{
+                font-family: Silkscreen;  
+                src: url( 'slkscr.eot' );
+            }
+
+        </style>
+        <![endif]-->
+
+        <script type="text/javascript" src="../../../ext.js"></script>
+
+        <script type="text/javascript">
+            Ext.require(['Ext.chart.series.Line','Ext.data.Model','Ext.data.Store','Ext.container.Container',
+                            'Ext.chart.series.Bar', 'Ext.chart.axis.Numeric', 'Ext.chart.axis.Time']);
+
+            Ext.onReady(function () {
+         
+                Ext.define('ChartModel', {
+                    extend: 'Ext.data.Model',
+                    fields: [
+                        { name: 'time', type: 'date', dateFormat: 'timestamp' },
+                        { name: 'inflow', type: 'int' },
+                        { name: 'outflow', type: 'int' },
+                        { name: 'unresolved', type: 'int' }
+                    ]
+                });
+                
+                var crbacklog_store = Ext.create('Ext.data.Store', {
+                    model: 'ChartModel',
+                    storeId: 'ChartStore',
+                    data: [{"time":1332370101,"inflow":1,"outflow":0,"unresolved":1},{"time":1332974901,"inflow":28,"outflow":3,"unresolved":13},{"time":1333579701,"inflow":13,"outflow":22,"unresolved":20},{"time":1334184501,"inflow":13,"outflow":3,"unresolved":24},{"time":1334789301,"inflow":10,"outflow":11,"unresolved":28},{"time":1335394101,"inflow":9,"outflow":5,"unresolved":30},{"time":1335998901,"inflow":7,"outflow":6,"unresolved":31},{"time":1336603701,"inflow":8,"outflow":9,"unresolved":32},{"time":1337208501,"inflow":3,"outflow":1,"unresolved":32},{"time":1337813301,"inflow":8,"outflow":9,"unresolved":32},{"time":1338418101,"inflow":6,"outflow":10,"unresolved":29},{"time":1339022901,"inflow":5,"outflow":3,"unresolved":28},{"time":1339627701,"inflow":6,"outflow":4,"unresolved":31},{"time":1340232501,"inflow":5,"outflow":2,"unresolved":32},{"time":1340837301,"inflow":2,"outflow":4,"unresolved":33},{"time":1341442101,"inflow":5,"outflow":1,"unresolved":34},{"time":1342046901,"inflow":3,"outflow":6,"unresolved":35},{"time":1342651701,"inflow":7,"outflow":8,"unresolved":33},{"time":1343256501,"inflow":4,"outflow":4,"unresolved":30},{"time":1343861301,"inflow":7,"outflow":3,"unresolved":34},{"time":1344466101,"inflow":2,"outflow":4,"unresolved":33},{"time":1345070901,"inflow":2,"outflow":8,"unresolved":29},{"time":1345675701,"inflow":6,"outflow":0,"unresolved":31},{"time":1346280501,"inflow":3,"outflow":4,"unresolved":32},{"time":1346885301,"inflow":27,"outflow":21,"unresolved":35},{"time":1347490101,"inflow":9,"outflow":11,"unresolved":37},{"time":1348094901,"inflow":2,"outflow":5,"unresolved":34},{"time":1348699701,"inflow":2,"outflow":3,"unresolved":34},{"time":1349304501,"inflow":4,"outflow":5,"unresolved":34},{"time":1349909301,"inflow":7,"outflow":2,"unresolved":35},{"time":1350514101,"inflow":3,"outflow":5,"unresolved":37},{"time":1351118901,"inflow":5,"outflow":6,"unresolved":35},{"time":1351723701,"inflow":4,"outflow":7,"unresolved":34},{"time":1352328501,"inflow":3,"outflow":2,"unresolved":32},{"time":1352933301,"inflow":1,"outflow":1,"unresolved":32},{"time":1353538101,"inflow":9,"outflow":3,"unresolved":35},{"time":1354142901,"inflow":3,"outflow":4,"unresolved":38},{"time":1354747701,"inflow":3,"outflow":3,"unresolved":38},{"time":1355352501,"inflow":0,"outflow":1,"unresolved":36},{"time":1355957301,"inflow":13,"outflow":3,"unresolved":39},{"time":1356562101,"inflow":0,"outflow":2,"unresolved":44},{"time":1357166901,"inflow":2,"outflow":1,"unresolved":44},{"time":1357771701,"inflow":5,"outflow":4,"unresolved":44},{"time":1358376501,"inflow":1,"outflow":3,"unresolved":44},{"time":1358981301,"inflow":8,"outflow":4,"unresolved":46},{"time":1359586101,"inflow":4,"outflow":5,"unresolved":46},{"time":1360190901,"inflow":4,"outflow":7,"unresolved":46},{"time":1360795701,"inflow":3,"outflow":12,"unresolved":38},{"time":1361400501,"inflow":8,"outflow":11,"unresolved":35},{"time":1362005301,"inflow":3,"outflow":4,"unresolved":31},{"time":1362610101,"inflow":2,"outflow":1,"unresolved":31},{"time":1363214901,"inflow":0,"outflow":0,"unresolved":31},{"time":1363819701,"inflow":0,"outflow":0,"unresolved":31}]
+                });    
+                
+                var colors = ['#3c3','#c33','#33c'];
+
+                Ext.chart.theme.ChartTheme = Ext.extend(Ext.chart.theme.Base, {
+                    constructor: function(config) {
+                        Ext.chart.theme.Base.prototype.constructor.call(this, Ext.apply({
+                            colors: colors
+                        }, config));
+                    }
+                });
+
+                //Ext.create('Ext.container.Container', {
+                Ext.create('Ext.panel.Panel', {
+                    layout: {
+                        type: 'fit'
+                    },
+                    width: 300,
+                    height: 200,
+                    renderTo: 'chartdiv',
+                    title: 'Legend Problem',
+                    resizable: true,
+                    resizeHandles: 'all',
+                    draggable: true,
+                    items: [{
+                        xtype: 'chart',
+                        animate: true,
+                        store: 'ChartStore',
+                        shadow: false,
+                        theme: 'ChartTheme',
+                        padding: 1,
+                        background: {
+                            gradient: {
+                                id: 'gradientId',
+                                angle: 90,
+                                stops: {
+                                    0: {
+                                        color: '#fff'
+                                    },
+                                    100: {
+                                        color: '#ddd'
+                                    }
+                                }
+                            }
+                        },
+
+                        legend: {
+                            boxStrokeWidth: 8,
+                            boxFill: 'rgba(255,255,0,0.5)',
+                            itemSpacing: 1,
+                            labelFont: '8px Silkscreen',
+                            padding: 1,
+                            position: 'float',
+                            x: 35,
+                            y: -2
+                        },
+                        axes: [{
+                            type: 'Numeric',
+                            minimum: 0,
+                            position: 'left',
+                            decimals: 0,
+                            fields: ['unresolved','inflow', 'outflow'],
+                            grid: true,
+                            style: {
+                                'font-size': '10pt'
+                            },
+                            label: {
+                                font: '8px Silkscreen'
+                            }
+                        }, {
+                            type: 'Time',
+                            position: 'bottom',
+                            fields: ['time'],
+                            dateFormat: 'M',
+                            constrain: true,
+                            fromDate: new Date().setMonth(-3),
+                            toDate: new Date(),
+                            step: [Ext.Date.MONTH,1],
+                            grid: true,
+                            label: {
+                                font: '8px Silkscreen',
+                                renderer: function(v) {
+                                    var me = this;
+                                    var df = me.dateFormat;
+                                    var d = new Date(v);
+                                    var day = d.getDate();
+                                    if ( day == Ext.Date.getLastDateOfMonth(d).getDate() ) {
+                                        d = Ext.Date.add(d, Ext.Date.DAY, 1);
+                                    }
+                                    return d;
+                                },
+                            }
+                        }],
+                        series: [{
+                            column: true,
+                            type: 'bar',
+                            highlight: true,
+                            axis: 'left',
+                            xField: 'time',
+                            yField: ['outflow','inflow'],
+                            gutter: 0.01,
+                            yPadding: 0,
+                            xPadding: 0
+                        }, {
+                            type: 'line',
+                            style: {
+                                stroke: '#f33',
+                                'stroke-width': 2,
+                                fill: '#f33',
+                                opacity: 1.0
+                            },
+                            axis: 'left',
+                            smooth: true,
+                            xField: 'time',
+                            yField: 'unresolved',
+                            markerConfig: {
+                                type: 'circle',
+                                radius: 3,
+                                'stroke-width': 0
+                            },
+                            tips: {
+                                trackMouse: true,
+                                width: 50,
+                                height: 28,
+                                renderer: function(storeItem, item) {
+                                    // calculate and display percentage on hover
+                                    var total = 0;
+                                    crbacklog_store.each(function(rec) {
+                                        total += rec.get('unresolved');
+                                    });
+                                    this.setTitle(storeItem.get('unresolved'));
+                                }
+                            },
+                        }]
+                    }]
+                });
+            });
+        </script>
+
+    </head>
+    <body>
+        <div id="chartdiv">
+        </div>
+    </body>
+</html>

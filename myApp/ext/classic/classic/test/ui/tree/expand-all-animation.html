@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Tree Expand All Animation Verification</title>
+    <link rel="stylesheet" type="text/css" href="../../../resources/css/ext-all.css" />
+     <link rel="stylesheet" type="text/css" href="../../../examples/shared/example.css" />
+    <style type="text/css">
+        .grid-icon {
+            background-repeat: no-repeat;
+            background-position: 5px;
+        }
+    </style>
+    <script type="text/javascript" src="../../../ext.js"></script>
+    <script type="text/javascript">
+
+Ext.require(['Ext.tree.*','Ext.data.*']);
+
+Ext.onReady(function() {
+    var store = Ext.create('Ext.data.TreeStore', {
+        proxy: {
+            type: 'ajax',
+            url: 'expand-all-animation.json'
+        },
+        root: {
+            text: 'Root'
+        },
+        folderSort: true,
+        sorters: [{
+            property: 'text',
+            direction: 'ASC'
+        }]
+    });
+
+    var tree = Ext.create('Ext.tree.Panel', {
+        store: store,
+        renderTo: 'tree-div',
+        height: 200,
+        width: 300,
+        title: 'Node Animation Test',
+        
+        dockedItems: [{
+            xtype: 'toolbar',
+            items: [{
+                text: 'Expand All',
+                handler: function(){
+                    tree.expandAll();
+                }
+            }, {
+                text: 'Collapse All',
+                handler: function(){
+                    tree.collapseAll();
+                }
+            }]
+        }]
+    });
+});
+    </script>
+    
+    <style>
+        p { width: 500px; }
+    </style>
+</head>
+<body>
+    <h1>Tree Expand All Animation Verification</h1>
+    
+    <p>The Tree has logic that manages its node expand/collapse animations. Currently when expanding multiple
+    nested items in quick succession you get JS errors because each node kicks off a slideOut animation using
+    the same (duplicate) parent node wrapping element rather than each using its own animation wrapper element.</p>
+    <p>This test is to verify that it works as expected after the fix. Clicking "Expand All" should expand all
+    levels of the tree with a (reasonably) smooth slide out animation (it's a bit jumpy by nature since each level
+    animates independently) and there should be no JS errors.</p>
+    
+    <div id="tree-div"></div>
+</body>
+</html>

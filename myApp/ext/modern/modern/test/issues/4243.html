@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4243</title>
+	<script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+
+	    Ext.setup({
+            requires: [
+                'Ext.form.Panel',
+                'Ext.field.Text',
+	            'Ext.device.Orientation'
+            ],
+            onReady:function () {
+	            Ext.override(Ext.viewport.Default, {
+		            determineOrientation: function() {
+			            var portrait = this.PORTRAIT,
+					            landscape = this.LANDSCAPE;
+
+			            if( this.supportsOrientation() ){
+				            console.log('supports Orientation ');
+				            console.log('window Orientation ' + this.getWindowOrientation());
+			            }else{
+				            console.log('does NOT support orientation ');
+			            }
+			            if (!Ext.os.is.Android && this.supportsOrientation()) {
+				            if (this.getWindowOrientation() % 180 === 0) {
+					            return portrait;
+				            }
+
+				            return landscape;
+			            }
+			            else {
+				            if (this.getWindowHeight() >= this.getWindowWidth()) {
+					            return portrait;
+				            }
+
+				            return landscape;
+			            }
+		            }
+	            });
+
+	            Ext.override(Ext.viewport.Android, {
+		            determineOrientation: function() {
+			            console.debug('Android viewport used for Orientation');
+			            return (this.getWindowHeight() >= this.getWindowWidth()) ? this.PORTRAIT : this.LANDSCAPE;
+		            }
+	            });
+
+	           /* Ext.device.Orientation.on({
+		            orientationchange: function(e) {
+			            console.log('Alpha: ', e.alpha);
+			            console.log('Beta: ', e.beta);
+			            console.log('Gamma: ', e.gamma);
+		            },
+		            scope: this
+	            });*/
+
+	            var form = Ext.create('Ext.form.Panel', {
+		            width:"100%",
+		            height:"100%",
+		            items: [
+			            {
+				            xtype: 'textfield',
+				            name: 'name',
+				            label: 'Name'
+			            }
+		            ]
+	            });
+	            Ext.Viewport.add(form);
+
+	            Ext.Viewport.onBefore({
+		            orientationchange: function(){
+			            console.log('orientationchange')
+		            },
+		            scope: this
+	            });
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

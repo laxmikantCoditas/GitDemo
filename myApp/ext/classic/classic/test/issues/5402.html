@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+
+
+        Ext.onReady(function () {
+            /* Datepicker */
+            Ext.create('Ext.FormPanel', {
+                renderTo: Ext.getBody(),
+                labelWidth: 100, // label settings here cascade unless overridden
+                ariaTitle: "CHANGEME {0}",
+                frame: true,
+                title: 'Date Picker',
+                bodyStyle: 'padding:5px 5px 0',
+                width: 380,
+                defaults: {
+                    msgTarget: 'side',
+                    width: 340
+                },
+                defaultType: 'datefield',
+                items: [{
+                    fieldLabel: 'Date',
+                    name: 'date'
+                }]
+            });
+        });
+    </script>
+        
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sencha Touch Issue Template</title>
+		<link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+		<script type="text/javascript" src="../../sencha-touch.js"></script>
+
+		<script type="text/javascript">
+			Ext.application({
+				name : 'Test',
+
+				requires : [
+                    'Ext.Ajax'
+				],
+
+				launch : function () {
+                    var doRequest = function() {
+                        Ext.Ajax.request({
+                            url: "3815.json",
+                            params: {
+                                dummyParam: 1
+                            }
+                        });
+                    };
+                    setInterval(doRequest, 100);
+				}
+			});
+		</script>
+	</head>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2665</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.application({
+            launch:function () {
+                Ext.Viewport.add({
+                    xtype:'tabpanel',
+                    items:[
+                        {
+                            title:'One',
+                            items:[
+                                {
+                                    xtype:'button',
+                                    text:'Go to second',
+                                    handler:function (button) {
+                                        var tabpanel = button.up('tabpanel');
+
+                                        tabpanel.setActiveItem(1);
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            title:'Two',
+                            html:'two'
+                        }
+                    ]
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2265</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+
+    <script>
+        Ext.define('App.view.SpacerClass', {
+            extend:'Ext.Component',
+            xtype:'spacerclass',
+            config:{
+                html:"<div style='height:900px;width:600px'></div>"
+            }
+        });
+
+
+        Ext.define('App.view.Market', {
+            extend:"Ext.Panel",
+            xtype:'marketPanel',
+
+            config:{
+                title:'market',
+                iconCls:'market',
+                scrollable:'both',
+                items:[
+                    {
+                        xtype:'spacerclass' //a class which makes the panel a set hight and width for the content which gets built slightly later in 'euaglo' below
+                    },
+                    {
+                        centered:'true',
+                        items:[
+                            {
+                                xtype:'spacer',
+                                height:10
+                            },
+
+
+                            {
+                                xtype:'segmentedbutton',
+                                ui:'bvAccount',
+                                id:'comoditySwitch',
+                                name:'comod',
+                                layout:{
+                                    type:'hbox',
+                                    pack:'center',
+                                    align:'stretchmax'
+                                },
+                                allowMultiple:false,
+                                items:[
+                                    {
+                                        width:'40%',
+                                        //height:50,
+                                        labelWidth:'100%',
+                                        text:'Gold'
+                                    },
+                                    {     width:'40%',
+                                        //height:50,
+                                        labelWidth:'100%',
+                                        text:'Silver',
+                                        pressed:true
+                                    }
+                                ]
+                            }//end gold silver switch
+                            ,
+                            {
+                                xtype:'component',
+                                id:'euaglo' //this is th eclass that builds divs and stuff to make the page bigger as this happens later I need the spacerclass to happen NOW similar to the lorenipson class in the kitchensink
+                            }
+                        ]//endvbox items
+                    }//end vbox
+                ]
+            }
+        });
+        Ext.application({
+            name:'Demo',
+            launch:function () {
+                Ext.Viewport.add({
+                    xtype:'tabpanel',
+                    tabBar:{
+                        layout:{
+                            pack:'center',
+                            align:'center'
+                        },
+                        docked:'bottom'
+                    },
+                    items:[
+                        {
+                            title:'Panel A',
+                            iconCls:'info',
+                            xtype:'marketPanel'
+                        },
+                        {
+                            title:'Panel B',
+                            iconCls:'download',
+                            xtype:'marketPanel'
+                        }
+                    ]
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

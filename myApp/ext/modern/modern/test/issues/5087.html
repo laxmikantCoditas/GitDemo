@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>TOUCH-5087</title>
+    <style></style>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+    <script src="../../sencha-touch-all-debug.js"></script>
+    <script>
+        Ext.require(['Ext.chart.*', 'Ext.Toolbar']);
+        Ext.setup({
+            onReady: function () {
+                var chart, isCanvas;
+                var toolbar = Ext.Viewport.add({
+                    xtype: 'toolbar',
+                    docked: 'top',
+                    items: [
+                        {
+                            xtype: 'button',
+                            text: 'Save Chart',
+                            handler: function () {
+                                chart.save();
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            text: 'Engine: Canvas',
+                            handler: function () {
+                                toggleChart();
+                                this.setText('Engine: ' + (isCanvas ? 'Canvas' : 'Svg'));
+                            }
+                        }
+                    ]
+                });
+                function toggleChart() {
+                    Ext.Viewport.remove(chart);
+                    chart = Ext.Viewport.add({
+                        xtype: 'chart',
+                        engine: 'Ext.draw.engine.' + ((isCanvas = !isCanvas) ? 'Canvas' : 'Svg'),
+                        store: {
+                            fields: ['value', 'index'],
+                            data: (function () {
+                                var data = [],
+                                        start = 1000,
+                                        count = 30,
+                                        i = 0;
+                                for (; i < count; i++) {
+                                    data.push({
+                                        value: start = start + 25 - Math.random() * 50,
+                                        index: i
+                                    });
+                                }
+                                return data;
+                            })()
+                        },
+                        axes: [
+                            {
+                                type: 'numeric',
+                                fields: 'value',
+                                needHighPrecision: true,
+                                position: 'left'
+                            },
+                            {
+                                type: 'category',
+                                fields: 'index',
+                                position: 'bottom',
+                                grid: {
+                                    odd: {
+                                        fill: '#e8e8e8'
+                                    }
+                                }
+                            }
+                        ],
+                        series: [
+                            {
+                                type: 'line',
+                                colors: 'rgba(0,200,0,0.3)',
+                                style: {
+                                    smooth: true,
+                                    stroke: 'rgb(0,200,0)'
+
+                                },
+                                xField: 'index',
+                                yField: 'value'
+                            }
+                        ],
+                        interactions: [
+                            {
+                                type: 'panzoom',
+                                zoomOnPanGesture: true
+                            }
+                        ]
+                    });
+                }
+                toggleChart();
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

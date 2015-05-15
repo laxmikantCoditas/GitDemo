@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3975</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.define('MyModel', {
+            extend: 'Ext.data.Model',
+            config: {
+                fields: [
+                    {name: 'id'},
+                    {name: 'name'}
+                ]
+            }
+        });
+
+        Ext.setup({
+            requires:['Ext.data.Store','Ext.data.proxy.Sql'],
+            onReady: function() {
+                var s = Ext.create('Ext.data.Store', {
+                    model: 'MyModel',
+                    storeId: 'MyStore',
+                    filters: [{
+                        property: 'name',
+                        value: 'Bob'
+                    }],
+                    proxy: {
+                        type: 'sql'
+                    }
+                });
+
+                s.load();
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

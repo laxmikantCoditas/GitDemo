@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, body * {
+            /*-webkit-box-sizing: border-box;*/
+        }
+
+        #container {
+            /*-webkit-transform: rotate(45deg) skew(20deg);*/
+            background-color: green;
+            width: 500px;
+            height: 500px;
+            position: relative;
+            /*overflow: auto;*/
+            padding: 40px;
+            border-top: 50px solid orange;
+            border-right: 100px solid orange;
+            border-bottom: 150px solid orange;
+        }
+
+        #draggable {
+            position: absolute;
+            width: 200px;
+            height: 100px;
+            background-color: red;
+            left: 100px;
+            top: 100px;
+            /*margin-left: 50px;*/
+            /*margin-top: 50px;*/
+        }
+
+        #draggable1 {
+            position: absolute;
+            width: 100px;
+            height: 150px;
+            background-color: blue;
+            top: 100px;
+        }
+
+        #draggable2 {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background-color: pink;
+            left: 100px;
+        }
+
+        #toolbar {
+            position: absolute;
+            bottom: 0px;
+        }
+    </style>
+    <script type="text/javascript" src="../../../sencha-touch.js"></script>
+    <script type="text/javascript">
+        Ext.setup({
+            viewport: {
+                autoRender: false
+            },
+            onReady: function() {
+                draggable = Ext.create('Ext.util.Draggable', {
+                    element: 'draggable',
+                    direction: 'both',
+                    translateMethod: 'cssposition'
+                });
+
+//                draggable1 = Ext.create('Ext.util.Draggable', {
+//                    direction: 'vertical',
+//                    element: 'draggable1'
+//                });
+//
+//                draggable2 = Ext.create('Ext.util.Draggable', {
+//                    element: 'draggable2'
+//                });
+            }
+        });
+
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function doResize() {
+            document.getElementById('container').style.width = getRandomInt(200, 600) + 'px';
+            document.getElementById('container').style.height = getRandomInt(200, 600) + 'px';
+
+            draggable.refresh();
+            draggable.setOffset({
+                x: Infinity,
+                y: Infinity
+            })
+//            draggable1.refresh();
+//            draggable2.refresh();
+//            draggable.setOffset({Infinity, Infinity);
+        }
+    </script>
+</head>
+<body>
+    <div id="container">
+        <div id="draggable"></div>
+        <div id="draggable1"></div>
+        <div id="draggable2"></div>
+    </div>
+    <div id="toolbar">
+        <button onclick="doResize()">Resize</button>
+    </div>
+</body>
+</html>

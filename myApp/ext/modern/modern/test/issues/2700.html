@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2618</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.application({
+            launch:function () {
+                Ext.define('HCofC.view.Location', {
+                    extend:'Ext.Container',
+                    requires:'Ext.Map',
+                    xtype:'location',
+
+                    directionsRenderer:null,
+                    directionsService:null,
+
+                    config:{
+                        title:'Location',
+                        iconCls:'locate',
+                        layout:'fit',
+                        items:[
+                            {
+                                docked:'top',
+                                xtype:'toolbar',
+                                title:'Location'
+                            }
+                        ]
+                    },
+
+                    initialize:function () {
+                        var directionsService = new google.maps.DirectionsService(),
+                            directionsRenderer = new google.maps.DirectionsRenderer(),
+                            position = new google.maps.LatLng(HCofC.app.mapCenter[0], HCofC.app.mapCenter[1]),
+                            infoWindow = new google.maps.InfoWindow({ content:HCofC.app.mapText }),
+                            marker, isMaxMind;
+
+                        this.callParent();
+
+                        var map = this.add({
+                            xtype:'map',
+                            mapOptions:{
+                                zoom:13,
+                                center:position,
+                                mapTypeId:google.maps.MapTypeId.ROADMAP
+                            },
+                            mapRendererOptions:{
+                                draggable:true,
+                                panel:document.getElementById('ext-map-1'),
+                                hideRouteList:false
+                            }
+                        });
+
+
+                        directionsRenderer.setMap(map.getMap());
+                        //		directionsRenderer.setPanel(document.getElementById('directionsPanel'));
+
+                        marker = new google.maps.Marker({
+                            position:position,
+                            map:map.getMap(),
+                            visible:true
+                        });
+
+                        // Use our new getLatLng with fallback and define an inline function to handle the callback.
+                        getLatLng(function (latitude, longitude, isMaxMind) {
+                            var start = new google.maps.LatLng(latitude, longitude),
+                                address = HCofC.app.mapDestination;
+
+                            if (address) {
+                                var end = HCofC.app.mapDestination;
+                                var request = {
+                                    origin:start,
+                                    destination:end,
+                                    travelMode:google.maps.DirectionsTravelMode.DRIVING
+                                };
+
+                                // make the directions request
+                                directionsService.route(request, function (result, status) {
+                                    if (status == google.maps.DirectionsStatus.OK) {
+                                        // Display the directions using Google's Directions Renderer.
+                                        // ****  This line destroys the map with the pin, but the driving directions are correct.  The zoom does not work..
+                                        directionsRenderer.setDirections(result);
+                                    } else {
+                                        error("Directions failed due to: " + status);
+                                    }
+                                });
+
+                            }
+                            else {
+                                error('Please enter an address');
+                            }
+
+                            // if we used MaxMind for location, add attribution link
+                            if (isMaxMind) {
+                                $('body').append('<p><a href="http://www.maxmind.com" target="_blank">IP to Location Service Provided by MaxMind</a></p>');
+                            }
+                        });
+
+                        function getLatLng(callback) {
+                            // test for presence of geolocation
+                            if (navigator && navigator.geolocation) {
+                                // make the request for the user's position
+                                navigator.geolocation.getCurrentPosition(function (position) {
+                                            // success handler
+                                            callback(position.coords.latitude, position.coords.longitude);
+                                        },
+                                        function (err) {
+                                            // handle the error by passing the callback the location from MaxMind
+                                            callback(geoip_latitude(), geoip_longitude(), true);
+                                        });
+                            } else {
+                                // geolocation not available, so pass the callback the location from MaxMind
+                                callback(geoip_latitude(), geoip_longitude(), true);
+                            }
+                        }
+
+                        function error(msg) {
+                            alert(msg);
+                        }
+
+                        google.maps.event.addListener(marker, 'click', function () {
+                            infoWindow.open(map, marker);
+                        });
+                    }
+                });
+
+                Ext.Viewport.add({xtype:'swipertest'});
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

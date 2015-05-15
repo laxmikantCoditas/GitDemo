@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript">
+
+        Ext.application({
+            name: 'MyApp',
+
+            requires: [
+                'Ext.form.Text'
+            ],
+
+            launch: function () {
+                var i     = 1,
+                    len   = 50,
+                    items = [];
+
+                for (; i < len; i++) {
+                    items.push({
+                        xtype : 'textfield',
+                        label : i
+                    });
+                }
+
+                Ext.Viewport.add({
+                    items      : items,
+                    scrollable : {
+                        direction  : 'both',
+                        indicators : {
+                            y : {
+                                autoHide : false //y indicator will always show, x will auto hide
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+
+</head>
+<body></body>
+</html>

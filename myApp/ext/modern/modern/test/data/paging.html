@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../sencha-touch-all.js"></script>
+    <script>
+        Ext.define('MyModel', {
+            extend: 'Ext.data.Model',
+
+            config: {
+                fields: [
+                    'field1',
+                    {name: 'field2', type: 'date', dateFormat: 'timestamp'},
+                    {name: 'field3', mapping: 'data.test', type: 'int'}
+                ],
+
+                proxy: {
+                    type: 'ajax',
+                    url: 'read.json',
+                    reader: {
+                        type: 'json',
+                        rootProperty: 'results',
+                        idProperty: 'IDPROPERTY'
+                    }
+                }
+            }
+        });
+
+        Ext.setup({
+            onReady: function() {
+                var store = Ext.create('Ext.data.Store', {
+                    model: 'MyModel'
+                });
+
+                var dataview = Ext.create('Ext.DataView', {
+                    store: store,
+                    fullscreen: true,
+                    itemTpl: 'Field1: {field1}, Field2: {field2:date("d-m-Y")}, Field3: {field3}'
+                });
+
+                store.loadPage(2);
+                store.nextPage();
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

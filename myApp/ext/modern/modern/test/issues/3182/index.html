@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../../sencha-touch-all.js"></script>
+    <script>
+        Ext.define('Person', {
+            extend: 'Ext.data.Model',
+            config: {
+                fields: [
+                    { name: 'id', type: 'int' },
+                    { name: 'name', type: 'string' }
+                ],
+
+
+                associations: { type: 'hasOne', model: 'Address' }
+            }
+        });
+
+        Ext.define('Address', {
+            extend: 'Ext.data.Model',
+            config: {
+                fields: [
+                    { name: 'id', type: 'int' },
+                    { name: 'display', type: 'string' }
+                ]
+            }
+        });
+
+        Ext.application({
+            name: 'Test',
+            launch: function () {
+                var store = Ext.create('Ext.data.Store', {
+                    model: 'Person',
+                    proxy: {
+                        type: 'ajax',
+                        url: 'data.json',
+                        reader: {
+                            type: 'json',
+                            rootProperty: 'persons'
+                        }
+                    }
+                });
+
+                var printStore = function() {
+                    store.each(function(person) {
+                        console.log(person.getId() + ' - ' + person.get('name') + ' @ ' + person.getAddress().get('display'));
+                    });
+                };
+
+                store.load({
+                    callback: function() {
+                        printStore();
+                        console.log('----------');
+                        store.getProxy().setUrl('updates.json');
+                        store.load({
+                            callback: function() {
+                                printStore();
+                            }
+                        })
+                    }
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

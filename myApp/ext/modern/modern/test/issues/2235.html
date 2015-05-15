@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2235</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.define('App.view.StatusBar', {
+            extend: 'Ext.TitleBar',
+            xtype: 'StatusBar',
+            config: {
+                title: 'My title bar',
+                docked: 'top',
+                items: [{
+                   xtype: 'button',
+                    action: 'home',
+                    iconCls: 'info',
+                    width: 100
+                }]
+            }
+        });
+        Ext.application({
+            name:'Demo',
+            launch:function () {
+                Ext.Viewport.add({ html: 'One'});
+                console.log(Ext.Viewport.getActiveItem());
+                Ext.Viewport.removeAt(0);
+                console.log(Ext.Viewport.getActiveItem());
+                Ext.Viewport.add({ html: 'Two'});
+                console.log(Ext.Viewport.getActiveItem());
+                Ext.Viewport.removeAt(0);
+                console.log(Ext.Viewport.getActiveItem());
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

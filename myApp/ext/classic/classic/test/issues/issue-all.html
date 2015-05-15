@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv=Content-type content="text/html; charset=utf-8">
+<title>issue-all</title>
+
+<style>
+html,body{
+    margin:0;padding:0;
+    height:100%;
+}
+iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20%;
+    height: 10000px;
+    min-height: 100%;
+}
+
+</style>
+</head>
+<body>
+
+<script>
+var versions = [
+    // '4.0.0'
+    // ,
+    // '4.0.1'
+    // ,
+    // '4.0.2a'
+    // ,
+    // '4.0.4'
+    // ,
+    // '4.0.5'
+    // ,
+    // '4.0.6'
+    // ,
+    '4.0.7'
+    ,
+    '4.1.0-beta-1' // current repo
+    ,
+    '' // current repo
+    // ,
+    // '4.1'
+];
+
+for (var index=0; index < versions.length; index++) {
+    document.write('<iframe class=i' + index + ' src="issue' + (versions[index] && '-' + versions[index])  + '.html' + location.search + '"><\/iframe>');
+}
+
+var rules = [];
+var style = document.createElement('div').style;
+
+style.width = 100 / index + '%';
+
+for (var i = 0; i < index; ++i) {
+    style.left = 100 * (i / index) + '%';
+    rules.push('.i' + i + '{' + style.cssText + '}');
+}
+
+document.write('<style>\n' + rules.join('\n') + '\n</style>');
+
+</script>
+
+</body>
+</html>

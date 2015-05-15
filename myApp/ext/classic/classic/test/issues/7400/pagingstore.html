@@ -1,0 +1,58 @@
+<html>
+<head>
+<title>cors</title>
+<link rel="stylesheet" type="text/css" href="../../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../../ext.js"></script>
+<script type="text/javascript">
+Ext.require('Ext.Ajax');
+Ext.onReady(function () {
+    Ext.Ajax.cors = true;
+
+    var itemsPerPage = 5;
+        name = 'Ben',
+        total = 200;
+                                                                                                                  
+    var store = Ext.create('Ext.data.Store', {
+        autoLoad: true,
+        fields: ['name', 'email', 'phone'],
+        pageSize: itemsPerPage,
+        proxy: {
+            type: 'ajax',
+            url: 'http://www.benjamintoll.com/cors/pagingstore.php',
+            reader: {
+                type: 'json',
+                root: 'rows',
+                totalProperty: 'total'
+            },                                                                                                   
+            extraParams: {
+                name: name,
+                total: total
+            }
+        }
+    });
+                                                                                                                  
+    Ext.create('Ext.grid.Panel', {
+        title: 'Test Grid',
+        store: store,
+        columns: [
+            { header: 'Name',  dataIndex: 'name', flex: 1 },
+            { header: 'Email', dataIndex: 'email', flex: 1 },
+            { header: 'Phone', dataIndex: 'phone', flex: 1 }
+        ],
+        width: 400,
+        height: 200,
+        dockedItems: [{
+            xtype: 'pagingtoolbar',
+            store: store,
+            dock: 'bottom',
+            displayInfo: true
+        }],
+        renderTo: Ext.getBody()
+    });
+});
+</script>
+</head>
+
+<body>
+</body>
+</html>

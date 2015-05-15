@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css">
+    <script type="text/javascript" src="../../ext.js"></script>
+    <script>
+        Ext.require('Ext.window.MessageBox');
+        Ext.onReady(function(){
+            var tempInputField=Ext.get("input");
+            tempInputField.on("change", uploadFile, this);
+
+            function uploadFile(e){
+                try{
+                    Ext.MessageBox.show({
+                     title: 'Please wait',
+                     msg: 'Uploading file...',
+                     progressText: 'Uploading file...',
+                     width:300,
+                     progress:true,
+                     closable:false
+                    });
+                } catch (e){
+                    alert (e);
+                }
+            }
+        });
+    </script>
+</head>
+<body>
+    <form id='test' title='test'  method='post' enctype='multipart/form-data'>
+        <input name='input' id='input' type='file' size='50' maxlength='100000'/>
+    </form>
+</body>
+</html>

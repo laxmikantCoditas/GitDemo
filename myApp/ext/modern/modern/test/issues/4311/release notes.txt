@@ -1,0 +1,1 @@
+YeTouchMini2 moved the touch table code to inside app/view/center

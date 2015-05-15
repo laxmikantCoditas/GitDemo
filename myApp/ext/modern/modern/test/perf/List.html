@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sencha Touch Issue Template</title>
+        <link rel="stylesheet" href="../../resources/css/base.css"/>
+		<link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+		<script type="text/javascript" src="../../sencha-touch.js"></script>
+
+		<script type="text/javascript">
+            var seed = 1.3,
+                iteration = 0,
+                count = 11,
+                averageFps = [],
+                cases = [
+                    {
+                        xtype: 'list',
+                        description: '+infinite +var +grp +disclosure',
+                        itemTpl: '{firstName} {lastName}',
+                        onItemDisclosure: function(record, item, index, e) {
+                            e.stopEvent();
+                            Ext.Msg.alert('Disclose', 'Disclose more info for ' + record.get('firstName'));
+                        },
+                        grouped: true,
+                        infinite: true,
+                        useSimpleItems: true,
+                        variableHeights: true,
+                        store: 'myStore'
+                    },
+                    {
+                        xtype: 'list',
+                        description: '+infinite +var +grp -disclosure',
+                        itemTpl: '{firstName} {lastName}',
+                        infinite: true,
+                        grouped: true,
+                        useSimpleItems: true,
+                        variableHeights: true,
+                        store: 'myStore'
+                    },
+                    {
+                        xtype: 'list',
+                        description: '+infinite +var -grp +disclosure',
+                        itemTpl: '{firstName} {lastName}',
+                        onItemDisclosure: function(record, item, index, e) {
+                            e.stopEvent();
+                            Ext.Msg.alert('Disclose', 'Disclose more info for ' + record.get('firstName'));
+                        },
+                        infinite: true,
+                        variableHeights: true,
+                        useSimpleItems: true,
+                        store: 'myStore'
+                    },
+                    {
+                        xtype: 'list',
+                        description: '+infinite +var -grp -disclosure',
+                        itemTpl: '{firstName} {lastName}',
+                        infinite: true,
+                        useSimpleItems: true,
+                        variableHeights: true,
+                        store: 'myStore'
+                    },
+                    {
+                        xtype: 'list',
+                        description: '+infinite -var +grp +disclosure',
+                        itemTpl: '{firstName} {lastName}',
+                        onItemDisclosure: function(record, item, index, e) {
+                            e.stopEvent();
+                            Ext.Msg.alert('Disclose', 'Disclose more info for ' + record.get('firstName'));
+                        },
+                        grouped: true,
+                        infinite: true,
+                        useSimpleItems: true,
+                        variableHeights: false,
+                        store: 'myStore'
+                    },
+                    {
+                        xtype: 'list',
+                        description: '+infinite -var +grp -disclosure',
+                        itemTpl: '{firstName} {lastName}',
+                        grouped: true,
+                        infinite: true,
+                        useSimpleItems: true,
+                        variableHeights: false,
+                        store: 'myStore'
+                    },
+                    {
+                        xtype: 'list',
+                        description: '+infinite -var -grp +disclosure',
+                        itemTpl: '{firstName} {lastName}',
+                        onItemDisclosure: function(record, item, index, e) {
+                            e.stopEvent();
+                            Ext.Msg.alert('Disclose', 'Disclose more info for ' + record.get('firstName'));
+                        },
+                        infinite: true,
+                        useSimpleItems: true,
+                        variableHeights: false,
+                        store: 'myStore'
+                    },
+                    {
+                        xtype: 'list',
+                        description: '+infinite -var -grp -disclosure',
+                        itemTpl: '{firstName} {lastName}',
+                        infinite: true,
+                        useSimpleItems: true,
+                        variableHeights: false,
+                        store: 'myStore'
+                    },
+                    {
+                        xtype: 'list',
+                        description: '-infinite -var +grp +disclosure',
+                        itemTpl: '{firstName} {lastName}',
+                        onItemDisclosure: function(record, item, index, e) {
+                            e.stopEvent();
+                            Ext.Msg.alert('Disclose', 'Disclose more info for ' + record.get('firstName'));
+                        },
+                        grouped: true,
+                        store: 'myStore'
+                    },
+                    {
+                        xtype: 'list',
+                        description: '-infinite -var +grp -disclosure',
+                        itemTpl: '{firstName} {lastName}',
+                        grouped: true,
+                        store: 'myStore'
+                    },
+                    {
+                        xtype: 'list',
+                        description: '-infinite -var -grp +disclosure',
+                        itemTpl: '{firstName} {lastName}',
+                        onItemDisclosure: function(record, item, index, e) {
+                            e.stopEvent();
+                            Ext.Msg.alert('Disclose', 'Disclose more info for ' + record.get('firstName'));
+                        },
+                        store: 'myStore'
+                    },
+                    {
+                        xtype: 'list',
+                        description: '-infinite -var -grp -disclosure',
+                        itemTpl: '{firstName} {lastName}',
+                        store: 'myStore'
+                    }
+                ],
+                myList, description, title, container;
+
+            // Controllable random.
+            function random() {
+                seed *= 7.3;
+                seed -= Math.floor(seed);
+                return seed;
+            }
+
+			Ext.application({
+				name : 'Test',
+
+				requires : [
+                    'Ext.data.Store',
+                    'Ext.dataview.List'
+				],
+
+
+				launch : function () {
+                    Ext.create('Ext.data.Store', {
+                        id: 'myStore',
+                        fields: ['firstName', 'lastName'],
+                        sorters: 'firstName',
+                        autoLoad: true,
+                        grouper: {
+                            groupFn: function(record) {
+                                return record.get('firstName')[0];
+                            }
+                        },
+                        proxy: {
+                            type: 'ajax',
+                            url: 'contacts.json'
+                        }
+                    });
+
+                    Ext.AnimationQueue.showFps();
+                    container = Ext.Viewport.add({
+                        layout: 'fit',
+                        items: {
+                            xtype: 'titlebar',
+                            id: 'title',
+                            docked: 'top',
+                            tpl: '<div>{description} (Run # {iteration})</div>'
+                        }
+                    });
+                    title = Ext.getCmp('title');
+                    this.scroller = Ext.Function.bind(this.scrollList, this);
+                    this.next();
+                },
+
+                next: function() {
+                    var test;
+                    if (cases.length) {
+                        test = cases.shift();
+                        Ext.AnimationQueue.resetFps();
+                        seed = 1.3;
+                        iteration = 0,
+                        description = test.description;
+
+                        Ext.destroy(myList);
+                        delete test.description;
+                        myList = container.add(test);
+                        this.scrollList(myList);
+                    }
+                    else {
+                        alert(averageFps.join(' : '));
+                    }
+
+                },
+
+                scrollList: function(myList) {
+                    var me = this,
+                        duration = 1500,
+                        amount = Math.floor(random() * 5000);
+
+                    iteration++;
+
+                    title.setData({ iteration: iteration, description: description});
+
+                    myList.getScrollable().getScroller().scrollTo(0, amount, { duration: duration });
+                    if (iteration < count) {
+                        setTimeout(function() {
+                            me.scrollList(myList);
+                        }, duration + 100);
+                    }
+                    else {
+                        averageFps.push("\n" + description + ': ', Ext.getCmp('__averageFps').getHtml());
+                        this.next();
+                    }
+                }
+			});
+		</script>
+	</head>
+</html>

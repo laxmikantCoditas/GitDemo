@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+    <script type="text/javascript">
+        var watchdog;
+
+        function go () {
+            function loadScript (src, onload, onerror) {
+                var script = document.createElement('script'),
+                    done;
+
+                script.src = src;
+                script.type = 'text/javascript';
+                //script.charset = 'UTF-8';
+
+                function wrapError () {
+                    script.onload = script.onreadystatechange = script.onerror = null;
+                    if (!done) {
+                        done = true;
+                        if (onerror) {
+                            onerror('Failed to load "' + src + '"');
+                        }
+                    }
+                }
+
+                function wrapLoad () {
+                    script.onload = script.onreadystatechange = script.onerror = null;
+                    if (!done) {
+                        done = true;
+                        if (onload) {
+                            onload();
+                        }
+                    }
+                }
+
+                script.onerror = wrapError;
+                if (('addEventListener' in script) || !('readyState' in script)) {
+                    script.onload = wrapLoad;
+                } else {   // for <IE9 Compatability
+                    script.onreadystatechange = function() {
+                        if (this.readyState == 'loaded' || this.readyState == 'complete') {
+                            wrapLoad();
+                        }
+                    };
+                }
+
+                document.getElementsByTagName('head')[0].appendChild(script);
+            }
+
+            var waitForExt;
+
+            function failed (msg) {
+                if (waitForExt) {
+                    clearInterval(waitForExt);
+                    waitForExt = null;
+                }
+                watchdog = null;
+
+                var el = document.createElement('div');
+                el.style.color = 'red';
+                el.style.fontSize = '30px';
+                el.innerHTML = 'FAILED: ' + msg;
+
+                document.body.appendChild(el);
+            }
+
+            setTimeout(function () {
+                loadScript('../../ext-all.js', function () {
+                    watchdog = setTimeout(function () {
+                        failed('Timeout');
+                    }, 2000);
+
+                    waitForExt = setInterval(function () {
+                        if (typeof Ext != 'undefined') {
+                            clearInterval(waitForExt);
+
+                            var el = document.createElement('div');
+                            el.style.color = 'green';
+                            el.style.fontSize = '30px';
+                            el.innerHTML = 'Loaded Ext JS...';
+
+                            document.body.appendChild(el);
+                            loadScript('load-after-ready.js');
+                        }
+                    }, 10);
+                },
+                failed);
+            }, 100);
+        }
+    </script>
+    <!--<link rel="stylesheet" type="text/css" href="sdk/.build/sdk/test/visual/windows/windows.css" />-->
+
+
+    <!--<script type="text/javascript" src="sdk/extjs/ext-all.js"></script>-->
+    <!--<script type="text/javascript" src="sdk/.build/sdk/ext-all-debug.js"></script>-->
+
+
+    <!--<script>if (typeof Ext == 'undefined') document.write('<script src="sdk/.build/sdk/ext.js"><\/script>');</script>-->
+    
+    <!--<script type="text/javascript" src="sdk/.build/sdk/test/visual/windows/windows.js"></script>-->
+
+</head>
+<body onload="go();">
+    This test should only be run against a build.
+</body>
+</html>

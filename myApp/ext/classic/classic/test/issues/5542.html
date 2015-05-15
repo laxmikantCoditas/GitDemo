@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>5542</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+Ext.onReady(function(){ 
+  //var panel = new Ext.panel.Panel({
+  var panel = Ext.create("Ext.panel.Panel", {
+    renderTo:Ext.getBody(),
+    height:100, 
+    items:[{
+      xtype:'button',
+      text:'Button In Form',
+      handler:function(){ 
+        //var mywindow = new Ext.window.Window({width:300,height:300,constrain:true, id:'myid', html:"<iframe src='http://www.VENTYX.com' style='width:290px;height:290px'/>"}); 
+        var mywindow = new Ext.window.Window({width:300,height:300,constrain:true, id:'myid', html:"<iframe src='http://www.VENTYX.com' style='width:100%;height:100%'/>"}); 
+        mywindow.show(); 
+      }
+    }] 
+  }); 
+});
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test case template</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css" type="text/css">
+        <script src="../../sencha-touch-all.js"></script>
+        
+        <script>
+            Ext.setup({
+                onReady: function() {
+
+                    Ext.widget('formpanel', {
+                        fullscreen: true,
+                        items: [
+                        {
+                            xtype: 'toolbar',
+                            docked: 'top',
+                            title: 'Toolbar'
+                        },
+                        {
+                            xtype: 'fieldset',
+                            title: 'Fieldset',
+                            items: {
+                                xtype: 'textfield',
+                                label: 'Field'
+                            }
+                        }
+                        ]
+                    });
+
+                }
+            });
+        </script>
+    </head>
+    <body>
+        
+    </body>
+</html>

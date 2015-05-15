@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sencha Touch Issue Template</title>
+		<link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+		<script type="text/javascript" src="../../sencha-touch.js"></script>
+
+		<script type="text/javascript">
+			Ext.application({
+			    name: 'App',
+			    launch: function () {
+			        Ext.Viewport.add(Ext.create('Ext.Panel', {
+			            fullscreen: true,
+			            layout: 'fit',
+			            items: [
+			                {
+			                    xtype: 'panel',
+			                    scrollable: true
+			                },
+			                {
+			                    xtype: 'toolbar',
+			                    docked: 'bottom',
+			                    items: {
+			                        iconMask: true,
+			                        ui: 'plain',
+			                        iconCls: 'info'
+			                    }
+			                }
+			            ]
+			        }));
+			    }
+			});
+
+			// Ext.application({
+			// 	name : 'Test',
+
+			// 	requires : [
+					
+			// 	],
+
+			// 	launch : function () {
+			// 		// Ext.Viewport.add({
+			// 		// 	xtype: 'formpanel',
+			// 		// 	items: [
+			// 		// 		{
+			// 		//             xtype: 'textfield',
+			// 		//             autoComplete: true,
+			// 		//             name: 'email'
+			// 		//         }
+			// 		// 	]
+			// 		// });
+
+			// 		Ext.create('Ext.form.Panel', {
+			// 		    fullscreen : true,
+			// 		    items      : [
+			// 		        {
+			// 		            xtype  : 'toolbar',
+			// 		            docked : 'top',
+			// 		            items  : [
+			// 		                {
+			// 		                    text    : 'get checked',
+			// 		                    handler : function () {
+			// 		                        var products = Ext.ComponentQuery.query('radiofield[name=product]');
+			// 		                        // Ext.Msg.alert('getGroupValue()', products[0].getGroupValue());
+			// 		                        console.log(products[0].getGroupValue());
+			// 		                    }
+			// 		                }
+			// 		            ]
+			// 		        },
+			// 		        {
+			// 		            xtype        : 'fieldset',
+			// 		            title        : 'Products:',
+			// 		            instructions : 'Please select a product.',
+			// 		            defaults     : {
+			// 		                labelWidth : 180
+			// 		            },
+			// 		            items        : [
+			// 		                {
+			// 		                    xtype : 'radiofield',
+			// 		                    name  : 'product',
+			// 		                    label : 'Ext JS',
+			// 		                    value : 'extjs'
+			// 		                },
+			// 		                {
+			// 		                    xtype   : 'radiofield',
+			// 		                    name    : 'product',
+			// 		                    label   : 'Sencha Touch',
+			// 		                    value   : 'senchatouch',
+			// 		                    checked : true
+			// 		                },
+			// 		                {
+			// 		                    xtype : 'radiofield',
+			// 		                    name  : 'product',
+			// 		                    label : 'Sencha Designer',
+			// 		                    value : 'designer'
+			// 		                }
+			// 		            ]
+			// 		        }
+			// 		    ]
+			// 		});
+			// 	}
+			// });
+		</script>
+	</head>
+</html>

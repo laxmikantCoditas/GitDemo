@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Better Components</title>
+
+    <link rel="stylesheet" href="../../../resources/css/sencha-touch.css" type="text/css" />
+    <link rel="stylesheet" href="layout.css" type="text/css" />
+
+    <script type="text/javascript" src="../../../sencha-touch-all.js"></script>
+    <script type="text/javascript">
+        Ext.setup({
+            requires: [
+                'Ext.Component',
+                'Ext.Container',
+                'Ext.Button'
+            ],
+
+            viewport: null,
+
+            onReady: function() {
+                container = new Ext.Container({
+                    id: 'test',
+                    width: 'inherit',
+                    height: 'inherit',
+                    layout: {
+                        type: 'vbox',
+                        pack: 'start'
+                    },
+                    items: [
+                        {
+                            ui: 'normal',
+                            xtype: 'button',
+                            text: 'Docked Top 1',
+                            docked: 'top'
+                        },
+                        {
+                            ui: 'normal',
+                            xtype: 'button',
+                            text: 'Docked Top 2',
+                            docked: 'top'
+                        },
+                        {
+                            ui: 'normal',
+                            xtype: 'button',
+                            text: 'Docked Top 3',
+                            docked: 'top'
+                        },
+                        {
+                            ui: 'decline',
+                            xtype: 'button',
+                            text: 'Docked Left 1',
+                            docked: 'left'
+                        },
+                        {
+                            ui: 'decline',
+                            xtype: 'button',
+                            text: 'Docked Left 2',
+                            docked: 'left'
+                        },
+                        {
+                            ui: 'confirm',
+                            xtype: 'button',
+                            text: 'Docked Right 1',
+                            docked: 'right'
+                        },
+                        {
+                            ui: 'confirm',
+                            xtype: 'button',
+                            text: 'Docked Right 1',
+                            docked: 'right'
+                        },
+                        {
+                            ui: 'action',
+                            xtype: 'button',
+                            text: 'Docked Bottom 1',
+                            docked: 'bottom'
+                        },
+                        {
+                            ui: 'action',
+                            xtype: 'button',
+                            text: 'Bar Longer Text sadfdsaf asd fsdafasdf',
+                            flex: 1
+                        },
+                        {
+                            ui: 'confirm',
+                            xtype: 'button',
+                            text: 'Bar Longer Text',
+                            flex: 1
+                        }
+                    ]
+                });
+
+                document.body.appendChild(container.render().dom);
+            }
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

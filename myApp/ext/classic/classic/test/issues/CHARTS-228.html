@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+Ext.onReady(function () {
+    var win = Ext.create('Ext.window.Window', {
+	id: 'chartWindow',
+	width: 600,
+	height: 400,
+	title: 'Chart Window',
+	layout: 'fit',
+	border: false,
+
+	items: [{
+	    xtype: 'chart',
+	    animate: true,
+	    mask: 'horizontal',
+	    listeners: {
+		select: {
+		    fn: function(me, selection) {
+			me.setZoom(selection);
+			me.mask.hide();
+		    }
+		}
+	    },
+	    axes: [{
+		title: 'Temperature',
+		type: 'Numeric',
+		position: 'left',
+		fields: ['temperature'],
+		minimum: 0,
+		maximum: 100
+	    }, {
+		title: 'Time',
+		type: 'Category',
+		position: 'bottom',
+		fields: ['date'],
+		label: { renderer: Ext.util.Format.dateRenderer('G:i') }
+	    }],
+	    series: [{
+		type: 'line',
+		xField: 'date',
+		yField: 'temperature'
+	    }],
+	    store: Ext.create('Ext.data.Store', {
+		fields: ['temperature', 'date'],
+		data: [
+			{ temperature: 58, date: new Date(2011, 1, 1, 8) },
+			{ temperature: 63, date: new Date(2011, 1, 1, 9) },
+			{ temperature: 73, date: new Date(2011, 1, 1, 10) },
+			{ temperature: 78, date: new Date(2011, 1, 1, 11) },
+			{ temperature: 81, date: new Date(2011, 1, 1, 12) }
+		]  
+	    })
+        }]
+    }).show();
+});
+        
+    </script>
+</body>
+</html>

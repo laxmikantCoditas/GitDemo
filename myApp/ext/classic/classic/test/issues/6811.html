@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+Ext.Loader.setConfig({enabled: true});
+
+Ext.Loader.setPath('Ext.ux', '../../builds/4.1.1/examples/ux');
+
+Ext.require([
+	'Ext.ux.data.PagingMemoryProxy',
+	'Ext.ux.SlidingPager'
+]);
+
+/*
+Ext.define('Ext.overrides.slider.Multi', {
+    override: 'Ext.slider.Multi',
+    calculateThumbPosition : function(v) {
+	var me = this,
+	    minValue = me.minValue,
+	    pos = (v - minValue) / (me.maxValue - minValue) * 100;
+
+	// If the number of records is <= pageSize then return minValue.
+	if (isNaN(pos)) {
+	    pos = minValue;
+	}
+
+	return pos;
+    }
+});
+*/
+
+var data = [
+    ['NOKIA BSC', 40576],
+    ['CTS_EQUIPMENT', 381912],
+    ['CSS', 297524],
+    ['TELLABS_8800', 348]
+];
+
+Ext.onReady(function(){
+    Ext.define('mymodel', {
+        extend: 'Ext.data.Model',
+        fields: [
+            {name: 'value1'},
+            {name: 'count'}
+        ]
+    });
+
+    Ext.create('Ext.data.Store', {
+        storeId: 'mystore',
+        model: 'mymodel',
+        pageSize: 5,
+        proxy: {
+            type: 'pagingmemory',
+            data: data,
+            reader: {
+            type: 'array'
+            }
+        },
+        autoLoad: true
+    });
+
+    Ext.create('Ext.grid.Panel', {
+        renderTo: document.body,
+        store: Ext.StoreMgr.get('mystore'),
+        height: 160,
+        width: 600,
+        columns: [{
+            text: 'VALUE1',
+            sortable: true,
+            dataIndex: 'value1',
+            flex: 1
+        }, {
+            text: 'COUNT(*)',
+            sortable: true,
+            dataIndex: 'count',
+            width: 100
+        }],
+        stripeRows: true,
+        bbar: Ext.create('Ext.PagingToolbar', {
+            store: Ext.StoreMgr.get('mystore'),
+            displayInfo: true,
+            plugins: Ext.create('Ext.ux.SlidingPager', {})
+        })
+    });
+
+});
+    </script>
+</body>
+</html>

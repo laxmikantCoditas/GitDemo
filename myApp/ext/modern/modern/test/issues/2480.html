@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sencha Test</title>
+        
+        <script src="../../sencha-touch-debug.js"></script>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+        <script type="text/javascript">
+
+            Ext.application({
+                name: 'Test',
+
+                requires : [
+                    'Ext.SegmentedButton'
+                ],
+            
+                launch: function() {
+                    new Ext.Container({
+                        fullscreen : true,
+                        items      : [
+                            {
+                                xtype       : 'segmentedbutton',
+                                allowToggle : false,
+                                items       : [
+                                    {
+                                        text : 'Start'
+                                    },
+                                    {
+                                        text : 'Stop'
+                                    }
+                                ]
+                            }
+                        ]
+                    });
+                }
+            });
+            
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

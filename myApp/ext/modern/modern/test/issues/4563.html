@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>TOUCH-4563</title>
+	<link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+	<script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+
+	<script type="text/javascript">
+		Ext.setup({
+			requires: [],
+			onReady: function() {
+				Ext.create('Ext.Carousel', {
+					fullscreen: true,
+
+					defaults: {
+						styleHtmlContent: true
+					},
+					updateTabs: function() {
+						var innerItems = this.getInnerItems(),
+								fields,
+								activeItem = this.getActiveItem();
+
+						innerItems.forEach(function(item) {
+							fields = item.query("field");
+							fields.forEach(function(field) {
+								if (item !== activeItem) {
+									field.getComponent().input.dom.setAttribute("tabindex", -1);
+								} else {
+									field.getComponent().input.dom.removeAttribute("tabindex");
+								}
+							});
+						});
+					},
+					listeners: {
+						initialize: function() {
+							this.updateTabs();
+						},
+						activeitemchange: function() {
+							this.updateTabs();
+						}
+					},
+
+					items: [
+						{
+							html: 'Item 1',
+							style: 'background-color: #5E99CC',
+							items: [
+								{
+									xtype: 'textfield'
+								}
+							]
+						},
+						{
+							html: 'Item 2',
+							style: 'background-color: #759E60',
+							items: [
+								{
+									xtype: 'textfield'
+								}
+							]
+						},
+						{
+							html: 'Item 3',
+							items: [
+								{
+									xtype: 'textfield'
+								}
+							]
+						}
+					]
+				});
+			}
+		});
+	</script>
+</head>
+<body></body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+    Ext.Loader.setConfig({enabled:true});
+    Ext.onReady(function () {
+        var store = Ext.create('Ext.data.Store', {
+            storeId:'testStore',
+            fields:['id', 'group', 'name'],
+            groupField: 'group',
+            data:{'items':[
+                { id:1, group:'A', name:'Lorem' },
+                { id:2, group:'A', name:'Ipsum' },
+                { id:3, group:'A', name:'Dolor' }
+            ]},
+            proxy:{
+                type:'memory',
+                reader:{
+                    type:'json',
+                    root:'items'
+                }
+            }
+        });
+        store.group('group');
+
+        var panel = Ext.create('Ext.grid.Panel', {
+            title:'Grouping bug',
+            store:Ext.data.StoreManager.lookup('testStore'),
+            columns:[
+                { text:'Name', dataIndex:'name'    },
+                { text:'Group', dataIndex:'group' }
+            ],
+            features:[
+                { ftype:'grouping' }
+            ],
+            height:200,
+            width:400,
+            renderTo:Ext.getBody()
+        });
+        panel.on('itemclick', function (view, record) {
+            alert("You clicked record \"" + record.data.name + "\"");
+        });
+
+        Ext.defer(function () {
+            store.getAt(1).set('group', 'B');
+        }, 1000);
+
+        Ext.defer(function () {
+            var middle_row = panel.view.el.query(panel.view.rowSelector)[1];
+            debugger;
+
+            var text = "Middle row text is " + middle_row.innerText.replace(/\s+/g, ' ') + "\nbut ExtJS thinks it is the record " + Ext.encode(panel.view.getRecord(middle_row).data) + ".\nTry clicking any row";
+
+            alert(text);
+        }, 2000);
+    })
+        
+    </script>
+</body>
+</html>

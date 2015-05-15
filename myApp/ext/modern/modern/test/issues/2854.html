@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>TOUCH-0000</title>
+		<link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+		<script type="text/javascript" src="../../sencha-touch.js"></script>
+
+		<script type="text/javascript">
+			Ext.application({
+				name : 'Test',
+
+				requires : [
+					'Ext.form.Panel',
+					'Ext.field.Text'
+				],
+
+				launch : function () {
+					Ext.Viewport.add({
+						xtype: 'formpanel',
+						items: [
+							{
+					            xtype: 'textfield',
+					            autoComplete: true,
+					            name: 'email'
+					        }
+						]
+					})
+				}
+			});
+	</script>
+	</head>
+	<body>
+
+	</body>
+</html>

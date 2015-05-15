@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+
+Ext.define('PlanContent', {
+    extend: 'Ext.container.Container',
+    alias: 'widget.plans',
+    style: 'background-color: #ffffff;',
+    layout: 'column',
+    margin: '10px 10px 15px 10px',
+    padding: '0 13 15 12',
+    defaults: {
+	width: 105,
+	height: 143,
+	margin: '15 12 0 13',
+	style: 'background-color: #88CDD3;'
+    },
+    items: [
+	{ xtype: 'component' },
+	{ xtype: 'component' },
+	{ xtype: 'component' },
+	{ xtype: 'component' },
+	{ xtype: 'component' },
+	{ xtype: 'component' },
+	{ xtype: 'component' }
+    ]
+});
+
+Ext.define('CenterRegion', {
+    extend: 'Ext.container.Container',
+    alias: 'widget.centerRegion',
+    layout: {
+	type: 'vbox',
+	align: 'stretch'
+    },
+    margin: '5 5 5 5',
+    items: [
+	{ xtype: 'plans'},
+	{ xtype: 'plans'}
+    ]
+});
+
+Ext.application({
+    name: 'SET',
+    requires: [
+	'Ext.container.Viewport'
+    ],
+    launch: function() {
+	Ext.create('Ext.container.Viewport', {
+	    layout: {
+		type: 'border',
+		align: 'stretch'
+	    },
+	    defaults: {
+		overflowY: 'auto'
+	    },
+	    items: [
+		{
+		    region:'north',
+		    xtype: 'component',
+		    height: 75,
+		    style: {
+			backgroundColor: '#ff0000'
+		    },
+		    html: '<h1>Header</h1>'
+		},
+		{
+		    region: 'center',
+		    xtype: 'centerRegion',
+		    style: {
+			backgroundColor: '#00ff00'
+		    }
+		},
+		{
+		    region: 'south',
+		    xtype: 'component',
+		    height: 75,
+		    style: {
+			backgroundColor: '#ff0000'
+		    },
+		    html: '<h1>Footer</h1>'
+		}
+	    ]
+	});
+    }
+});
+
+    </script>
+</body>
+</html>

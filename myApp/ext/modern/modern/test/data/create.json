@@ -1,0 +1,14 @@
+{
+    "success": true,
+    "results": [
+        {
+            "clientId": "ext-record-1",
+            "IDPROPERTY": 4,
+            "field1": "blaat4",
+            "field2": 1323124828,
+            "data": {
+                "test": 410
+            }
+        }
+    ]
+}

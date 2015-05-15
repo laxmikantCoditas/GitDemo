@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+
+        Ext.require([
+            'Ext.data.*',
+            'Ext.form.*'
+        ]);
+
+        Ext.onReady(function () {
+
+            Ext.QuickTips.init();
+
+            Ext.define('State', {
+                extend: 'Ext.data.Model',
+                fields: [
+                    { type: 'string', name: 'abbr' },
+                    { type: 'string', name: 'name' },
+                    { type: 'string', name: 'slogan' }
+                ]
+            });
+
+            var store = Ext.create('Ext.data.Store', {
+                model: 'State',
+                data: [
+                    { "abbr": "AL", "name": "Alabama", "slogan": "The Heart of Dixie" },
+                    { "abbr": "AK", "name": "Alaska", "slogan": "The Land of the Midnight Sun" },
+                    { "abbr": "AZ", "name": "Arizona", "slogan": "The Grand Canyon State" }
+                ]
+            });
+
+            panel = Ext.create('Ext.panel.Panel', {
+                title: 'Search the Ext Forums',
+                width: 600,
+                bodyPadding: 10,
+                layout: 'anchor',
+                anchor: '100%',
+
+                items: [
+                    {
+                        xtype: 'combo',
+                        store: store,
+                        displayField: 'name',
+                        queryMode: 'local',
+                        typeAhead: false,
+                        anchor: '100%',
+                        allowBlank: false,
+                        blankText: 'enter something',
+                        emptyText: 'test'
+                    }
+                ]
+            });
+
+            var window = Ext.create('Ext.window.Window', {
+                renderTo: Ext.getBody(),
+                x: 100,
+                y: 100,
+                title: 'GIANT',
+                items: [panel]
+            });
+
+            window.show();
+        });
+
+    </script>
+</body>
+</html>

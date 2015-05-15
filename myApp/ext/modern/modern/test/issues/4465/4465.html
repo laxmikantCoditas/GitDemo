@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TOUCH-4465</title>
+
+	<script src="../../../sencha-touch-debug.js"></script>
+	<link rel="stylesheet" href="../../../resources/css/sencha-touch.css">
+
+
+	<script type="text/javascript">
+		Ext.define('Contact', {
+			extend: 'Ext.data.Model',
+			config: {
+				fields: ['firstName', 'lastName']
+			}
+		});
+
+		Ext.application({
+			requires: ['Ext.Toolbar', 'Ext.data.Store', 'Ext.dataview.List', 'Ext.plugin.ListPaging'],
+
+			launch: function() {
+				var store = Ext.create('Ext.data.Store', {
+					model: 'Contact',
+					sorters: 'lastName',
+					autoLoad: true,
+					pageSize: 5,
+					proxy    : {
+						type   : 'ajax',
+						url    : 'data.json',
+						reader : {
+							type         : 'json',
+							rootProperty : 'data'
+						}
+					}
+				});
+
+				Ext.create('Ext.dataview.List', {
+					fullscreen: true,
+					itemTpl: '<div class="contact">{firstName} <strong>{lastName}</strong></div>',
+					store: store,
+					emptyText: 'No more records',
+					plugins: [
+						{
+							type: 'listpaging'
+						}
+					],
+					items: [
+						{
+							xtype: 'toolbar',
+							docked: 'top',
+							items: [
+								{
+									text: 'add filter',
+									handler: function() {
+										store.filter('firstName', /^x/);
+									}
+								}
+							]
+						}
+					]
+				});
+			}
+		});
+	</script>
+</head>
+<body>
+</body>
+</html>

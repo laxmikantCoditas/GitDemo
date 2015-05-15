@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>1313</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        var panel;
+        var items = [
+            {
+                xtype:'textfield',
+                label:'<img src=test.png /> test',
+                labelWidth:'60%',
+                value:'test value',
+                readOnly:true
+            },
+            {
+                xtype:'textfield',
+                label:'<img src=test.png /> test',
+                labelWidth:'60%',
+                value:'test value',
+                readOnly:true
+            }
+        ];
+
+
+        Ext.setup({
+            onReady:function () {
+                build_items();
+            }
+        });
+
+        function build_items() {
+            panel = Ext.Viewport.add(new Ext.Panel({
+                scrollable:'vertical',
+                autoDestroy:true,
+                fullscreen:true
+            }));
+            for (var i = 0; i <= 10; i++) {
+                var panel_child = new Ext.Panel({
+                    scrollable:'vertical',
+                    autoDestroy:true,
+                    width:500,
+                    height:60,
+                    html:'box' + i
+                });
+                panel_child.add(items);
+                panel.add(panel_child);
+            }
+            console.log('Items build');
+            setTimeout(destroy_items, 1000);
+        }
+
+        function destroy_items() {
+            panel.destroy();
+            console.log('Items destroyed');
+            setTimeout(build_items, 1000);
+        }
+    </script>
+</head>
+<body></body>
+</html>

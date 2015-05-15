@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3294</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+    <script type="text/javascript">
+        Ext.application({
+            requires: ['Ext.Panel', 'Ext.data.TreeStore', 'Ext.data.Model', 'Ext.dataview.NestedList'],
+            launch: function() {
+
+                Ext.define('b2test.model.MyModel', {
+                    extend:'Ext.data.Model',
+                    config:{ fields:['text'] }
+                });
+
+                Ext.define('b2test.store.MyStore', {
+                    extend:'Ext.data.TreeStore',
+                    config:{
+                        storeId:'mystore',
+                        model:'b2test.model.MyModel',
+                        defaultRootProperty:'items',
+                        root:{
+                            items:[
+                                {
+                                    text:'All',
+                                    items:[
+                                        {text:'All', leaf:true}
+                                        ,
+                                        {text:'CS_AVONEX' + ' - H', leaf:true}
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                });
+
+
+                Ext.define('b2test.view.Main', {
+                   extend: 'Ext.Panel',
+                   config: {
+                       items: [
+                           {
+                               xtype: 'nestedlist',
+                               height: 360,
+                               store: Ext.create('b2test.store.MyStore'),
+                               displayField: 'text',
+                               onItemDisclosure: true
+                           }
+                       ]
+                   }
+               });
+                Ext.Viewport.add(Ext.create('b2test.view.Main'));
+            }
+        });
+
+    </script>
+</head>
+<body>
+</body>
+</html>

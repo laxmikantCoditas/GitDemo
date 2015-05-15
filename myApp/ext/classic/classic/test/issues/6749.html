@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>6749</title>
+<!--
+<link rel="stylesheet" type="text/css" href="../../../../extjs-4.1.0/resources/css/ext-all.css" />
+<script type="text/javascript" src="../../../../extjs-4.1.0/ext.js"></script>
+-->
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        Ext.Loader.setConfig({
+            enabled: true
+        });
+
+    Ext.require([
+        'Ext.data.*',
+        'Ext.data.reader.*',
+        'Ext.form.*',
+        'Ext.grid.*',
+        'Ext.tree.*',
+        'Ext.window.MessageBox',
+        'Ext.tip.*',
+        'Ext.chart.*',
+        
+        'Ext.data.Store',
+        'Ext.grid.Panel',
+        
+        'Ext.container.Viewport',
+        'Ext.form.field.HtmlEditor',
+        'Ext.Array',
+        'Ext.panel.Panel',
+        'Ext.layout.container.Border',
+        'Ext.DomHelper',
+        'Ext.String'
+    ]);
+
+
+         Ext.onReady(function (){
+             ColumnChartReport();
+         }) ;
+
+
+         function ColumnChartReport() {
+
+
+             var  jsonStore = new Ext.data.Store({
+                 proxy: {
+                     type: 'memory',
+                     reader: 'array'
+                 },
+                 fields: [
+                     {name: 'month', type: 'string'},
+                     {name: 'defects opened',  type: 'int'} ,
+                     {name: 'defects closed',  type: 'int'}
+
+
+                 ]  ,
+
+                 data : [ ['jan', 50, 40], ['feb', 34, 30], ['mar', 20, 10]
+
+                 ]
+
+             });
+
+
+
+             var chart = Ext.create('Ext.chart.Chart', {
+
+                 renderTo:Ext.getBody(),
+                 animate: false,
+                 layout:'fit',
+                 width:500,
+                 legend:true,
+                 height:270,
+                 id:'chartId_',
+                 store: jsonStore,
+                 xField:   "month",
+                 axes: [{
+                     type: 'Numeric',
+                     position: 'left',
+                     fields: ['defects opened'],
+                     title: 'defects count',
+                     grid: true,
+                     minimum:0,
+                     label: { renderer: Ext.util.Format.numberRenderer('00.00')}
+
+
+                 }, {
+                     type: 'Category',
+                     position: 'bottom',
+                     fields: ['month'],
+                     title: "Test"
+
+
+                 }],
+                 series: [{
+
+                     type: 'line',
+
+                     axis: 'left',
+                     smooth:true,
+                     fill:false,
+                     selectionTolerance: 5,
+
+                     xField:"month",
+                     yField: "defects opened",
+
+                     tips: {
+                         trackMouse: true,
+                         width: 140,
+                         height: 28,
+                         renderer: function(storeItem, item) {
+
+                             title = storeItem.data["month"] + ': ' + storeItem.data["defects opened"] + ' ';
+
+                             this.setTitle(title);
+                             this.setWidth((title.length * 10));
+                         }
+                     },
+                     markerConfig: {
+                         type: 'cross',
+                         size: 4,
+                         radius: 4,
+                         'stroke-width': 0
+                     }
+
+                 },
+                     {
+                         type: 'line',
+
+                         axis: 'left',
+                         smooth:true,
+                         fill:false,
+                         selectionTolerance: 5,
+
+                         xField:"month",
+                         yField: "defects closed",
+
+                         tips: {
+                             trackMouse: true,
+                             width: 140,
+                             height: 28,
+                             renderer: function(storeItem, item) {
+
+                                 title = storeItem.data["month"] + ': ' + storeItem.data["defects closed"] + ' ';
+
+                                 this.setTitle(title);
+                                 this.setWidth((title.length * 10));
+                             }
+                         },
+                         markerConfig: {
+                             type: 'cross',
+                             size: 4,
+                             radius: 4,
+                             'stroke-width': 0
+                         }
+
+                     }
+                 ]
+
+             });
+
+         }
+        
+    </script>
+    <h1 style="margin: 20px;">There should be no confusion regarding the values in the tooltips, even when the points are close to each other.</h1>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sencha Test</title>
+        
+        <script src="../../sencha-touch-all.js"></script>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+        <script type="text/javascript">
+
+        Ext.application({
+            name: 'Hello World',
+            launch: function() {
+                Ext.create('Ext.Container', {
+                    fullscreen: true,
+                    items: [{
+                        xtype : 'toolbar',
+                        docked: 'top',
+                        title: 'App with a super long title that should be chopped when too long'
+                        title: 'App with a super long title that should be chopped when too long'
+                        },
+                        {
+                            xtype: 'panel',
+                            html: '<h2>Hello World!</h2>'
+                        }]
+                });
+            }
+        });
+            
+        </script>
+    </head>
+    <body>
+
+    </body>
+</html>

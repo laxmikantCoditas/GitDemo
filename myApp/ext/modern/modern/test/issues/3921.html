@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3921</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.setup({
+            requires: [
+                'Ext.tab.Panel'
+            ],
+            onReady: function() {
+                Ext.Viewport.add(Ext.create('Ext.form.Panel', {
+                    fullscreen: true,
+                    id      : 'formosity',
+                    html: 'Hello from your first Sencha Touch App made by Sencha Fiddle.',
+                    items : [
+                        {
+                            xtype : 'checkboxfield',
+                            name : 'ecco',
+                            label : 'Ciao',
+                            value : 0
+                        },
+                        {
+                            xtype : 'checkboxfield',
+                            name : 'ecco',
+                            label : 'Bau',
+                            value : 1
+                        },
+                        {
+                            xtype : 'button',
+                            text : 'Click me!',
+                            listeners : {
+                                tap : function () {
+                                    console.log(Ext.getCmp('formosity').getValues());
+                                }
+                            }
+                        }
+                    ]
+                }));
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

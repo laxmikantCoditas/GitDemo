@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>TOUCH-3664</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+</head>
+<body>
+<script type="text/javascript" charset="utf-8">
+    Ext.define('TestModel', {
+        extend : 'Ext.data.Model',
+        config : {
+            fields : [
+                {name : 'field1'},
+                {name : 'field2'},
+                {name : 'field3'}
+            ]
+        }
+    });
+
+    Ext.setup({
+        onReady: function () {
+            var store = Ext.create('Ext.data.Store', {
+                model : 'TestModel',
+                data  : [
+                    { field1 : 'data1Field1',  field2 : 'data1Field2',  field3 : 'data1Field3'  },
+                    { field1 : 'data2Field1',  field2 : 'data2Field2',  field3 : 'data2Field3'  },
+                    { field1 : 'data3Field1',  field2 : 'data3Field2',  field3 : 'data3Field3'  },
+                    { field1 : 'data4Field1',  field2 : 'data4Field2',  field3 : 'data4Field3'  }
+                ],
+            	grouper: {
+                    groupFn: function(record) {
+                        return record.get('field1');
+                    }
+                }
+            });
+
+            var list = Ext.create('Ext.dataview.List', {
+                store   : store,
+                itemTpl : '{field1} - {field3}',
+                flex    : 1,
+            	grouped: true,
+                items   : [
+                    {
+                        xtype       : 'textfield',
+                        label       : 'TestField',
+                        placeHolder : 'Enter the field value',
+                        scrollDock  : 'top',
+                        docked      : 'top'
+                    }
+                ]
+            });
+
+            Ext.Viewport.add(list);
+        }
+    });
+</script>
+</body>
+</html>

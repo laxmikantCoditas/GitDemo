@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>TOUCH-3808</title>
+		<link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+		<script type="text/javascript" src="../../sencha-touch.js"></script>
+
+		<script type="text/javascript">
+			Ext.application({
+				name : 'Test',
+
+				requires : [
+					'Ext.Button',
+					'Ext.TitleBar'					
+				],
+
+				launch : function () {
+					var me = this;
+
+					var x = Ext.Viewport.add({
+						xtype: 'container',
+						items: [{
+							docked: 'top',
+							xtype: 'titlebar',
+							title: 'TOUCH-3808',
+							items: [{
+								xtype: 'button',
+								text: 'Press Me',
+								name: 'pressme',
+								listeners: {
+									tap : me.onButtonTap
+								}
+							}, {
+								align: 'right',
+								xtype: 'button',
+								text: 'Suspend w/o Queuing ',
+								listeners: {
+									tap: me.suspendEventDiscardQueueing
+								}
+							}, {
+								align: 'right',
+								xtype: 'button',
+								text: 'Resume Events',
+								listeners: {
+									tap: me.resumeEvents
+								}
+							}]
+						}, {
+							html: 'hi there'
+						}]
+					});
+
+				},
+
+				onButtonTap: function(b, e, eOpts) {
+					console.log("I am tapped out...");
+				},
+
+				suspendEventDiscardQueueing: function() {
+					console.log("Suspending button events discarding queued events.")
+					Ext.Viewport.down('button[name=pressme]').suspendEvents(false); // Suspend events without queuing ... 
+				},
+
+				resumeEvents: function() {
+					console.log("Resuming button events - queue should be empty..");
+					Ext.Viewport.down('button[name=pressme]').resumeEvents();
+				}
+			});
+
+
+		</script>
+	</head>
+</html>

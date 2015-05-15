@@ -1,0 +1,15 @@
+{
+    "mount": "../../..",
+    "pages": {
+        "strict": "index.html"
+    },
+    "scripts": [
+        "json2.js",
+        "jasmine.js",
+        "testrunner-adapter.js",
+        "../unit/resources/helper.js"
+    ],
+    "specs": [
+        "../unit/spec"
+    ]
+}

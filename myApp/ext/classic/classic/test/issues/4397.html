@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<head>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+
+<!-- Shared example includes -->
+<link rel="stylesheet" type="text/css" href="../../examples/shared/example.css" />
+<script type="text/javascript" src="../../examples/shared/examples.js"></script>
+<script type="text/javascript" src="../../examples/shared/states.js"></script>
+
+<style type="text/css">
+.product {
+    padding: 10px;
+    background-color: #f1f1f1;
+    width: 10em;
+    font-size: 14pt;
+    z-index: 100000;
+    margin: 10px;
+}
+
+.semi-opaque {
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+    opacity: 0.8;
+}
+
+#red-box .x-window-body {
+    background-color: red;
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
+    opacity: 0.6;
+}
+
+#blue-box .x-window-body {
+    background-color: blue;
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
+    opacity: 0.6;
+}
+
+.x-panel-body {
+    background: transparent;
+}
+</style>
+<script type="text/javascript">
+Ext.require(['*']);
+
+Ext.onReady(function() {
+
+    var dd1 = new Ext.dd.DD('product1', 'products', {
+        isTarget  : false
+    });
+    dd1.onDragDrop = function(e, id) {
+        Ext.fly(dd1.getEl()).animate({
+            delay: 1000,
+            to: {
+                x: dd1.initPageX,
+                y: dd1.initPageY
+            }
+        });
+        Ext.example.msg('Drop Event', 'Dropped Product in {0}', Ext.dd.DragDropManager.getDDById(id).name);
+    };
+
+    // create containers
+    Ext.create('Ext.window.Window', {
+        id: 'red-box',
+        cls: 'semi-opaque',
+        layout: 'fit',
+        title: 'Red Box',
+        width: 300,
+        height: 200,
+        x: 50,
+        y: 170,
+        items: {
+            listeners: {
+                render: function(redPanel) {
+                    Ext.create('Ext.dd.DropTarget', redPanel.body.dom, {
+                        ddGroup: 'products',
+                        name: 'Red box'
+                    });
+                }
+            }
+        }
+    }).show();
+
+    Ext.create('Ext.window.Window', {
+        id: 'blue-box',
+        cls: 'semi-opaque',
+        layout: 'fit',
+        title: 'Blue Box',
+        width: 300,
+        height: 200,
+        x: 180,
+        y: 220,
+        items: {
+            listeners: {
+                render: function(bluePanel) {
+                    Ext.create('Ext.dd.DropTarget', bluePanel.body.dom, {
+                        ddGroup: 'products',
+                        name: 'Blue box'
+                    });
+                }
+            }
+        }
+    }).show();
+
+    Ext.create('Ext.button.Button', {
+        x: 250, y: 100,
+        style: 'position:absolute',
+        renderTo: document.body,
+        text: 'Notify Occluded',
+        enableToggle: true,
+        toggleHandler: function(btn, pressed) {
+            Ext.dd.DragDropManager.notifyOccluded = pressed;
+        }
+    })
+});
+</script>
+</head>
+<body>
+<p>Product will only drop into the topmost box when dropped into the intersection area unless "Notify Occluded" pressed.</p>
+<p>When "Notify Occluded" pressed, drop events will be delivered in z-index order, topmost first (First message at the top).</p>
+<div class="product" id="product1">Product</div>
+</body>
+</html>

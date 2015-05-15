@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2913</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.application({
+            launch:function () {
+                var panelCount = 0;
+
+                var navview = Ext.Viewport.add({
+                    xtype : 'navigationview',
+
+
+                    items : [{
+                        xtype : 'panel',
+                        title : 'panel',
+                        html : 'hey im a panel'
+                    }, {
+                        xtype : 'button',
+                        text : 'push me',
+                        listeners : {
+                            'tap' : function() {
+                                panelCount = panelCount + 1;
+                                navview.push({
+                                    xtype : 'panel',
+                                    html : 'panel ' + panelCount,
+                                    title : 'This is the panel title ' + panelCount
+                                });
+                            }
+                        }
+                    }]
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2859</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.define('SenchaTest.view.Blog', {
+            extend: 'Ext.navigation.View',
+            xtype: 'blog',
+
+            requires: [
+                'Ext.dataview.List',
+                'Ext.data.proxy.JsonP',
+                'Ext.data.Store'
+            ],
+
+            config: {
+                title: 'Blog',
+                iconCls: 'star',
+
+                items: {
+                    xtype: 'list',
+                    itemTpl: '{title.$t}',
+                    title: 'Recent Posts',
+                    store: {
+                        autoLoad: true,
+                        fields: ['title'],
+
+                        proxy: {
+                            type: 'jsonp',
+                            url: '2859.json',
+                            reader: {
+                                type: 'json'
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        Ext.application({
+            launch:function () {
+                // Initialize the main view
+                Ext.Viewport.add(Ext.create('SenchaTest.view.Blog'));
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

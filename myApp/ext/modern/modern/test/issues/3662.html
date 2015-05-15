@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>TOUCH-3662</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+</head>
+<body>
+<script type="text/javascript" charset="utf-8">
+    Ext.setup({
+        requires: ["Ext.chart.CartesianChart", "Ext.TitleBar", "Ext.chart.axis.Numeric", "Ext.chart.series.Line"],
+        onReady: function () {
+            Ext.Viewport.add({
+                layout: 'fit',
+                items: [
+                    {
+                        xtype: 'titlebar',
+                        docked: 'top',
+                        title: 'All data with same y value.',
+                        items: {
+                            align: 'right',
+                            text: '<a target="_blank" href="http://sencha.jira.com/browse/TOUCH-3662">TOUCH-3662</a>'
+                        }
+                    },
+                    {
+                        xtype: 'cartesian',
+                        store: {
+                            fields: ['x', 'y'],
+                            data: [
+                                {
+                                    x: 0,
+                                    y: 100
+                                },
+                                {
+                                    x: 1,
+                                    y: 100
+                                },
+                                {
+                                    x: 2,
+                                    y: 100
+                                },
+                                {
+                                    x: 3,
+                                    y: 100
+                                }
+                            ]
+                        },
+                        series: [
+                            {
+                                type: 'line',
+                                xField: 'x',
+                                yField: 'y',
+                                style: {
+                                    stroke: 'black'
+                                }
+                            }
+                        ],
+                        axes: [
+                            {
+                                type: 'numeric',
+                                position: 'left'
+                            }
+                        ]
+                    }
+                ]
+            });
+        }
+    });
+</script>
+</body>
+</html>

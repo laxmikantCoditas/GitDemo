@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>TOUCH-1274</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script src="../../sencha-touch.js"></script>
+        
+        <script type="text/javascript">
+
+Ext.setup({
+    onReady : function() {
+
+        var carousel = Ext.create('Ext.carousel.Carousel', {
+            fullscreen : true,
+            items      : [
+                {
+                    html : 'One'
+                },
+                {
+                    html : 'Two'
+                }
+            ]
+        });
+
+        setTimeout(function() {
+            console.log('Removing');
+
+            carousel.removeAll();
+
+            //produces a DOM exception
+            carousel.add({
+                html : 'Three'
+            });
+        }, 1000);
+
+    }
+});
+
+        </script>
+    </head>
+    
+    <body></body>
+</html>

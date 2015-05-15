@@ -1,0 +1,17 @@
+{
+   "success":true,
+   "report":[
+      {
+         "id":"rd02s",
+         "rd02s":[
+            {
+               "id":"1",
+               "period":"Jun 2012",
+               "Service":"0",
+               "Redemption":"0",
+               "PrePaid":"0"
+            }
+         ]
+      }
+   ]
+}

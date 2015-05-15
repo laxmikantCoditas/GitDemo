@@ -1,0 +1,181 @@
+<!DOCTYPE HTML>
+<html manifest="" lang="en-US">
+<head>
+<meta charset="UTF-8">
+<title>TOUCH-4481</title>
+<link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+<script src="../../sencha-touch-all-debug.js"></script>
+<script>
+Ext.require([
+    'Ext.Toolbar',
+    'Ext.data.JsonStore',
+    'Ext.chart.*'
+]);
+
+Ext.setup({
+    onReady: function () {
+        var store = Ext.create('Ext.data.JsonStore', {
+            data: [
+                {
+                    year: '2010',
+                    thisStore: 50520,
+                    otherStore: 50199
+                },
+                {
+                    year: '2011',
+                    thisStore: 62505,
+                    otherStore: 30156
+                },
+                {
+                    year: '2012',
+                    thisStore: 5141,
+                    otherStore: 1164
+                },
+                {
+                    year: '2013',
+                    thisStore: 0,
+                    otherStore: 0
+                },
+                {
+                    year: '2014',
+                    thisStore: 25523,
+                    otherStore: 23423
+                },
+                {
+                    year: '2015',
+                    thisStore: 21523,
+                    otherStore: 14423
+                }
+            ]
+        });
+
+        var isFlipped = false,
+            isLine = false;
+
+        function createChart(store, isFlipped, isLine) {
+            return Ext.create('Ext.chart.CartesianChart', {
+                fullscreen: true,
+                store: store,
+                flipXY: isFlipped,
+                axes: [
+                    {
+                        type: 'category',
+                        position: isFlipped ? 'left' : 'bottom',
+                        fields: [
+                            'year'
+                        ],
+                        label: {
+                            x: 0,
+                            y: 0,
+                            textBaseline: 'middle',
+                            textAlign: 'center',
+                            font: '14px Verdana',
+                            rotate: {
+                                rads: Math.PI * -0.2
+                            }
+                        }
+                    },
+                    {
+                        type: 'numeric',
+                        position: isFlipped ? 'bottom' : 'left',
+                        label: {
+                            x: 0,
+                            y: 0,
+                            display: 'rotate',
+                            textBaseline: 'middle',
+                            textAlign: 'center',
+                            fontSize: 12,
+                            fontFamily: 'Verdana'
+                        },
+                        labelInSpan: true
+                    }
+                ],
+                series: [
+                    {
+                        type: isLine ? 'line' : 'bar',
+                        colors: ['#c8b08e'],
+                        style: {
+                            stroke: '#c8b08e'
+                        },
+                        label: {
+                            field: 'thisStore',
+                            display: isLine ? 'over' : 'insideEnd',
+                            font: '14px Verdana',
+                            fontWeight: 'normal',
+                            textAlign: 'center',
+                            renderer: function (text, sprite, config, rendererData, index) {
+                                return {
+                                    opacity: 0.5,
+                                    rotationRads: config.rotationRads + Math.PI / 8
+                                };
+                            }
+                        },
+                        xField: 'year',
+                        yField: [
+                            'thisStore'
+                        ],
+                        stacked: false
+                    },
+                    {
+                        type: isLine ? 'line' : 'bar',
+                        colors: ['#542E1D'],
+                        style: {
+                            stroke: '#542E1D'
+                        },
+                        label: {
+                            field: 'otherStore',
+                            display: isLine ? 'over' : 'insideEnd',
+                            font: '14px Verdana',
+                            fontWeight: 'bold',
+                            textAlign: 'center',
+                            renderer: function (text, sprite, config, rendererData, index) {
+                                return '(' + text + ')';
+                            }
+                        },
+                        xField: 'year',
+                        yField: [
+                            'otherStore'
+                        ],
+                        stacked: false
+                    }
+                ]
+            });
+        }
+
+        function updateChart() {
+            Ext.Viewport.removeAll(true, false);
+            Ext.Viewport.add(createChart(store, isFlipped, isLine));
+        }
+
+        var toolbar = Ext.create('Ext.Toolbar', {
+            docked: 'top',
+            items: [{
+                xtype: 'button',
+                text: 'Toggle Bar/Column',
+                listeners: {
+                    tap: function () {
+                        isFlipped = !isFlipped;
+                        updateChart();
+                    }
+                }
+            }, {
+                xtype: 'button',
+                text: 'Toggle Line/Bar',
+                listeners: {
+                    tap: function () {
+                        isLine = !isLine;
+                        updateChart();
+                    }
+                }
+            }]
+        });
+
+        Ext.Viewport.add(toolbar);
+        updateChart();
+    }
+});
+</script>
+</head>
+<body>
+</body>
+</html>

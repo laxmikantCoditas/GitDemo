@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2189</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+
+    <script>
+        Ext.application({
+            name:'dragndrop',
+            requires:['Ext.Container', 'Ext.Panel'],
+            launch:function () {
+                var outer = Ext.create('Ext.Container', {
+                    height:'50%',
+                    width:'50%',
+                    top:'20%',
+                    left:'20%',
+                    style:'background-color:gray;'
+                });
+                Ext.Viewport.add(outer);
+
+                var drag1 = Ext.create('Ext.Panel', {
+                    draggable:true,
+                    height:'10%',
+                    width:'10%',
+                    top:'0%',
+                    left:'0%',
+                    style:'background-color:yellow;'
+                });
+
+                outer.add(drag1);
+
+                var drag2 = Ext.create('Ext.Panel', {
+                    draggable: {
+                        initialOffset: 50
+                    },
+                    top:'0%',
+                    left:'0%',
+                    height:'10%',
+                    width:'10%',
+                    style:'background-color:red;'
+                });
+
+                outer.add(drag2);
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

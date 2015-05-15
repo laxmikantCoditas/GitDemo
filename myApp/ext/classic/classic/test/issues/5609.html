@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+	Ext.Loader.setConfig({enabled:true});
+
+	Ext.Loader.setPath('Ext.ux', '../ux/');
+	Ext.require([
+	    'Ext.grid.*',
+	    'Ext.data.*',
+	    'Ext.util.*',
+	    'Ext.grid.PagingScroller'
+	]);
+
+	Ext.onReady(function () {
+
+	    Ext.define('ForumThread', {
+		extend:'Ext.data.Model',
+		fields:[
+		    'title', 'forumtitle', 'forumid', 'author',
+		    {name:'replycount', type:'int'},
+		    {name:'lastpost', mapping:'lastpost', type:'date', dateFormat:'timestamp'},
+		    'lastposter', 'excerpt', 'threadid'
+		],
+		idProperty:'threadid'
+	    });
+
+	    // create the Data Store
+	    var store = Ext.create('Ext.data.Store', {
+		id:'store',
+		pageSize:200,
+		model:'ForumThread',
+		remoteSort:true,
+		// allow the grid to interact with the paging scroller by buffering
+		buffered:true,
+		proxy:{
+		    // load using script tags for cross domain, if the data in on the same domain as
+		    // this page, an HttpProxy would be better
+		    type:'jsonp',
+		    url:'http://www.sencha.com/forum/remote_topics/index.php',
+		    extraParams:{
+			total:50
+		    },
+		    reader:{
+			root:'topics',
+			totalProperty:'totalCount'
+		    },
+		    // sends single sort as multi parameter
+		    simpleSortMode:true
+		},
+		sorters:[
+		    {
+			property:'lastpost',
+			direction:'DESC'
+		    }
+		]
+	    });
+
+	    function renderTopic(value, p, record) {
+		//Link to some high res image
+				if(record.index%2 == 0){ //Alternate images between records
+					return '<div><img  class="rmPageImage"	src="http://trendsupdates.com/wp-content/uploads/2011/07/google-android.jpg"></div>';
+				}
+				else{
+					return '<div><img class="rmPageImage"	src="http://cdn1.mobilemag.com/wp-content/uploads/2012/02/motorola-ics1.jpg"></div>';
+				}
+
+	    }
+
+	    var grid = Ext.create('Ext.grid.Panel', {
+		id:"infiniteGrid",
+		title:'Images in infinite gird example',
+		store:store,
+		verticalScrollerType:'paginggridscroller',
+		loadMask:true,
+		disableSelection:true,
+		invalidateScrollerOnRefresh:false,
+				height:700,
+				hideHeaders: true,
+		viewConfig:{
+		    trackOver:false
+		},
+		// grid columns
+		columns:[
+		    {
+			id:'pic',
+			dataIndex:'title',
+			renderer:renderTopic,
+			sortable:false,
+			width:1000,
+			maxWidth:10000
+		    }
+		],
+		renderTo:Ext.getBody()
+	    });
+
+	    // trigger the data store load
+	    store.loadPage(1);
+	    var gridView = grid.view;
+	    Ext.create('Ext.Button', {
+		text:'Resize',
+		renderTo:Ext.getBody(),
+		listeners:{
+		    click:function () {
+			Ext.util.CSS.updateRule(".rmPageImage", "height", "450px");
+			console.log("scroller rowHeight : " + grid.verticalScroller.rowHeight);
+			var viewRowHeight = gridView.el.down(gridView.getItemSelector()).getHeight(false, true);
+			console.log("actual grid element row height not updated to actual row height: " + viewRowHeight);
+			//try a refresh
+			debugger;
+			//grid.verticalScroller.onViewRefresh();
+			grid.view.refresh();
+			//still does not reflect
+			//console.log("scroller rowHeight not correct after calling an onViewRefresh : " + grid.verticalScroller.rowHeight);
+			//setting the row height to null and then refresh view
+			grid.verticalScroller.rowHeight = null;
+			grid.verticalScroller.onViewRefresh();
+			//now works
+			console.log("scroller rowHeight now correct after un-setting rowHeight and then onViewRefresh : " + grid.verticalScroller.rowHeight);
+
+		    }}
+
+	    });
+	});
+    </script>
+</body>
+</html>

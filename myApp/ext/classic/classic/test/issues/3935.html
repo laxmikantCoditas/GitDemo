@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+/*
+Ext.override(Ext.data.reader.Json, {
+    createAccessor: function() {
+        var re = /[\[\.]/;
+
+        return function(expr) {
+            if (Ext.isEmpty(expr)) {
+                return Ext.emptyFn;
+            }
+            if (Ext.isFunction(expr)) {
+                return expr;
+            }
+            if (this.useSimpleAccessors !== true) {
+                var i = String(expr).search(re);
+                if (i >= 0) {
+                    // it's necessary to get the corrrect root object
+                    return Ext.functionFactory('obj', 'return !obj["' + expr.substr(0, i) + '"] ? "" : obj' + (i > 0 ? '.' : '') + expr);
+                }
+            }
+            return function(obj) {
+                return obj[expr];
+            };
+        };
+    }()
+});
+*/
+
+Ext.require("Ext.data.TreeStore");
+Ext.onReady(function () {
+
+Ext.define('MyModel', {
+    extend: 'Ext.data.Model',
+    fields: [
+	{name: 'text', type: 'string'}
+    ]
+});
+
+var store = Ext.create("Ext.data.TreeStore", {
+        model: "MyModel",
+        proxy: {
+            type: 'ajax',
+            url: '3935.json',
+            reader: {              	              
+                type: 'json',
+                root: 'output[0].data.tree_data',
+            }
+        },
+        sorters: [{
+            property: 'leaf',
+            direction: 'ASC'
+        }, {
+            property: 'text',
+            direction: 'ASC'
+        }]
+});
+
+Ext.create('Ext.tree.Panel', {
+    store: store,
+    title: 'Simple Tree',
+    width: 200,
+    height: 150,
+    rootVisible: false,
+    columns: [{
+	xtype: 'treecolumn', //this is so we know which column will show the tree
+	text: 'Tasks',
+	flex: 2,
+	sortable: true,
+	dataIndex: 'text'
+    }],
+    renderTo: Ext.getBody()
+  });
+  
+});
+</script>
+</head>
+<body>
+</body>
+</html>			

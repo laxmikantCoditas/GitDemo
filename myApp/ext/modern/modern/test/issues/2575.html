@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-2575</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.setup({ 
+            requires: [
+                'Ext.form.Panel', 'Ext.field.Text', 'Ext.field.Email', 'Ext.field.Password', 'Ext.field.Slider'
+            ],
+            onReady: function() {
+                Ext.Viewport.add({
+                    xtype: 'formpanel',
+                    fullscreen: true,
+                    id:"myForm",
+                    trackResetOnLoad:true,
+                    items: [
+                        {
+                            xtype: 'textfield',
+                            name: 'name',
+                            label: 'Name'
+                        },
+                        {
+                            xtype: 'emailfield',
+                            name: 'email',
+                            label: 'Email'
+                        },
+                        {
+                            xtype: 'passwordfield',
+                            name: 'password',
+                            label: 'Password'
+                        },
+                        {
+                            xtype: 'sliderfield',
+                            label: 'Waist Measurement',
+                            minValue: 24,
+                            maxValue: 60,
+                            increment: 2,
+                            value: 32
+                        }
+                    ]
+                });
+
+                var f = Ext.getCmp("myForm");
+                f.setValues({
+                    name:"Duder",
+                    email:"duder@mccheese.com",
+                    password:"supersecret"
+                })
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

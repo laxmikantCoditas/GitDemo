@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TOUCH-2893</title>
+        
+        <script src="../../sencha-touch-debug.js"></script>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+        <script type="text/javascript">
+
+            Ext.application({
+                name: 'Test',
+
+                requires : [
+                    'Ext.form.Panel',
+                    'Ext.field.Slider'
+                ],
+            
+                launch: function() {
+                    new Ext.form.Panel({
+                        fullscreen : true,
+                        items      : [
+                            {
+                                xtype     : 'sliderfield',
+                                label     : 'Field',
+                                value     : 9.5,
+                                increment : 0.5,
+                                maxValue  : 10
+                            }
+                        ]
+                    });
+                }
+            });
+            
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>TOUCH-5087</title>
+    <style></style>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+    <script src="../../sencha-touch-all-debug.js"></script>
+    <script>
+        Ext.require(['Ext.form.Panel', 'Ext.field.File', 'Ext.field.Text', 'Ext.Button']);
+        Ext.setup({
+            onReady: function () {
+                Ext.Viewport.add({
+                    xtype : 'formpanel',
+                    url   : '5081.json',
+                    items : [
+                        {
+                            xtype : 'textfield',
+                            label : 'Foo',
+                            name  : 'foo'
+                        },
+                        {
+                            xtype  : 'filefield',
+                            label  : 'File',
+                            name   : 'file',
+                            accept : 'image'
+                        },
+                        {
+                            xtype   : 'button',
+                            text    : 'Submit',
+                            handler : function(button) {
+                                var form = button.up('formpanel');
+
+                                form.submit({
+                                    success : function() {
+                                        console.log('success');
+                                    },
+                                    failure : function() {
+                                        console.log('failure');
+                                    }
+                                });
+                            }
+                        }
+                    ]
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

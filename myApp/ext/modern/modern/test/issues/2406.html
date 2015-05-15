@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2406</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.application({
+            launch: function() {
+                var pkr = Ext.create('Ext.picker.Date');
+                Ext.Viewport.add({
+                    xtype: 'formpanel',
+                    items: [{
+                        xtype: 'fieldset',
+                        title: 'Test',
+                        items: {
+                            xtype: 'datepickerfield',
+                            label: 'Birthday',
+                            name: 'birthday',
+                            picker: pkr
+                        }
+                    }]
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

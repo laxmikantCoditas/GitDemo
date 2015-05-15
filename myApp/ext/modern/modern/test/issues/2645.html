@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../sencha-touch-all.js"></script>
+    <script>
+        Ext.define('MyModel', {
+            extend: 'Ext.data.Model',
+
+            config: {
+                fields: ['name']
+            }
+        });
+
+        Ext.define('MyStore', {
+            extend: 'Ext.data.Store',
+
+            config: {
+                model: 'MyModel'
+            }
+        });
+
+        Ext.setup({
+            onReady: function() {
+                var store = Ext.create('MyStore');
+                store.add([
+                    {id: 1, name: 'bob'},
+                    {id: 2, name: 'bill'},
+                    {id: 3, name: 'bob'},
+                    {id: 4, name: 'ted'},
+                    {id: 5, name: 'ted'},
+                    {id: 6, name: 'phil'}
+                ]);
+
+                Ext.create('Ext.dataview.List', {
+                    store: store,
+                    fullscreen: true,
+                    itemTpl: '{name}'
+                });
+
+                setTimeout(function() {
+                    store.filter('name', 'bob');
+
+                    setTimeout(function() {
+                        store.filter('name', 'ted');
+
+                        setTimeout(function() {
+                            store.filter('name', 'bill');
+
+                            setTimeout(function() {
+                                store.filter('name', 'ted');
+                            }, 1000);
+                        }, 1000);
+                    }, 1000);
+                }, 1000);
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

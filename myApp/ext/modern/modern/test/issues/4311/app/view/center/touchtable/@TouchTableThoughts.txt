@@ -1,0 +1,17 @@
+Advantage of using components
+fits right in with infrastructur
+Theming would be smoother
+Stores would update automatically
+Use a List, allows for grouping and indexbar
+Teaching a feature of Touch - components in lists
+Possibly would want a dialog box to change
+grouping and sorting fields
+Could do headers with toolbar in panel
+
+Advantage of simeon
+works
+header styled differently than cells
+sorting built in
+can turn off columns
+header looks nice, like toolbar
+

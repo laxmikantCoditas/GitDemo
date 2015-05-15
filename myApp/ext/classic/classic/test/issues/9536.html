@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css">
+    <script type="text/javascript" src="../../ext-all-debug.js"></script>
+
+
+    <script type="text/javascript">
+        Ext.require([
+            'Ext.chart.Chart',
+            'Ext.layout.container.Fit',
+            'Ext.window.Window'
+        ]);
+
+        Ext.onReady(function() {
+            Ext.create("Ext.window.Window", {
+                y:80,
+            	width:500,
+            	height:500,
+            	title:'The maximum on the y-axis should be 160, not 4500.',
+            	layout:"fit",
+            	items:[
+            		{
+            			xtype:"chart",
+            			store:{
+            				proxy:{
+            					type:"memory",
+            					reader:{
+            						type:"json"
+            					}
+            				},
+            				model:Ext.define("MyModel", {
+            					extend:"Ext.data.Model",
+            					fields:[
+            						"month",
+            						"count_a",
+            						"count_b",
+            						"count_c"
+            					]
+            				}),
+            				data:[
+            					{
+            						month:"January",
+            						count_a:"",
+            						count_b:40,
+            						count_c:60
+            					},
+            					{
+            						month:"February",
+            						count_a:40,
+            						count_b:10,
+            						count_c:10
+            					},
+            					{
+            						month:"March",
+            						count_a:25,
+            						count_b:41,
+            						count_c:80
+            					},
+            					{
+            						month:"April",
+            						count_a:1,
+            						count_b:12,
+            						count_c:80
+            					}
+            				]
+            			},
+            			axes:[
+            				{
+            					type:"Numeric",
+            					position:"left",
+            					fields:["count_a", "count_b", "count_c"],
+            					grid:true,
+            					minimum:0
+            				},
+            				{
+            					type:"Category",
+            					position:"bottom",
+            					fields:["month"]
+            				}
+            			],
+            			series:[
+            				{
+            					type:"column",
+            					axis:"left",
+            					stacked:true,
+            					xField:"month",
+            					yField:["count_a", "count_b", "count_c"]
+            				}
+            			]
+            		}
+            	]
+            }).show();
+            
+        });
+    </script>
+
+</head>
+<body>
+</body>
+</html>

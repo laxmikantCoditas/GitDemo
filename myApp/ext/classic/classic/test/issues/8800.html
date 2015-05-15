@@ -1,0 +1,32 @@
+<html>
+<head>
+    <title>This simple little app brings EVIL IE to its knees.</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css"/>
+    <script src="../../ext.js"></script>
+    <script>
+        Ext.define('EvilIE.view.Viewport', {
+            extend: 'Ext.container.Viewport',
+            requires:[ 'Ext.layout.container.Border' ],
+            layout: 'border',
+            items: [{
+                region: 'center',
+                layout: 'vbox',
+                items: [{
+                    xtype: 'container',
+                    items: [{
+                        xtype: 'panel',
+                        height: 200,
+                        width: 200,
+                        html: 'bob'
+                    }]
+                }]
+            }]
+        });
+
+        Ext.onReady(function() {
+            var vp = new EvilIE.view.Viewport();
+        });
+    </script>
+</head>
+<body></body>
+</html>

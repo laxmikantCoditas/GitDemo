@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-2186</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.define('Coordinate', {
+            extend: 'Ext.data.Model',
+            config: {
+                fields: ['lat', 'lon']
+            }
+        });
+        Ext.define('LocationBelongsTo', {
+            extend: 'Ext.data.Model',
+            config: {
+                fields: ['name', 'city'],
+                belongsTo: {model: 'Coordinate', associationKey: 'coord'}
+            }
+        });
+        Ext.define('LocationHasOne', {
+            extend: 'Ext.data.Model',
+            config: {
+                fields: ['name', 'city'],
+                hasOne: {model: 'Coordinate', associationKey: 'coord'}
+            }
+        });
+        Ext.define('LocationHasMany', {
+            extend: 'Ext.data.Model',
+            config: {
+                fields: ['name', 'city'],
+                hasMany: {model: 'Coordinate', associationKey: 'coord'}
+            }
+        });
+
+        Ext.setup({
+            requires: [
+                'Ext.data.Store'
+            ],
+            onReady: function() {
+                var belongsToStore = Ext.create('Ext.data.Store', {
+                    model: 'LocationBelongsTo',
+                    data: [
+                        { name: 'Kauppatori', city: 'Helsinki', coord: { lat: 60.167625, lon: 24.952312 } }
+                    ]
+                });
+                belongsToStore.load({
+                    callback: function(records, operation, success) {
+                        var location = belongsToStore.first();
+                        var coordinate = location.getCoordinate();
+                        console.log("Location name " + location.get('name') + " city " + location.get('city'));
+                        console.log("Location coordinate: " + coordinate.get('lat') + "," + coordinate.get('lon'));
+                    }
+                });
+
+                var hasOneStore = Ext.create('Ext.data.Store', {
+                    model: 'LocationHasOne',
+                    data: [
+                        { name: 'Kauppatori', city: 'Helsinki', coord: { lat: 60.167625, lon: 24.952312 } }
+                    ]
+                });
+                hasOneStore.load({
+                    callback: function(records, operation, success) {
+                        var location = hasOneStore.first();
+                        var coordinate = location.getCoordinate();
+                        console.log("Location name " + location.get('name') + " city " + location.get('city'));
+                        console.log("Location coordinate: " + coordinate.get('lat') + "," + coordinate.get('lon'));
+                    }
+                });
+
+                var hasManyStore = Ext.create('Ext.data.Store', {
+                    model: 'LocationHasMany',
+                    data: [
+                        { name: 'Kauppatori', city: 'Helsinki', coord: { lat: 60.167625, lon: 24.952312 } }
+                    ]
+                });
+                hasManyStore.load({
+                    callback: function(records, operation, success) {
+                        var location = hasManyStore.first();
+                        var coordinate = location.coordinates().first();
+                        console.log("Location name " + location.get('name') + " city " + location.get('city'));
+                        console.log("Location coordinate: " + coordinate.get('lat') + "," + coordinate.get('lon'));
+                    }
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

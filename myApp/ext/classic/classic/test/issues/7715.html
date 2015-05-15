@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+    <title>EXTJSIV-7715 Test Case</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+    <script type="text/javascript" src="../../ext.js"></script>
+
+    <script type="text/javascript">
+
+
+
+        Ext.onReady(function(){
+
+            var win;
+
+            win = Ext.create("Ext.window.Window", {
+                width:500,
+                height:500,
+                layout:"accordion"
+            });
+
+            win.show();
+
+            setTimeout(function()	{
+                win.add(
+                        {
+                            xtype:"panel",
+                            html:"1"
+                        },
+                        {
+                            xtype:"panel",
+                            html:"2"
+                        },
+                        {
+                            xtype:"panel",
+                            html:"3"
+                        },
+                        {
+                            xtype:"panel",
+                            html:"4"
+                        }
+                );
+            }, 1000);
+
+
+
+
+
+
+
+        });
+
+
+
+
+    </script>
+
+</head>
+<body>
+
+</body>
+</html>

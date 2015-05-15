@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2681</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.application({
+            launch:function () {
+
+                Ext.Viewport.add({
+                    xtype : 'formpanel',
+                    items : [
+                        {
+                            xtype     : 'sliderfield',
+                            label     : 'Test',
+                            minValue  : 24,
+                            maxValue  : 60,
+                            increment : 2,
+                            value     : 32,
+                            listeners : {
+                                change : function (select, thumb, newval, oldval) {
+                                    console.log(newval, oldval);
+                                }
+                            }
+                        }
+                    ]
+                });
+
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

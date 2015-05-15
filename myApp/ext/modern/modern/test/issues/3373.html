@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3373</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+    <script type="text/javascript">
+
+        Ext.require([
+                '*'
+        ]);
+
+        Ext.application({
+            launch : function () {
+
+                var parent = Ext.create('Ext.Container', {
+                    width: 800,
+                    height: 600,
+                    left: 30,
+                    top: 30,
+                    style: 'border : 2px solid blue;',
+                    listeners: {
+                        painted: function() {
+                            console.log('painted')
+                        },
+                        erased: function(a, b, c, d, e) {
+                            console.log('erased')
+                        }
+                    },
+                    layout: {
+                        type: 'vbox',
+                        pack: 'center',
+                        align: 'center'
+                    },
+                    items: [{
+                        xtype: 'container',
+                        width : 150,
+                        height : 150,
+                        layout: {
+                            type: 'vbox',
+                            pack: 'center',
+                            align: 'center'
+                        },
+                        style: 'border : 2px solid black;',
+                        items: [{
+                            xtype: 'button',
+                            text: 'Hide',
+                            handler: function() {
+                                this.up('container[width=800]').hide();
+                            }
+                        }]
+                    }]
+                });
+                Ext.Viewport.add(parent);
+            }
+        });
+
+    </script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        Ext.require(['*']);
+
+        Ext.onReady(function(){
+
+        var myPanel001 = Ext.create('Ext.panel.Panel', {
+        	id: 'myPanel001',
+        	height: 400,
+        	layout: 'border',
+        	items: [
+        		{
+        			xtype: 'panel',
+        			region: 'center',
+        			margin: '0 0 0 0',
+        			bodyStyle: "background: #ffffff;",
+        			border:false,
+        			defaults:{
+        				flex:1, 
+        				border:false, 
+        				},
+        			items: [
+        				{
+        					xtype: 'displayfield', // Set this one to textfield also and the isDirty status works correctly!
+        					fieldLabel: 'Filename',
+        					name:'original_filename'
+        				},
+        				{
+        					xtype: 'textfield',
+        					fieldLabel: 'Size (Kb)',
+        					name:'filesize'
+        				}
+        			]		
+        		}
+        	]
+        });
+
+        var myPanel002 = Ext.create('Ext.panel.Panel', {
+        	id: 'myPanel002',
+        	height: 400,
+        	items: [
+        		{
+        			xtype: 'textareafield',
+        			id: 'myPanel002TextArea',
+        			margin: '0 0 0 0',
+        			bodyStyle: "background: #ffffff;",
+        			name:'text',
+        			value: 'Some text'
+        		}
+        	]
+        });
+
+
+        var myForm = Ext.create('Ext.form.Panel', {
+        	id: 'myForm',
+        	border : false,
+        	bodyPadding: '3 10 10 10',
+        	layout: 'anchor',
+        	fieldDefaults: {
+                    labelAlign: 'left',
+                    labelWidth: 110,
+                    msgTarget: 'qtip'
+           	},
+        	items:[
+        		{
+        			xtype: 'fieldset',
+        			title: 'Fieldset 1',
+        			collapsible: true,
+        			defaultType: 'displayfield',
+        			layout: 'anchor',
+        			items: [
+        				myPanel001
+
+        			]
+        		},
+        		{
+        			xtype: 'fieldset',
+        			title: 'Fieldset 2',
+        			collapsible: true,
+        			defaultType: 'displayfield',
+        			layout: 'anchor',
+        			items: [
+        				myPanel002
+        			]
+        		}
+        	],
+        	listeners: {
+        		dirtychange: function() {
+        			myPanelFormDirtyId = this.getForm().id;
+        				console.log("Form ID:" + " " + myPanelFormDirtyId);
+        			myPanelFormDirty = this.getForm().isDirty();
+        				console.log("Form Dirty Flag:" + " " + myPanelFormDirty);
+        		}
+        	}
+        });
+
+        var myPanelFormDirty = false;
+
+        var myTabPanel = Ext.create('Ext.tab.Panel', {
+        	id: 'myTabPanel',
+        	stateful : false,
+
+        	resizeTabs: true,
+        	tabWidth: 80,
+        	animScroll: true,
+        	enableTabScroll : true,
+            defaults: {bodyStyle: 'padding: 0px'},
+            items:[
+        		{
+                    xtype: 'panel',
+                    title: 'Tab 1',
+                    items: [
+        				myForm
+        			]
+        		},
+        		{
+                    xtype: 'panel',
+                    title: 'Tab 2',
+                    items: [
+
+        			]
+        		}
+        	],
+        	listeners: {
+        		beforetabchange: function(tabpanel, newTab, oldTab, options){
+        			if (tabpanel.canContinue) {
+        				tabpanel.canContinue = false;
+        				return true;
+        			} else 
+        				if ( myPanelFormDirty === true )
+        					{
+        						Ext.Msg.confirm('Are you sure?','Discard unsaved data?', function(btn){
+        							if (btn == 'yes') {
+        								tabpanel.canContinue = true;
+        								myPanelFormDirty = false;
+        								Ext.getCmp(myPanelFormDirtyId).getForm().reset();
+        								tabpanel.setActiveTab(newTab);
+        							}
+        							tabpanel.canContinue = false;
+        						});
+        						return false; 
+        					}
+        				else
+        					{
+        						return true;
+        					}
+        		}
+        	}
+        });
+
+
+        Ext.create('Ext.container.Viewport', {
+                id: 'myViewport',
+        		layout: {
+                    type: 'fit'
+                },
+                items: [
+        			myTabPanel
+        		]
+        	});
+
+        });
+        
+    </script>
+</body>
+</html>

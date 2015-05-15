@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../sencha-touch-all.js"></script>
+    <script type="text/javascript">
+        Ext.require([
+            'Ext.draw.Component',
+            'Ext.Panel'
+        ]);
+        var seed = .5;
+
+        function random() {
+            seed *= 15.1;
+            seed -= Math.floor(seed);
+            return seed - 0.5;
+        }
+        Ext.setup({
+            onReady: function () {
+                var items = [
+                    {
+                        type: 'circle',
+                        radius: 10,
+                        fill: 'gray',
+                        stroke: 'black',
+                        translate: {
+                            x: 30,
+                            y: 90
+                        }
+                    },
+                    {
+                        type: 'circle',
+                        radius: 10,
+                        fill: 'gray',
+                        stroke: 'black',
+                        translate: {
+                            x: 30,
+                            y: 90
+                        }
+                    },
+                    {
+                        type: 'circle',
+                        radius: 10,
+                        fill: 'gray',
+                        stroke: 'black',
+                        translate: {
+                            x: 30,
+                            y: 90
+                        }
+                    },
+                    {
+                        type: 'circle',
+                        radius: 10,
+                        fill: 'gray',
+                        stroke: 'black',
+                        translate: {
+                            x: 30,
+                            y: 90
+                        }
+                    }
+                ];
+                var parent = Ext.create("Ext.Panel", {
+                        layout: 'fit'
+                    }),
+                    cmp = new Ext.draw.Component({
+                        background: 'white',
+                        sprites: items
+                    });
+
+                parent.add(cmp);
+                var sprite = cmp.getSurface().getItems()[0],
+                    sprite1 = cmp.getSurface().getItems()[1],
+                    sprite2 = cmp.getSurface().getItems()[2],
+                    sprite3 = cmp.getSurface().getItems()[3];
+                Ext.Viewport.add(parent);
+                sprite3.fx.setDuration(700);
+                sprite2.fx.setDuration(600);
+                sprite1.fx.setDuration(500);
+                sprite.fx.setDuration(400);
+                sprite.setAttributes({
+                    translationX: 100
+                });
+                function move(e) {
+                    sprite3.setAttributes({
+                        translationX: e.pageX,
+                        translationY: e.pageY,
+                        r: Math.random() * 15
+                    });
+                    sprite2.setAttributes({
+                        translationX: e.pageX,
+                        translationY: e.pageY,
+                        r: Math.random() * 15
+                    });
+                    sprite1.setAttributes({
+                        translationX: e.pageX,
+                        translationY: e.pageY,
+                        r: Math.random() * 15
+                    });
+                    sprite.setAttributes({
+                        translationX: e.pageX,
+                        translationY: e.pageY,
+                        r: Math.random() * 15
+                    });
+                }
+
+                cmp.element.on('touchstart', move);
+                cmp.element.on('drag', move);
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

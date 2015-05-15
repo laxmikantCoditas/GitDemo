@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4599</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.setup({
+            requires: [
+                'Ext.Panel',
+	            'Ext.device.Connection'
+            ],
+            onReady:function () {
+                var form = Ext.create('Ext.Panel', {
+                    width:"100%",
+                    height:"100%",
+                    html:"hello world"
+                });
+                Ext.Viewport.add(form);
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

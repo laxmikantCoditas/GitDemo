@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title></title>
+    <link href="../../resources/css/sencha-touch.css" rel="stylesheet" />
+    <script src="../../sencha-touch-all.js"></script>
+    <script type="text/javascript">
+        Ext.setup({
+            onReady: function() {
+                Ext.Viewport.add(
+                    Ext.create("Ext.form.Panel", {
+                        fullscreen: true,
+                        items: [
+                            {
+                                xtype: 'textfield',
+                                required: true,
+                                name: 'username'
+                            }
+                        ]
+                    })
+                )
+            }
+        });
+    </script>
+</head>
+<body dir='rtl'></body>
+</html>

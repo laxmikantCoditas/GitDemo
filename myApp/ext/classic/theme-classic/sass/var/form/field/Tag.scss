@@ -1,0 +1,24 @@
+$tag-field-item-background-color: adjust-color($base-color, $hue: 0deg, $saturation: 0.542%, $lightness: 7.843%) !dynamic;
+$tag-field-item-border-color: adjust-color($base-color, $hue: 0deg, $saturation: 7.644%, $lightness: -8.627%) !dynamic;
+$tag-field-item-over-background-color: adjust-color($tag-field-item-background-color, $lightness: -12%) !dynamic;
+$tag-field-item-over-border-color: adjust-color($tag-field-item-border-color, $lightness: -12%) !dynamic;
+$tag-field-item-selected-background-color: desaturate(darken($base-color, 23.33%), 11.55%) !dynamic;
+$tag-field-item-selected-border-color: saturate(darken($base-color, 38.63%), 5.65%) !dynamic;
+$tag-field-item-selected-color: #fff !dynamic;
+$tag-field-item-close-icon-width: 11px !dynamic;
+$tag-field-item-close-icon-height: 11px !dynamic;
+$tag-field-item-close-icon-top: 2px !dynamic;
+$tag-field-item-close-icon-right: 2px !dynamic;
+$tag-field-input-field-height: 18px!dynamic;
+
+$tag-field-item-selected-close-icon-position: 0px 11px !dynamic;
+$tag-field-item-close-icon-over-position: 22px 0px !dynamic;
+$tag-field-item-close-icon-active-position: 11px 0px !dynamic;
+$tag-field-item-selected-close-icon-over-position: 22px 11px !dynamic;
+$tag-field-item-selected-close-icon-active-position: 11px 11px !dynamic;
+
+$tag-field-item-margin: 1px 4px 1px 0 !dynamic;
+$tag-field-item-line-height: ($form-field-height - 6) !dynamic;
+
+// Padding to accommodate the close icon
+$tag-field-item-after-padding: 20px !dynamic;

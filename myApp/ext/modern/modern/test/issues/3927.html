@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3927</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.setup({ 
+            requires: [
+                'Ext.data.Store', 'Ext.dataview.List'
+            ],
+            onReady: function() {
+                this.do_model = Ext.define("SampleDataObject", {
+                    extend: 'Ext.data.Model',
+                    config:{
+                        fields:[
+                            {name: 'code', type: 'string'},
+                            {name: 'title', type: 'string'}
+                        ]
+                    }
+                });
+
+                this.store_models = Ext.create("Ext.data.Store", {
+                    model: this.do_model
+                });
+
+                this.listview_lister = Ext.create('Ext.List', {
+                    store: this.store_models,
+                    itemTpl: '{title}'
+                });
+
+                Ext.Viewport.add(this.listview_lister);
+
+                var array_codes = ["A", "B", "C", "D"];
+                var array_titles = ["aaa", "bbb", "ccc", "ddd"];
+
+                for (var i = 0; i < array_codes.length; i++){
+                    this.store_models.add({
+                        code: array_codes[i],
+                        title: array_titles[i]
+                    });
+                }
+
+                this.listview_lister.refresh();
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

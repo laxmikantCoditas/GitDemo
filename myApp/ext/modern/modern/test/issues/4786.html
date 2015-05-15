@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TOUCH-4786</title>
+
+	<script src="../../sencha-touch-debug.js"></script>
+	<link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+	<script type="text/javascript">
+		Ext.setup({
+			requires: [
+				"Ext.data.Model",
+				"Ext.data.Store",
+				"Ext.data.proxy.SQL"
+			],
+			onReady: function() {
+				Ext.require([]);
+				Ext.define("User", {
+					extend: "Ext.data.Model",
+					config: {
+						fields: [ "firstName", "lastName" ],
+						proxy: {
+							type: "sql"
+						}
+					}
+				});
+
+				Ext.create("Ext.data.Store", {
+					model: "User",
+					storeId: "Users",
+					proxy: {
+						type: "sql"
+					}
+				});
+
+				var store = Ext.getStore("Users"), model;
+
+				console.log("Adding records to Store");
+				for (var i = 0; i < 10; i++) {
+					store.add(
+							{
+								firstName: "Polly",
+								lastName: "Hedra"
+							}
+					);
+				}
+
+				console.log("Syncing with Database");
+				store.sync({
+					callback: function(result, operation, success) {
+						console.log("Total Items in Store: " + store.getCount());
+						model = store.getAt(0);
+						if (model) {
+							console.log("Saved name: " + model.get("firstName"));
+							model.set("firstName", "Bill");
+							store.sync({
+								callback: function() {
+									model = store.getAt(0);
+									console.log("Updated Name: " + model.get("firstName"));
+									store.load({
+										params: {
+											id: {
+												filters: [
+													new Ext.util.Filter({
+														property: 'firstName',
+														value: 'bill',
+														anyMatch: true
+													})
+												]
+											}
+										},
+										callback: function(records, operation, successful) {
+											console.log("Filtered Results: " + records.length);
+											store.load({
+												callback: function() {
+													console.log("Total Items in Store: " + store.getCount());
+													store.remove(model);
+													store.sync({
+														callback: function() {
+															console.log("Total Items in Store: " + store.getCount());
+															store.removeAll();
+															store.sync({
+																callback: function() {
+																	console.log("Total Items in Store: " + store.getCount());
+																	store.getModel().getProxy().dropTable({
+																		callback:function() {
+																			console.log("Table Dropped");
+																		}
+																	});
+																}
+															});
+														}
+													});
+												}
+											})
+										}
+									})
+								}
+							})
+						} else {
+							console.log("Problem Saving model")
+						}
+
+					}
+				});
+			}
+		});
+	</script>
+</head>
+<body>
+</body>
+</html>

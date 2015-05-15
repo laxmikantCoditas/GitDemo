@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sencha Touch Issue Template</title>
+		<link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+		<script type="text/javascript" src="../../sencha-touch.js"></script>
+
+		<script type="text/javascript">
+			Ext.application({
+				name : 'Test',
+
+				requires : [
+
+				],
+
+				launch : function () {
+                    Ext.create('Ext.Container', {
+                        fullscreen: true,
+                        items: [
+                            {
+                                xtype:'toolbar',
+                                docked:'top',
+                                items:[
+                                    {
+                                        xtype:'textfield',
+                                        label:'Name it',
+                                        labelWidth:60,
+                                        flex: 1
+                                    }
+
+                                ]
+                            }
+                        ]
+                    });
+				}
+			});
+		</script>
+	</head>
+</html>

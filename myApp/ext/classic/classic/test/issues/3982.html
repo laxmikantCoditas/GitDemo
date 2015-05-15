@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        //your test case goes here
+Ext.require([
+    'Ext.form.*'
+]);
+
+Ext.onReady(function() {
+
+    // Add the additional 'advanced' VTypes
+    Ext.apply(Ext.form.field.VTypes, {
+        daterange: function(val, field) {
+            var date = field.parseDate(val);
+
+            if (!date) {
+                return false;
+            }
+            if (field.startDateField && (!this.dateRangeMax || (date.getTime() != this.dateRangeMax.getTime()))) {
+                var start = field.up('form').down('#' + field.startDateField);
+                start.setMaxValue(date);
+                start.validate();
+                this.dateRangeMax = date;
+            }
+            else if (field.endDateField && (!this.dateRangeMin || (date.getTime() != this.dateRangeMin.getTime()))) {
+                var end = field.up('form').down('#' + field.endDateField);
+                end.setMinValue(date);
+                end.validate();
+                this.dateRangeMin = date;
+            }
+            /*
+             * Always return true since we're only using this vtype to set the
+             * min/max allowed values (these are tested for after the vtype test)
+             */
+            return true;
+        },
+
+        daterangeText: 'Start date must be less than end date'
+
+    });
+
+    /*
+     * ================  Date Range  =======================
+     */
+
+    var dr = Ext.create('Ext.FormPanel', {
+        renderTo: Ext.getBody(),
+        frame: true,
+        title: 'Date Range',
+        bodyPadding: '5px 5px 0',
+        width: 350,
+        fieldDefaults: {
+            labelWidth: 125,
+            msgTarget: 'side',
+            autoFitErrors: false
+        },
+        defaults: {
+            width: 300
+        },
+        defaultType: 'datefield',
+        items: [
+            {
+                fieldLabel: 'Start Date',
+                name: 'startdt',
+                id: 'startdt',
+                vtype: 'daterange',
+                endDateField: 'enddt' // id of the end date field
+            },
+            {
+                fieldLabel: 'End Date',
+                name: 'enddt',
+                id: 'enddt',
+                vtype: 'daterange',
+                startDateField: 'startdt' // id of the start date field
+            }
+        ]
+    });
+
+});
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2033</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+
+    <script>
+        Ext.setup({
+            onReady:function () {
+                Ext.create('Ext.Container', {
+                    fullscreen:true,
+                    items:[
+                        {
+                            xtype:'toolbar',
+                            align:'right',
+                            items:{
+                                xtype:'button',
+                                text:"Add new item",
+                                handler:function () {
+                                    var ct = this.up('container(true)');
+                                    console.log(ct);
+                                    ct.animateActiveItem({html:'New item ' + new Date().toString()}, {
+                                        type:'slide'
+                                    })
+                                }
+                            }
+                        },
+                        {
+                            html:'first item'
+                        }
+                    ]
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

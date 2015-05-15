@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3695</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+    <script type="text/javascript">
+
+    Ext.setup({ 
+        requires: [
+                'Ext.form.Panel', 'Ext.form.FieldSet', 'Ext.field.DatePicker'
+            ],
+        onReady: function() {
+            Ext.create('Ext.form.Panel', {
+                fullscreen: true,
+                items: [
+                    {
+                        xtype: 'fieldset',
+                        items: [
+                            {
+                                xtype: 'datepickerfield',
+                                label: 'Birthday',
+                                name: 'birthday',
+                                value: new Date(),
+                                picker: {                    
+                                    yearFrom: 1980,
+                                    yearTo: 2002
+                                }
+                            }
+                        ]
+                    }
+                ]
+            });
+        }
+    });
+
+    </script>
+</head>
+<body>
+</body>
+</html>

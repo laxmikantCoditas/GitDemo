@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Canvas Test</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script src="../../sencha-touch.js"></script>
+        <style>
+            .x-canvas {
+                height: 100%;
+                width: 100%;
+            }
+        </style>
+
+        <script>
+            Ext.define('Ext.myCanvas', {
+                extend: 'Ext.Component',
+                xtype: 'canvas',
+                template: [{
+                    reference: 'canvas',
+                    tag: 'canvas',
+                    classList: [Ext.baseCSSPrefix + 'canvas']
+                }],
+                initialize: function() {
+                    this.canvas.on({
+                        tap: 'onCanvasTap',
+                        scope: this
+                    });
+                },
+                onCanvasTap: function(e) {
+                    alert('tap');
+                }
+            });
+            Ext.setup({
+                onReady:function () {
+                    Ext.Viewport.add({
+                        xtype: 'canvas',
+                        layout: 'fit'
+                    })
+                }
+            });
+        </script>
+    </head>
+    <body></body>
+</html>

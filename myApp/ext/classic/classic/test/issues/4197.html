@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+<script type="text/javascript" charset="utf-8">
+Ext.onReady(function() {
+
+    var menuItems = [
+        { text : 'Giant Step' },
+        { text : 'Lilliput Steps' },
+        { text : 'Milky Well' },
+        { text : 'Rainy Circle' },
+        { text : 'Magnet Hill' },
+        { text : 'Pink Cloud' },
+        { text : 'Lumine Hall' },
+        { text : 'Fire Circle' }
+    ];
+
+    Ext.create( 'Ext.Viewport', {
+        layout : 'border',
+        items: [{
+            xtype: 'toolbar',
+            region: 'north',
+            items: [{
+                xtype : 'button',
+                text : 'Aligned Correctly in Firefox',
+                menuAlign : 'tr-br?',
+                menu    : {
+                    items : menuItems
+                }
+            }]
+        }, {
+            region : 'west',
+            title: 'West',
+            width: 100,
+            items : [{
+                xtype : 'button',
+                text : 'Add a row',
+                handler : function () {
+                    addField();
+                }
+            }]
+        }, {
+            title: 'Center',
+            region : 'center',
+            layout: 'anchor',
+            id: 'center'
+        }]
+    });
+
+    function addField() {
+        Ext.getCmp('center').add({
+            xtype : 'fieldcontainer',
+            text : 'Panel',
+            layout : 'hbox',
+            items : [{
+                xtype : 'tbspacer',
+                flex : 1
+            }, {
+                xtype : 'button',
+                text : 'Bad',
+                menuAlign : 'tr-br?',
+                menu    : {
+                    items : menuItems
+                }
+            }, {
+                xtype : 'tbspacer',
+                width : 40
+            }]
+        });
+    }
+});
+</script>
+</body>
+</html>

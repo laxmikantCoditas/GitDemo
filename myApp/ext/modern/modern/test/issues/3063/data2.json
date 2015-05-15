@@ -1,0 +1,52 @@
+{
+   "success":true,
+   "report":[
+      {
+         "id":"rd02s",
+         "rd02s":[
+            {
+               "id":"1",
+               "period":"Jan 2012",
+               "Service":"0",
+               "Redemption":"0",
+               "PrePaid":"0"
+            },
+            {
+               "id":"2",
+               "period":"Feb 2012",
+               "Service":"0",
+               "Redemption":"0",
+               "PrePaid":"0"
+            },
+            {
+               "id":"3",
+               "period":"Mar 2012",
+               "Service":"0",
+               "Redemption":"0",
+               "PrePaid":"0"
+            },
+            {
+               "id":"4",
+               "period":"Apr 2012",
+               "Service":"0",
+               "Redemption":"0",
+               "PrePaid":"0"
+            },
+            {
+               "id":"5",
+               "period":"May 2012",
+               "Service":"0",
+               "Redemption":"0",
+               "PrePaid":"0"
+            },
+            {
+               "id":"6",
+               "period":"Jun 2012",
+               "Service":"0",
+               "Redemption":"0",
+               "PrePaid":"0"
+            }
+         ]
+      }
+   ]
+}

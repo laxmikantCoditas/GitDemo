@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>TOUCH-5028</title>
+    <style></style>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+    <script src="../../sencha-touch-all-debug.js"></script>
+    <script>
+        Ext.require(['Ext.data.JsonStore', 'Ext.Toolbar', 'Ext.chart.*']);
+        Ext.setup({
+            onReady: function () {
+                var testDataStore = new Ext.data.JsonStore({
+                    fields: ['datetime', 'line1', 'line2'],
+                    data: [{
+                        datetime: new Date(2007, 11, 1, 0, 0, 0),
+                        line1: 1,
+                        line2: undefined
+                    }, {
+                        datetime: new Date(2007, 11, 2, 0, 0, 0),
+                        line1: 1,
+                        line2: undefined
+                    }, {
+                        datetime: new Date(2007, 11, 3, 0, 0, 0),
+                        line1: 1,
+                        line2: undefined
+                    }, {
+                        datetime: new Date(2007, 11, 4, 0, 0, 0),
+                        line1: 1,
+                        line2: undefined
+                    }, {
+                        datetime: new Date(2007, 11, 5, 0, 0, 0),
+                        line1: 1,
+                        line2: 4
+                    }, {
+                        datetime: new Date(2007, 11, 6, 0, 0, 0),
+                        line1: 1,
+                        line2: 4
+                    }, {
+                        datetime: new Date(2007, 11, 7, 0, 0, 0),
+                        line1: 1,
+                        line2: 4
+                    }, {
+                        datetime: new Date(2007, 11, 8, 0, 0, 0),
+                        line1: 1,
+                        line2: 4
+                    }]
+                });
+
+
+
+
+                var testAxisArray = [];
+                testAxisArray.push({
+                    type: 'numeric',
+                    minimum: 0,
+                    maximum: 5,
+                    position: 'left',
+                    fields: ['line1', 'line2'],
+                    title: 'value',
+                    minorTickSteps: 1
+                });
+                testAxisArray.push({
+                    type: 'time',
+                    dateFormat: 'n/j g:i a',
+                    position: 'bottom',
+                    fields: ['datetime'],
+                    label: {
+                        x: 20,
+                        y: -8,
+                        rotate: {
+                            degrees: 35
+                        },
+                        fontSize: 12,
+                        fontFamily: 'Arial'
+                    }
+                });
+
+
+                var testChartSeries = [];
+                testChartSeries.push({
+                    type: 'line',
+                    colors: 'transparent',
+                    style: {
+                        stroke: 'Blue',
+                        lineWidth: 1
+                    },
+                    xField: 'datetime',
+                    yField: 'line1'
+                });
+
+
+                testChartSeries.push({
+                    type: 'line',
+                    colors: 'transparent',
+                    style: {
+                        stroke: 'Red',
+                        lineWidth: 1
+                    },
+                    xField: 'datetime',
+                    yField: 'line2'
+                });
+
+
+                var lineChart = new Ext.chart.CartesianChart({
+                    flex: 1,
+                    itemId: 'Chart',
+                    animate: true,
+                    store: testDataStore,
+                    legend: {
+                        position: 'right'
+                    },
+                    axes: testAxisArray,
+                    series: testChartSeries
+                });
+
+                Ext.Viewport.add([lineChart, {
+                    xtype: 'toolbar',
+                    docked: 'top',
+                    title: 'The red line should be straight.'
+                }]);
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

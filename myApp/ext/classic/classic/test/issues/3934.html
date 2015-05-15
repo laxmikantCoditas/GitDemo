@@ -1,0 +1,282 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" language="javascript">
+        Ext.require([
+            'Ext.container.*',
+            'Ext.layout.*',
+            'Ext.grid.*',
+            'Ext.data.*'
+        ]);
+
+        Ext.onReady(function () {
+            // sample static data for the store
+            var myData = [
+                [0, 'ttt', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                [1, 'ttt', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                [2, 'ttt', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                [3, 'ttt', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                [4, 'ttt', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                [5, 'ttt', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                [6, 'ttt', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                [7, 'ttt', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                [8, 'ttt', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                [9, 'ttt', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                [10, 'ttt', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                [11, 'ttt', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                [12, 'ttt', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                [13, 'ttt', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                [14, 'ttt', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                [15, 'ttt', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                [16, 'ttt', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                [17, 'ttt', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                [18, 'ttt', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                [19, 'ttt', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                [20, 'ttt', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                [21, 'ttt', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                [22, 'ttt', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                [23, 'ttt', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                [24, 'ttt', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                [25, 'ttt', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                [26, 'ttt', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                [27, 'ttt', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                [28, 'ttt', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                [29, 'ttt', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
+            ];
+
+            // create the data store
+            var store = Ext.create('Ext.data.ArrayStore', {
+                fields:
+                [
+                    'id',
+                    'field1',
+                    'field2',
+                    'field3',
+                    'field4',
+                    'field5',
+                    'field6',
+                    'field7',
+                    'field8',
+                    'field9',
+                    'field10',
+                    'field11',
+                    'field12',
+                    'field13',
+                    'field14',
+                    'field15',
+                    'field16',
+                    'field18',
+                    'field19',
+                    'field20',
+                    'field21',
+                    'field22',
+                    'field23',
+                    'field24',
+                    'field25',
+                    'field26',
+                    'field27',
+                    'field28',
+                    'field29'
+                ],
+                data: myData
+            });
+
+            var grid = Ext.create('Ext.grid.Panel', {
+                store: store,
+                columns: {
+                    items:
+                [
+                    {
+                        text: 'Field1',
+                        width: 155,
+                        dataIndex: 'field1'
+                    },
+                    {
+                        text: 'Field2',
+                        width: 100,
+                        dataIndex: 'field2'
+                    },
+                    {
+                        text: 'Field3',
+                        width: 150,
+                        dataIndex: 'field3'
+                    },
+                    {
+                        text: 'Group1',
+                        columns: [
+                            {
+                                text: 'Field4',
+                                width: 125,
+                                dataIndex: 'field4'
+                            },
+                            {
+                                text: 'Field5',
+                                width: 125,
+                                dataIndex: 'field5'
+                            }
+                        ]
+                    },
+                    {
+                        text: 'Group2',
+                        columns: [
+                            {
+                                text: 'Field6',
+                                width: 125,
+                                dataIndex: 'field6'
+                            },
+                            {
+                                text: 'Field7',
+                                width: 125,
+                                dataIndex: 'field7'
+                            },
+                            {
+                                text: 'Field8',
+                                width: 150,
+                                dataIndex: 'field8'
+                            }
+                        ]
+                    },
+                    {
+                        text: 'Group3',
+                        columns: [
+                        {
+                            text: 'Field9',
+                            width: 125,
+                            dataIndex: 'field9'
+                        },
+                        {
+                            text: 'Field10',
+                            width: 125,
+                            dataIndex: 'field10'
+                        },
+                        {
+                            text: 'Field11',
+                            width: 125,
+                            dataIndex: 'field11'
+                        },
+                        {
+                            text: 'Field12',
+                            width: 125,
+                            dataIndex: 'field12'
+                        },
+                        {
+                            text: 'Field13',
+                            width: 125,
+                            dataIndex: 'field13'
+                        }
+                    ]
+                    },
+                     {
+                         text: 'Group4',
+                         columns: [
+                            {
+                                text: 'Field14',
+                                width: 125,
+                                dataIndex: 'field14'
+                            },
+                            {
+                                text: 'Field15',
+                                width: 125,
+                                dataIndex: 'field15'
+                            },
+                            {
+                                text: 'Field16',
+                                width: 100,
+                                dataIndex: 'field16'
+                            },
+                            {
+                                text: 'Field17',
+                                width: 125,
+                                dataIndex: 'field17'
+                            },
+                            {
+                                text: 'Field18',
+                                width: 125,
+                                dataIndex: 'field18'
+                            }
+                        ]
+                     },
+                     {
+                         text: 'Group5',
+                         columns: [
+                            {
+                                text: 'Field19',
+                                width: 125,
+                                dataIndex: 'field19'
+                            }
+                        ]
+                     },
+                    {
+                        text: 'Group6',
+                        columns: [
+                            {
+                                text: 'field20',
+                                width: 100,
+                                dataIndex: 'field20'
+                            },
+                            {
+                                text: 'Field21',
+                                width: 100,
+                                dataIndex: 'field21'
+                            }
+                        ]
+                    },
+                    {
+                        text: 'Field22',
+                        width: 150,
+                        dataIndex: 'field22'
+                    },
+                    {
+                        text: 'Field23',
+                        width: 75,
+                        dataIndex: 'field23'
+                    },
+                    {
+                        text: 'Field24',
+                        width: 50,
+                        dataIndex: 'field24'
+                    },
+                    {
+                        text: 'Field25',
+                        width: 100,
+                        dataIndex: 'field25'
+                    },
+                    {
+                        text: 'Field26',
+                        width: 100,
+                        dataIndex: 'field26'
+                    },
+                    {
+                        text: 'Field27',
+                        width: 100,
+                        dataIndex: 'field27'
+                    },
+                    {
+                        text: 'Field28',
+                        width: 100,
+                        dataIndex: 'field28'
+                    },
+                    {
+                        text: 'Field29',
+                        width: 100,
+                        dataIndex: 'field29'
+                    }
+                ]
+                }
+            });
+            
+            Ext.create('Ext.container.Viewport', {
+                layout: 'fit',
+                items: grid
+            });
+        });
+
+    </script>
+</body>
+</html>

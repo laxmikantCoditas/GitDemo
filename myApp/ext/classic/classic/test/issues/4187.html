@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Chart Tooltip doesn't honor tooltip configured width.</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+<script type="text/javascript" src="../ui/example-data.js"></script>
+<script type="text/javascript" src="4187.js"></script>
+   <style>
+        .x-tip {
+        background-color: #fff;
+        border-radius: 0.5em;
+        -moz-border-radius: 0.5em;
+        -webkit-border-radius: 0.5em;
+        border-radius: 0.5em;
+        border: 1px solid rgba(134, 84, 41, 0.5);
+        opacity: 0.95;
+    }
+    .x-tip-header {
+        margin-bottom: 5px;
+    }
+    .x-tip .x-panel .x-panel-body.x-layout-fit {
+        border: none;
+    }
+    .x-tip .x-panel.x-grid-section.x-panel-noborder.x-fit-item {
+        margin: 0;
+    }
+    .x-tip .x-panel.x-box-item {
+        top: 0 !important;
+    }
+    .x-tip-header-body .x-component.x-box-item {
+        width: 100%;
+        text-align: center;
+    }
+    .x-tip-body {
+        text-shadow: none;
+    }
+    .x-panel {
+            margin: 20px;
+        }
+    ul {
+        margin-left: 10px;
+    }
+    ul li {
+        display: block;
+        font-weight: normal;
+        color: #444;
+        padding: 2px;
+    }
+    h1 {
+        font-size: 18px;
+        margin: 10px;
+    }
+    </style>
+</head>
+    <body id="docbody">
+    <h1>Chart in tips example</h1>
+    <div style="margin: 10px;">
+        Showing a Pie Chart and a Grid Panel as elements in a tooltip. <a href="TipsChart.js">View Source</a>
+    </div>
+    </body>
+</html>

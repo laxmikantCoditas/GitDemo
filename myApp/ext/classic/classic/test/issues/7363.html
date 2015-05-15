@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        Ext.define('Company', {
+            extend: 'Ext.data.Model',
+            fields: [
+                {name: 'company'},
+                {name: 'price'}
+            ],
+            idProperty: 'company'
+        });
+
+        Ext.onReady(function() {
+
+            var myData = [
+                ['3m Co',                               71.72],
+                ['Alcoa Inc',                           29.01],
+                ['Altria Group Inc',                    83.81],
+                ['American Express Company',            52.55],
+                ['American International Group, Inc.',  64.13],
+                ['AT&T Inc.',                           31.61],
+                ['Boeing Co.',                          75.43]
+            ];
+
+            var store = Ext.create('Ext.data.ArrayStore', {
+                model: 'Company',
+                data: myData
+            });
+
+            var grid = Ext.create('Ext.grid.Panel', {
+                store: store,
+                columns: [
+                    {
+                        text     : 'Company',
+                        flex     : 1,
+                        dataIndex: 'company',
+                        //locked   : true
+                    },
+                    {
+                        text     : 'Price',
+                        width    : 75,
+                        dataIndex: 'price'
+                    }
+                ],
+                height: 190,
+                width: 600,
+                title: 'Array Grid',
+                renderTo: Ext.getBody()
+            });
+
+            var cols = grid.getView().getHeaderCt().getVisibleGridColumns();
+            console.log(cols);
+        });
+    </script>
+</body>
+</html>

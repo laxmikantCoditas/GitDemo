@@ -1,0 +1,20 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css">
+    <script type="text/javascript" src="../../ext-all-debug.js"></script>
+    <script type="text/javascript">
+        Ext.onReady(function(){
+            var tempCal=new Ext.form.field.Date({hideTrigger: true});
+            tempCal.render(Ext.get("test").dom);
+            var tempText=new Ext.form.field.Text({});
+            tempText.render(Ext.get("test").dom);
+            tempText.setHeight(200);
+            tempCal.setHeight(200);
+        });
+    </script>
+</head>
+<body><div id="test"></div></body>
+</html>

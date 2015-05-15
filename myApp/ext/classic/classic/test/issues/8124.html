@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css">
+    <script type="text/javascript" src="../../ext-all-debug.js"></script>
+    <script type="text/javascript">
+
+        Ext.onReady(function () {
+            Ext.create('Ext.form.Panel', {
+                renderTo: Ext.getBody(),
+                width: 500,
+                title: 'File Upload Form',
+                bodyPadding: 5,
+                items: [{
+                    xtype: 'filefield',
+                    emptyText: 'Select an image',
+                    fieldLabel: 'Photo',
+                    buttonText: 'Select...',
+                    anchor: '100%',
+                    listeners: {
+                        change: function(field, value) {
+                            Ext.Msg.alert('New Value', value);
+                        }
+                    }
+                }]
+            });
+        });
+
+    </script>
+
+</head>
+<body></body>
+</html>

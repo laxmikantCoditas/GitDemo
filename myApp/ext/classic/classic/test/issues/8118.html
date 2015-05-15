@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+
+        Ext.onReady(function () {
+            Ext.create('Ext.form.Panel', {
+                title: 'Simple Form',
+                bodyPadding: 5,
+                width: 500,
+                layout: 'anchor',
+                items: [
+                    {
+                        xtype      : 'fieldset',
+                        width      : 450,
+                        height     : 80,
+                        defaults   : {
+                            labelWidth : 70
+                        },
+                        layout: {
+                            type : 'column'
+                        },
+                        title  : 'Umwandlung',
+                        items : [
+                            {
+                                xtype      : 'numberfield',
+                                width      : 120,
+                                name       : 'ms_kammer',
+                                fieldLabel : 'Kammer'
+                            },
+                            {
+                                xtype      : 'splitter'
+
+                            },{
+                                xtype      : 'numberfield',
+                                width      : 120,
+                                name       : 'ms_bock',
+                                fieldLabel : 'Bock'
+                            },
+                            {
+                                xtype      : 'splitter'
+
+                            },
+                            {
+                                xtype      : 'numberfield',
+                                width      : 120,
+                                name       : 'ms_brett',
+                                fieldLabel : 'Brett'
+                            },
+                            {
+                                xtype      : 'label',
+                                height     : 11,
+                                margin     : '5 0 0 0',
+                                width      : 400,
+                                text       : 'Maschine hat x Kammer, wo 1 Kammer = y Bock und 1 Bock = z Bretter'
+                            }
+                        ]
+                    }
+
+
+                ],
+                renderTo: Ext.getBody()
+            });
+        });
+
+        
+    </script>
+</body>
+</html>

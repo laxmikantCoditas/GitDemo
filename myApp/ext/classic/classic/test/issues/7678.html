@@ -1,0 +1,287 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+Ext.require('Ext.chart.*');
+Ext.require(['Ext.Window', 'Ext.fx.target.Sprite', 'Ext.layout.container.Fit', 'Ext.window.MessageBox']);
+Ext.onReady(function () {
+    var chartData = {
+        "message": "",
+        "results": [{
+            "factorName": "INDEX",
+            "factorId": 1,
+            "benchmarkProviderName": "AMERICAN FAMILY",
+            "benchmarkScore": 873.2442,
+            "benchmarkProviderId": 6,
+            "baselineProviderName": "COUNTRY",
+            "baselineScore": 855.2088,
+            "baselineProviderId": 10,
+            "bestInClassScore": 892.9571,
+            "bestInClassProviderName": "AUTO-OWNERS INSURANCE",
+            "bestInClassProviderId": 8
+        }, {
+            "factorName": "FNOL",
+            "factorId": 2,
+            "benchmarkProviderName": "AMERICAN FAMILY",
+            "benchmarkScore": 881.8507,
+            "benchmarkProviderId": 6,
+            "baselineProviderName": "COUNTRY",
+            "baselineScore": 855.4798,
+            "baselineProviderId": 10,
+            "bestInClassScore": 912.9842,
+            "bestInClassProviderName": "USAA",
+            "bestInClassProviderId": 31
+        }, {
+            "factorName": "SERVICE",
+            "factorId": 3,
+            "benchmarkProviderName": "AMERICAN FAMILY",
+            "benchmarkScore": 893.248,
+            "benchmarkProviderId": 6,
+            "baselineProviderName": "COUNTRY",
+            "baselineScore": 864.8613,
+            "baselineProviderId": 10,
+            "bestInClassScore": 909.5015,
+            "bestInClassProviderName": "AUTO-OWNERS INSURANCE",
+            "bestInClassProviderId": 8
+        }, {
+            "factorName": "APPRAISAL",
+            "factorId": 4,
+            "benchmarkProviderName": "AMERICAN FAMILY",
+            "benchmarkScore": 876.1112,
+            "benchmarkProviderId": 6,
+            "baselineProviderName": "COUNTRY",
+            "baselineScore": 857.4499,
+            "baselineProviderId": 10,
+            "bestInClassScore": 881.2169,
+            "bestInClassProviderName": "NEW JERSEY MANUFACTURERS",
+            "bestInClassProviderId": 23
+        }, {
+            "factorName": "REPAIR",
+            "factorId": 5,
+            "benchmarkProviderName": "AMERICAN FAMILY",
+            "benchmarkScore": 865.6813,
+            "benchmarkProviderId": 6,
+            "baselineProviderName": "COUNTRY",
+            "baselineScore": 843.6672,
+            "baselineProviderId": 10,
+            "bestInClassScore": 894.9416,
+            "bestInClassProviderName": "AUTO-OWNERS INSURANCE",
+            "bestInClassProviderId": 8
+        }, {
+            "factorName": "RENTAL",
+            "factorId": 6,
+            "benchmarkProviderName": "AMERICAN FAMILY",
+            "benchmarkScore": 737.9799,
+            "benchmarkProviderId": 6,
+            "baselineProviderName": "COUNTRY",
+            "baselineScore": 788.3117,
+            "baselineProviderId": 10,
+            "bestInClassScore": 821.836,
+            "bestInClassProviderName": "OTHER",
+            "bestInClassProviderId": 24
+        }, {
+            "factorName": "SETTLEMENT",
+            "factorId": 7,
+            "benchmarkProviderName": "AMERICAN FAMILY",
+            "benchmarkScore": 870.1927,
+            "benchmarkProviderId": 6,
+            "baselineProviderName": "COUNTRY",
+            "baselineScore": 847.2679,
+            "baselineProviderId": 10,
+            "bestInClassScore": 899.0457,
+            "bestInClassProviderName": "AUTO-OWNERS INSURANCE",
+            "bestInClassProviderId": 8
+        }],
+        "success": true,
+        "totalCount": 7
+    };
+
+    console.log("chart data:", chartData.results);
+
+    Ext.define('DummyChartData', {
+        extend: 'Ext.data.Model',
+        fields: [{
+            name: 'factorId',
+            type: 'int'
+        }, {
+            name: 'factorName',
+            type: 'string'
+        }, {
+            name: 'benchmarkProviderName',
+            type: 'string'
+        }, {
+            name: 'Benchmark',
+            mapping: 'benchmarkScore',
+            type: 'int'
+        }, {
+            name: 'benchmarkProviderId',
+            type: 'int'
+        }, {
+            name: 'baselineProviderName',
+            type: 'string'
+        }, {
+            name: 'Baseline',
+            mapping: 'baselineScore',
+            type: 'int'
+        }, {
+            name: 'baselineProviderId',
+            type: 'int'
+        }, {
+            name: 'bestInClassProviderName',
+            type: 'string'
+        }, {
+            name: 'Best In Class',
+            mapping: 'bestInClassScore',
+            type: 'int'
+        }, {
+            name: 'bestInClassProviderId',
+            type: 'int'
+        }, {
+            name: 'Target',
+            mapping: 'targetScore',
+            type: 'int'
+        }],
+        proxy: {
+            type: 'memory',
+            reader: {
+                type: 'json'
+            }
+        }
+    });
+
+    var dummyChartStore = Ext.create('Ext.data.Store', {
+        model: 'DummyChartData',
+        data: chartData.results
+    });
+
+    var chart = Ext.create("Ext.chart.Chart", {
+        gradients: [{
+            id: 'benchmark',
+            angle: 90,
+            stops: {
+                0: {
+                    color: '#7cd851'
+                },
+                100: {
+                    color: '#578447'
+                }
+            }
+        }, {
+            id: 'bestInClass',
+            angle: 90,
+            stops: {
+                0: {
+                    color: '#d74949'
+                },
+                100: {
+                    color: '#824242'
+                }
+            }
+        }, {
+            id: 'baseline',
+            angle: 90,
+            stops: {
+                0: {
+                    color: '#bb9fdb'
+                },
+                100: {
+                    color: '#71647d'
+                }
+            }
+        }],
+        cls: 'chart-container',
+        legend: {
+            position: 'right',
+            boxstroke: '#ccc',
+            boxstrokewidth: 1,
+            itemspacing: 20,
+            paddingtop: 10,
+        },
+        store: dummyChartStore,
+        axes: [{
+            title: 'Score',
+            type: 'Numeric',
+            position: 'left',
+            label: {
+                font: '10pt Arial, Helvetica, sans-serif bold',
+                field: ['Baseline', 'Target', 'Benchmark', 'Best In Class']
+            },
+            fields: ['Baseline', 'Target', 'Benchmark', 'Best In Class'],
+            grid: {
+                odd: {
+                    opacity: 1,
+                    fill: '#e0eeee',
+                    stroke: '#f5f5f5',
+                    'stroke-width': .4
+                }
+            },
+            maximum: 1000
+        }, {
+            type: 'Category',
+            title: 'Factors',
+            label: {
+                font: '10pt Arial, Helvetica, sans-serif bold'
+            },
+            position: 'bottom',
+            fields: ['factorName']
+        }],
+        series: [{
+            type: 'column',
+            axis: 'left',
+            label: {
+                display: 'insideEnd',
+                field: ['Baseline', 'Target', 'Benchmark', 'Best In Class'],
+                renderer: Ext.util.Format.numberRenderer('0'),
+                orientation: 'horizontal',
+                color: '#333',
+                'text-anchor': 'middle',
+                contrast: true
+            },
+            highlight: true,
+            xField: 'factorName',
+            yField: ['Baseline', 'Target', 'Benchmark', 'Best In Class']
+        }]
+    });
+
+    var win = Ext.create('Ext.window.Window', {
+        width: 1000,
+        height: 600,
+        minHeight: 400,
+        minWidth: 550,
+        hidden: false,
+        maximizable: true,
+        title: 'Column Chart',
+        autoShow: true,
+        layout: 'fit',
+        tbar: [{
+            text: 'Save Chart',
+            handler: function () {
+                var svg = chart.save({
+                    type: 'image/svg'
+                });
+                Ext.MessageBox.show({
+                    icon: Ext.window.MessageBox.INFO,
+                    title: 'svg',
+                    msg: 'The svg that was generated',
+                    value: svg,
+                    width: 600,
+                    buttons: Ext.MessageBox.OK,
+                    multiline: true,
+                    animateTarget: 'mb3'
+                });
+                console.log(svg);
+            }
+        }],
+        items: chart
+    });
+});
+        
+    </script>
+</body>
+</html>

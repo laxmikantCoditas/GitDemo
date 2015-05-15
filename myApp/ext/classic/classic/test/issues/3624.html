@@ -1,0 +1,196 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+    Ext.Loader.setConfig({ enabled: true }); 
+    Ext.Loader.setPath('Ext.ux', '../../examples/ux'); 
+
+    Ext.require([ 
+        'Ext.grid.*', 
+        'Ext.data.*', 
+        'Ext.ux.ajax.SimManager' 
+    ]); 
+
+    Ext.define('Task', { 
+        extend: 'Ext.data.Model', 
+        idProperty: 'taskId', 
+        fields: [ 
+            {name: 'configId', type: 'int'}, 
+            {name: 'config', type: 'string'}, 
+            {name: 'projectId', type: 'int'}, 
+            {name: 'settingId', type: 'int'} 
+        ] 
+    }); 
+    Ext.onReady(function() { 
+        initAjaxSim(); 
+
+        var projectStore = Ext.create('Ext.data.Store', { 
+            autoLoad: true, 
+            fields: [ 
+                {name: 'projectId', type: 'int'}, 
+                {name: 'name', type: 'string'} 
+            ], 
+            proxy: { 
+                type: 'ajax', 
+                url: 'remote-project-data', 
+                reader: { 
+                    type: 'json', 
+                    root: 'data' 
+                } 
+            } 
+        }); 
+
+        var settingStore = Ext.create('Ext.data.Store', { 
+            autoLoad: true, 
+            fields: [ 
+                {name: 'settingId', type: 'int'}, 
+                {name: 'setting', type: 'string'}, 
+                {name: 'projectId', type: 'int'} 
+            ], 
+            proxy: { 
+                type: 'ajax', 
+                url: 'remote-setting-data', 
+                reader: { 
+                    type: 'json', 
+                    root: 'data' 
+                } 
+            } 
+        }); 
+
+        var projectCombo = Ext.create('Ext.form.field.ComboBox', { 
+            xtype:'combobox', 
+            allowBlank: false, 
+            store: projectStore, 
+            editable: false, 
+            valueField: 'projectId', 
+            displayField: 'name', 
+            listeners: { 
+                change: function(combo, newVal, oldVal) { 
+                    if(newVal != null && oldVal != null) { 
+                        grid.getSelectionModel().getSelection()[0].set('settingId', ''); 
+                    } 
+                } 
+            } 
+        }); 
+
+        var settingCombo = Ext.create('Ext.form.field.ComboBox', { 
+            xtype:'combobox', 
+            allowBlank: false, 
+            queryMode: 'local', 
+            store: settingStore, 
+            editable: false, 
+            valueField: 'settingId', 
+            displayField: 'setting' 
+        }); 
+
+        var gridStore = Ext.create('Ext.data.Store', { 
+            model: 'Task', 
+            autoLoad: true, 
+            remoteSort: true, 
+            proxy: { 
+                type: 'ajax', 
+                url: 'remote-grid-data', 
+                reader: { 
+                    type: 'json', 
+                    root: 'data' 
+                } 
+            } 
+        }); 
+
+        var grid = Ext.create('Ext.grid.Panel', { 
+            width: 900, 
+            height: 450, 
+            renderTo: Ext.getBody(), 
+            title: 'Grid combos', 
+            store: gridStore, 
+            selModel: {xtype: 'rowmodel', mode: 'multi'}, 
+            plugins: this.plugins || [Ext.create('Ext.grid.plugin.CellEditing', { 
+                listeners: { 
+                    beforeedit: function( cell, e, options ) { 
+                        var record = gridStore.getAt(cell.rowIdx); 
+                        settingStore.clearFilter(true); 
+                        settingStore.filter('projectId', (record.get('projectId') || 0)); 
+                        return true; 
+                    } 
+                } 
+            })], 
+            columns: [ 
+                Ext.create('Ext.grid.RowNumberer'), 
+                { 
+                    text: 'Config', 
+                    flex: 1, 
+                    dataIndex: 'config', 
+                    field: { 
+                        xtype:'textfield', 
+                        allowBlank:false 
+                    } 
+                },{ 
+                    header: 'Project', 
+                    width: 200, 
+                    dataIndex: 'projectId', 
+                    field: projectCombo, 
+                    renderer: comboRenderer(projectCombo) 
+                }, { 
+                    header: 'Setting', 
+                    width: 130, 
+                    dataIndex: 'settingId', 
+                    field: settingCombo, 
+                    renderer: comboRenderer(settingCombo) 
+                } 
+            ] 
+        }); 
+    }); 
+
+    function comboRenderer(combo) { 
+        return function(value) { 
+            record = combo.store.findRecord(combo.valueField, value); 
+            return record ? record.get(combo.displayField) : combo.valueNotFoundText; 
+        }; 
+    } 
+
+    function initAjaxSim () { 
+        Ext.ux.ajax.SimManager.register({ 
+            'remote-grid-data' : { 
+                stype: 'json', 
+                data: [ 
+                    {configId: 1, config:'Config 1', projectId: 1, settingId: 1}, 
+                    {configId: 2, config:'Config 2', projectId: 1, settingId: 2}, 
+                    {configId: 3, config:'Config 3', projectId: 1, settingId: 3}, 
+
+                    {configId: 4, config:'Config 4', projectId: 2, settingId: 4}, 
+                    {configId: 5, config:'Config 5', projectId: 2, settingId: 5}, 
+                    {configId: 6, config:'Config 6', projectId: 2, settingId: 6} 
+                ] 
+            }, 
+            'remote-project-data' : { 
+                stype: 'json', 
+                data: [ 
+                    {projectId: 1, name:'Project A'}, 
+                    {projectId: 2, name:'Project B'}, 
+                    {projectId: 3, name:'Project C'}, 
+                    {projectId: 4, name:'Project D'} 
+                ] 
+            }, 
+
+            'remote-setting-data' : { 
+                stype: 'json', 
+                data: [ 
+                    {settingId: 1, setting:'Setting X', projectId: 1}, 
+                    {settingId: 2, setting:'Setting Y', projectId: 1}, 
+                    {settingId: 3, setting:'Setting Z', projectId: 1}, 
+                    {settingId: 4, setting:'Setting AZ', projectId: 2}, 
+                    {settingId: 5, setting:'Setting BZ', projectId: 2}, 
+                    {settingId: 6, setting:'Setting CZ', projectId: 2} 
+                ] 
+            } 
+        }); 
+    }
+    </script>
+</body>
+</html>

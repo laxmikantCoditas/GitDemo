@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Canvas Test</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.application({
+            name:'Sencha',
+            launch:function () {
+                Ext.create('Ext.carousel.Carousel', {
+                    fullscreen:true,
+                    style:'background-color:green',
+                    items:[
+                        {
+                            xtype:'panel',
+                            title:'dasd',
+                            html:'Panel1',
+                            style:'background-color:red',
+                            margin:20
+
+
+                        },
+                        {
+                            xtype:'panel',
+                            title:'asd',
+                            html:'Panel2',
+                            style:'background-color:yellow',
+                            margin:20
+
+
+                        }
+                    ]
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

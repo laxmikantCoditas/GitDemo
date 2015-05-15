@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Photon</title>
+    <link rel="stylesheet" href="../../../resources/css/sencha-touch.css">
+    <script src="../../../sencha-touch-all-debug.js"></script>
+    <script>
+        Ext.Loader.setPath({
+            'Ext': '../../../../touch/src',
+            'Photon': ''
+        });
+
+        Ext.require(['Photon.view.Main']);
+
+        Ext.setup({
+            onReady: function () {
+                Ext.Viewport.add(Ext.create('Photon.view.Main'));
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

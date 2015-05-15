@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        Ext.require([
+            'Ext.tree.*',
+        	'Ext.menu.*',
+            'Ext.data.*',
+            'Ext.window.MessageBox'
+        ]);
+
+        Ext.onReady(function() {
+        	//getContextMenu();
+
+            var store = Ext.create('Ext.data.TreeStore', {
+        									root: {
+        										text: 'Content',
+        										expanded: true,
+        										children: [
+        										  {
+        														text: "To Do", 
+        														cls: "folder",
+        														expanded: true,
+        														checked: true,
+        														children: [{
+        																			text: "Go jogging",
+        																			leaf: true,
+        																			checked: true
+        																		},{
+        																			text: "Take a nap",
+        																			leaf: true,
+        																			checked: false
+        																		}
+        																		,{
+        																			text: "Climb Everest",
+        																			leaf: true,
+        																			checked: false
+        																		}
+        																	]
+        														}
+
+        										] 
+        									}
+
+            });
+
+            var tree = Ext.create('Ext.tree.Panel', {
+                store: store,
+                rootVisible: true,
+                useArrows: true,
+                frame: true,
+                title: 'Check Tree',
+                renderTo: 'tree-div',
+                width: 200,
+                height: 250,
+                enableKeyEvents:true,
+        		listeners: {
+        			 keypress: {
+        						element: 'el', //bind to the underlying el property on the panel
+        						fn: function(e){ 
+        							console.log('navi key ? ' +  e.isNavKeyPress() +  ' => keypress: ' 
+        											  + e.getCharCode( )  ); 
+        							e.stopEvent();
+        							return false;
+        							}
+        					}
+        		   , click: {
+        						element: 'el', //bind to the underlying el property on the panel
+        						fn: function(e){ 
+        							console.log('clicking ...'); 
+        							e.stopEvent();
+        							return false;
+        							}
+        					}
+
+        		},
+                dockedItems: [{
+                    xtype: 'toolbar',
+                    items: {
+                        text: 'Get checked nodes',
+                        handler: function(){
+                            var records = tree.getView().getChecked(),
+                                names = [];
+
+                            Ext.Array.each(records, function(rec){
+                                names.push(rec.get('text'));
+                            });
+
+                            Ext.MessageBox.show({
+                                title: 'Selected Nodes',
+                                msg: names.join('<br />'),
+                                icon: Ext.MessageBox.INFO
+                            });
+                        }
+                    }
+                }]
+            });
+
+
+
+        });
+    </script>
+    <div id="tree-div"></div>
+</body>
+</html>

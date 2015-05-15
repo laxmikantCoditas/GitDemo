@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3789</title>
+	<style>
+		html {
+			font-size: 4em;
+		}
+	</style>
+</head>
+<body>
+	<div class="unselectable">Try to Select me!!!!</div>
+
+
+	<script>
+		var touching = null;
+		var d = document.querySelector("div.unselectable");
+		d.addEventListener("touchstart", function(e) {
+			e.preventDefault();
+			touching = window.setTimeout(longTouch, 1500, true);
+		});
+
+		d.addEventListener("touchend", function(e) {
+			e.preventDefault();
+			window.clearTimeout(touching);
+		})
+
+		function longTouch(e) {
+			alert("long press");
+		}
+
+	</script>
+</body>
+</html>

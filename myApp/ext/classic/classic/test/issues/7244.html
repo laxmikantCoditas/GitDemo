@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        Ext.onReady(function() {
+            var testpanel = Ext.widget('panel', {
+                renderTo: Ext.getBody(),
+                layout: 'border',
+                width: 500,
+                height: 250,
+                items: [{
+                    xtype: 'panel',
+                    itemId: 'p1',
+                    region: 'west',
+                    title: 'Collapsible',
+                    flex: 0.5,
+                    collapsible: true
+                }, {
+                    xtype: 'panel',
+                    region: 'center',
+                    title: 'Main panel',
+                    flex: 0.5
+                }
+                ]
+            });
+        });
+    </script>
+</body>
+</html>

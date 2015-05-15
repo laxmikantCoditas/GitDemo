@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test case template</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+
+    <script>
+        Ext.define('MyApp.model.User', {
+            extend: 'Ext.data.Model',
+            config: {
+                fields: ['name', 'email', 'password']
+            }
+        });
+        Ext.setup({
+            onReady:function () {
+                Ext.Viewport.add({
+                    xtype:'formpanel',
+                    id: 'myForm',
+                    items:[
+                        {
+                            xtype:'textfield',
+                            name:'name',
+                            label:'Name'
+                        },
+                        {
+                            xtype:'emailfield',
+                            name:'email',
+                            label:'Email'
+                        },
+                        {
+                            xtype:'passwordfield',
+                            name:'password',
+                            label:'Password'
+                        }
+                    ]
+                });
+
+                var ed = Ext.create('MyApp.model.User', {
+                    name: 'Ed',
+                    email: 'ed@sencha.com',
+                    password: 'secret'
+                });
+
+                Ext.getCmp('myForm').setRecord(ed);
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

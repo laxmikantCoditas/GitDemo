@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3341</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+    <script type="text/javascript">
+        Ext.application({
+
+            launch: function() {
+
+                var items = this.getFormItems(),
+                    config, form;
+
+                config = {
+                    xtype: 'formpanel',
+                    items: items
+                };
+
+                form = Ext.Viewport.add(config);
+
+                this.form = form;
+            },
+
+            /**
+             * This method returns an array of all items we should add into the form panel we create above in our launch function.
+             * We have created this function to simply make things cleaner and easier to read and understand. You could just put these items
+             * inline up above in the form `config`.
+             * @return {Array} items
+             */
+            getFormItems: function() {
+                return [
+                    {
+                        xtype: 'fieldset',
+                        title: 'Personal Info',
+                        instructions: 'Please enter the information above.',
+                        defaults: {
+                            required: true,
+                            labelAlign: 'left',
+                            labelWidth: '40%'
+                        },
+                        items: [
+                            {
+                                xtype: 'datepickerfield',
+                                name: 'date',
+                                label: 'Start Date',
+                                value: new Date(),
+                                picker: {
+                                    yearFrom: 1980,
+                                    listeners: {
+                                        show: function() {
+                                            console.log("Picker shown");
+                                        },
+                                        pick: function(){
+                                            console.log(arguments);
+                                            console.log("SLot picked");
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ];
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

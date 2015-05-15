@@ -1,0 +1,172 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title></title>
+	<style type="text/css">
+		body
+		{
+			-webkit-user-select: none;
+		}
+
+		body > div {
+			border:1px solid blue;
+            margin: 50px;
+		}
+
+		div div {
+			display: inline-block;
+			width: 200px;
+			height: 200px;
+			background: red;
+			margin: 10px 0 0 10px;
+		}
+
+		h1 {
+			padding: 30px 0 0 10px;
+			margin: 0;
+		}
+
+		button {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+		}
+	</style>
+	<script type="text/javascript" src="../../../sencha-touch.js"></script>
+	<script type="text/javascript">
+        Ext.require('Ext.Anim');
+		Ext.setup({
+			viewport: {
+				autoRender: false
+			},
+			onReady: function() {
+				var directions = ['left', 'right', 'up', 'down'];
+
+                Ext.get('fadein').on('tap', function() {
+                    Ext.Animator.run({
+                        xclass   : 'Ext.fx.animation.FadeIn',
+                        element  : 'fadein',
+                        duration : 2000
+                    });
+                });
+
+                Ext.get('fadeout').on('tap', function() {
+                    Ext.Animator.run({
+                        xclass   : 'Ext.fx.animation.FadeOut',
+                        element  : 'fadeout',
+                        duration : 2000
+                    });
+                });
+
+                Ext.get('popin').on('tap', function() {
+                    Ext.Animator.run({
+                        xclass   : 'Ext.fx.animation.Pop',
+                        element  : 'popin',
+                        duration : 2000
+                    });
+                });
+
+                Ext.get('popout').on('tap', function() {
+                    Ext.Animator.run({
+                        xclass   : 'Ext.fx.animation.PopOut',
+                        element  : 'popout',
+                        duration : 2000
+                    });
+                });
+
+                Ext.each(directions, function(direction) {
+                	Ext.get('wipe-in-' + direction).on('tap', function() {
+	                    Ext.Animator.run({
+	                        xclass   : 'Ext.fx.animation.Wipe',
+	                        element  : 'wipe-in-' + direction,
+	                        direction: direction,
+	                        duration : 2000
+	                    });
+	                });
+
+	                Ext.get('wipe-out-' + direction).on('tap', function() {
+	                    Ext.Animator.run({
+	                        xclass   : 'Ext.fx.animation.WipeOut',
+	                        element  : 'wipe-out-' + direction,
+	                        direction: direction,
+	                        duration : 2000
+	                    });
+	                });
+	            });
+
+                Ext.each(directions, function(direction) {
+                	Ext.get('slide-in-' + direction).on('tap', function() {
+	                    Ext.Animator.run({
+	                        xclass   : 'Ext.fx.animation.Slide',
+	                        element  : 'slide-in-' + direction,
+	                        direction: direction,
+	                        duration : 2000
+	                    });
+	                });
+
+	                Ext.get('slide-out-' + direction).on('tap', function() {
+	                    Ext.Animator.run({
+	                        xclass   : 'Ext.fx.animation.SlideOut',
+	                        element  : 'slide-out-' + direction,
+	                        direction: direction,
+	                        duration : 2000
+	                    });
+	                });
+                });
+			}
+		});
+
+		function random(from, to) {
+			return Math.floor(Math.random() * (to - from + 1) + from);
+		};
+
+	</script>
+</head>
+<body>
+	<button onclick="window.location.reload()">refresh</button>
+
+	<div>
+		<h1>fade</h1>
+		<div id="fadein" style="opacity: 0.75;">in</div>
+		<div id="fadeout">out</div>
+	</div>
+
+	<div>
+		<h1>pop</h1>
+		<div id="popin">in</div>
+		<div id="popout">out</div>
+	</div>
+
+	<div>
+		<h1>wipe in</h1>
+		<div id="wipe-in-left">left</div>
+		<div id="wipe-in-right">right</div>
+		<div id="wipe-in-up">up</div>
+		<div id="wipe-in-down">down</div>
+	</div>
+
+	<div>
+		<h1>wipe out</h1>
+		<div id="wipe-out-left">left</div>
+		<div id="wipe-out-right">right</div>
+		<div id="wipe-out-up">up</div>
+		<div id="wipe-out-down">down</div>
+	</div>
+
+	<div>
+		<h1>slide in</h1>
+		<div id="slide-in-left">left</div>
+		<div id="slide-in-right">right</div>
+		<div id="slide-in-up">up</div>
+		<div id="slide-in-down">down</div>
+	</div>
+
+	<div>
+		<h1>slide out</h1>
+		<div id="slide-out-left">left</div>
+		<div id="slide-out-right">right</div>
+		<div id="slide-out-up">up</div>
+		<div id="slide-out-down">down</div>
+	</div>
+</body>
+</html>

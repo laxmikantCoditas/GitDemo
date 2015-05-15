@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Pie 3D</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <link rel="stylesheet" href="../../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../../sencha-touch-all.js"></script>
+    <script src="data.js"></script>
+    <script>
+        Ext.require(['Ext.chart.SpaceFillingChart',
+                     'Ext.chart.series.Pie3D',
+                     'Ext.Toolbar',
+                     'Ext.TitleBar',
+                     'Ext.Button']);
+        Ext.setup({
+            onReady: function () {
+                var store = new OrderItems(),
+                    colors = ["#43ffff", "#5bbbbb", "#538888", "#5da64e", "#e3e32e", "#878746", "#d5821d", "#d04646", "#6e4273", "#3e8aa8"],
+                    cmp = new Ext.chart.SpaceFillingChart({
+                        store: store,
+                        colors: colors,
+                        series: [
+                            {
+                                type: 'pie3d',
+                                field: 'g1',
+                                donut: 30
+                            }
+                        ]
+                    });
+                Ext.Viewport.add({
+                    layout: 'fit',
+                    items: [
+                        {
+                            xtype: 'titlebar',
+                            docked: 'top',
+                            title: 'Pie Chart',
+                            items: {
+                                text: 'Refresh',
+                                handler: function () {
+                                    store.generateData(3 + 6 * Math.random());
+                                }
+                            }
+                        },
+                        cmp
+                    ]
+                });
+            }
+        });
+
+    </script>
+</head>
+<body>
+</body>
+</html>

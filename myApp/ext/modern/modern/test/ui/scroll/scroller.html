@@ -1,0 +1,281 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8" />
+    <title>Scroller</title>
+    <link rel="stylesheet" href="../../../resources/css/sencha-touch.css" type="text/css">
+
+    <script type="text/javascript" src="../../../sencha-touch.js"></script>
+    <script type="text/javascript">
+        //<![CDATA[
+        Ext.setup({
+            onReady: function() {
+                var size   = 300,
+                    margin = 10;
+
+                var itemCfg = {
+                    width : 701,
+                    height: 462,
+                    style : 'background:url(image.png);color:#fff;font-size:22px;font-weight:bold;',
+                    html  : 'direction: vertical'
+                };
+
+                var baseCfg = {
+                    floatable: {
+                        width   : size,
+                        height  : size,
+                        top     : margin,
+                        left    : margin
+                    },
+                    scrollable: {
+                        scrollView: {
+                            direction: 'vertical'
+                        }
+                    },
+                    items: [itemCfg]
+                };
+
+                //basic
+                Ext.create('Ext.Container', baseCfg).show();
+
+                Ext.create('Ext.Container', Ext.merge({}, baseCfg, {
+                    floatable: {
+                        left: (size + (margin * 2)) * 1
+                    },
+                    scrollable: {
+                        scrollView: {
+                            direction: 'horizontal'
+                        }
+                    },
+                    items: [
+                        Ext.merge({}, itemCfg, {
+                            html: 'direction: horizontal'
+                        })
+                    ]
+                })).show();
+
+                Ext.create('Ext.Container', Ext.merge({}, baseCfg, {
+                    floatable: {
+                        left: (size + (margin * 2)) * 2
+                    },
+                    scrollable: {
+                        scrollView: {
+                            direction: 'both'
+                        }
+                    },
+                    items: [
+                        Ext.merge({}, itemCfg, {
+                            html: 'direction: both'
+                        })
+                    ]
+                })).show();
+
+                Ext.create('Ext.Container', Ext.merge({}, baseCfg, {
+                    floatable: {
+                        left: (size + (margin * 2)) * 3
+                    },
+                    scrollable: {
+                        scrollView: {
+                            direction: 'auto'
+                        }
+                    },
+                    items: [
+                        Ext.merge({}, itemCfg, {
+                            html: 'direction: auto'
+                        })
+                    ]
+                })).show();
+
+                //docked
+                Ext.create('Ext.Container', Ext.merge({}, baseCfg, {
+                    floatable: {
+                        left: (size + (margin * 2)) * 0,
+                        top: (size + (margin * 2)) * 1
+                    },
+                    scrollable: {
+                        scrollView: {
+                            direction: 'vertical'
+                        }
+                    },
+                    items: [
+                        {
+                            xtype : 'toolbar',
+                            docked: 'top',
+                            title  : 'direction: vertical'
+                        },
+                        Ext.merge({}, itemCfg, {
+                            html: 'direction: vertical<br />on container'
+                        })
+                    ]
+                })).show();
+
+                Ext.create('Ext.Container', Ext.merge({}, baseCfg, {
+                    floatable: {
+                        left: (size + (margin * 2)) * 1,
+                        top: (size + (margin * 2)) * 1
+                    },
+                    scrollable: {
+                        scrollView: {
+                            direction: 'horizontal'
+                        }
+                    },
+                    items: [
+                        {
+                            xtype : 'toolbar',
+                            docked: 'top',
+                            title  : 'direction: horizontal'
+                        },
+                        Ext.merge({}, itemCfg, {
+                            html: 'direction: horizontal<br />on container'
+                        })
+                    ]
+                })).show();
+
+                Ext.create('Ext.Container', Ext.merge({}, baseCfg, {
+                    floatable: {
+                        left: (size + (margin * 2)) * 2,
+                        top: (size + (margin * 2)) * 1
+                    },
+                    scrollable: {
+                        scrollView: {
+                            direction: 'both'
+                        }
+                    },
+                    items: [
+                        {
+                            xtype : 'toolbar',
+                            docked: 'top',
+                            title  : 'direction: both'
+                        },
+                        Ext.merge({}, itemCfg, {
+                            html: 'direction: both<br />on container'
+                        })
+                    ]
+                })).show();
+
+                Ext.create('Ext.Container', Ext.merge({}, baseCfg, {
+                    floatable: {
+                        left: (size + (margin * 2)) * 3,
+                        top: (size + (margin * 2)) * 1
+                    },
+                    scrollable: {
+                        scrollView: {
+                            direction: 'auto'
+                        }
+                    },
+                    items: [
+                        {
+                            xtype : 'toolbar',
+                            docked: 'top',
+                            title  : 'direction: auto'
+                        },
+                        Ext.merge({}, itemCfg, {
+                            html: 'direction: auto<br />on container'
+                        })
+                    ]
+                })).show();
+
+                // //docked
+                // Ext.create('Ext.Container', Ext.merge({}, baseCfg, {
+                //     floatable: {
+                //         left: (size + (margin * 2)) * 0,
+                //         top: (size + (margin * 2)) * 2
+                //     },
+                //     items: [
+                //         {
+                //             xtype : 'toolbar',
+                //             docked: 'top',
+                //             title  : 'direction: vertical'
+                //         },
+                //         Ext.merge({}, itemCfg, {
+                //             html: 'direction: vertical<br />on inner item',
+                //             scrollable: {
+                //                 scrollView: {
+                //                     direction: 'vertical'
+                //                 }
+                //             }
+                //         })
+                //     ]
+                // })).show();
+
+                // Ext.create('Ext.Container', Ext.merge({}, baseCfg, {
+                //     floatable: {
+                //         left: (size + (margin * 2)) * 1,
+                //         top: (size + (margin * 2)) * 2
+                //     },
+                //     items: [
+                //         {
+                //             xtype : 'toolbar',
+                //             docked: 'top',
+                //             title  : 'direction: horizontal'
+                //         },
+                //         Ext.merge({}, itemCfg, {
+                //             html: 'direction: horizontal<br />on inner item',
+                //             scrollable: {
+                //                 scrollView: {
+                //                     direction: 'horizontal'
+                //                 }
+                //             }
+                //         })
+                //     ]
+                // })).show();
+
+                // Ext.create('Ext.Container', Ext.merge({}, baseCfg, {
+                //     floatable: {
+                //         left: (size + (margin * 2)) * 2,
+                //         top: (size + (margin * 2)) * 2
+                //     },
+                //     items: [
+                //         {
+                //             xtype : 'toolbar',
+                //             docked: 'top',
+                //             title  : 'direction: both'
+                //         },
+                //         Ext.merge({}, itemCfg, {
+                //             html: 'direction: both<br />on inner item',
+                //             scrollable: {
+                //                 scrollView: {
+                //                     direction: 'both'
+                //                 }
+                //             }
+                //         })
+                //     ]
+                // })).show();
+
+                // Ext.create('Ext.Container', Ext.merge({}, baseCfg, {
+                //     floatable: {
+                //         left: (size + (margin * 2)) * 3,
+                //         top: (size + (margin * 2)) * 2
+                //     },
+                //     items: [
+                //         {
+                //             xtype : 'toolbar',
+                //             docked: 'top',
+                //             title  : 'direction: auto'
+                //         },
+                //         Ext.merge({}, itemCfg, {
+                //             html: 'direction: auto<br />on inner item',
+                //             scrollable: {
+                //                 scrollView: {
+                //                     direction: 'auto'
+                //                 }
+                //             }
+                //         })
+                //     ]
+                // })).show();
+            }
+        });
+        //]]>
+    </script>
+
+</head>
+<body>
+
+    <div id="scrollView">
+        <div id="scrollContainer">
+            <div id="scroller"></div>
+        </div>
+    </div>
+
+</body>
+</html>

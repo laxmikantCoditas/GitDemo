@@ -1,0 +1,236 @@
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Template</title>
+        
+        <link rel="stylesheet" href="../../../resources/css/sencha-touch.css">
+
+        <script type="text/javascript" src="../../../sencha-touch-all.js"></script>
+
+        <script type="text/javascript">
+
+Ext.setup({
+    requires: [
+        'Ext.Toolbar',
+        'Ext.field.*'
+    ],
+    onReady: function() {
+        options = [
+            {text:"One", value:1},
+            {text:"Two", value:2},
+            {text:"Three", value:3}
+        ];
+
+        Ext.Viewport.add({
+            layout: 'vbox',
+            scrollable: true,
+            defaults: {
+                xtype: 'toolbar'
+                // docked: 'top'
+            },
+            items: [
+                {
+                    items: [
+                        {
+                            xtype: 'textfield',
+                            label: 'text',
+                            value: 'textfield'
+                        },
+                        {
+                            xtype: 'textfield',
+                            label: 'text',
+                            value: 'disabled',
+                            disabled: true
+                        },
+                        {
+                            xtype: 'textfield'
+                        },
+                        {
+                            xtype: 'textfield',
+                            value: 'disabled',
+                            disabled: true
+                        }
+                    ]
+                },
+
+                {
+                    items: [
+                        {
+                            xtype: 'numberfield',
+                            label: 'number',
+                            value: 100
+                        },
+                        {
+                            xtype: 'numberfield',
+                            label: 'number',
+                            value: 100,
+                            disabled: true
+                        },
+                        {
+                            xtype: 'numberfield'
+                        },
+                        {
+                            xtype: 'numberfield',
+                            value: 'disabled',
+                            disabled: true
+                        }
+                    ]
+                },
+
+                {
+                    items: [
+                        {
+                            xtype: 'emailfield',
+                            label: 'email',
+                            value: 'emailfield'
+                        },
+                        {
+                            xtype: 'emailfield',
+                            label: 'email',
+                            value: 'disabled',
+                            disabled: true
+                        },
+                        {
+                            xtype: 'emailfield'
+                        },
+                        {
+                            xtype: 'emailfield',
+                            value: 'disabled',
+                            disabled: true
+                        }
+                    ]
+                },
+
+                {
+                    items: [
+                        {
+                            xtype: 'passwordfield',
+                            label: 'password',
+                            value: 'passwordfield'
+                        },
+                        {
+                            xtype: 'passwordfield',
+                            label: 'password',
+                            value: 'disabled',
+                            disabled: true
+                        },
+                        {
+                            xtype: 'passwordfield'
+                        },
+                        {
+                            xtype: 'passwordfield',
+                            value: 'disabled',
+                            disabled: true
+                        }
+                    ]
+                },
+
+                {
+                    items: [
+                        {
+                            xtype: 'urlfield',
+                            label: 'url',
+                            value: 'urlfield'
+                        },
+                        {
+                            xtype: 'urlfield',
+                            label: 'url',
+                            value: 'disabled',
+                            disabled: true
+                        },
+                        {
+                            xtype: 'urlfield'
+                        },
+                        {
+                            xtype: 'urlfield',
+                            value: 'disabled',
+                            disabled: true
+                        }
+                    ]
+                },
+
+                {
+                    items: [
+                        {
+                            xtype: 'searchfield',
+                            label: 'search',
+                            value: 'searchfield'
+                        },
+                        {
+                            xtype: 'searchfield',
+                            label: 'search',
+                            value: 'disabled',
+                            disabled: true
+                        },
+                        {
+                            xtype: 'searchfield'
+                        },
+                        {
+                            xtype: 'searchfield',
+                            value: 'disabled',
+                            disabled: true
+                        }
+                    ]
+                },
+
+
+                {
+                    items: [
+                        {
+                            xtype: 'selectfield',
+                            label: 'select',
+                            options: options
+                        },
+                        {
+                            xtype: 'selectfield',
+                            label: 'select',
+                            disabled: true,
+                            options: options
+                        },
+                        {
+                            xtype: 'selectfield',
+                            options: options
+                        },
+                        {
+                            xtype: 'selectfield',
+                            disabled: true,
+                            options: options
+                        }
+                    ]
+                },
+
+                {
+                    items: [
+                        {
+                            xtype: 'datepickerfield',
+                            label: 'date',
+                            value: new Date('05/01/1989')
+                        },
+                        {
+                            xtype: 'datepickerfield',
+                            label: 'date',
+                            disabled: true,
+                            value: new Date('05/01/1989')
+                        },
+                        {
+                            xtype: 'datepickerfield',
+                            value: new Date('05/01/1989')
+                        },
+                        {
+                            xtype: 'datepickerfield',
+                            disabled: true,
+                            value: new Date('05/01/1989')
+                        }
+                    ]
+                }
+            ]
+        })
+    }
+});
+
+        </script>
+    </head>
+    
+    <body></body>
+</html>

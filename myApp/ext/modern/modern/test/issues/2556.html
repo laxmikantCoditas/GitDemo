@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2556</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.setup({
+           onReady: function() {
+              var _;
+              Ext.Viewport.add(Ext.create('Ext.form.Panel', {
+                 items: [
+                    {
+                       xtype:'fieldset',
+                       title:'focus the field on android',
+                       items:[
+                          _ = Ext.create('Ext.form.Number', {
+                             listeners: {
+                                focus:function() {
+                                   _.setValue(null);
+                                }
+                             }
+                          })
+                       ]
+                    }
+                 ]
+              }));
+           }
+        });
+    </script>
+</head>
+<body></body>
+</html>

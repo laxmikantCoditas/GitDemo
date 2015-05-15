@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>3701</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        Ext.require('Ext.form.field.Time');
+
+        Ext.onReady(function() {
+            var field= Ext.create('Ext.form.field.Time', {
+                renderTo: 'field'
+            });
+            field.setValue(new Date('1/1/2008 12:00 AM'));
+            Ext.get('test').on('click', function() {
+                field.setValue(new Date('1/1/2008 8:00 AM'));
+            });
+        });
+    </script>
+</body>
+<div id="field"></div>
+<button id="test">Test</button> Should display "8:00 AM" in the above field.
+</html>

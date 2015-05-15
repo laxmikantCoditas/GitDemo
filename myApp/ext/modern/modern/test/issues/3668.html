@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3668</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.setup({ 
+            requires: [
+                'Ext.tab.Panel'
+            ],
+            onReady: function() {
+                Ext.Viewport.add({
+                    xtype: 'tabpanel',
+                    items: [{
+                        xtype: 'toolbar',
+                        docked: 'top',
+                        items: [{
+                            text: 'Toggle Dock Location',
+                            handler: function(btn) {
+                                var tabpanel = btn.up('tabpanel');
+                                var toolbar = tabpanel.down("toolbar");
+                                //var toolbar = Ext.ComponentQuery.query('toolbar')[0];
+                                var newDocked = (toolbar.getDocked() === 'top') ? 'bottom' : 'top';
+
+                                console.log("Changing Docked to : " + newDocked);
+                                toolbar.setDocked(newDocked);
+                                
+                            
+
+                                 //debugger;
+                                //tabpanel.setTabBarPosition('bottom');
+                            }
+                        }]
+                    }, {
+                        title: 'One',
+                        html: 'One'
+                    }]
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

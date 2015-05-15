@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript">
+        Ext.Loader.setConfig({
+            enabled: true
+        });
+
+        Ext.define('MyApp.view.MultiPicker', {
+            extend: 'Ext.picker.Picker',
+            xtype: 'datetimepicker',
+            alternateClassName: 'Ext.ux.DateTimePicker',
+
+            initialize: function () {
+                this.callParent();
+                this.on({
+                    scope: this,
+                    delegate: '> slot',
+                    slotpick: this.onSlotPick
+                });
+            },
+            // @private
+            constructor: function () {
+                this.callParent(arguments);
+                this.createSlots();
+            },
+
+            /**
+             * Generates all slots for all years specified by this component, and then sets them on the component
+             * @private
+             */
+            createSlots: function () {
+                var names = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth'];
+                var slots = [];
+                for(var i=0; i< names.length;i++){
+                    var data = [];
+                    for(var j=0; j < 50; j ++){
+                        data[j] = {text: i + "" + j, value:j};
+                    }
+                    slots[i] = {
+                        name:names[i],
+                        data:data,
+                        title:names[i]
+                    }
+                }
+                this.setSlots(slots);
+            }
+        });
+
+        Ext.application({
+            name: 'MyApp',
+            requires: [
+                'MyApp.view.MultiPicker'
+            ],
+
+            launch: function () {
+                Ext.create('Ext.form.Panel', {
+                    fullscreen: true,
+                    layout: 'vbox',
+                    standardSubmit: false,
+                    listeners: {
+                        beforesubmit: function(e, a) {
+                            this.reset();
+                            return true;
+                        }
+                    },
+                    items: [
+                        {
+                            xtype: 'textfield',
+                            label: 'text91'
+                        },
+                        {
+                            xtype: 'textfield',
+                            label: 'text2'
+                        },
+                        {
+                            xtype: 'button',
+                            text: 'Button',
+                            handler: function() {
+                                var picker = Ext.create('MyApp.view.MultiPicker');
+                                Ext.Viewport.add(picker);
+                            }
+                        }
+                    ]
+                });
+            }
+        });
+    </script>
+
+</head>
+<body></body>
+</html>

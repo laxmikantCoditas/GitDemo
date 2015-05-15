@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-5037</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+	<link href='http://fonts.googleapis.com/css?family=La+Belle+Aurore' rel='stylesheet' type='text/css'>
+
+	<style>
+		body {
+			font-family: 'La Belle Aurore';
+		}
+
+		.x-tabbar .x-tab .x-button-label {
+			font-family: 'La Belle Aurore';
+		}
+	</style>
+
+    <script type="text/javascript">
+        Ext.setup({
+            requires: [
+                'Ext.form.Panel',
+                'Ext.field.Text',
+                'Ext.field.Password'
+            ],
+            onReady:function () {
+                var tp = Ext.create('Ext.TabPanel', {
+	                fullscreen: true,
+	                tabBarPosition: 'bottom',
+
+	                defaults: {
+		                styleHtmlContent: true
+	                },
+
+	                items: [
+		                {
+			                title: 'Home',
+			                iconCls: 'home',
+			                html: 'Home Screen'
+		                },
+		                {
+			                title: 'Contact',
+			                iconCls: 'user',
+			                html: 'Contact Screen'
+		                }
+	                ]
+                });
+                Ext.Viewport.add(tp);
+
+//	            alert(document.body.classList.toString())
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

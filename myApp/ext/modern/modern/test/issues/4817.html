@@ -1,0 +1,184 @@
+<!DOCTYPE HTML>
+<html manifest="" lang="en-US">
+<head>
+<meta charset="UTF-8">
+<title>TOUCH-4817</title>
+<link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+<script src="../../sencha-touch-all-debug.js"></script>
+<script>
+Ext.require([
+    'Ext.Toolbar',
+    'Ext.data.JsonStore',
+    'Ext.chart.*'
+]);
+
+Ext.setup({
+    onReady: function () {
+        var store = Ext.create('Ext.data.JsonStore', {
+            data: [
+                {
+                    year: '2010',
+                    field1: 50520,
+                    field2: 40199
+                },
+                {
+                    year: '2011',
+                    field1: 62505,
+                    field2: 30156
+                },
+                {
+                    year: '2012',
+                    field1: 21523,
+                    field2: 4423
+                }
+            ]
+        });
+
+        var isFlipped = false,
+            isLine = false,
+            isInsideStart = false,
+            isUnder = false,
+            isHorizontal = false;
+
+        function getLabelDisplay() {
+            if (isLine) {
+                return isUnder ? 'under' : 'over';
+            } else {
+                return isInsideStart ? 'insideStart' : 'insideEnd';
+            }
+        }
+
+        function getSeriesType() {
+            return isLine ? 'line' : 'bar';
+        }
+
+        function getLabelOrientation() {
+            return isHorizontal ? 'horizontal' : 'vertical';
+        }
+
+        function createView() {
+            var chart = Ext.create('Ext.chart.CartesianChart', {
+                fullscreen: true,
+                store: store,
+                flipXY: isFlipped,
+                axes: [
+                    {
+                        type: 'category',
+                        position: isFlipped ? 'left' : 'bottom',
+                        fields: [
+                            'year'
+                        ],
+                        label: {
+                            x: 0,
+                            y: 0,
+                            textBaseline: 'middle',
+                            textAlign: 'center',
+                            font: '14px Verdana',
+                            rotate: {
+                                rads: Math.PI * -0.2
+                            }
+                        }
+                    },
+                    {
+                        type: 'numeric',
+                        position: isFlipped ? 'bottom' : 'left',
+                        label: {
+                            x: 0,
+                            y: 0,
+                            display: 'rotate',
+                            textBaseline: 'middle',
+                            textAlign: 'center',
+                            fontSize: 12,
+                            fontFamily: 'Verdana'
+                        },
+                        labelInSpan: true
+                    }
+                ],
+                series: [
+                    {
+                        type: getSeriesType(),
+                        colors: ['lightblue', 'cornsilk'],
+                        style: {
+                            stroke: '#c8b08e'
+                        },
+                        label: {
+                            field: ['field1', 'field2'],
+                            display: getLabelDisplay(),
+                            font: '14px Verdana',
+                            fontWeight: 'normal',
+                            textAlign: 'center',
+                            orientation: getLabelOrientation(),
+                            renderer: function (text, sprite, config, options, index) {
+                                return index === 1 ? 'a very long label' : text;
+                            }
+                        },
+                        xField: 'year',
+                        yField: isLine ? 'field1' : ['field1', 'field2']
+                    }
+                ]
+            });
+            var toolbar = Ext.create('Ext.Toolbar', {
+                docked: 'top',
+                items: [{
+                    xtype: 'button',
+                    text: 'flipXY: ' + isFlipped,
+                    listeners: {
+                        tap: function () {
+                            isFlipped = !isFlipped;
+                            updateViewport();
+                        }
+                    }
+                }, {
+                    xtype: 'button',
+                    text: getSeriesType(),
+                    listeners: {
+                        tap: function () {
+                            isLine = !isLine;
+                            updateViewport();
+                        }
+                    }
+                }, {
+                    xtype: 'button',
+                    text: 'label.orientation: ' + getLabelOrientation(),
+                    listeners: {
+                        tap: function () {
+                            isHorizontal = !isHorizontal;
+                            updateViewport();
+                        }
+                    }
+                }, {
+                    xtype: 'button',
+                    text: 'bar.display: ' + (isInsideStart ? 'insideStart' : 'insideEnd'),
+                    listeners: {
+                        tap: function (button) {
+                            isInsideStart = !isInsideStart;
+                            updateViewport();
+                        }
+                    }
+                }, {
+                    xtype: 'button',
+                    text: 'line.display: ' + (isUnder ? 'under' : 'over'),
+                    listeners: {
+                        tap: function () {
+                            isUnder = !isUnder;
+                            updateViewport();
+                        }
+                    }
+                }]
+            });
+            return [chart, toolbar];
+        }
+
+        function updateViewport() {
+            Ext.Viewport.removeAll(true, true);
+            Ext.Viewport.add(createView());
+        }
+
+        updateViewport();
+    }
+});
+</script>
+</head>
+<body>
+</body>
+</html>

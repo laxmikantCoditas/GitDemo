@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>EXTJSIV-3589</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css"/>
+    <script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+<script type="text/javascript" charset="utf-8">
+    Ext.require(['*']);
+    Ext.onReady(function () {
+
+        var store = Ext.create('Ext.data.JsonStore', {
+            fields: ['name', 'data1', 'data2', 'data3', 'data4', 'data5'],
+            data: [
+                {'name': 'metric one', 'data1': 10},
+                {'name': 'metric two', 'data1': 7},
+                {'name': 'metric three', 'data1': 5},
+                {'name': 'metric four', 'data1': 2},
+                {'name': 'metric five', 'data1': 27}
+            ]
+        });
+
+        var pie = Ext.create('Ext.chart.Chart', {
+            width: 700,
+            height: 700,
+            renderTo: Ext.getBody(),
+            animate: true,
+            store: store,
+            theme: 'Base:gradients',
+            series: [
+                {
+                    type: 'pie',
+                    field: 'data1',
+                    highlight: {
+                        segment: {
+                            margin: 20
+                        }
+                    },
+                    label: {
+                        field: 'name',
+                        display: 'rotate',
+                        contrast: true,
+                        font: '18px Arial'
+                    }
+                }
+            ]
+        });
+        var piePanel = Ext.create('Ext.panel.Panel', {
+            items: [pie],
+            layout: 'fit',
+            resizable: true
+        });
+
+        Ext.create('Ext.container.Viewport', {
+            layout: {
+                type: 'hbox',
+                pack: 'center',
+                align: 'stretch'
+            },
+            renderTo: Ext.getBody(),
+            items: [piePanel]
+        });
+    });
+
+</script>
+</body>
+</html>

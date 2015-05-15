@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv=Content-type content="text/html; charset=utf-8">
+    <title>Echo GET Values</title>
+</head>
+<body style="margin:0; text-align:right">
+
+<script type="text/javascript" src="../../ext.js"></script>
+<script>
+document.write(
+        Ext.Array.map(
+            String(location.search).split(/[?&]/),
+            function(keyVal){
+                if (!keyVal) return;
+                keyVal = String(keyVal).split('=');
+                if (!keyVal.length) return;
+                var key = decodeURIComponent(keyVal[0]);
+                var value = decodeURIComponent(keyVal.slice(1).join('='));
+
+                var el = document.createElement('div');
+
+                el.appendChild(document.createElement('label'));
+                el.lastChild.appendChild(document.createTextNode(key + ' '));
+                el.lastChild.appendChild(document.createElement('input'));
+                el.lastChild.lastChild.setAttribute('value', value);
+                el.lastChild.lastChild.setAttribute('readonly', true);
+
+                return el.innerHTML;
+            }
+        )
+        .join('<p style="margin:0">')
+    );
+</script>
+
+</body>
+</html>

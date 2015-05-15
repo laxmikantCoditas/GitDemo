@@ -1,0 +1,85 @@
+﻿.x-html-form-text-right
+{
+    text-align:right;
+}
+.x-html-form-select-right
+{
+    text-align:right;
+    padding-right: 47px;
+}
+.x-html-custom-grid-header
+{
+    font-weight:bold;
+}
+.x-html-custom-article-header
+{
+    font-weight:bold;
+}
+.x-html-custom-grid-item
+{
+    white-space: nowrap;
+}
+.x-html-custom-grid-header .x-html-custom-grid-header-item
+{
+    display:inline-block;
+    margin-top:5px;
+}
+.x-html-custom-grid-header .x-html-custom-grid-header-item-right
+{
+    display:inline-block;
+    text-align:right;
+    margin-top:5px;
+}
+.x-html-custom-grid-header .x-html-custom-grid-header-item-art
+{
+    display:inline-block;
+    text-align:center;
+    margin-top:5px;
+}
+.x-html-custom-grid-item .x-html-custom-grid-item-value-art
+{
+    display:inline-block;
+    text-align:center;
+    margin-top:5px;
+    margin-left: 1px;
+    vertical-align:top;
+}
+.x-html-custom-grid-item .x-html-custom-grid-item-value
+{
+    display:inline-block;
+    text-align:left;
+    margin-top:5px;
+    vertical-align:top;
+}
+.x-html-custom-grid-item .x-html-custom-grid-item-value-right
+{
+    display:inline-block;
+    text-align:right;
+    margin-top:5px;
+    vertical-align:top;
+}
+.x-html-custom-grid-item .x-html-custom-grid-item-label
+{
+    display:inline-block;
+    text-align:left;
+    margin-top:7px;
+    vertical-align:top;
+    font-weight: bold;
+    font-size: 0.8em;
+    margin-right: 25px;
+}
+.x-html-article-countperiod-input {
+    border: solid 2px black;
+}
+.deliveryinfooverview-grid .x-item-selected .x-list-item-label {
+    
+    
+}
+.x-html-warn-label 
+{
+    color: Red;
+}
+.wrap 
+{
+    white-space: normal !important;
+}

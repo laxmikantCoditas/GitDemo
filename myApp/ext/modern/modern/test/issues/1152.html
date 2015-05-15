@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>TOUCH-1152</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script src="../../sencha-touch-all.js"></script>
+
+    <script type="text/javascript">
+
+Ext.Loader.setConfig({
+    enabled : true
+});
+
+Ext.require([
+    'Ext.data.TreeStore',
+    'Ext.dataview.NestedList',
+    'Ext.NavigationBar' //should be required by NestedList?
+]);
+
+Ext.define('model', {
+    extend : 'Ext.data.Model',
+
+    fields : [
+        { name : 'text', type : 'string' }
+    ]
+});
+
+Ext.setup({
+    onReady: function() {
+
+        var store = Ext.create('Ext.data.TreeStore', {
+            model               : 'model',
+            defaultRootProperty : 'items',
+            proxy               : {
+                type   : 'ajax',
+                url    : '1152.json',
+                reader : 'json'
+            }
+        });
+
+
+        Ext.create('Ext.dataview.NestedList', {
+            fullscreen   : true,
+            title        : 'Menu',
+            displayField : 'text',
+            store        : store
+        });
+
+    }
+});
+    </script>
+
+    <style>
+        .red {
+            color: #f00;
+        }
+        .blue {
+            color: #00f;
+        }
+        .green {
+            color: #0f0;
+        }
+    </style>
+</head>
+<body>
+</body>
+</html>

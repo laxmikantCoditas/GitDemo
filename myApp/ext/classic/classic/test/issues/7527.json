@@ -1,0 +1,26 @@
+[
+    {
+        "foo"  : "bar",
+        "blam" : [
+            {
+                "one" : [
+                    {
+                        "field1" : "test 1"
+                    }
+                ]
+            }
+        ],
+        "boom" : {
+            "nest" : {
+                "two" : [
+                    {
+                        "field2" : "test 2"
+                    },
+                    {
+                        "field2" : "another test 2"
+                    }
+                ]
+            }
+        }
+    }
+]

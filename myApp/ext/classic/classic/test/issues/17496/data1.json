@@ -1,0 +1,25 @@
+{
+  "items": [
+    {
+      "name": "metric one",
+      "value": 10
+    },
+    {
+      "name": "metric two",
+      "value": 7
+    },
+    {
+      "name": "metric three",
+      "value": 5
+    },
+    {
+      "name": "metric four",
+      "value": 2
+    },
+    {
+      "name": "metric five",
+      "value": 27
+    }
+  ],
+  "success": true
+}

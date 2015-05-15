@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>CHARTS-201</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css"/>
+    <script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+<script type="text/javascript" charset="utf-8">
+    Ext.require([
+        'Ext.data.JsonStore',
+        'Ext.window.Window',
+        'Ext.chart.Chart',
+        'Ext.chart.theme.Base',
+        'Ext.chart.axis.Numeric',
+        'Ext.chart.series.Column',
+        'Ext.chart.axis.Category',
+        'Ext.chart.series.Bar'
+    ]);
+    Ext.onReady(function () {
+
+        window.generateDataNegative = function(n, floor) {
+            var data = [],
+                p = (Math.random() * 11) + 1,
+                i;
+
+            floor = (!floor && floor !== 0) ? 20 : floor;
+
+            for (i = 0; i < (n || 12); i++) {
+                data.push({
+                    name: Ext.Date.monthNames[i % 12],
+                    data1: Math.floor((Math.random() - 0.5) * 100),
+                    data2: Math.floor((Math.random() - 0.5) * 100),
+                    data3: Math.floor((Math.random() - 0.5) * 100),
+                    data4: Math.floor((Math.random() - 0.5) * 100),
+                    data5: Math.floor((Math.random() - 0.5) * 100),
+                    data6: Math.floor((Math.random() - 0.5) * 100),
+                    data7: Math.floor((Math.random() - 0.5) * 100),
+                    data8: Math.floor((Math.random() - 0.5) * 100),
+                    data9: Math.floor((Math.random() - 0.5) * 100)
+                });
+            }
+            return data;
+        };
+
+        window.storeNegatives = Ext.create('Ext.data.JsonStore', {
+            fields: ['name', 'data1', 'data2', 'data3', 'data4', 'data5', 'data6', 'data7', 'data9', 'data9'],
+            data: generateDataNegative()
+        });
+
+        var defChart1 = {
+            xtype: 'chart',
+            animate: true,
+            shadow: true,
+            store: storeNegatives,
+            title: 'neg',
+            axes: [
+                {
+                    type: 'Numeric',
+                    position: 'left',
+                    fields: ['data1'],
+                    title: 'Hits',
+                    grid: true,
+                    maximum: 0
+                },
+                {
+                    type: 'Category',
+                    position: 'bottom',
+                    fields: ['name'],
+                    title: 'Months',
+                    label: {
+                        rotate: {
+                            degrees: 270
+                        }
+                    }
+                }
+            ],
+            series: [
+                {
+                    type: 'column',
+                    axis: 'left',
+                    gutter: 80,
+                    xField: 'name',
+                    yField: ['data1'],
+                    tips: {
+                        trackMouse: true,
+                        width: 74,
+                        height: 38,
+                        renderer: function(storeItem, item) {
+                            this.setTitle(storeItem.get('name') + '<br />' + storeItem.get('data1'));
+                        }
+                    },
+                    label: {
+                        field: 'data1',
+                        display: 'rotate',
+                        contrast: true
+                    },
+                    style: {
+                        fill: '#38B8BF'
+                    }
+                }
+            ]
+        }, defChart2 = {
+            xtype: 'chart',
+            animate: true,
+            shadow: true,
+            store: storeNegatives,
+            title: 'pos',
+            axes: [
+                {
+                    type: 'Numeric',
+                    position: 'left',
+                    fields: ['data1'],
+                    title: 'Hits',
+                    grid: true,
+                    minimum: 0
+                },
+                {
+                    type: 'Category',
+                    position: 'bottom',
+                    fields: ['name'],
+                    title: 'Months',
+                    label: {
+                        rotate: {
+                            degrees: 270
+                        }
+                    }
+                }
+            ],
+            series: [
+                {
+                    type: 'column',
+                    axis: 'left',
+                    gutter: 80,
+                    xField: 'name',
+                    yField: ['data1'],
+                    tips: {
+                        trackMouse: true,
+                        width: 74,
+                        height: 38,
+                        renderer: function(storeItem, item) {
+                            this.setTitle(storeItem.get('name') + '<br />' + storeItem.get('data1'));
+                        }
+                    },
+                    label: {
+                        field: 'data1',
+                        display: 'rotate',
+                        contrast: true
+                    },
+                    style: {
+                        fill: '#38B8BF'
+                    }
+                }
+            ]
+        };
+
+        Ext.create("widget.window", {
+            title: "Negatives broken",
+            modal: true,
+            width: 600,
+            height: 600,
+            layout: 'fit',
+            tbar: [
+                {
+                    text: 'refresh',
+                    handler: function () {
+                        window.storeNegatives.loadData(generateDataNegative());
+                    }
+                }
+            ],
+            items: [{
+                xtype: 'tabpanel',
+                items: [defChart1, defChart2]
+            }]
+        }).show();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2034</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+
+    <script>
+        var data1 = {
+            items:[
+                {
+                    id:1,
+                    name:'item1'
+                },
+                {
+                    id:2,
+                    name:'item2'
+                }
+            ]
+        };
+
+        var data2 = {
+            items:[
+                {
+                    id:3,
+                    name:'item3'
+                },
+                {
+                    id:4,
+                    name:'item4'
+                },
+                {
+                    id:5,
+                    name:'item5'
+                }
+            ]
+        };
+
+        Ext.define("Test.model.TestModel", {
+            extend:'Ext.data.Model',
+            config:{
+                idProperty:'id',
+                fields:["id", "name"]
+            }
+        });
+
+        Ext.define("Test.store.TestStore", {
+            extend:'Ext.data.Store',
+            xtype:'teststore',
+            config:{
+                model:'Test.model.TestModel',
+                autoLoad:true,
+                data:data1,
+                proxy:{
+                    type:'memory',
+                    reader:{
+                        type:'json',
+                        rootProperty:'items'
+                    }
+                }
+            }
+        });
+
+
+        Ext.application({
+            name:'Test',
+            stores:['Test.store.TestStore'],
+            launch:function () {
+                Ext.Viewport.add({
+                    xtype:'panel',
+                    layout:'fit',
+                    items:[
+                        {
+                            xtype:'titlebar',
+                            title:'test',
+                            docked:'top',
+                            items:[
+                                {
+                                    text:'Reload',
+                                    handler:function () {
+                                        Ext.getStore('TestStore').setData(data2);
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            xtype:'list',
+                            store:'TestStore',
+                            itemTpl:'{name}'
+                        }
+                    ]
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

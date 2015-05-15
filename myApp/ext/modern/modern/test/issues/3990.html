@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sencha Touch Issue Template</title>
+		<link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+		<script type="text/javascript" src="../../sencha-touch.js"></script>
+
+		<script type="text/javascript">
+			Ext.application({
+				name : 'Test',
+
+				requires : [
+
+				],
+
+				launch : function () {
+                    var aboutPanel = Ext.create('Ext.Panel', {
+                        html: 'About this app',
+                         translatable: {
+                            translationMethod: 'scrollposition'
+                        }
+                    });
+
+                    //this is the Panel we'll be adding to
+                    var mainPanel = Ext.create('Ext.Panel', {
+                        fullscreen: true,
+
+
+                        items: {
+                            html: 'First Panel',
+                            translatable: {
+                                translationMethod: 'scrollposition'
+                            }
+                        }
+                    });
+                    mainPanel.getInnerItems()[0].translate(0,100);
+
+                    //now we add the first panel inside the second
+                    mainPanel.insert(0,aboutPanel);
+				}
+			});
+		</script>
+	</head>
+</html>

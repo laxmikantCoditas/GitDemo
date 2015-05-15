@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>EXTJS-4610</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css"/>
+    <script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+<script type="text/javascript" charset="utf-8">
+    Ext.require([
+        'Ext.panel.Panel',
+        'Ext.layout.container.Accordion'
+    ]);
+
+
+    Ext.onReady(function () {
+        
+        function createItems() {
+            var i = 1,
+                items = [];
+                
+            for (; i <= 3; ++i) {
+                items.push({
+                    title: 'Title ' + i,
+                    html: 'Item ' + i
+                });
+            }
+            return items;
+        }
+        
+        Ext.create('Ext.panel.Panel', {
+            width: 400,
+            height: 200,
+            renderTo: document.body,
+            layout: {
+                type: 'hbox',
+                align: 'stretch'
+            },
+            items: [{
+                flex: 1,
+                title: 'animate: true',
+                layout: {
+                    type: 'accordion',
+                    animate: true
+                },
+                items: createItems()
+            }, {
+                flex: 1,
+                title: 'animate: false',
+                layout: {
+                    type: 'accordion',
+                    animate: false
+                },
+                items: createItems()
+            }]
+        });
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+Ext.onReady(function () {
+    Ext.create('Ext.grid.Panel',{
+        itemId: 'gridLst',
+        forceFit: true,
+        width: 1200,
+        store: Ext.create('Ext.data.ArrayStore', {
+            fields: [
+                'a','b','c','d','e','f','g','h','i','j','k'
+            ],
+            data: [
+                ['999','999','999','999','999','999','999','999'],
+                ['999','999','999','999','999','999','999','999'],
+                ['999','999','999','999','999','999','999','999'],
+                ['999','999','999','999','999','999','999','999']
+            ],
+            autoLoad : true
+        }),
+        columns: [
+            {dataIndex: 'a',header: 'Column Sequence A'},
+            {dataIndex: 'b',header: 'Column Sequence B'},
+            {dataIndex: 'c',header: 'Column Sequence C'},
+            {dataIndex: 'd',header: 'Column Sequence D'},
+            {dataIndex: 'e',header: 'Column Sequence E'},
+            {dataIndex: 'f',header: 'Column Sequence F'},
+            {dataIndex: 'g',header: 'Column Sequence G'},
+            {dataIndex: 'h',header: 'Column Sequence H'}
+        ],
+        renderTo: document.body
+    });
+});
+        
+    </script>
+</body>
+</html>

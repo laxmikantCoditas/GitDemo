@@ -1,0 +1,66 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>5274</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+<script>
+Ext.require(['Ext.data.*', 'Ext.chart.*']);
+Ext.onReady(function () {
+    var store = new Ext.create('Ext.data.ArrayStore', {
+        fields: [
+            {name: 'datetime', type: 'date', dateFormat: 'timestamp'},
+            {name: 'data'/*, type: 'float'*/}
+        ],
+        data: [
+            [new Date(1296547200000),47],
+            [new Date(1306911600000),68],
+            [new Date(1312326490262),90]
+        ]
+    });
+ 
+    Ext.create('Ext.Window', {
+        width: 800,
+        height: 600,
+        title: 'Test Chart - Dates along the x axis',
+        renderTo: Ext.getBody(),
+        layout: 'fit',
+        items: {
+            xtype: 'chart',
+            store: store,
+            axes: [{
+                type: 'Time',
+		label: { rotate: { degrees: 45 }},
+                position: 'bottom',
+                fields: ['datetime'],
+                dateFormat: 'M d',
+                groupBy: 'day',
+                aggregateOp: 'sum',
+                constrain: true,
+                fromDate: new Date(2011, 1,1),
+                toDate: new Date()
+	    }, {
+                type: 'Numeric',
+                position: 'left',
+                fields: ['data']
+            }],
+            series: [{
+                type: 'line',
+                axis: 'left',
+                xField: 'datetime',
+                yField: 'data',
+                tips: {
+                    width: "6em",
+                    renderer: function(storeItem, item) {
+                        this.setTitle(storeItem.get('data') + '@' + Ext.Date.format(storeItem.get('datetime'), 'H:i'));
+                    }
+                }
+            }]
+        }
+    }).show();
+});
+</script>
+</head>
+<body>
+</body>
+</html>

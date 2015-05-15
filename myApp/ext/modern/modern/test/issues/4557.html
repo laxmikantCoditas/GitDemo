@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TOUCH-4557</title>
+	<link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+	<script type="text/javascript" src="../../sencha-touch.js"></script>
+
+	<script type="text/javascript">
+		Ext.define('PickerTest.view.PickerTest',
+				{
+					extend: 'Ext.Panel',
+					xtype: 'pickertest',
+
+					config: {
+						modal: true,
+						width: '50%',
+						height: '50%',
+
+						showAnimation: {
+							type: 'popIn',
+							duration: 250,
+							easing: 'ease-out'
+						},
+
+						hideAnimation: {
+							type: 'popOut',
+							duration: 250,
+							easing: 'ease-out'
+						},
+
+						items: {
+							xtype: 'picker',
+							useTitles: true,
+							slots: [
+								{
+									xtype: 'pickerslot',
+									title: 'First',
+									name: "first",
+									data: [
+										{
+											text: 'One',
+											value: 1
+										},
+										{
+											text: 'Two',
+											value: 2
+										},
+										{
+											text: 'Three',
+											value: 3
+										}
+									],
+									scrollable: {
+										autoRefresh: false
+									}
+								},
+								{
+									xtype: 'pickerslot',
+									title: 'Second',
+									name: "second",
+									data: [
+										{
+											text: 'One',
+											value: 1
+										},
+										{
+											text: 'Two',
+											value: 2
+										},
+										{
+											text: 'Three',
+											value: 3
+										}
+									],
+									scrollable: {
+										autoRefresh: false
+									}
+								}
+							]
+						}
+					}
+				});
+
+
+		Ext.define('PickerTest.view.Main', {
+			extend: 'Ext.Panel',
+			xtype: 'main',
+			requires: [
+				'Ext.TitleBar',
+				'Ext.Video'
+			],
+			config: {
+				tabBarPosition: 'bottom',
+
+				items: [
+					{
+						xtype: 'button',
+						text: 'Picker',
+						itemId: 'pickerButton'
+					}
+				],
+				listeners: [
+					{
+						fn: 'onPickerButtonTap',
+						event: 'tap',
+						delegate: '#pickerButton'
+					}
+				]
+			},
+
+			onPickerButtonTap: function() {
+				var me = this;
+				if(!me.myPanel) {
+					me.myPanel = Ext.Viewport.add({
+						xtype: 'pickertest',
+						centered: true
+					});
+
+					var picker = me.myPanel.down("picker");
+					me.myPanel.on({
+						show: function() {
+							picker.query("pickerslot").forEach(function(pickerslot){
+								pickerslot.setupBar();
+							});
+
+							picker.setValue(picker.getValue());
+						},
+						scope: this
+					});
+
+					picker.onBefore({
+						hiddenchange: function() {
+							console.log(this.getValues());
+							me.myPanel.hide();
+							return false;
+						},
+						scope: picker
+					});
+				}
+
+				me.myPanel.show();
+			}
+		});
+
+		Ext.application({
+			name: 'Test',
+			launch: function() {
+				Ext.Viewport.add({
+					xtype: 'main'
+				});
+			}
+		});
+	</script>
+</head>
+</html>

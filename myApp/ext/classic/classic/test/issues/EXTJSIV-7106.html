@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+
+Ext.onReady(function () {
+    var modalForm = Ext.create('Ext.window.Window', {
+        title: 'Hello',
+        height: 200,
+        width: 400,
+        modal: true,
+        items: {
+            xtype: 'form',
+            defaultType: 'textfield',
+            items: [{
+                fieldLabel: 'Street Name',
+                name: 'first',
+                allowBlank: false,
+                tabIndex: 1
+            },{
+                fieldLabel: 'City',
+                name: 'last',
+                allowBlank: false,
+                tabIndex: 2
+            }]
+        }
+    });
+
+    Ext.create('Ext.form.Panel', {
+        title: 'Simple Form',
+        width: 350,
+        defaultType: 'textfield',
+        items: [{
+            fieldLabel: 'First Name',
+            name: 'first',
+            allowBlank: false,
+            tabIndex: 1
+        },{
+            fieldLabel: 'Address',
+            name: 'address',
+            allowBlank: false,
+            tabIndex: 2,
+            listeners: {
+                focus: function(){
+                    modalForm.show();
+                }
+            }
+        }],
+        renderTo: Ext.getBody()
+    });
+});
+    </script>
+</body>
+</html>

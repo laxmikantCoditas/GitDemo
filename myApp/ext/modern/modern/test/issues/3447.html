@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TOUCH-3447</title>
+
+        <script src="../../sencha-touch-debug.js"></script>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+        <script type="text/javascript">
+            Ext.define('Ext.override.Toolbar', {
+                override: 'Ext.Toolbar',
+                updateTitle: function(newTitle, oldTitle) {
+                    if (newTitle) {
+                        this.add(newTitle);
+                    }
+
+                    if (oldTitle) {
+                        oldTitle.destroy();
+                    }
+                }
+            });
+            Ext.define('MyApp.view.MyPanel', {
+                extend: 'Ext.Panel',
+                alias: 'widget.mypanel',
+
+                config: {
+                    items: [
+                        {
+                            xtype: 'toolbar',
+                            docked: 'top',
+                            title: 'Title-x',
+                            items: [
+                                {
+                                    xtype: 'button',
+                                    itemId: 'mybutton',
+                                    text: 'Press me first!'
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'button',
+                            itemId: 'mybutton1',
+                            text: 'Remove Title and try again'
+                        }
+                    ],
+                    listeners: [
+                        {
+                            fn: 'onMybuttonTap',
+                            event: 'tap',
+                            delegate: '#mybutton'
+                        },
+                        {
+                            fn: 'onMybutton1Tap',
+                            event: 'tap',
+                            delegate: '#mybutton1'
+                        }
+                    ]
+                },
+
+                onMybuttonTap: function(button, e, options) {
+                    alert('instant win');
+                },
+
+                onMybutton1Tap: function(button, e, options) {
+                    Ext.Viewport.down('toolbar').setTitle('');
+                }
+
+            });
+
+            Ext.application({
+                name: 'Test',
+                requires: ['Ext.Toolbar'],
+
+                viewport : {
+                    autoMaximize : Ext.os.is.iOS
+                },
+
+                launch: function() {
+                    Ext.create('MyApp.view.MyPanel', {fullscreen: true});
+                }
+            });
+
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

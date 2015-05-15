@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>TOUCH-</title>
+		<link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+		<script type="text/javascript" src="../../sencha-touch-all.js"></script>
+		<script type="text/javascript">
+
+			Ext.application({
+			    requires: ['Ext.Button', 'Ext.field.Text'],
+			    launch: function() {
+			        Ext.Viewport.add([
+			        	{
+			                xtype: 'container',
+			                layout: 'hbox',
+			                defaults: {
+			                	
+			                	flex: 1
+			                },
+			                items: [
+			                	{
+			                		html: '123',
+			                		style: 'background: #111',
+			                		scrollable: {
+			                			indicatorsUi: 'light'
+			                		},
+			                	}
+			                	// {
+			                	// 	scrollable: true,
+			                	// 	html: '456'
+			                	// }
+			                ]
+			            }
+			        ]);
+			    }
+			});
+
+		</script>
+	</head>
+</html>

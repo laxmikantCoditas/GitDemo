@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+
+        Ext.onReady(function () {
+            Ext.onReady(function(){
+                var gridData = {'names': [
+                    {'name':'Jaspreet'},
+                    {'name':'Data value   Data value Data value Data value Data value Data value Data value Data value  '},
+                    {'name':'Data value   Data value Data value Data value Data value Data value Data value Data value  '},
+                    {'name':'Data value   Data value Data value Data value Data value Data value Data value Data value  '},
+                    {'name':'Data value   Data value Data value Data value Data value Data value Data value Data value  '},
+                    {'name':'Data value   Data value Data value Data value Data value Data value Data value Data value  '},
+                    {'name':'Data value   Data value Data value Data value Data value Data value Data value Data value  '},
+                    {'name':'Data value   Data value Data value Data value Data value Data value Data value Data value  '},
+                    {'name':'Data value   Data value Data value Data value Data value Data value Data value Data value  '},
+                    {'name':'Data value   Data value Data value Data value Data value Data value Data value Data value  '},
+                    {'name':'Data value   Data value Data value Data value Data value Data value Data value Data value  '},
+                    {'name':'Data value   Data value Data value Data value Data value Data value Data value Data value  '},
+                    {'name':'Data value   Data value Data value Data value Data value Data value Data value Data value  '},
+                    {'name':'Data value   Data value Data value Data value Data value Data value Data value Data value  '},
+                    {'name':'Data value   Data value Data value Data value Data value Data value Data value Data value  '},
+                    {'name':'Data value   Data value Data value Data value Data value Data value Data value Data value  '},
+                    {'name':'Data value   Data value Data value Data value Data value Data value Data value Data value  '},
+                    {'name':'Data value   Data value Data value Data value Data value Data value Data value Data value  '},
+                    {'name':'Data value   Data value Data value Data value Data value Data value Data value Data value  '},
+                    {'name':'Data value   Data value Data value Data value Data value Data value Data value Data value  '},
+                    {'name':'Data value   Data value Data value Data value Data value Data value Data value Data value  '},
+                    {'name':'Data value   Data value Data value Data value Data value Data value Data value Data value  '},
+                    {'name':'Data value   Data value Data value Data value Data value Data value Data value Data value  '},
+                    {'name':'Data value   Data value Data value Data value Data value Data value Data value Data value  '},
+                    {'name':'Data value   Data value Data value Data value Data value Data value Data value Data value  '},
+                    {'name':'Data value   Data value Data value Data value Data value Data value Data value Data value  '},
+                    {'name':'Data value   Data value Data value Data value Data value Data value Data value Data value  '},
+                    {'name':'Data value Data value  Data value  Data value  Data value  Data value  Data value  Data value  Data value  Data value  Data value  '},
+                    {'name':'Data value  Data value  Data value  Data value  Data value  Data value  Data value  Data value  Data value  Data value  Data value  Data value  Data value  Data value  Data value  Data value  Data value  '},
+                    {'name':'Data value '},
+                    {'name':'Data value '},
+                    {'name':'Jas Chahal'}
+                ]
+                };
+                var store = Ext.create('Ext.data.ArrayStore', {
+                    fields: [
+                        {name: 'name'}
+                    ],
+                    data: gridData,
+                    proxy: {
+                        type: 'memory',
+                        reader: {
+                            type: 'json',
+                            root:'names'
+                        }
+                    }
+                });
+
+                var grid = Ext.create('Ext.grid.Panel', {
+                    store: store,
+                    columns: [
+                        {
+                            text     : 'Something Random',
+                            flex     : 1,
+                            dataIndex: 'name',
+                            editor: {
+                                xtype:'textfield'
+                            }
+                        }
+                    ],
+                    height: 350,
+                    width: 400,
+                    title:'Example',
+                    renderTo: Ext.getBody()
+
+                });
+                setInterval(function(){
+                    grid.store.reload();
+                },100)
+            });
+
+        });
+        
+    </script>
+</body>
+</html>

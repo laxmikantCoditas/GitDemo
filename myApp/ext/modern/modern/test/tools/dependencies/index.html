@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Dependency analyzer</title>
+        <link rel="stylesheet" type="text/css" href="../../extjs/resources/css/ext-all.css" />
+        <style type="text/css" media="screen">
+            .later-appearance {
+                color: #aaa;
+            }
+        </style>
+        
+        <script type="text/javascript" src="../../extjs/bootstrap.js"></script>
+        
+        <script type="text/javascript" charset="utf-8">
+            Ext.require('Ext.Component');
+            
+            Ext.onReady(function() {
+                var map = Ext.Loader.dependencyMap,
+                    alreadyCounted = [],
+                    inclusionCount = {};
+                
+                function getDependencies(klass) {
+                    var files = map[klass],
+                        firstAppearance = Ext.Array.indexOf(alreadyCounted, klass) === -1,
+                        node  = {
+                            text: klass,
+                            expanded: true,
+                            children: [],
+                            firstAppearance: firstAppearance
+                        };
+                    
+                    if (firstAppearance) {
+                        alreadyCounted.push(klass);
+                    }
+                    
+                    Ext.each(files, function(file) {
+                        node.children.push(getDependencies(file));
+                    }, this);
+                    
+                    return node;
+                }
+                
+                
+                var node = getDependencies('Ext.Component');
+                
+                console.log(node);
+                
+                var store = Ext.create('Ext.data.TreeStore', {
+                    fields: ['text', 'firstAppearance'],
+                    root: node
+                });
+                
+                
+                Ext.iterate(map, function(name, dependencies) {
+                    console.log(name);
+                    
+                    Ext.each(dependencies, function(dependency) {
+                        if (!inclusionCount[dependency]) {
+                            inclusionCount[dependency] = {
+                                includedBy: [],
+                                name: dependency
+                            };
+                        }
+                        
+                        console.count('test');
+                        
+                        inclusionCount[dependency].includedBy.push(name);
+                    }, this);
+                }, this);
+                
+                var allFiles = [];
+                Ext.iterate(inclusionCount, function(key, value) {
+                    allFiles.push({
+                        name: value.name,
+                        includedCount: value.includedBy.length,
+                        includedBy: value.includedBy
+                    });
+                }, this);
+                
+                
+                
+                var tree = Ext.create('Ext.tree.Panel', {
+                    columns: [
+                        {dataIndex: 'text', header: 'Class', width: 300, xtype: 'treecolumn'},
+                        {dataIndex: 'firstAppearance', header: '#', renderer: function(v) {
+                            return v ? 'Yes' : 'No';
+                        }}
+                    ],
+                    store: store,
+                    
+                    viewConfig: {
+                        getRowClass: function(record) {
+                            return record.data.firstAppearance ? 'first-appearance' : 'later-appearance';
+                        }
+                    },
+                    
+                    title: 'Simple Tree',
+                    flex: 1
+                });
+                
+                
+                var grid = Ext.create('Ext.grid.Panel', {
+                    title: 'Times each class was directly required by another',
+                    width: 400,
+                    height: 400,
+                    columns: [
+                        {dataIndex: 'name', flex: 1, header: 'Class'},
+                        {dataIndex: 'includedCount', header: '#'}
+                    ],
+                    store: {
+                        fields: ['name', 'includedCount', 'includedBy'],
+                        data: allFiles,
+                        sorters: {
+                            property: 'includedCount',
+                            direction: 'DESC'
+                        }
+                    }
+                });
+                
+                boo = grid;
+                
+                Ext.create('Ext.container.Viewport', {
+                    items: [
+                        tree, grid
+                    ],
+                    
+                    layout: {
+                        type: 'hbox',
+                        align: 'stretch'
+                    }
+                });
+            });
+        </script>
+    </head>
+    <body>
+        
+    </body>
+</html>

@@ -1,0 +1,157 @@
+<project name="SenchaAnt">
+
+    <target name="init-sencha-command">
+        <property name="sencha.command.dir" value="${cmd.dir}"/>
+        <property name="cmd.dir" value="${sencha.command.dir}"/>
+        <taskdef resource="com/sencha/ant/antlib.xml"
+                 classpath="${sencha.command.dir}/sencha.jar"/>
+        <x-extend-classpath>
+            <jar path="${sencha.command.dir}/sencha.jar"/>
+        </x-extend-classpath>
+    </target>
+
+    <!--
+    Initializes the Sencha Ant tools.
+
+    The scriptdef tag can only handle a single JS file, so we concat the individual files
+    to produce the complete scripts.
+    -->
+    <target name="init-sencha" depends="init-sencha-command">
+        <!-- Ensure the temp dir exists -->
+        <mkdir dir="${sencha-temp.dir}"/>
+
+        <!--
+        On Windows, tools that use Cygwin (such as Git Bash), (ab)use the PATH environment
+        variable and put Unix-like paths in it. On true Cygwin, items in the PATH use a
+        prefix for drives like "/cygdrive/c/" for "C:\". With Git Bash, a sane syntax is
+        used: "/c/" for "C:\".
+
+        This hack corrects for this when TERM=cygwin and sets the x-env.PATH property to a
+        PATH value that can be used in exec tasks.
+        -->
+        <script language="javascript"><![CDATA[
+            var System = java.lang.System,
+                env = System.getenv(),
+                path = env.get('PATH') || env.get('path') || env.get('Path');
+
+            if (env.get('TERM') == 'cygwin') {
+                var dirs = String(path).split(':'),
+                    regex = /^\/([a-z])\//i; // match "/c/foo" style
+
+                if (!regex.test(dirs[0])) {
+                    regex = /^\/cygdrive\/([a-z])\//i; // match "/cygdrive/c/foo" style
+                }
+
+                for (var i = 0; i < dirs.length; ++i) {
+                    dirs[i] = dirs[i].replace(regex, function (m0, m1) {
+                        return m1 + ':/';
+                    });
+                }
+
+                path = dirs.join(';'); // cannot use ':' for the PATH on Windows!
+            }
+
+            project.setProperty('x-env.PATH', path);
+        ]]></script>
+
+        <concat destfile="${sencha-temp.dir}/eye.js">
+            <filelist dir="${sencha-ant.dir}" files="ant-util.js"/>
+            <filelist dir="${sencha-ant.dir}/tasks" files="eye.js"/>
+        </concat>
+        
+         <macrodef name="x-eye-browser">
+            <attribute name="name"/>
+            <attribute name="version"/>
+            <attribute name="cpu"/>
+            <sequential/>
+        </macrodef>
+        
+        <macrodef name="x-eye-test">
+            <attribute name="name"/>
+            <attribute name="kind"/>
+            <attribute name="samples"/>
+            <attribute name="injectedScript"/>
+            <attribute name="compareWithTag"/>
+            <attribute name="tag"/>       
+            <element name="url"/>
+            <element name="browser"/>
+            <sequential>
+                <url/>
+            </sequential>
+        </macrodef>
+        
+        <scriptdef name="x-eye" language="javascript" src="${sencha-temp.dir}/eye.js">
+            <classpath>
+                <pathelement location="${sencha-ant.dir}/ant-contrib/commons-httpclient-3.0.1.jar"/>
+                <pathelement location="${sencha-ant.dir}/ant-contrib/commons-logging-1.0.4.jar"/>
+                <pathelement location="${sencha-ant.dir}/ant-contrib/commons-codec-1.3.jar"/>
+            </classpath> 
+            
+            <attribute name="zip"/>
+            <attribute name="eyeUrl"/>
+            <attribute name="eyeSession"/>
+            <attribute name="reportDir"/>
+            <attribute name="gitRepo"/>
+            <attribute name="gitBranch"/>
+            <attribute name="teamcityOutput"/>
+            <attribute name="performanceReportOutput"/>
+            <attribute name="testReportOutput"/>
+            
+            <element name="fileset" type="zipfileset"/>
+            <element name="test" type="x-eye-test"/>
+        </scriptdef>
+        
+                
+        <macrodef name="x-github-trigger-exectarget">
+            <attribute name="name"/>
+            <sequential/>
+        </macrodef>
+        
+        <concat destfile="${sencha-temp.dir}/github.js">
+            <filelist dir="${sencha-ant.dir}" files="ant-util.js"/>
+            <filelist dir="${sencha-ant.dir}/tasks" files="github-api-client.js"/>
+            <filelist dir="${sencha-ant.dir}/tasks" files="github-trigger.js"/>
+        </concat>
+        
+        <scriptdef name="x-github-trigger" language="javascript" src="${sencha-temp.dir}/github.js">
+            <classpath>
+                <pathelement location="${sencha-ant.dir}/ant-contrib/commons-httpclient-3.0.1.jar"/>
+                <pathelement location="${sencha-ant.dir}/ant-contrib/commons-logging-1.0.4.jar"/>
+                <pathelement location="${sencha-ant.dir}/ant-contrib/commons-codec-1.3.jar"/>
+            </classpath> 
+            
+            <attribute name="gitPR"/>
+            <attribute name="gitRepo"/>
+            <attribute name="gitBranch"/>
+            <attribute name="githubToken"/>
+            <attribute name="teamcityServerUrl"/>
+            <attribute name="teamcityBuildId"/>
+            <attribute name="teamcityBuildType"/>
+             
+            <element name="exectarget" type="x-github-trigger-exectarget"/>
+        </scriptdef>
+
+        <concat destfile="${sencha-temp.dir}/github-external.js">
+            <filelist dir="${sencha-ant.dir}" files="ant-util.js"/>
+            <filelist dir="${sencha-ant.dir}/tasks" files="github-api-client.js"/>
+            <filelist dir="${sencha-ant.dir}/tasks" files="github-external-trigger.js"/>
+        </concat>
+
+        <scriptdef name="x-github-external-trigger" language="javascript" src="${sencha-temp.dir}/github-external.js">
+            <classpath>
+                <pathelement location="${sencha-ant.dir}/ant-contrib/commons-httpclient-3.0.1.jar"/>
+                <pathelement location="${sencha-ant.dir}/ant-contrib/commons-logging-1.0.4.jar"/>
+                <pathelement location="${sencha-ant.dir}/ant-contrib/commons-codec-1.3.jar"/>
+            </classpath>
+
+            <attribute name="gitRepo"/>
+            <attribute name="gitBranch"/>
+            <attribute name="githubToken"/>
+            <attribute name="teamcityServerUrl"/>
+            <attribute name="teamcityBuildType"/>
+            <attribute name="teamcityUser"/>
+            <attribute name="teamcityPassword"/>
+        </scriptdef>
+
+    </target>
+</project>

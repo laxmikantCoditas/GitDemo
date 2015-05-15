@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../sencha-touch-all.js"></script>
+    <script>
+        Ext.define('Card', {
+            extend: 'Ext.data.Model',
+
+            config: {
+                idProperty: 'blaat',
+                identifier: 'uuid',
+                fields: [
+                    'value',
+                    'suit'
+                ],
+
+                proxy: {
+                    id: 'cards',
+                    enablePagingParams: true,
+                    type: 'localstorage'
+                }
+            }
+        });
+//
+//        Ext.define('Deck', {
+//            extend: 'Ext.data.Model',
+//
+//            config: {
+//                fields: [
+//                    'name'
+//                ],
+//
+//                proxy: {
+//                    type: 'localstorage'
+//                },
+//
+//                hasMany: 'Card'
+//            }
+//        });
+
+        Ext.setup({
+            onReady: function() {
+                var deck = Ext.create('Ext.data.Store', {
+                    model: 'Card',
+                    remoteFilter: true
+                });
+
+                deck.add([
+                    {value: '2',  suit: 'clubs'}
+                ]);
+
+                deck.sync();
+
+                //deck.getProxy().clear();
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

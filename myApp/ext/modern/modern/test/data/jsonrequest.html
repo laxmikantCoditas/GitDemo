@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../sencha-touch-all.js"></script>
+    <script>
+        Ext.define('app.model.Thing', {
+            extend: 'Ext.data.Model',
+            config: {
+                fields: [
+                    {name: 'name', type: 'string'}
+                ]
+            }
+        });
+
+        Ext.define('app.store.Things', {
+            extend: 'Ext.data.Store',
+
+            config: {
+                autoLoad: true,
+                model: 'app.model.Thing',
+                proxy: {
+                    reader: {
+                        type: 'json',
+                        root: 'd'
+                    },
+                    type: 'ajax',
+                    url: 'someurl.json',
+                    extraParams: {
+                        id: '',
+                        token: '',
+                        filter: ''
+                    },
+                    writer: {
+                        encodeRequest: true,
+                        type: 'json'
+                    }
+                }
+            }
+        });
+
+        Ext.setup({
+            onReady: function() {
+                var store = new app.store.Things();
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

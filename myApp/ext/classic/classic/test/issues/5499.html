@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EXTJSIV-5499</title>
+</head>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css"/>
+<script type="text/javascript" src="../../ext.js"></script>
+<body>
+<script type="text/javascript">
+    Ext.require(['Ext.chart.*', 'Ext.data.*']);
+    Ext.onReady(function() {
+
+        var store = Ext.create('Ext.data.JsonStore', {
+            fields: ['name', 'data1', 'data2'],
+            data: [
+                { 'name': 'metric one', 'data1': 25, 'data2': 27}
+            ]
+        });
+        var mychart = Ext.create('Ext.chart.Chart',
+            {
+                renderTo: Ext.getBody(),
+                width: 600,
+                height: 600,
+                store: store,
+                legend: true,
+                axes: [
+                    {
+                        type: 'Numeric',
+                        position: 'left',
+                        fields: 'data1',
+                        title: 'Sample Values',
+                        minimum: 0
+                    },
+                    {
+                        type: 'Category',
+                        position: 'bottom',
+                        fields: 'name',
+                        title: 'Sample Metrics'
+                    }
+                ],
+                series: [
+                    {
+                        type: 'column',
+                        axis: 'left',
+                        xField: 'name',
+                        yField: ['data1', 'data2'],
+                        style: {
+                            width: 100
+                        },
+                        label: {
+                            display: 'insideEnd',
+                            font: '36px Arial',
+                            contrast: true,
+                            "text-anchor": 'middle',
+                            field: ['data1', 'data2'],
+                            renderer: Ext.util.Format.numberRenderer('0')
+                        }
+
+                    }
+                ]
+            }
+        );
+    });
+</script>
+</body>
+</html>

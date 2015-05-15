@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+			Ext.onReady(function() {
+
+				Ext.widget('container', {
+
+					renderTo: "content",
+
+					layout: {
+
+						type: 'vbox',
+
+						align: 'stretch'
+
+					},
+
+					items: [
+
+						{ xtype: 'box', html: 'Menu Should be Below' } ,
+
+						{ xtype: 'menu', floating: false, items: [{text: 'menuitem1'}, {text: 'menuitem2'}]},
+
+						{ xtype: 'box', html: 'Menu Should Be Above. It is, but it is positioned way off screen to the right.' }
+
+					]
+
+				});
+
+			});
+
+        
+    </script>
+	<div id="content" style="width: 300px; height: 500px; border: 1px solid black; position: absolute; right: 0px;"></div>
+
+</body>
+</html>

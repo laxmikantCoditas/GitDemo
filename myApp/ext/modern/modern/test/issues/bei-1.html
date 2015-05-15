@@ -1,0 +1,40 @@
+<html>
+<head>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../sencha-touch-all.js"></script>
+    <title>Supposed to have only 10 elements</title>
+</head>
+<body>
+    <script type="text/javascript">
+        Ext.setup({
+            onReady: function () {
+                var store = Ext.create('Ext.data.JsonStore', {
+                    fields: ['a', 'b', 'c'],
+                    data: []
+                });
+                var list = Ext.create('Ext.dataview.DataView', {
+                    store: store,
+                    fullscreen: true,
+                    itemTpl: [
+                        '<span>2 * {a} = {b}; 100 - {a} = {c}</span>'
+                    ]
+                });
+                var data = [], i;
+                for (i = 0; i < 10; i++) {
+                    data.push({
+                        a: i,
+                        b: i * 2,
+                        c: 100 - i
+                    });
+                }
+                store.removeAll();
+                store.add(data);
+                store.removeAll();
+                store.add(data);
+                store.removeAll();
+                store.add(data);
+            }
+        });
+    </script>
+</body>
+</html>

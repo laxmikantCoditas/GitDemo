@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style type="text/css" media="screen">
+            iframe {
+                height: 1000px;
+                width: 1000px;
+                margin: 0;
+                padding: 0;
+            }
+        </style>
+    </head>
+    <body style="position: relative; width: 10000px;">
+        <script type="text/javascript" src="../../deploy/ext-all.js">
+        
+        <script type="text/javascript" charset="utf-8">
+            //no idea why we need an empty script tag here but the next one doesn't run without it!
+        </script>
+        
+        <script type="text/javascript" charset="utf-8">
+            window.isIframe = false;
+            Ext.define('Harness', {
+                singleton: true,
+                
+                config: {
+                    testCases: []
+                },
+                
+                loadCases: function() {
+                    window.testCases.forEach(this.loadCase);
+                },
+                
+                loadCase: function(url, index) {
+                    console.log('LOADING CASE ' + url + ' ' + index);
+
+                    injected = Ext.core.DomHelper.append(Ext.getBody(), {
+                        tag: 'iframe',
+                        src: window.baseUrl + url,
+                        style: 'position: absolute; top: 0px; left: ' + (index * 1000) + "px;",
+                        height: 1000,
+                        frameborder: 0,
+                        width: 1000,
+                        top: 0,
+                        left : (index + 1) * 1000
+                    });
+                }
+            });
+            
+            console.log('CREATED HARNESS');
+        </script>
+    </body>
+</html>

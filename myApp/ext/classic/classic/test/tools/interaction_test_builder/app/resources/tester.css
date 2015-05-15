@@ -1,0 +1,88 @@
+/*.t-row-test-passed .x-grid-cell {
+    
+    background-color: #3EA99F;
+} 
+.t-row-test-failed .x-grid-cell {
+    background-color: #E55B3C;
+}*/
+
+
+.t-test-tree .x-grid-cell .t-passed-icon,
+.t-test-tree .x-grid-cell .t-failed-icon {
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 20px;
+    height: 100%;
+    
+}
+.t-test-tree .x-grid-cell .t-passed-icon {
+    background-image: url(icons/accept.png);
+}
+
+.t-test-tree .x-grid-cell .t-failed-icon {
+    background-image: url(icons/delete.png);
+}
+
+.t-test-runner-panel .t-go-button-icon {
+     background-image: url(icons/control_play.png);
+}
+
+iframe.t-test-iframe {
+    border: 1px solid #EB10DC;
+}
+
+.jasmine-result {
+    
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    padding: 5px;
+    color: white;
+    text-shadow: black 0.1em 0.1em 0.2em;
+    margin: 1px;
+    display: inline-block;
+}
+
+.jasmine-result-expect {
+    font-size: 12px;
+    white-space: pre;
+}
+
+.jasmine-result-spec {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.jasmine-result-suite {
+      font-size: 13px;
+      font-weight: bold;
+}
+
+.jasmine-result-true {
+    background-color: green;
+}
+
+.jasmine-result-false {
+    background-color: red;
+
+}
+
+.no-icon {
+    display : none;
+    height: 0;
+    width: 0;
+}
+
+.t-test-tree .x-grid-row, 
+.t-test-tree .x-grid-cell-inner {
+    line-height: normal !important;
+    height: auto !important;
+}
+.t-test-tree .x-tree-expander {
+    margin-top: 4px !important;
+}
+
+.keyframe-screenshot {
+    background-color: grey;
+    padding: 10px;
+}

@@ -1,0 +1,21 @@
+{
+    "navRuleName": "pyCaseManagerMain",
+    "text": ".",
+    "children": [
+        {
+            "id": 1,
+            "label": "Add Expense Report",
+            "leaf": true
+        },
+        {
+            "id": 2,
+            "label": "Enter Information",
+            "leaf": true
+        },
+        {
+            "id": 3,
+            "label": "Add Expense Report",
+            "leaf": true
+        }
+    ]
+}

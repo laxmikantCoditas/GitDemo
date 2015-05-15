@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sencha Form with Textfields</title>
+
+	<script src="../../../sencha-touch-debug.js"></script>
+	<link rel="stylesheet" href="../../../resources/css/sencha-touch.css">
+
+	<script type="text/javascript">
+		Ext.setup({
+			requires: [
+				'Ext.Button'
+			],
+			onReady:function () {
+				var panel = Ext.create("Ext.form.Panel");
+
+				Ext.Viewport.add(panel);
+
+				for (var i = 0; i <= 20; i++) {
+					panel.add({
+						xtype:"textfield",
+						label:"label"
+					});
+				}
+			}
+		});
+	</script>
+</head>
+<body>
+</body>
+</html>

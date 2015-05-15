@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Test reconfigure of locked grid</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+Ext.require([
+    'Ext.grid.*',
+    'Ext.data.*',
+    'Ext.util.*',
+    'Ext.state.*'
+]);
+
+Ext.onReady(function() {
+    var lockedPanel =  Ext.create('Ext.grid.Panel', {
+        title: 'Locked Grid with reconfigure',
+        renderTo: Ext.getBody(),
+        width: 270,
+        height: 200,
+        enableLocking: true,
+        columns: [],
+        updateGrid: function(store) {
+            this.reconfigure(store, store.columns);
+        }
+    });
+
+    Ext.create('Ext.data.Store', {
+        proxy: {
+            type: 'memory',
+            reader: {
+                type: 'array',
+            }
+        },
+        fields: [
+            'group',
+            'type',
+            'value'
+        ],
+        data: [
+            ['Group1', 'Type1', 'Value1'],
+            ['Group1', 'Type2', 'Value2'],
+            ['Group1', 'Type3', 'Value3']
+        ],
+        columns: [
+            {
+                header: 'Group',
+                locked: true,
+                dataIndex: 'group'
+            },
+            {
+                header: 'Type',
+                dataIndex: 'type'
+            },
+            {
+                header: 'Value',
+                dataIndex: 'value'
+            }
+        ],
+        listeners: {
+            load: {
+                fn: function(store, records, success) {
+                    //console.log('records', records);
+                    lockedPanel.updateGrid(store);
+                }
+            }
+        }
+    });
+});        
+</script>
+</body>
+</html>

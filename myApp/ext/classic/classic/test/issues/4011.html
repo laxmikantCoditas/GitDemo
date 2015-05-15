@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        //your test case goes here
+		Ext.Loader.setConfig({
+		    enabled: true,
+		    paths: {
+		        'Ext.ux': '/SDK/extjs/examples/ux'
+		    }
+		});
+		Ext.require('Ext.ux.grid.FiltersFeature');
+
+		function gridFilters() {
+		    var dataItems = [];
+		    for(var i = 0; i != 1000; ++i) {
+		        var data = {
+		            name: "Name "+i,
+		            gender: 'Male',
+		            age: 20 + i%3
+		        };
+		        if(i % 2 == 0) {
+		            data.gender = 'Female';
+		        }
+		        dataItems.push(data);
+		    }
+		    var store = Ext.create('Ext.data.Store', {
+		        fields: ['name', 'gender', 'age'],
+		        data: {
+		            'items': dataItems
+		        },
+		        proxy: {
+		            type: 'memory',
+		            reader: {
+		                type: 'json',
+		                root: 'items'
+		            }
+		        }
+		    });
+
+		    var grid = Ext.create('Ext.grid.Panel', {
+		        title: 'Names',
+		        store: store,
+		        height: 300,
+
+		        features: [
+		        {
+		            ftype: 'filters',
+		            encode: false,
+		            local: true
+		        }
+		        ],
+
+		        columns: [
+		        {
+		            header: 'Name',
+		            dataIndex: 'name',
+		            editor: 'textfield'
+		        },
+		        {
+		            header: 'Gender',
+		            dataIndex: 'gender',
+		            renderer: function(value) {
+		                return Ext.util.Format.htmlEncode(value);
+		            },
+		            editor: {
+		                xtype: 'combobox',
+		                store: ['Male', 'Female']
+		            },
+		            filter: {
+		                type: 'list',
+		                options: ['Male', 'Female']
+		            }
+		        },
+		        {
+		            header: 'Age',
+		            dataIndex: 'age',
+		            editor: 'numberfield'
+		        }
+		        ],
+
+		        selType: 'cellmodel',
+		        plugins: [
+		        Ext.create('Ext.grid.plugin.CellEditing', {
+		            autoCancel: false,
+		            clicksToEdit: 1
+		        })
+		        ],
+
+		        renderTo: Ext.getBody()
+		    });
+		}
+		Ext.onReady(gridFilters);
+    </script>
+</body>
+</html>

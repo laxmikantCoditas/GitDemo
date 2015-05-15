@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3829</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+    <style>
+/*        .x-android .x-toolbar {
+            z-index: 1;
+        }*/
+    </style>
+
+    <script type="text/javascript">
+        Ext.setup({
+            requires: [
+                'Ext.form.*',
+                'Ext.field.*',
+                'Ext.Button',
+                'Ext.Toolbar',
+                'Ext.data.Store'
+            ],
+            onReady: function() {
+                Ext.Viewport.add({
+                    xtype: 'formpanel',
+                    items: [
+                        {
+                            xtype: 'toolbar',
+                            docked: 'top',
+                            title: 'Test Title',
+                            id:'time-exp-titlebar',
+                            style: 'font-size: small;background-color:blue',
+                            ui:'secondarytoolbar',
+                            items : [
+                                {
+                                    text: 'Back',
+                                    ui: 'back',
+                                    id:'closecasetandeback'
+                                },
+                                {xtype:'spacer'},
+                                {xtype:'spacer'},
+                                {
+                                    iconAlign: 'right',
+                                    iconMask:true,
+                                    text: 'Next',
+                                    iconCls: 'action',
+                                    id:'closecasetandenextbutton'
+                                }
+
+                            ]
+
+                        },
+                        {
+                            itemId: 'myInfoHeader',
+                            cls: 'sub-header',
+                            tpl: [
+                            ]
+                        },
+                        {
+                            itemId: 'firstName',
+                            xtype: 'textfield',
+                            name: 'firstName',
+                            label: 'First Name',
+                            placeHolder: 'Enter First Name',
+                            maxLength: 20
+                        },
+                        // added middleInitial name as per defect 45689 + CR
+                        {
+                            itemId: 'middleInitial',
+                            xtype: 'textfield',
+                            name: 'middleInitial',
+                            label: 'Middle Initial',
+                            placeHolder: 'Enter Middle Initial',
+                            maxLength: 1
+                        },
+                        {
+                            itemId: 'lastName',
+                            xtype: 'textfield',
+                            name: 'lastName',
+                            label: 'Last Name',
+                            placeHolder: 'Enter Last Name',
+                            maxLength: 20
+                        },
+                        {
+                            itemId: 'myInfoPhone',
+                            xtype: 'fieldset',
+                            name: 'myInfoPhone',
+                            title: 'Phone Number',
+                            cls: 'lateral-fields required phone-number',
+                            required: true,
+                            items: [
+                                {
+                                    itemId: 'areaCode',
+                                    xtype: 'textfield',
+                                    clearIcon: false,
+                                    name: 'areaCode',
+                                    component: {pattern: "[0-9]*"},
+                                    minLength: 3,
+                                    maxLength: 3,
+                                    cls: 'areaCode'
+                                },
+                                {
+                                    itemId: 'phonePrefix',
+                                    xtype: 'textfield',
+                                    clearIcon: false,
+                                    name: 'phonePrefix',
+                                    component: {pattern: "[0-9]*"},
+                                    minLength: 3,
+                                    maxLength: 3,
+                                    cls: 'phonePrefix'
+                                },
+                                {
+                                    itemId: 'phoneSuffix',
+                                    xtype: 'textfield',
+                                    clearIcon: false,
+                                    name: 'phoneSuffix',
+                                    component: {pattern: "[0-9]*"},
+                                    minLength: 4,
+                                    maxLength: 4,
+                                    cls: 'phoneSuffix'
+                                }
+                            ]
+                        },
+                        {
+                            itemId: 'myInfoAddress',
+                            cls: 'sub-header',
+                            tpl: [
+                                '<h2>{data.msg.mobile_pep_installation_address_header}</h2>',
+                                '<p>{data.msg.mobile_pep_installation_address_introcopy}</p>'
+                            ]
+                        },
+                        {
+                            itemId: 'address1',
+                            xtype: 'textfield',
+                            name: 'address1',
+                            label: 'Address 1',
+                            maxLength: 35
+                        },
+                        {
+                            itemId: 'address3',
+                            xtype: 'textfield',
+                            name: 'address3',
+                            label: 'Apt/Unit',
+                            labelAlign: 'top',
+                            maxLength: 5
+                        },
+                        {
+                            itemId: 'address2',
+                            xtype: 'textfield',
+                            name: 'address2',
+                            label: 'Address 2',
+                            labelAlign: 'top',
+                            maxLength: 30
+                        },
+                        {
+                            itemId: 'city',
+                            xtype: 'textfield',
+                            name: 'city',
+                            label: 'City',
+                            maxLength: 30
+                        },
+                        {
+                            itemId: 'city',
+                            xtype: 'textfield',
+                            name: 'city',
+                            label: 'City',
+                            maxLength: 30
+                        },
+                        {
+                            itemId: 'city',
+                            xtype: 'textfield',
+                            name: 'city',
+                            label: 'City',
+                            maxLength: 30
+                        },
+                        {
+                            itemId: 'city',
+                            xtype: 'textfield',
+                            name: 'city',
+                            label: 'City',
+                            maxLength: 30
+                        },
+                        {
+                            itemId: 'city',
+                            xtype: 'textfield',
+                            name: 'city',
+                            label: 'City',
+                            maxLength: 30
+                        },
+                        {
+                            itemId: 'city',
+                            xtype: 'textfield',
+                            name: 'city',
+                            label: 'City',
+                            maxLength: 30
+                        },
+                        {
+                            itemId: 'state',
+                            xtype: 'textfield',
+                            name: 'state',
+                            label: 'State',
+                            labelAlign: 'top',
+                            required: true,
+                            disabled: true
+                        },
+                        {
+                            itemId: 'postalCode',
+                            xtype: 'textfield',
+                            name: 'postalCode',
+                            label: 'ZIP Code',
+                            labelAlign: 'top',
+                            component: {pattern: "[0-9]*"},
+                            required: true,
+                            disabled: true
+                        },
+                        {
+                            itemId: 'myInfoChangeZipCode',
+                            name: 'myInfoChangeZipCode',
+                            cls: 'cta-change-zipcode',
+                            tpl: [
+                                '<a class="text-cta page-callback" rev="doZipConfirm">{data.msg.package_change_zip_code_link}</a>',
+                            ]
+                        },
+                        {
+                            itemId: 'continueButton',
+                            xtype: 'button',
+                            action: 'submit',
+                            cls: 'button button-submit',
+                            disabled: true
+                        },
+                        {
+                            itemId: 'validateSSN',
+                            xtype: 'hiddenfield',
+                            name: 'validateSSN',
+                            value: 'false'
+                        },
+                        {
+                            itemId: 'consentToCreditCheck',
+                            xtype: 'hiddenfield',
+                            name: 'consentToCreditCheck',
+                            value: 'no'
+                        },
+                        {
+                            itemId: 'acqSessionTimeoutCheck',
+                            xtype: 'hiddenfield',
+                            name: 'acqSessionTimeoutCheck',
+                            value: true
+                        }
+                    ]
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

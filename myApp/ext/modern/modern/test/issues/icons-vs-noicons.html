@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sencha Touch Issue Template</title>
+		<link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+		<script type="text/javascript" src="../../sencha-touch.js"></script>
+
+		<style type="text/css">
+
+		.icons .x-list-item {
+			padding-left: 30px;
+		}
+
+		.icons .x-list-item:before {
+			content: 'a';
+			font-family: Pictos;
+			font-size: 30px;
+			position: absolute;
+			top: 7px;
+			left: 10px;
+			bottom: 0;
+			right: 0;
+		}
+
+		</style>
+
+		<script type="text/javascript">
+			Ext.application({
+				name : 'Test',
+
+				requires : [
+					'Ext.List'
+				],
+
+				viewport: {
+					layout: 'hbox'
+				},
+
+				launch : function () {
+					Ext.Viewport.add([{
+						xtype: 'list',
+						data: [
+							{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},
+							{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
+						],
+						itemTpl: 'Without',
+						flex: 1
+					}, {
+						style: 'background: blue',
+						width: 5
+					}, {
+						xtype: 'list',
+						cls: 'icons',
+						data: [
+							{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},
+							{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
+						],
+						itemTpl: 'With',
+						flex: 1
+					}]);
+				}
+			});
+		</script>
+	</head>
+</html>

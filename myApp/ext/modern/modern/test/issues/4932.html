@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TOUCH-4932</title>
+
+	<script src="../../sencha-touch-debug.js"></script>
+	<link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+	<script type="text/javascript">
+		Ext.application({
+			name: 'Fiddle',
+
+			launch: function() {
+
+				var inputPanel = Ext.create('Ext.Panel', {
+					height: 100,
+					width: 300,
+					items: [
+						{
+							xtype: 'titlebar',
+							height: 44,
+							docked: 'top',
+							items: [
+								{
+									xtype: 'button',
+									width: 80,
+									iconCls: 'delete',
+									iconMask: true,
+									listeners: {
+										tap: function() {
+											inputPanel.hide();
+										}
+									}
+								}
+							]
+						},
+						{
+							xtype: 'textfield',
+							label: 'Text:',
+							id: 'test_textfield',
+							labelWidth: 125,
+							listeners: {
+								change: function(textfield, newValue, oldValue, eOpts) {
+									alert("New value of test textfield recognized on change as: " + newValue);
+								}
+							}
+						}
+					],
+					listeners: {
+						hide: function() {
+							alert("Setting value of test_textfield to ''");
+							Ext.getCmp('test_textfield').setValue('');
+						}
+					},
+
+				});
+
+				Ext.Viewport.add({
+					xtype: 'panel',
+					items: [
+						{
+							xtype: 'titlebar',
+							docked: 'top',
+							items: [
+								{
+									text: 'Open Window',
+									listeners: {
+										tap: function() {
+											inputPanel.showBy(this);
+										}
+									}
+								}
+							]
+						}
+					]
+				});
+
+			}
+		});
+		// or replace all text with a URL
+	</script>
+</head>
+<body>
+</body>
+</html>

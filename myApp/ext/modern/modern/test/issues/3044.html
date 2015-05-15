@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sencha Test</title>
+        
+        <script src="../../sencha-touch-all.js"></script>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+        <script type="text/javascript">
+
+        Ext.application({
+            name: 'Hello World',
+            launch: function() {
+                var button = Ext.create('Ext.Button', {
+                    iconCls: 'refresh',
+                    ui: 'small',
+                    iconMask: true
+                });
+
+                var button2 = Ext.create('Ext.Button', {
+                    iconCls: 'refresh',
+                    iconMask: true
+                });
+
+                Ext.Viewport.add({ xtype: 'toolbar', padding: 10, items: [button, button2] });
+            }
+        });
+            
+        </script>
+    </head>
+    <body>
+
+    </body>
+</html>

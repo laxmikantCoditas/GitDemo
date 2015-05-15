@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>EXTJSIV-6593</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+		<link type="text/css" rel="stylesheet" href="../../resources/css/ext-all.css"/>
+		<script type="text/javascript" src="../../ext-all.js"></script>
+
+	</head>
+	<body>
+
+        <div style="padding:20px">
+            - The columns should be aligned to the bottom axis.<br>
+        </div>
+
+		<script type="text/javascript">
+
+            Ext.onReady(function() 
+            {
+                Ext.define('Cost',{
+                    extend: 'Ext.data.Model',
+                    fields:[
+                        {name: 'interval', type: 'date'},
+                        {name: 'value1'   , type: 'float'},
+                        {name: 'value2'   , type: 'float'}
+                    ]
+                });
+
+                var cost_store = Ext.create('Ext.data.Store',{
+                    model: 'Cost',
+                    data:[
+                        {interval: new Date(2011, 04, 01), value1: 4, value2: 8.2},
+                        {interval: new Date(2011, 04, 02), value1: 4.3, value2: 8},
+                        {interval: new Date(2011, 04, 03), value1: 2, value2: 4.5},
+                        {interval: new Date(2011, 04, 04), value1: 3.6, value2: 6},
+//                        {interval: new Date(2011, 04, 05), value1: 5, value2: 10.56},
+//                        {interval: new Date(2011, 04, 06), value1: 8, value2: 16},
+                        {interval: new Date(2011, 04, 07), value1: 5, value2: 10.11},
+                        {interval: new Date(2011, 04, 08), value1: 7, value2: 14},
+                        {interval: new Date(2011, 04, 09), value1: 5, value2: 10.23},
+//                        {interval: new Date(2011, 04, 10), value1: 4, value2: 8},
+                        {interval: new Date(2011, 04, 11), value1: 6.9, value2: 12.58},
+                        {interval: new Date(2011, 04, 12), value1: 8, value2: 16},
+                        {interval: new Date(2011, 04, 13), value1: 5.17, value2: 10.13},
+                        {interval: new Date(2011, 04, 14), value1: 5, value2: 10}
+                    ]
+                }),
+                data = cost_store.data.items;
+
+
+                Ext.create('Ext.chart.Chart',{
+                    renderTo: Ext.getBody(),
+                    store: cost_store,
+                    width: 850,
+                    height: 300,
+                    axes:[
+                        {
+                            title: 'Intervals',
+                            type: 'Time',
+                            dateFormat: 'M d',
+                            position: 'bottom',
+                            fields: ['interval'],
+                            fromDate: data[0].data.interval,
+                            toDate: data[data.length-1].data.interval,
+                            grid: true
+                        },
+                        {
+                            title: 'Values',
+                            type: 'Numeric',
+                            position: 'left',
+                            fields: ['value1', 'value2'],
+                            grid: true,
+                            
+                        }
+                    ],
+                    series:[
+                        {
+                            type: 'column',
+                            axis: 'bottom',       // bind the columns to the bottom axis
+                            xField: 'interval',
+                            yField: 'value2',
+                            style: { width: 10},
+                            stacked: true
+                        },                    
+                        {
+                            type: 'line',
+                            xField: 'interval',
+                            yField: 'value2',
+                            smooth: true
+                        },                    
+                    ]
+                });
+            
+            
+            
+            });
+
+		</script>
+	</body>
+</html>

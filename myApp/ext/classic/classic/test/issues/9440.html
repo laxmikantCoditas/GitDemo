@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css">
+    <script type="text/javascript" src="../../ext-all-debug.js"></script>
+    <script type="text/javascript">
+        Ext.define('ImageHawk.forms.fields.currency', {
+            extend:'Ext.form.field.Text'
+            , enableKeyEvents: true
+            , alias: 'widget.currencyfield'
+            , listeners: {
+                'change': function(me, newValue, oldValue, eOpts) {
+                    console.log("Change: ''%s' from '%s'", newValue, oldValue);
+                }
+            }
+        });
+
+        Ext.define('ImageHawk.viewer.ui.dialog.HistorySearchDialog', {
+            extend: 'Ext.window.Window'
+            , requires: [
+                , 'ImageHawk.forms.fields.currency'
+            ]
+            ,renderTo: Ext.getBody()
+            , title: 'Search for:'
+            , closeAction: 'hide'
+            , floating: false
+            , resizable: false
+            , modal: true
+            , closable: false
+            , width: 550
+            , layout: 'fit'
+            , id: 'history-search-dialog'
+            , items: [{
+                xtype: 'form'
+                , id: 'history-form'
+                , collapsible: false
+                , frame: false
+                , layout: 'anchor'
+                , anchorSize: '100%'
+                , fieldDefaults: {
+                    labelAlign: 'right'
+                    , msgTarget: 'under'
+                }
+                , defaults: {
+                    anchor: "100%"
+                    /*
+                    , enableKeyEvents: true
+                    , listeners: {
+                    	specialKey: function(field, el) {
+                    		if(el.getKey() == Ext.EventObject.ENTER) {
+                    			Ext.getCmp('do-history-search').handler();
+                    		}
+                    	}
+                    }
+                    */
+                }
+                , items: [{
+                    xtype: 'container'
+                    , anchor: '100%'
+                    , layout: 'hbox'
+                    , margin: "5 5 5 5"
+                    , defaults: {
+                        flex: 1
+                    }
+                }, {
+                    xtype: 'currencyfield'
+                    , id: 'currency'
+                    , fieldLabel: 'currency'
+                    , name: 'currency'
+                }
+                ]
+                , buttons: [{
+                    text: 'search'
+                    , id: 'do-history-search'
+                    , formBind: true
+                    , handler: function(me) {
+                        console.log("Do Search");
+                    }
+                },{
+                    text: 'Cancel'
+                    , handler: function() {
+                        Ext.getCmp('history-search-dialog').close();
+                    }
+                }]
+            }]
+        });
+
+        Ext.application({
+            name: 'ImageHawk'
+            , appFolder: '/ImageHawk'
+            , launch: function() {
+                dlg = Ext.create('ImageHawk.viewer.ui.dialog.HistorySearchDialog');
+                dlg.show();
+            }
+        });
+    </script>
+</head>
+<body>
+<div id='loading-message'>Loading HTML5 Application ...</div>
+</body>

@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>TOUCH-3928</title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript">
+        Ext.application({
+            name   : 'Test',
+
+            requires : [
+                'Ext.Toolbar'
+            ],
+
+            launch : function () {
+                var i = 0,
+                    cnt = Ext.Viewport.add({
+                        items     : [
+                            {
+                                xtype  : 'toolbar',
+                                docked : 'top',
+                                items  : [
+                                    {
+                                        text    : 'Suspend Events',
+                                        ui      : 'decline',
+                                        handler : function () {
+                                            cnt.suspendEvents(false);
+                                        }
+                                    },
+                                    {
+                                        text    : 'Resume Events',
+                                        ui      : 'confirm',
+                                        handler : function () {
+                                            cnt.resumeEvents();
+                                        }
+                                    },
+                                    {
+                                        text    : 'Resume and Dump Queue',
+                                        ui      : 'confirm',
+                                        handler : function () {
+                                            cnt.resumeEvents(true);
+                                        }
+                                    },
+                                    {
+                                        text    : 'Add 2 items',
+                                        ui      : 'action',
+                                        handler : function () {
+                                            cnt.removeAll();
+                                            cnt.add({
+                                                html : 'Was added ' + i
+                                            });
+
+                                            i++;
+
+                                            cnt.add({
+                                                html : 'Was added ' + i
+                                            });
+
+                                            i++;
+                                        }
+                                    }
+                                ]
+                            }
+                        ],
+                        listeners : {
+                            add : function () {
+                                console.log('item added');
+                            }
+                        }
+                    });
+            }
+        });
+    </script>
+
+</head>
+<body></body>
+</html>

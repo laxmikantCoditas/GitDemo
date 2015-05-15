@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2550</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.define('NavigationModel', {
+            extend: 'Ext.data.Model',
+            config: {
+                fields: ['path', 'text', 'size', 'mime', 'extension', { name: 'modified', type: 'date'}]
+            }
+        });
+
+        Ext.setup({
+            onReady:function () {
+                var lstNav = Ext.create('Ext.NestedList', {
+                    title: 'Files',
+                    floating: true,
+                    width: 300,
+                    height: 400,
+                    store: Ext.create('Ext.data.TreeStore', {
+                        model: 'NavigationModel',
+                        root: {},
+                        proxy: {
+                            type: 'memory',
+                            reader: {
+                                type: 'json',
+                                root: 'children'
+                            }
+                        }
+                    })
+                });
+                Ext.Viewport.add(lstNav);
+
+                setTimeout(function () {
+                    var rootNode = lstNav.getStore().getRoot();
+                    rootNode.appendChild([
+                        {
+                            text: 'C:\\'
+                        },
+                        {
+                            text: 'D:\\'
+                        }
+                    ]);
+
+                    setTimeout(function () {
+                        var child = rootNode.childNodes[0];
+                        child.appendChild([
+                            {
+                                text: 'Folder1'
+                            },
+                            {
+                                text: 'Folder2'
+                            }
+                        ]);
+
+                        //Child list is empty.
+                        //lstNav.goToNode(child);
+                    }, 1000);
+                }, 1000);
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

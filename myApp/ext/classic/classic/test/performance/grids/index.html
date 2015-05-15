@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <script type="text/javascript">
+        (function () {
+            var css = 'packages/theme-classic/build/resources/theme-classic-all';
+            var js = 'ext-all';
+            var script = '<script type="text/javascript" src="JS"><'+'/script>';
+
+            if (/[?&](?:rtl)\b/i.test(location.search)) {
+                css += '-rtl';
+                js += '-rtl';
+            }
+            if (/[?&](?:debug)\b/i.test(location.search)) {
+                css += '-debug';
+                js += '-debug';
+            }
+
+            var root = "../../../";
+            css = '<link rel="stylesheet" type="text/css" href="' + root + css + '.css"/>';
+
+            document.write(css);
+            document.write(script.replace('JS', root + js + '.js'));
+            document.write(script.replace('JS', 'test.js'));
+        }());
+    </script>
+</head>
+<body></body>
+</html>

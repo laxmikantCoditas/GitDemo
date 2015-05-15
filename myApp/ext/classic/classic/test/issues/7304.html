@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        Ext.onReady(function () {
+
+            var states = Ext.create('Ext.data.Store', {
+                fields:['abbr', 'name'],
+                data:[
+                    {"abbr":"AL", "name":"Alabama"},
+                    {"abbr":"AK", "name":"Alaska"},
+                    {"abbr":"AZ", "name":"Arizona"}
+                ]
+            });
+
+            Ext.create('Ext.button.Button', {
+                text:'Dynamic menu',
+                renderTo:Ext.getBody(),
+                menu:{
+                    /** Adds/Removes items before show each time: */
+                    beforeShow:function () {
+                        var store = this.items.get(0).store;
+                        var index = store.find('abbr', 'long');
+                        if (index >= 0) {
+                            store.removeAt(index);
+                        } else {
+                            store.add({abbr:'long', name:'longlonglonglonglonglonglong'});
+                        }
+                        this.callParent(arguments);
+                    },
+                    shrinkWrap:true,
+                    items:{
+                        xtype:'dataview',
+                        itemSelector:'tr',
+                        store:states,
+                        tpl:new Ext.XTemplate(
+                                '<table>',
+                                    '<tpl for=".">',
+                                        '<tr><td>{name}</td></tr>',
+                                    '</tpl>',
+                                '</table>'
+                        )
+                    }
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>

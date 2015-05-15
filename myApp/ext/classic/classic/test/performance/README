@@ -1,0 +1,2 @@
+To create a performance testcase, please use the file in the template folder.
+Because dynamic loading (like document.write) really impacts the garbage collection and the global performances on IE < 9.

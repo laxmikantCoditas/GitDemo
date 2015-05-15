@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+Ext.onReady(function() {
+    var drawComponent = Ext.create('Ext.draw.Component', {
+	viewBox: false,
+	style:'background-color: white;',
+	width: 530,
+	height: 530,
+	id:'drawComponent',
+	items: [{
+	    xtype:'sprite',
+	    type: 'image',
+	    fill: '#ccc',
+	    translate: {
+		x: 10,
+		y: 40
+	    },
+	    //x: 10,
+	    //y: 40,
+	    width:243,
+	    height:44,
+	    id:'in',
+	    src: 'img/logical_input_port_ref_03.png'
+	}, {
+	    xtype:'sprite',
+	    type: 'image',
+	    translate: {
+		x: 0,
+		y: 80
+	    },
+	    //x: 0,
+	    //y: 80,
+	    width:243,
+	    height:44,
+	    id:'in1',
+	    src: 'img/logical_input_port_disabled_03.png'
+	}],
+	renderTo: Ext.getBody()
+    });
+
+/*
+    var sprite = drawComponent.surface.items.get(0);
+    sprite.setAttributes({
+	translate: {
+	    x: 10,
+	    y: 40
+	}
+    }, true);
+*/
+
+});
+
+    </script>
+</body>
+</html>

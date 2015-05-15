@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>TOUCH-986</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script src="../../sencha-touch.js"></script>
+        
+        <script type="text/javascript">
+
+Ext.setup({
+    onReady : function() {
+        var picker = Ext.create('Ext.Picker', {
+            id: 'pickCmp',
+            doneButton: false,
+            cancelButton: false,
+            // layout: 'fit',
+            toolbar: {
+                ui: 'light',
+                title: 'My Picker!',
+                items: [{
+                    xtype: 'button',
+                    text: 'update',
+                    handler: function() {
+                        var p = Ext.getCmp('pickCmp');
+                        var newSlots = [
+                            {
+                                title: 'Speed',
+                                data : [
+                                    {text: '100 KB/s', value: 10},
+                                    {text: '20 KB/s', value: 20},
+                                    {text: '30 KB/s', value: 30},
+                                    {text: '40 KB/s', value: 40}
+                                ]
+                            }
+                        ];
+                        
+                        p.setSlots(newSlots);
+                    }
+          
+                }]
+            },
+            slots: [
+                {
+                    title: 'Speed',
+                    data : [
+                        {text: '50 KB/s', value: 50},
+                        {text: '100 KB/s', value: 100},
+                        {text: '200 KB/s', value: 200},
+                        {text: '300 KB/s', value: 300}
+                    ]
+                }
+            ]
+        });
+        
+        picker.show();
+    }
+});
+
+        </script>
+    </head>
+    
+    <body></body>
+</html>

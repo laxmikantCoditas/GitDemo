@@ -1,0 +1,54 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>XHR Dynamic Script Loading Fail</title>
+
+
+    <!-- ExtJS -->
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css"/>
+    <script type="text/javascript" src="../../ext-all.js"></script>
+
+    <!-- Shared -->
+    <link rel="stylesheet" type="text/css" href="../../examples/shared/example.css"/>
+
+
+    <script type="text/javascript">
+        Ext.Loader.setConfig({enabled:true});
+        Ext.Loader.setPath('Ext.ux', '../../examples/ux');
+    </script>
+
+
+    <script type="text/javascript">
+        // The code below turns on IE conditional compilation and will make the Ext.Loader fail due to the last line in the dynamically loaded scripts.
+        if (/*@cc_on!@*/false) {
+            // do something
+        }
+
+
+        var a = 1;
+
+        alert("a: " + a);
+
+        Ext.Loader.loadScriptFile(
+                "../../examples/ux/grid/FiltersFeature.js",
+                Ext.emptyFn,
+                Ext.emptyFn,
+                Ext.Loader,
+                true
+        );
+
+        var b = 2;
+
+        alert("b: " + b);
+    </script>
+</head>
+<body>
+
+
+<h1>XHR Dynamic Script Loading Fail</h1>
+
+<p>You should get two alerts, "a: 1" and "b: 2";</p>
+
+
+</body>
+</html>

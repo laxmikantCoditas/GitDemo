@@ -1,0 +1,105 @@
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+.x-button {
+    /*display: -webkit-inline-box;*/
+}
+
+.x-container, .x-container > * {
+    position: relative;
+}
+
+.x-layout-hbox, .x-layout-vbox {
+    display: -webkit-box;
+}
+
+.x-layout-hbox > *, .x-layout-vbox > * {
+    -webkit-box-flex: 0;
+}
+
+.x-layout-hbox {
+    -webkit-box-orient: horizontal;
+}
+
+.x-layout-vbox {
+    -webkit-box-orient: vertical;
+}
+
+.x-layout-hbox > * {
+    /*height: 100%;*/
+    display: -webkit-box;
+    -webkit-box-orient: horizontal;
+}
+
+.x-layout-vbox > * {
+    /*width: 100%;*/
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+
+.x-layout-hbox > * > *, .x-layout-vbox > * > * {
+    -webkit-box-flex: 1;
+}
+
+.x-layout-hbox > .x-layout-box-item-fixed {
+    width: 0 !important;
+}
+
+.x-layout-vbox > .x-layout-box-item-fixed {
+    height: 0 !important;
+}
+
+.x-docking-wrapper {
+    display: -webkit-box;
+    -webkit-box-flex: 1;
+}
+
+.x-docking-wrapper > * {
+    -webkit-box-flex: 0;
+}
+
+.x-docking-wrapper > :not(.x-outer) {
+    -webkit-box-flex: 1;
+}
+
+.x-docking-wrapper-horizontal {
+    -webkit-box-orient: horizontal;
+}
+
+.x-docking-wrapper-vertical {
+    -webkit-box-orient: vertical;
+}
+
+.x-outer > *, .x-layout-fit > * {
+    /*width: inherit;*/
+    /*height: inherit;*/
+    -webkit-box-flex: 1;
+}
+
+.x-outer {
+    display: -webkit-box;
+}
+
+.x-item-centered {
+    position: absolute !important;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: auto !important;
+    height: auto !important;
+    display: -webkit-box;
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+}
+
+.x-item-floating {
+    position: absolute !important;
+}
+
+.x-item-centered > * {
+    position: relative !important;
+    -webkit-box-flex: 0 !important;
+}

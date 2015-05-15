@@ -1,0 +1,40 @@
+[{
+	"text": "RMA", 
+	"cls": "folder",
+	"expanded": false,
+	"children": [
+		{"text":"Brisendine, Kris","hours":0, "leaf": true, "checked": false},
+		{"text":"Brown, Lacey","hours":0, "leaf": true, "checked": false},
+		{"text":"Campbell, Scott","hours":0,"leaf": true, "checked": false},
+		{"text":"Davis, Brent","hours":0, "leaf": true, "checked": false},
+		{"text":"Fisher, Donna","hours":0, "leaf": true, "checked": false},
+		{"text":"Graves, Kim","hours":0, "leaf": true, "checked": false},
+		{"text":"Haws, Brandi","hours":0, "leaf": true, "checked": false},
+		{"text":"Kennedy, Carol","hours":0, "leaf": true, "checked": false},
+		{"text":"Lee, Deborah","hours":0, "leaf": true, "checked": false},
+		{"text":"Madura, Keri","hours":0, "leaf": true, "checked": false},
+		{"text":"Madura, Victoria","hours":0, "leaf": true, "checked": false},
+		{"text":"Miller, Cindy","hours":0, "leaf": true, "checked": false},
+		{"text":"Peterson, Tracey","hours":0, "leaf": true, "checked": false},
+		{"text":"Thomas, Nate","hours":0, "leaf": true, "checked": false},
+		{"text":"Van Winkle, Judy","hours":0, "leaf": true, "checked": false}
+	]
+	},
+	{
+	"text": "FCA",
+	"cls": "folder",
+	"expanded": false,   
+	"children": [
+		{"text":"Brown, Lacey","hours":0, "leaf": true, "checked": false},
+		{"text":"Bryan, Doug","hours":0, "leaf": true, "checked": false},
+		{"text":"Davila, Rachel","hours":0, "leaf": true, "checked": false},
+		{"text":"Davis, Brent","hours":0, "leaf": true, "checked": false},
+		{"text":"Demcoe, Mike","hours":0, "leaf": true, "checked": false},
+		{"text":"Dennison, Amber","hours":0, "leaf": true, "checked": false},
+		{"text":"Fisher, Tracy","hours":0, "leaf": true, "checked": false},
+		{"text":"Green, Jan","hours":0, "leaf": true, "checked": false},
+		{"text":"Holmes, John","hours":0, "leaf": true, "checked": false},
+		{"text":"Johnson, Sandra","hours":0, "leaf": true, "checked": false},
+		{"text":"Johnson, Theresa","hours":0, "leaf": true, "checked": false}
+	]
+}]

@@ -1,0 +1,26 @@
+{
+  "name": "topcoat",
+  "description": "topcoat benchmark server",
+  "version": "0.0.1-16",
+  "subdomain": "topcoat",
+  "engines": {
+    "node": "0.8.x",
+    "npm": "1.1.x"
+  },
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "3.0.0",
+    "jade": "*",
+    "stylus": "*",
+    "mongoose": "*",
+    "ua-parser": "latest",
+    "csv": "latest",
+    "validator": "~0.4.28",
+    "underscore.string": "~2.2.0",
+    "grunt": "~0.4.1",
+    "prompt": "~0.2.11"
+  }
+}

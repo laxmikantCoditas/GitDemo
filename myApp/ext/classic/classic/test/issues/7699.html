@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+Ext.Loader.setConfig({enabled:true});
+Ext.require([
+    'Ext.util.KeyMap'
+]);
+Ext.onReady(function() {
+	
+	var map = new Ext.util.KeyMap(Ext.getBody(),
+		[{
+			key: Ext.EventObject.Q, alt: true,
+            scope: this,
+            fn: rmBinding
+		},{
+			key: Ext.EventObject.A, alt: true,
+			scope: this,
+			fn: function() { console.log("alt+A"); }
+		},{
+			key: Ext.EventObject.B, alt: true,
+            scope: this,
+            fn: function() { console.log("alt+B"); }
+		}]
+	);
+	
+    function rmBinding() {
+    	console.log('removing alt+Q');
+        var toDel=[];
+        Ext.Array.each(map.bindings, function(item, idx, arr) {
+            if (item.key===Ext.EventObject.Q) { toDel.push(idx); }
+        });
+        var i=0;
+        Ext.Array.each(toDel, function(item, idx, arr) {
+            map.bindings.splice(item-i,1);
+            i+=1;
+        });
+    }
+});
+        
+    </script>
+	<div>If you have 3 keymap bindings enabled:</div>
+	<ol>
+		<li>Alt+A prints to console</li>
+		<li>Alt+B prints to console</li>
+		<li>Alt+Q removes Alt+Q binding</li>
+	</ol>
+	<div>Once you remove Alt+Q binding (and prints the "removing" message), you should see the error at console level. Simply refresh to re-attach binding.</div>
+	<div>The other bindings still work, and "alt+Q" binding is removed as expected. It's just the console error that worries me.</div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Test Case</title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+
+    <script type="text/javascript">
+        Ext.setup({
+            requires : [],
+            onReady  : function () {
+                function testEvents() {
+                    var data= new Ext.util.MixedCollection();
+                    data.on('add',function (hash,value,key) {
+                        if ((value || {}).disabled && key === 'hiddenValue') {
+                            console.warn('test failed');
+                        }
+                    });
+
+                    data.add('initial',1);
+                    data.insert(0,'hiddenValue',{initializing:1});
+                    data.suspendEvents();
+                    data.insert(0,'hiddenValue',{disabled:1});
+                    data.resumeEvents(true);
+                }
+                testEvents();
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

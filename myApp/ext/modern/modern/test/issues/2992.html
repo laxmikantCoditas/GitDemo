@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TOUCH-2893</title>
+        
+        <script src="../../sencha-touch-debug.js"></script>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+        <script type="text/javascript">
+
+            Ext.application({
+                name: 'Test',
+
+                requires : [
+                    'Ext.form.Panel',
+                    'Ext.field.Text'
+                ],
+            
+                launch: function() {
+                    new Ext.form.Panel({
+                        fullscreen : true,
+                        items      : [
+                            {
+                                xtype : 'textfield',
+                                label : 'Foo',
+                                name  : 'foo',
+                                value : 'bar'
+                            },
+                            {
+                                xtype : 'textfield',
+                                label : 'Test',
+                                value : 'test'
+                            },
+                            {
+                                xtype   : 'button',
+                                text    : 'Get Values',
+                                handler : function (button) {
+                                    var form = button.up('formpanel');
+
+                                    //should output an object with only the values of fields with a name configured
+                                    console.log(form.getValues());
+                                    //should output an object with all values no matter the name config
+                                    console.log(form.getValues(null, true));
+                                }
+                            },
+                            {
+                                xtype   : 'button',
+                                text    : 'Submit',
+                                handler : function (button) {
+                                    var form = button.up('formpanel');
+
+                                    //should only submit the fields with the name config configured
+                                    form.submit({
+                                        url : '2992.json'
+                                    });
+                                }
+                            }
+                        ]
+                    });
+                }
+            });
+            
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Test case template</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch-debug.js"></script>
+    <script>
+
+        Ext.define('MyModel', {
+            extend : 'Ext.data.Model',
+            config : {
+                fields : ['foo', 'group1', 'group2']
+            }
+        });
+
+        Ext.application({
+            launch:function () {
+                Ext.Viewport.add({
+                    xtype   : 'list',
+                    itemTpl : '{foo}',
+                    grouped : true,
+                    store   : {
+                        model   : 'MyModel',
+                        grouper : {
+                            property     : 'group1',
+                            sortProperty : 'group1'
+                        },
+                        data    : [
+                            { foo : 'One',   group1 : 'Number', group2 : 'Integer' },
+                            { foo : 'A',     group1 : 'Text',   group2 : 'String'  },
+                            { foo : 'Two',   group1 : 'Number', group2 : 'Integer' },
+                            { foo : 'Three', group1 : 'Number', group2 : 'Integer' },
+                            { foo : 'B',     group1 : 'Text',   group2 : 'String'  }
+                        ]
+                    },
+                    items   : [
+                        {
+                            xtype  : 'toolbar',
+                            docked : 'top',
+                            items  : [
+                                {
+                                    text    : 'Set group1',
+                                    handler : function (button) {
+                                        var list  = button.up('list'),
+                                            store = list.getStore();
+
+                                        store.setGrouper({
+                                            property     : 'group1',
+                                            sortProperty : 'group1'
+                                        });
+                                    }
+                                },
+                                {
+                                    text    : 'Set group2',
+                                    handler : function (button) {
+                                        var list  = button.up('list'),
+                                            store = list.getStore();
+
+                                        store.setGrouper({
+                                            property     : 'group2',
+                                            sortProperty : 'group2',
+                                            direction: 'DESC'
+                                        });
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                });
+            } //launch
+        }); //Ext.application
+    </script>
+</head>
+
+<body></body>
+
+</html>

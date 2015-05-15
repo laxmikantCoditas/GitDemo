@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Getting Started</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../sencha-touch-all.js"></script>
+    <script>
+        Ext.application({
+            requires: [
+                'Ext.Panel'
+            ],
+            name: 'Sencha',
+            launch: function() {
+                Ext.create('Ext.Panel', {
+                    fullscreen: true,
+                    html: 'Hello World, version is ' + Ext.getVersion()
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

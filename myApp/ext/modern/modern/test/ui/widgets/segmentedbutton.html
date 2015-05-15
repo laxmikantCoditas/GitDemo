@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ext.SegmentedButton</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" href="../../../resources/css/sencha-touch.css" type="text/css">
+
+        <script type="text/javascript" src="../../../sencha-touch.js"></script>
+        <script type="text/javascript">
+            Ext.require([
+                'Ext.SegmentedButton'
+            ]);
+
+            var items = [
+                // no pressed
+                {
+                    items: [
+                        { text: 'One' }
+                    ]
+                },
+                {
+                    items: [
+                        { text: 'One' },
+                        { text: 'Two', itemId: 'testing' }
+                    ]
+                },
+                {
+                    items: [
+                        { text: 'One' },
+                        { text: 'Two' },
+                        { text: 'Three' }
+                    ]
+                },
+
+                {
+                    items: [
+                        { text: 'One', hidden: true },
+                        { text: 'Two' },
+                        { text: 'Three' }
+                    ]
+                },
+
+                // pressed
+                {
+                    items: [
+                        { text: 'One', pressed: true }
+                    ]
+                },
+                {
+                    items: [
+                        { text: 'One' },
+                        { text: 'Two', pressed: true }
+                    ]
+                },
+                {
+                    items: [
+                        { text: 'One' },
+                        { text: 'Two', pressed: true },
+                        { text: 'Three' }
+                    ]
+                },
+
+                // pressed
+                {
+                    allowDepress: true,
+                    items: [
+                        { text: 'One', pressed: true }
+                    ]
+                },
+                {
+                    allowDepress: true,
+                    items: [
+                        { text: 'One' },
+                        { text: 'Two', pressed: true }
+                    ]
+                },
+                {
+                    allowDepress: true,
+                    items: [
+                        { text: 'One' },
+                        { text: 'Two', pressed: true },
+                        { text: 'Three' }
+                    ]
+                },
+
+                // allowMultiple
+                {
+                    items: [
+                        { text: 'One' },
+                        { text: 'Two', pressed: true },
+                        { text: 'Three', pressed: true }
+                    ]
+                },
+                {
+                    allowMultiple: true,
+                    allowDepress: true,
+                    items: [
+                        { text: 'One' },
+                        { text: 'Two', pressed: true },
+                        { text: 'Three', pressed: true }
+                    ]
+                },
+                {
+                    allowMultiple: true,
+                    allowDepress: true,
+                    items: [
+                        { text: 'One' },
+                        { text: 'Two', pressed: true },
+                        { text: 'Three', pressed: true }
+                    ]
+                },
+                {
+                    allowMultiple: true,
+                    allowDepress: true,
+                    items: [
+                        { text: 'One' },
+                        { text: 'Two', pressed: true },
+                        { text: 'Three', pressed: true }
+                    ]
+                },
+                {
+                    xtype: 'toolbar',
+                    layout: {
+                        pack: 'middle'
+                    },
+                    items: [{
+                        xtype: 'segmentedbutton',
+                        items: [
+                            { text: 'One' },
+                            { text: 'Two', pressed: true },
+                            { text: 'Three', pressed: true }
+                        ]
+                    }]
+                }
+            ];
+
+            /**
+             * Show all the configs
+             */
+            Ext.setup({
+                tabletStartupScreen: 'tablet_startup.png',
+                phoneStartupScreen: 'phone_startup.png',
+                icon: 'icon.png',
+                glossOnIcon: false,
+
+                onReady: function() {
+
+                    Ext.each(items, function(item) {
+                        Ext.applyIf(item, {
+                            xtype: 'segmentedbutton',
+                            docked: 'top'
+                        });
+                    });
+
+
+                    // });
+
+                    // var a = Ext.create('Ext.SegmentedButton', {
+                    //     items: [
+                    //         { text: 'One' },
+                    //         { text: 'Two' }
+                    //     ],
+                    //     docked: 'top'
+                    // });
+                    Ext.Viewport.add(items);
+
+                }
+            });
+        </script>
+    </head>
+    <body>
+
+    </body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>2483</title>
+<link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+<script src="../../sencha-touch.js"></script>
+<script>
+    Ext.define('My.custom.Tab', {
+    	extend: 'Ext.tab.Tab',
+
+    	applyTitle: function(title) {
+    		return 'foo-' + title;
+    	}
+    });
+
+    Ext.application({
+        launch: function() {
+            Ext.Viewport.add({
+                xtype: 'tabpanel',
+            	items: [{
+            		tab: {
+            			xclass: 'My.custom.Tab'
+            		},
+            		title: 'Something'
+            	}]
+            });
+        }
+    });
+</script>
+</head>
+<body></body>
+</html>

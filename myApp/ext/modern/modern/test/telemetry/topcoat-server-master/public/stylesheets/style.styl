@@ -1,0 +1,200 @@
+/**
+ *
+ * Copyright (c) 2013 Adobe Systems Incorporated. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+@import "checkbox.css"
+
+@font-face {
+    font-family: "source-l";
+    src: url("../font/SourceSansPro/SourceSansPro-Light.otf");
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "source-sb";
+    src: url("../font/SourceSansPro/SourceSansPro-Semibold.otf");
+    font-weight: 700;
+    font-style: normal;
+}
+
+body
+	font 16px source-l, sans-serif
+
+a
+	color #0083e8
+
+.plot__tooltip
+	position: absolute
+	border: 1px solid #fdd
+	padding: 5px
+	font-size: 12px
+	background-color: #fee
+
+table
+	margin 2em 0
+	width 100%
+	a
+		color #444
+
+td
+	font-size 12px
+	text-align left
+	padding 1em 0.5em 1em 1em
+	background #edf1f1
+	border-top 1px solid #DDDFDF
+	border-bottom 1px solid #DDDFDF
+	&:hover .add-filter
+		visibility visible
+
+thead tr
+	background #DFE2E2
+	cursor default
+	border-bottom 1px solid #f05
+	&:hover
+		background #DFE2E2
+	th
+		padding 1rem
+		text-align left
+		font-weight bold
+		font-size 1.1rem
+
+thead tr
+	th:first-child
+		border-top-left-radius 5px
+	th:last-child
+		border-top-right-radius 5px
+
+tbody tr:first-child td
+	border-top 1px solid #aaa
+
+tr
+	-webkit-transition-duration .1s
+	cursor pointer
+	&:hover td
+		background #e5e9e9
+		-webkit-transition-duration .2s
+		-moz-transition-duration .2s
+		transition-duration .2s
+
+.odd td
+	background #DDDFDF
+
+.hide
+	display none
+
+[class*=" group"]
+	border-top 1px solid #DDDFDF
+
+tr:hover img
+	opacity 1
+	transition-duration .5s
+
+.stress-selectors
+	border-top 1px solid #ddd
+
+.add-filter, .close
+	margin 0 0 0 0.5em
+	visibility hidden
+	padding 0 .4em
+	text-decoration none
+	border 1px solid #9c9e9e
+	background #e5e9e9
+	border-radius 3px
+	box-shadow: inset 0 1px 0 #fff
+	color #454545
+	text-shadow 0 1px 0 #fff
+
+.inline
+	li
+		display inline-block
+		list-style-type none
+
+.close
+	visibility visible
+	cursor pointer
+
+.legend
+	position absolute
+	top 50px
+	right 50px
+	ul
+		margin 1em 0
+		padding .2em
+
+.test-info
+	background #f8f8f8
+	width 250px
+	border-radius 5px
+	border 1px solid rgba(0,0,0,.2)
+	padding-left .5em
+	li
+		list-style none
+		border-bottom 1px solid rgba(0,0,0,.2)
+		padding .5em
+
+	h2
+		text-align center
+	input
+		display block
+		width 80%
+		padding .5em
+		margin .5em 0
+	img
+		width 30px
+
+input[type="checkbox"]
+	margin-right 0.5em
+
+nav
+	margin 0
+
+.demo-container
+	width 80%
+	height 450px
+
+canvas
+	color #fff
+
+.fade
+	opacity .5
+
+.inline
+	display inline !important
+
+.demo-placeholder
+	width: 100%
+	height: 100%
+
+.legend > div
+	display none
+
+.legend
+	position absolute
+	right -140px
+
+.info-box
+	padding-left .5rem
+	display inline-block
+
+.bordered
+	border-radius 5px
+	border 5px solid rgba(0,0,0,.1)
+	box-shadow 0 0 2px black
+
+.white
+	color #fff

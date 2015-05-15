@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4093</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.setup({ 
+            requires: [
+	            'Ext.form.Panel', 'Ext.field.Text','Ext.field.Email', 'Ext.field.Password', 'Ext.data.JsonP'
+            ],
+            onReady: function() {
+	            var form = Ext.create('Ext.form.Panel', {
+		            fullscreen: true,
+		            items: [
+			            {
+				            xtype: 'textfield',
+				            name: 'name',
+				            label: 'Name'
+			            },
+			            {
+				            xtype: 'emailfield',
+				            name: 'email',
+				            label: 'Email'
+			            },
+			            {
+				            xtype: 'passwordfield',
+				            name: 'password',
+				            label: 'Password'
+			            }
+		            ]
+	            });
+
+                Ext.Viewport.add(form);
+
+	            form.submit({
+		            /* PHP Server File 'return204Status.php'
+		             <?php
+						function cors() {
+							// Allow from any origin
+							if (isset($_SERVER['HTTP_ORIGIN'])) {
+								header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
+								header('Access-Control-Allow-Credentials: true');
+								header('Access-Control-Max-Age: 86400');    // cache for 1 day
+							}
+
+							// Access-Control headers are received during OPTIONS requests
+							if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+								if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
+									header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+
+								if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
+									header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+								exit(0);
+							}
+						}
+						cors();
+
+						//Testing 204 error
+						header("HTTP/1.0 204 No Response");
+
+						//Testing JSON Result
+						//header('Content-Type: application/json');
+						//$arr = array ('success'=>true, 'a'=>1,'b'=>2,'c'=>3,'d'=>4,'e'=>5);
+						//echo json_encode($arr)
+					?>
+		             */
+		            url: 'return204Status.php',
+		            waitMsg : {
+			            xtype : 'loadmask',
+			            message : 'Please wait...'
+		            },
+		            success: function() {
+			            alert("I should always get here!");
+		            },
+		            failure: function() {
+			            alert("This should never happen");
+		            }
+	            });
+
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

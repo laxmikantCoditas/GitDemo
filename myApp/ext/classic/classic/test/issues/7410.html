@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="../../ext-all.js"></script>
+        <link rel="stylesheet" href="../../resources/css/ext-all.css"/>   
+        
+        <script type="text/javascript">
+Ext.define('Test.MockProxy', {
+    extend: 'Ext.data.proxy.Memory',
+    alias: 'proxy.mock',
+    
+    showChildren: false,
+    
+    read: function() {
+        if (this.showChildren) {
+            this.data = {
+                children: [
+                    { id: 'ChildOfA', text: 'Child of A', leaf: true }                  
+                ]
+            };
+        } else {
+            this.data = [];
+        }
+        this.callParent(arguments);     
+    }
+});
+
+Ext.onReady(function() {
+    var tree = Ext.create('Ext.tree.Panel', {
+        store: {
+            proxy: {
+                type: 'mock'
+            }
+        },
+        root: {
+            id: 'root',
+            text: 'Root',
+            expanded: true,
+            children: [
+                { id: 'A', text: 'A' },
+                { id: 'B', text: 'B' }
+            ]
+        },
+        height: 700
+    });
+    
+    Ext.create('Ext.container.Container', {
+        renderTo: Ext.getBody(),
+        items: [
+            {
+                xtype: 'button',
+                toggleGroup: 'test',
+                toggleHandler: function(btn, pressed) {
+                    tree.store.getProxy().showChildren = !tree.store.getProxy().showChildren;
+                    
+                    var a = tree.store.getById('A');
+                    tree.store.load({
+                        operation: 'read',
+                        node: a,
+                        callback: function(r, o) {
+                            a.expand();
+                        }
+                    });
+                },
+                text: 'Show/hide child of A'
+            },
+            tree
+        ]
+    });
+});
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
+

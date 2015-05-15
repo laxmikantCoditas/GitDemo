@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Scatter</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <link rel="stylesheet" href="../../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../../sencha-touch-all.js"></script>
+    <script src="data.js"></script>
+    <script>
+        Ext.require([
+            'Ext.chart.CartesianChart',
+            'Ext.chart.series.Line',
+            'Ext.chart.series.Scatter',
+            'Ext.chart.axis.Numeric',
+            'Ext.chart.axis.Time',
+            'Ext.chart.interactions.PanZoom',
+            'Ext.Toolbar',
+            'Ext.TitleBar',
+            'Ext.Button']);
+        Ext.setup({
+            onReady: function () {
+                var seed = .5;
+
+                function random() {
+                    seed *= 15.1;
+                    seed -= Math.floor(seed);
+                    return seed;
+                }
+
+                var store = new OrderItems(),
+                    cmp = Ext.create("Ext.chart.CartesianChart", {
+                        store: store,
+                        interactions: ['panzoom'],
+                        series: [
+                            {
+                                type: 'scatter',
+                                xField: 'id',
+                                yField: 'g1',
+                                marker: {
+                                    lineJoin: 'butt',
+                                    type: 'circle',
+                                    radius: 4,
+                                    x: 0,
+                                    y: 0,
+                                    fill: 'blue',
+                                    fillOpacity: 0.5,
+                                    gapWidth: 7,
+                                    barWidth: 5
+                                }
+                            }
+                        ],
+                        axes: [
+                            {
+                                type: 'numeric',
+                                position: 'left',
+                                fields: 'g1'
+                            },
+                            {
+                                type: 'numeric',
+                                position: 'bottom',
+                                fields: 'id'
+                            }
+                        ]
+                    });
+                Ext.Viewport.add({
+                    layout: 'fit',
+                    items: [
+                        {
+                            xtype: 'titlebar',
+                            docked: 'top',
+                            title: 'Scatter Chart',
+                            items: {
+                                text: 'Refresh',
+                                handler: function () {
+                                    store.generateData(300);
+                                }
+                            }
+                        },
+                        cmp
+                    ]
+                });
+
+                Ext.ComponentQuery.query('titlebar')[0].add(
+                    Ext.ComponentQuery.query('interaction')[0].getModeToggleButton()
+                );
+            }
+        });
+
+    </script>
+</head>
+<body>
+</body>
+</html>

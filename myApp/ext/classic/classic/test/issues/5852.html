@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>EXTJSIV-5852</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css"/>
+    <script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+<a target="_blank" href="http://sencha.jira.com/browse/EXTJSIV-5852">EXTJSIV-5852</a><br/>
+<script type="text/javascript" charset="utf-8">
+    Ext.require([
+        'Ext.window.Window',
+        'Ext.chart.Chart',
+        'Ext.chart.series.Bar',
+        'Ext.chart.axis.Numeric',
+        'Ext.chart.series.Column',
+        'Ext.chart.axis.Category'
+    ]);
+    //your test case goes here
+    Ext.onReady(function () {
+        var store = {
+            fields: ['year', 'data1', 'data2', 'data3'],
+            data: [
+                {
+                    year: 1, data1: 20, data2: 30, data3: 50
+                }
+            ]
+        };
+
+        var chart = Ext.widget('chart', {
+            renderTo: Ext.getBody(),
+            width: 260,
+            height: 260,
+            shadow: true,
+            animate: false,
+            legend: false,
+            store: store,
+            axes: [
+                {
+                    type: 'numeric',
+                    field: ['data1', 'data2', 'data3'],
+                    position: 'left'
+                },
+                {
+                    type: 'category',
+                    field: 'year',
+                    position: 'bottom'
+                }
+            ],
+            series: [
+                {
+                    type: 'column',
+                    highlight: {
+                        lineWidth: 3,
+                        stroke: '#fff',
+                        opacity: 0.8, color: '#fff'
+                    },
+                    stacked: true,
+                    xField: 'year',
+                    yField: ['data1', 'data2', 'data3'],
+                    tips: {
+                        trackMouse: true,
+                        width: 65,
+                        height: 28,
+                        renderer: function (storeItem, item) {
+                            this.setTitle(item.value[1]);
+                        }
+                    }
+                }
+            ]
+        });
+
+        chart.getStore().loadData([
+            { year: 1, data1: 50, data2: 20, data3: 80 },
+            { year: 2, data1: 50, data2: 20, data3: 80 },
+            { year: 3, data1: 50, data2: 20, data3: 80 },
+            { year: 4, data1: 50, data2: 20, data3: 80 },
+            { year: 5, data1: 50, data2: 20, data3: 80 },
+            { year: 6, data1: 50, data2: 20, data3: 80 },
+            { year: 7, data1: 50, data2: 20, data3: 80 },
+            { year: 8, data1: 50, data2: 20, data3: 80 }
+        ]);
+
+        chart.getStore().loadData([
+            { year: 1, data1: 50, data2: 20, data3: 80 },
+            { year: 2, data1: 50, data2: 20, data3: 80 }
+        ]);
+    });
+</script>
+</body>
+</html>

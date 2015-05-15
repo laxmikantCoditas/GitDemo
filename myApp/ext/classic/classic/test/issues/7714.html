@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+    <title>EXTJSIV-7714 Test Case</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+    <script type="text/javascript" src="../../ext.js"></script>
+
+    <script type="text/javascript">
+
+
+        Ext.Loader.setConfig({enabled: true});
+        Ext.Loader.setPath('Ext.ux',      '../../examples/ux/');
+        Ext.require([
+            'Ext.ux.form.MultiSelect'
+        ]);
+
+        Ext.onReady(function(){
+            Ext.tip.QuickTipManager.init();
+
+            var w = Ext.create("Ext.window.Window", {
+                height: 400,
+                width: 400,
+                items: [{
+                    xtype: "multiselect",
+                    store: [
+                        ["0", "Item #0"],
+                        ["1", "Item #1"],
+                        ["2", "Item #2"],
+                        ["3", "Item #3"],
+                        ["4", "Item #4"],
+                        ["5", "Item #5"],
+                        ["6", "Item #6"],
+                        ["7", "Item #7"],
+                        ["8", "Item #8"],
+                        ["9", "Item #9"]
+                    ]
+                }],
+                layout: 'fit'
+            });
+            w.show();
+            w.center();
+
+
+
+        });
+
+
+
+
+    </script>
+
+</head>
+<body>
+
+</body>
+</html>

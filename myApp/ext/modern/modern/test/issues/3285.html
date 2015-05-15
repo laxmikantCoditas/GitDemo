@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3285</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+    <script type="text/javascript">
+
+        Ext.application({
+            name:'App',
+            launch:function () {
+                var store = Ext.create('Ext.data.Store', {
+                    fields:['firstName'],
+
+                    data:[
+                        {firstName:'A'},
+                        {firstName:'A'},
+                        {firstName:'A'},
+                        {firstName:'A'},
+                        {firstName:'A'},
+                        {firstName:'A'},
+                        {firstName:'A'},
+                        {firstName:'A'},
+                        {firstName:'A'},
+                        {firstName:'A'},
+                        {firstName:'A'}
+                    ]
+                });
+
+                Ext.Viewport.add(Ext.create('Ext.Panel', {
+                    fullscreen:true,
+                    layout:'fit',
+                    items:{
+                        xtype:'list',
+                        store:store,
+                        masked:{
+                            xtype:'loadmask'
+                        },
+                        itemTpl:'{firstName}'
+                    }
+                }));
+                Ext.Viewport.down('list').setMasked(false);
+            }
+        });
+
+    </script>
+</head>
+<body>
+</body>
+</html>

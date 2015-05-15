@@ -1,0 +1,133 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, body * {
+            -webkit-box-sizing: border-box;
+        }
+
+        body {
+            padding: 200px;
+            background-color: #000;
+        }
+
+        #page, #pageClone {
+            width: 300px;
+            height: 500px;
+            padding: 10px;
+            background-color: #FFF;
+            overflow: hidden;
+            position: absolute;
+        }
+
+        #page {
+            box-shadow: 0px 0px 10px #AAA;
+        }
+
+        #pageClone {
+            opacity: 0.3;
+            -webkit-transform: rotateY(180deg);
+        }
+
+        #pageCurl {
+            background-color: #FFF;
+            width: 300px;
+            height: 500px;
+            overflow: hidden;
+            position: absolute;
+            left: 50px;
+            box-shadow: -10px 0px 10px #777;
+        }
+
+        #pageCurlCover {
+            box-shadow: 10px 0px 10px #777;
+            width: 0px;
+            left: 500px;
+            overflow: hidden;
+            position: absolute;
+            height: 540px;
+        }
+    </style>
+    <script type="text/javascript" src="../../../sencha-touch.js"></script>
+    <script type="text/javascript">
+        Ext.setup({
+            requires: [
+                'Ext.fx.runner.Css'
+            ],
+            viewport: {
+                autoRender: false
+            },
+            onReady: function() {
+                animator = new Ext.fx.runner.Css();
+                animator.run([{
+                    element: '#pageCurl',
+                    transition: {
+                        from: {
+                            transform: {
+                                rotate: '10deg',
+                                translate: [0, 20]
+                            }
+                        },
+                        to: {
+                            transform: {
+                                translate: [0, 0]
+                            }
+                        },
+                        duration: '5s',
+                        easing: 'ease-in'
+                    }
+                },
+                {
+                    element: '#pageCurlCover',
+                    transition: {
+                        from: {
+                        },
+                        to: {
+                            width: 300,
+                            left: -90
+                        },
+                        duration: '5s',
+                        easing: 'ease-in'
+                    }
+                }]);
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+<div id="page">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+    industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it
+    to make a type specimen book. It has survived not only five centuries, but also the leap into electronic
+    typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets
+    containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including
+    versions of Lorem Ipsum.
+
+    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its
+    layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to
+    using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web
+    page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web
+    sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on
+    purpose (injected humour and the like).
+</div>
+<div id="pageCurlCover">
+    <div id="pageCurl">
+        <div id="pageClone">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+            the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+            scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
+            electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of
+            Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus
+            PageMaker including versions of Lorem Ipsum.
+
+            It is a long established fact that a reader will be distracted by the readable content of a page when looking at
+            its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as
+            opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing
+            packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum'
+            will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by
+            accident, sometimes on purpose (injected humour and the like).
+        </div>
+    </div>
+</div>
+</html>

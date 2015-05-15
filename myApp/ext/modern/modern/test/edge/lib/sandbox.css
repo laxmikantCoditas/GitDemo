@@ -1,0 +1,44 @@
+body {
+    height: 100%;
+    overflow: hidden;
+}
+
+.red {
+    background-color: red
+}
+
+.green {
+    background-color: green
+}
+
+.blue {
+    background-color: blue
+}
+
+.cyan {
+    background-color: cyan
+}
+
+.pink {
+    background-color: pink
+}
+
+.orange {
+    background-color: orange
+}
+
+.brown {
+    background-color: brown
+}
+
+.purple {
+    background-color: purple
+}
+
+.salmon {
+    background-color: salmon
+}
+
+.violet {
+    background-color: violet
+}

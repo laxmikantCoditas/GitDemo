@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Chart 2 0 Prototype Prototype UI</title>
+	<meta content="text/html; charset=UTF-8" http-equiv="content-type">
+	<meta http-equiv="X-UA-Compatible" content="IE=8">
+
+<link rel="stylesheet" type="text/css" href="../../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../../ext.js"></script>
+	<script type="text/javascript" src="line-chart-data.js"></script>
+	<script type="text/javascript" src="line.js"></script>
+
+	<script type="text/javascript" language="javascript">
+	Ext.onReady(function(){
+		initializeView();
+	});
+	</script>
+</head>
+<body>
+	<!--
+	The basic HTML structure below is for prototype display only.
+	The style settings used here may not be accurate or complete.
+	It helps provide a visual representation of a portlet container without having Liferay available.
+	Do not use it when implementing the prototype as a portlet.
+	-->
+	<div id="chartWrapper" >
+	</div>
+Type : test case
+Module: Charts
+Ticket: EXTJSIV-4459
+Changelog: no
+Comments: If you try to render a chart in internet explorer 8 and you have animate=true, the markers will render, but lines themselves will never render
+</body>
+</html>

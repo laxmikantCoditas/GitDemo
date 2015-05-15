@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>TOUCH-3858/TOUCH-3955</title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript">
+        Ext.setup({
+            onReady:function () {
+                var store1 = Ext.create('Ext.data.JsonStore', {
+                    fields : [ 'name', 'data1', 'data2', 'data3', 'data4', 'data5',
+                        'data6', 'data7', 'data8', 'data9' ],
+                    data : [
+                        {'data1': 49, 'data2': 10, 'data3': 17288146955, 'data4': 10, 'data5': 10, 'data6': 10,'data7': 78, 'name': "Q1"},
+                        {'data1': 49, 'data2': -18, 'data3': 12465205357, 'data4': 17, 'data5': 22, 'data6': 45,'data7': 116, 'name': "Q2"},
+                        {'data1': 50, 'data2': 23, 'data3': 17616604906, 'data4': 22, 'data5': 42, 'data6': 32,'data7': 133, 'name': "Q3"},
+                        {'data1': 50, 'data2': -35, 'data3': 15061159274, 'data4': 33, 'data5': 39, 'data6': 47,'data7': 166, 'name': "Q4"},
+                        {'data1': 51, 'data2': 45, 'data3': 18526463121, 'data4': 44, 'data5': 68, 'data6': 60,'data7': 209, 'name': "Q5"},
+                        {'data1': 49, 'data2': -16, 'data3': 11944552179, 'data4': 48, 'data5': 56, 'data6': 63,'data7': 214, 'name': "Q6"},
+                        {'data1': 51, 'data2': 47, 'data3': 9632227788, 'data4': 50, 'data5': 57, 'data6': 64, 'data7': 220,'name': "Q7"},
+//                        {'data1': 50, 'data2': -47, 'data3': 20935493782, 'data4': 50, 'data5': 57, 'data6': 65, 'data7': 221,'name': "Q8"},
+
+                    ]
+                });
+
+                Ext.create('Ext.chart.CartesianChart', {
+                    fullscreen: true,
+                    store: store1,
+                    background: 'white',
+                    margin: 50,
+//                    colors: 'green',
+                    series: [
+
+                        {
+                            type: 'line',
+                            xField: 'name',
+                            yField: ['data6'],
+                            colors: 'cyan',
+                            fill: false,
+                            smooth: false,
+                            style: {
+                                lineWidth: 2,
+                                stroke: 'blue',
+                                opacity: 0.7
+                            },
+                            marker:{
+                                type: 'circle',
+                                fill: 'lightgrey',
+                                stroke: 'blue',
+                                size: 5,
+                                radius: 5,
+                                opacity: 1
+                            }
+                        },
+                        {
+                            type: 'line',
+                            xField: 'name',
+                            yField: ['data5'],
+                            fill: false,
+                            style: {
+                                lineWidth: 2,
+                                stroke: 'red',
+                                fill: 'pink',
+                                opacity: 0.9
+                            },
+                            marker:{
+                                type: 'circle',
+                                size: 5,
+                                radius: 5,
+                                fill: 'pink'
+                            }
+                        }
+                    ],
+                    axes: [
+                        {
+                            type: 'numeric',
+                            position: 'left',
+                            fields: ['data1', 'data2', 'data3', 'data4', 'data5', 'data6','data7'],
+                            title: {
+                                text: 'Value',
+                                font: '20px sans-serif'
+                            }
+                        },
+                        {
+                            type: 'category',
+                            position: 'bottom',
+                            fields: 'name',
+                            title: {
+                                text: 'Quarter',
+                                font: '20px sans-serif'
+                            }
+                        }
+                    ]
+                });
+            }
+        });
+    </script>
+
+</head>
+<body>
+<H1 style="position:fixed; padding:20px; background-color:lightyellow; z-index:1000">Both lines should <u>not</u> be filled.</h1>
+</body>
+</html>

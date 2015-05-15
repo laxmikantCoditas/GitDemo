@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>EXTJSIV-4622</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css"/>
+    <script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+<script type="text/javascript" charset="utf-8">
+    //your test case goes here
+    Ext.require(['Ext.button.Button', 'Ext.tip.QuickTipManager']);
+    Ext.onReady(function () {
+        Ext.tip.QuickTipManager.init();
+        var button = Ext.create('Ext.Button', {
+            renderTo: Ext.getBody(),
+            text: 'hover for tip',
+            listeners : {
+                'mouseover' : showTip
+            }
+        });
+        var tooltip = new Ext.tip.ToolTip({
+            trackMouse: true,
+            width: 140,
+            height: 28,
+            trackMouse: true,
+            title: 'Should not be shown'
+        });
+
+        function showTip() {
+            tooltip.setTitle('Should be shown');
+            tooltip.show();
+        }
+    })
+</script>
+</body>
+</html>

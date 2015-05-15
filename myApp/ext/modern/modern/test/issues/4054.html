@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript">
+        Ext.define('ServiceObject', {
+            extend: 'Ext.data.Model',
+            config: {
+                fields: ['id', 'number', 'name']
+            }
+        });
+
+        Ext.define('OfferCalculation', {
+            extend: 'Ext.data.Model',
+            config: {
+                fields: ['id', 'number', 'name'],
+                associations: [
+                    { type: 'hasOne', model: 'ServiceObject', name: 'ServiceObject' }
+                ]
+            }
+        });
+
+        Ext.setup({
+            onReady:function () {
+                var serviceObjectInstance = Ext.create('ServiceObject', {
+                    id: 1,
+                    number: 123456,
+                    name: 'serviceObject 123456',
+
+                });
+
+                var offerInstance = Ext.create('OfferCalculation', {
+                    id: 1,
+                    number: 123456,
+                    name: 'offer 123456'
+                });
+
+                //offerInstance.set('ServiceObject', serviceObjectInstance.getData());
+                offerInstance.setServiceObject(serviceObjectInstance);
+
+                console.log(offerInstance);
+
+                debugger;
+
+                offerInstance.setServiceObject(null);
+
+                console.log(offerInstance);
+            }
+        });
+    </script>
+
+</head>
+<body></body>
+</html>

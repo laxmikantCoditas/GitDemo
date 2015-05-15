@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en">
+
+<head>
+
+    <title>Ext JS Buffered Grid - 2,500 rows by 25 columns</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <link rel="stylesheet" type="text/css" href="resources/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="examples/shared/example.css" />
+
+    <style type="text/css">
+
+        div.x-grid-row  {
+            position: absolute;
+            height: 21px;
+            width: 100%;
+            border-bottom: 1px solid #ededed;
+        }
+
+        div.x-grid-cell {
+            position: absolute;
+        }
+    </style>
+
+    <!--<x-compile>-->
+        <!--<x-bootstrap>-->
+            <script type="text/javascript" src="../../../ext.js"></script>
+        <!--</x-bootstrap>-->
+
+        <script type="text/javascript" src="7230_data.js"></script>
+        <script type="text/javascript">
+
+            Ext.require([
+                '*'
+            ]);
+
+            Ext.onReady(function() {
+                var multiplier = 25;
+
+                function getTestFields()
+                {
+                    var fields = [];
+                    for (i=1; i<=multiplier; i++)
+                    {
+                        fields.push({ name: 'name_' + i });
+                    }
+                    return fields;
+                }
+
+                function getTestColumns()
+                {
+                    var columns = [];
+                    for (var i=1; i<=multiplier; i++)
+                    {
+                        columns.push({ text: 'Name', width: 150 , sortable: true, dataIndex: 'name_' + i, filterable: true });
+                    }
+                    return columns;
+                }
+
+                Ext.define('Employee', {
+                    extend: 'Ext.data.Model',
+                    fields: getTestFields()
+                });
+
+                var store = Ext.create('Ext.data.Store', {
+                    id: 'store',
+                    buffered: true,
+                    pageSize: 2500,
+                    data: __bigdata,
+                    model: 'Employee',
+                    proxy: {
+                        type: 'memory'
+                    }
+                });
+
+                var columns = getTestColumns(),
+                    grid = Ext.create('Ext.grid.Panel', {
+                        title: 'Ext JS Buffered Grid - 2,500 rows by 25 columns',
+                        store: store,
+                        loadMask: true,
+                        disableSelection: true,
+                        id: "grid1",
+                        viewConfig: {
+                            trackOver: false,
+                            getTplFactory: function() {
+                                return Ext.view.DivTplFactory;
+                            }
+                        },
+                        columnLines: true,
+                        verticalScroller: {
+                            numFromEdge: 18,
+                            trailingBufferZone: 20,
+                            leadingBufferZone: 30
+                        },
+                        columns: columns
+                    });
+
+                Ext.create("Ext.container.Viewport", {
+                    layout: "fit",
+                    items: [
+                        grid
+                    ]
+                });
+            });
+        </script>
+    <!--</x-compile>-->
+
+
+</head>
+
+<body>
+
+
+
+</body>
+
+</html>

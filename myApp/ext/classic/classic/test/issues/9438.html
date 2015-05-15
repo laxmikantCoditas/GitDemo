@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css">
+    <script type="text/javascript" src="../../ext-all-debug.js"></script>
+
+    <style type="text/css">
+        .x-column-header-inner .x-column-header-text {
+            white-space: normal !important; /* changed from nowrap */
+        }
+    </style>
+
+    <script type="text/javascript">
+        Ext.onReady(function() {
+            Ext.define('Test.LargeDataModel', {
+                extend: 'Ext.data.Model',
+                fields: [
+                    { name: 'Id', type: 'int', convert: null },
+                    { name: 'Valid', type: 'boolean', convert: null },
+                    { name: 'Name', type: 'string' },
+                    { name: 'TestCol', type: 'string' },
+                    { name: 'DateAdded', type: 'date', convert: function(v) { return Ext.Date.parse(v, 'MS'); } }, // , convert: null
+                ]
+            });
+
+
+            var store = Ext.create('Ext.data.Store', {
+                data: [
+                    {"DateAdded":"\/Date(1342112130442-0500)\/","Id":0,"Name":"Name 0","Valid":true, "ExpandAll": true},
+                    {"rowColor": 'red', "canExpand": false, "DateAdded":"\/Date(1342198530442-0500)\/","Id":1,"Name":"Name 1","Valid":false},
+                    {"isExpanded": true, "rowCls": "row-context-menu-bg-green", "DateAdded":"\/Date(1342284930442-0500)\/","Id":2,"Name":"Name 2","Valid":false},
+                    {"DateAdded":"\/Date(1342371330442-0500)\/","Id":3,"Name":"Name 3","Valid":true}
+                ],
+                remoteSort: true,
+                model: 'Test.LargeDataModel'
+            });
+
+            var panel = Ext.create('Ext.grid.Panel', {
+                store: store,
+                renderTo: Ext.getBody(),
+                height: 400,
+                columns: [
+                    {
+                        text: '&#160;',
+                        menuDisabled: true,
+                        columns: [
+                            { text: 'Id', dataIndex: 'Id', width: 100, sortable: true }
+                        ]
+                    },
+                    {
+                        text:"test group",
+                        columns:[{
+                            text: 'First Group',
+                            //flex: 1,
+                            columns: [
+                                { text: 'Id', dataIndex: 'Id', width: 100, sortable: true },
+                                { text: 'Name', dataIndex: 'Name', width: 200, sortable: true }
+                            ]
+                        },
+                        {
+                            text: 'Second Group',
+                            columns: [
+                                { text: 'Valid?', dataIndex: 'Valid', xtype: 'booleancolumn', width: 30 },
+                                { text: 'Date Added', dataIndex: 'DateAdded', xtype: 'datecolumn', width: 30 }
+                            ]
+                        }]
+                    }
+                ]
+            });
+        });
+    </script>
+
+</head>
+<body></body>
+</html>

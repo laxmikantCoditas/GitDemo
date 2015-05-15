@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../sencha-touch-all.js"></script>
+    <script>
+        Ext.Loader.setPath({
+            'Ext.data': '../../src/data'
+        });
+
+        Ext.define('MyModel', {
+            extend: 'Ext.data.Model',
+
+            config: {
+                fields: [
+                    'field1',
+                    {name: 'field2', type: 'date', dateFormat: 'timestamp'},
+                    {name: 'field3', mapping: 'data.test', type: 'int'}
+                ],
+
+                proxy: {
+                    type: 'ajax',
+                    url: 'read.json',
+                    reader: {
+                        type: 'json',
+                        rootProperty: 'results',
+                        idProperty: 'IDPROPERTY'
+                    }
+                }
+            }
+        });
+
+        Ext.setup({
+            onReady: function() {
+                var store = Ext.create('Ext.data.TreeStore', {
+                    model: 'MyModel'
+                });
+
+                var tree = store.tree,
+                    root = new MyModel({
+                        field1: 'root',
+                        field2: new Date().getTime()/1000,
+                        field3: 410
+                    }),
+                    nodeStore = Ext.create('Ext.data.NodeStore', {
+                        model: 'MyModel',
+                        recursive: true
+                    }),
+                    ln = 3,
+                    children = [],
+                    i, child, j;
+
+                tree.setRootNode(root);
+
+                for (i = 0; i < ln; i++) {
+                    child = new MyModel({
+                        field1: 'child-' + i,
+                        expanded: true,
+                        field2: (new Date().getTime() - (i * 100)) / 1000,
+                        field3: i * 100
+                    });
+                    root.appendChild(child);
+
+                    for (j = 0; j < ln; j++) {
+                        child.appendChild({
+                            field1: 'grandchild-' + i + '-' + j,
+                            field2: (new Date().getTime() - (j * 1000)) / 1000,
+                            field3: j * i * 50
+                        });
+                    }
+                }
+
+                nodeStore.setNode(root);
+
+                Ext.create('Ext.List', {
+                    fullscreen: true,
+                    store: nodeStore,
+                    itemTpl: '<span style="width: {[values.depth*50]}px; height: 1px; display: inline-block; background-color: black;"></span> {field1}'
+                });
+
+                root.firstChild.appendChild({
+                    field1: 'grandchild-0-yay',
+                    field2: new Date().getTime(),
+                    field3: 10000
+                });
+
+                root.firstChild.removeChild(root.firstChild.firstChild);
+                root.removeChild(root.firstChild.nextSibling);
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

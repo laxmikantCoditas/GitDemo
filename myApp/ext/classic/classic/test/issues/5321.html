@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>EXTJSIV-5321.html</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css"/>
+    <script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+<a target="_blank" href="http://sencha.jira.com/browse/EXTJSIV-5321.html">EXTJSIV-5321.html</a>
+<script type="text/javascript" charset="utf-8">
+    //your test case goes here
+    Ext.onReady(function () {
+        var component = Ext.create("Ext.draw.Component", {renderTo: Ext.getBody(), width: 800, height: 600}),
+            surface = component.surface;
+        for (var j = 0; j < 100; j++) {
+            surface.add({
+                type: 'circle',
+                group: 'g' + j,
+                x: Math.random() * 100,
+                y: Math.random() * 100,
+                radius: 15
+            });
+        }
+        surface.renderAll();
+        component.destroy();
+        setTimeout(function () {
+            alert('Continue');
+            for (var i = 0; i < 50; i++) {
+                
+                component = Ext.create("Ext.draw.Component", {renderTo: Ext.getBody(), width: 800, height: 600});
+                surface = component.surface;
+                for (var j = 0; j < 100; j++) {
+                    surface.add({
+                        type: 'circle',
+                        fill: 'black',
+                        group: 'g' + j,
+                        x: Math.random() * 100,
+                        y: Math.random() * 100,
+                        radius: 15
+                    });
+                }
+                surface.renderAll();
+                component.destroy();
+            }
+            alert('Done');
+        }, 500);
+    });
+</script>
+</body>
+</html>

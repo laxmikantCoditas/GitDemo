@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TOUCH-3000</title>
+
+        <script src="../../sencha-touch-debug.js"></script>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+        <script type="text/javascript">
+
+            Ext.application({
+                name: 'Test',
+
+                viewport : {
+                    autoMaximize : Ext.os.is.iOS
+                },
+
+                launch: function() {
+                    Ext.Viewport.on('orientationchange', function (viewport, orientation) {
+                        console.log(orientation); //inspect this
+                    });
+                }
+            });
+
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

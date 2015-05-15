@@ -1,0 +1,16 @@
+.tabs {
+    background-image:url(../shared/icons/add.gif) !important;
+}
+
+.add {
+    background-image: url(../shared/icons/user_add.gif) !important;
+}
+ .add16 {
+    background-image: url(../shared/icons/user_add16.gif) !important;
+}
+.add24 {
+    background-image: url(../shared/icons/user_add24.gif) !important;
+}
+.icon-feed {
+    background-image: url(../../../examples/shared/icons/fam/feed_add.png) !important;
+}

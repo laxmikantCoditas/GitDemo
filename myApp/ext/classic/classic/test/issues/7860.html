@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+Ext.define('Ext.overrides.form.RadioGroup', {
+    override: 'Ext.form.RadioGroup',
+
+    setError: function (value) {
+        Ext.form.field.Base.prototype.setError.call(this, value);
+    }
+});
+
+Ext.onReady(function () {
+    Ext.create('Ext.form.Panel', {
+        title: 'RadioGroup Example',
+        width: 300,
+        height: 125,
+        bodyPadding: 10,
+        renderTo: Ext.getBody(),
+        items:[{
+            xtype: 'radiogroup',
+            id: 'test',
+            fieldLabel: 'Two Columns',
+            columns: 2,
+            vertical: true,
+            items: [
+                { boxLabel: 'Item 1', name: 'rb', inputValue: '1' },
+                { boxLabel: 'Item 2', name: 'rb', inputValue: '2', checked: true},
+                { boxLabel: 'Item 3', name: 'rb', inputValue: '3' },
+                { boxLabel: 'Item 4', name: 'rb', inputValue: '4' },
+                { boxLabel: 'Item 5', name: 'rb', inputValue: '5' },
+                { boxLabel: 'Item 6', name: 'rb', inputValue: '6' }
+            ]
+        }]
+    });
+});
+// call the following in the console:
+// Ext.getCmp('test').markInvalid('This field is invalid.');
+    </script>
+</body>
+</html>

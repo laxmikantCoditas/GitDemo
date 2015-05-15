@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TOUCH-3247</title>
+
+        <script src="../../sencha-touch-debug.js"></script>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+        <script type="text/javascript">
+            Ext.define('Ux.Container', {
+                extend : 'Ext.Container',
+                xtype  : 'ux-container',
+
+                config : {
+                    layout : 'auto',
+                    items  : [
+                        {
+                            html : 'Test'
+                        }
+                    ]
+                }
+            });
+
+            Ext.application({
+                name : 'Test',
+
+                launch : function () {
+
+                    Ext.Viewport.add(
+                        new Ux.Container()
+                    );
+
+                }
+            });
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

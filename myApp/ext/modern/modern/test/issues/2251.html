@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2251</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.application({
+            name:'Demo',
+            launch:function () {
+                var panel = Ext.create('Ext.Container', {
+                    fullscreen:true,
+                    scrollable:true,
+                    items:{
+                        xtype:'togglefield',
+                        labelWidth:200,
+                        label:'Average Price',
+                        value:1
+                    }
+                });
+                try {
+                    panel.destroy();
+                }
+                catch(e) {
+                    alert(e.message);
+                }
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

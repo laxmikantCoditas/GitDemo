@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../../sencha-touch-debug.js"></script>
+    <script type="text/javascript">
+	    Ext.setup({
+		    requires: ['Ext.plugin.PullRefresh'],
+            onReady:function () {
+
+                Ext.define('textModel', {
+                    extend: 'Ext.data.Model',
+                    config: {
+                        fields: [
+                            { name: 'text', type: 'string' }
+                        ]
+                    }
+                });
+
+                Ext.define('userModel', {
+                    extend: 'Ext.data.Model',
+                    config: {
+                        fields: [
+                            { name: 'id' },
+                            { name: 'name', type: 'string'},
+                            { name: 'img',  type: 'string'}
+                        ],
+                        associations: [{
+                            type: 'hasMany',
+                            model: 'textModel',
+                            name: 'texts',
+                            associationKey: 'texts'
+                        }]
+                    }
+                });
+
+                var store = Ext.create('Ext.data.Store', {
+                    model: 'userModel',
+                    proxy: {
+                        type: 'ajax',
+                        url: 'users.json',
+                        noCache: false,
+                        limitParam: false,
+                        startParam: false,
+                        pageParam: false,
+                        reader: {
+                            type: "json",
+                            rootProperty: "users"
+                        }
+                    },
+                    autoLoad: true
+                });
+
+	            Ext.override(Ext.plugin.PullRefresh, {
+				            fetchLatest: function() {
+					            store.load();
+				            }
+			            }
+	            );
+
+                Ext.create('Ext.dataview.List', {
+                    fullscreen: true,
+
+                    store: store,
+	                items: [
+		                {
+			                xtype:"toolbar",
+			                docked:"top",
+			                items:{
+				                text:"reload",
+				                handler: function(){
+					                store.load();
+				                }
+			                }
+		                }
+	                ],
+
+                    plugins: [
+                        {
+                            xclass: 'Ext.plugin.PullRefresh',
+                            pullRefreshText: 'Pull to refresh!'
+                        }
+                    ],
+
+                    itemTpl: new Ext.XTemplate('</pre><img src="{img}" alt="{name} photo"/><div class="tweet"><b>{name}: {[this.sequenceTexts(values.texts)]}<pre>',{
+                        sequenceTexts: function(texts){
+                            var i,
+                                    toReturn = "<br>";
+                            for(i=0;i<texts.length;i++){
+                                toReturn = toReturn.concat(i, ": ", texts[i].text, '<br>');
+                            }
+                            return toReturn;
+                        }
+                    })
+                });
+            }
+        });
+    </script>
+
+</head>
+<body></body>
+</html>

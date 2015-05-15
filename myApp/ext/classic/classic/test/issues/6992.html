@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        Ext.Loader.setConfig({enabled:true});
+        Ext.require(['*']);
+        Ext.onReady(function(){
+
+
+            /**
+             * @class Test3
+             *
+             * One stacked area chart Test with time data
+             *
+             */
+            Ext.define('Test3', {
+                extend:'Ext.container.Container',
+                alias:"widget.test3",
+                padding:'0 0 0 0',
+                autoScroll:true,
+                layout:{type:'fit', align:'stretch'},
+
+                initComponent:function () {
+                    Ext.define('TestTime', {
+                        extend:'Ext.data.Model',
+                        fields:[
+                            {name:'time', type:'date', dateFormat:'d-m-Y H:i:s'},
+                            'value',
+                            'value1'
+                        ]
+                    });
+                    var testTimeStore1 = Ext.create('Ext.data.Store', {
+                        model:'TestTime',
+                        data:[
+                            {time:"08-04-2012 08:00:10", value:2, value1:12},
+                            {time:"08-04-2012 08:00:40", value:1, value1:6},
+                            {time:"08-04-2012 08:01:00", value:7, value1:5},
+                            {time:"08-04-2012 08:01:20", value:6, value1:6},
+                            {time:"08-04-2012 08:01:40", value:1, value1:1},
+                            {time:"08-04-2012 08:02:00", value:6, value1:4},
+                            {time:"08-04-2012 08:02:20", value:1, value1:1},
+                            {time:"08-04-2012 08:02:40", value:5, value1:1},
+                            {time:"08-04-2012 08:03:00", value:12, value1:2},
+                            {time:"08-04-2012 08:03:20", value:1, value1:12},
+                            {time:"08-04-2012 08:03:40", value:3, value1:4},
+                            {time:"08-04-2012 08:04:00", value:2, value1:9},
+                            {time:"08-04-2012 08:04:20", value:4, value1:3},
+                            {time:"08-04-2012 08:04:40", value:7, value1:4},
+                            {time:"08-04-2012 08:05:00", value:1, value1:6},
+                            {time:"08-04-2012 08:05:20", value:3, value1:7}
+                        ]
+                    });
+
+                    var chart1 = Ext.create("Ext.chart.Chart", {
+                        id:"chart1",
+                        width: 800,
+                        height:500,
+                        shadow:true,
+                        store:testTimeStore1,
+                        legend:{
+                            position:'right'
+                        },
+                        animate:false,
+                        mask:'horizontal',
+                        axes:[
+                            {
+                                type:'Numeric',
+                                minimum:0,
+                                maximum:16,
+                                majorTickSteps:7,
+                                minorTickSteps:1,
+                                grid: true,
+                                position:'left',
+                                fields:'value1',
+                                title:'Y something'
+                            },
+                            {
+                                type:'Time',
+                                minorTickSteps:2,
+                                grid: true,
+                                position:'bottom',
+                                fields:['time'],
+                                fromDate: +(new Date(2012,3,8,7,59,0)),
+                                toDate:   +(new Date(2012,3,8,8,6,0)),
+                                constrain: true,
+                                title:'X something',
+                                dateFormat:"H:i:s",
+                                step:[Ext.Date.MINUTE, 1]
+                            }
+                        ],
+                        series:[
+                            {
+                                //fake series which just shows the fill..
+                                type:'area',    // area / column / scatter / line
+                                stacked: true,
+                                axis:['left', 'bottom'],
+                                fill:true,
+                                xField:'time',
+                                yField:['value1', 'value'],
+                                style: {width: 15}
+                            }
+                        ]
+                    });
+                    Ext.apply(this, {
+                        items:[
+                            chart1
+                        ]
+                    });
+                    this.callParent(arguments);
+                }
+            });
+
+
+            Ext.application({
+                name:'',
+                autoCreateViewport:false,
+
+                launch:function () {
+                    var me = this,
+                            viewport = Ext.create('Ext.container.Viewport'),
+                            mainView = Ext.create("Ext.Container", {
+                                items:[
+                                    { xtype: 'test3' }
+                                ]
+                            });
+                    viewport.add(mainView);
+                    viewport.show();
+                }
+
+            })
+
+        });      
+    </script>
+</body>
+</html>

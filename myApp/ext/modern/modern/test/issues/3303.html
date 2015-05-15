@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3303</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+    <script type="text/javascript">
+
+        counter = 1;
+
+        Ext.Loader.setConfig({
+            enabled : true
+        });
+
+        Ext.define('MyView', {
+            extend: 'Ext.Container',
+            xtype : 'myview',
+
+            config: {
+                items: [{
+                    xtype: 'button',
+                    text: 'Enter new View',
+                    handler: function() {
+                        counter++;
+
+                        Ext.Viewport.setActiveItem({
+                            xtype : 'myview',
+                            html  : 'Card: ' + counter
+                        });
+                    }
+                }]
+            },
+
+            initialize: function() {
+                this.callParent(arguments);
+
+                this.on({
+                    show: 'onShow',
+                    hide: 'onHide'
+                });
+            },
+
+            onHide: function(view) {
+                console.log('onHide', view.id);
+            },
+
+            onShow: function(view) {
+                console.log('onShow', view.id);
+            }
+        });
+
+        Ext.application({
+            launch: function() {
+                var me = this;
+
+                Ext.Viewport.onAfter('activeitemchange', me.onViewportChange, me);
+
+                Ext.Viewport.setActiveItem({
+                    xtype : 'myview'
+                });
+            },
+
+            onViewportChange : function (viewport, newCard, oldCard) {
+                if (oldCard && oldCard.destroy) {
+                    oldCard.destroy();
+                }
+            }
+        });
+
+    </script>
+</head>
+<body>
+</body>
+</html>

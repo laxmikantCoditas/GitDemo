@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        Ext.onReady(function() {
+
+            Ext.create('Ext.form.ComboBox', {
+                id:'state1',
+                forceSelection:true,
+//                listConfig : {
+//                  tpl: new Ext.XTemplate(
+//                          '<ul><tpl for=".">',
+//                          '<li role="option" class="x-boundlist-item">{field2:htmlEncode}</li>', // fix encoding of special character
+//                          '</tpl></ul>'
+//                          )
+//                },
+                store: [
+                    ['AL', 'Alabama\n\rAL'] ,
+                    ['AK', 'Alaska<AK>'] ,
+                    ['AZ', 'Arizona<script>alert(10)<\/script>']
+                ],
+                renderTo: document.body
+            });
+
+            Ext.create('Ext.form.ComboBox', {
+                id:'state2',
+                forceSelection:true,
+                store: [
+                    ['AL', 'Alabama&#010;AL'] ,
+                    ['AK', 'Alaska&lt;AK&gt;'] ,
+                    ['AZ', 'Arizona&lt;script&gt;alert(10)&lt;\/script&gt;']
+                ],
+                renderTo: document.body
+            });
+        });
+    </script>
+</body>
+</html>

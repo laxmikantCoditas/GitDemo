@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>TOUCH-1067</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script src="../../sencha-touch.js"></script>
+
+    <script type="text/javascript">
+
+        Ext.setup({
+            requires: ['Ext.DateExtras'],
+            onReady: function() {
+                var showtimestr = Ext.Date.format(new Date(), "Y-m-d");
+                var showtime = Ext.Date.parse(showtimestr, "Y-m-d");
+
+                alert(showtimestr);
+                alert(showtime.__proto__);
+            }
+        });
+
+    </script>
+
+    <style>
+        
+    </style>
+</head>
+<body>
+</body>
+</html>

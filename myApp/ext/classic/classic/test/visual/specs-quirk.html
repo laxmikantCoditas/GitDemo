@@ -1,0 +1,22 @@
+<html>
+    <head>
+         <script type="text/javascript">
+            document.write('<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all' +
+             ((/rtl=true/i).test(location.search) ? '-rtl' : '') + '.css" />');
+        </script>
+        
+        <script type="text/javascript">
+            document.write('<script type="text/javascript"  src="../../ext-all' +
+             ((/rtl=true/i).test(location.search) ? '-rtl' : '') + '-dev.js" <\/script>');
+        </script>
+        
+        <script type="text/javascript">
+            if (typeof Ext == 'undefined') {
+                document.write('<script type="text/javascript" src=\"../../ext.js\" <\/script>');
+            }
+        </script>
+        <script type="text/javascript" src="../../../testreporter/build/jasmine.js"></script>
+        <script type="text/javascript" src="bootstrap.js"></script>
+    </head>
+    <body></body>
+</html>

@@ -1,0 +1,67 @@
+{
+    "text"       : "Menu1",
+    "id"         : "/menu1",
+    "leaf"       : false,
+    "expandable" : false,
+    "expanded"   : true,
+    "children"   : [
+        {
+            "text" : "Accueil1",
+            "id"   : "/menu/accueil1",
+            "leaf" : true
+        },
+        {
+            "text"       : "Comptabilité1",
+            "id"         : "/menu/comptabilite1",
+            "leaf"       : false,
+            "expanded"   : true,
+            "expandable" : true,
+            "children"   : [
+                {
+                    "text" : "Relevé d'opérations1",
+                    "id"   : "/menu/comptabilite/ro1",
+                    "leaf" : true
+                },
+                {
+                    "text" : "Grand-Livre1",
+                    "id"   : "/menu/comptabilite/grandlivre1",
+                    "leaf" : true
+                },
+                {
+                    "text" : "Trésorerie1",
+                    "id"   : "/menu/comptabilite/tresorerie1",
+                    "leaf" : true
+                }
+            ]
+        },
+        {
+            "text"       : "Facturation1",
+            "id"         : "/menu/facturation1",
+            "leaf"       : false,
+            "expanded"   : true,
+            "expandable" : true,
+            "children"   : [
+                {
+                    "text" : "Echéancier1",
+                    "id"   : "/menu/facturation/echeancier1",
+                    "leaf" : true
+                }
+            ]
+        },
+        {
+            "text" : "Mes archives1",
+            "id"   : "/menu/archives1",
+            "leaf" : true
+        },
+        {
+            "text" : "Visioplaine1",
+            "id"   : "/menu/visioplaine1",
+            "leaf" : true
+        },
+        {
+            "text" : "Retour1",
+            "id"   : "/menu/retour1",
+            "leaf" : true
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+
+.xcp_viewer .x-grid-row .x-grid-cell {
+  border-style: none;
+  background-color:#999999;
+}
+
+.xcp_viewer .x-grid-row-selected .x-grid-cell, .xcp_viewer .x-grid-row-selected .x-grid-rowwrap-div
+{
+    background-color: #B4B5B4 !important;        
+}
+
+.xcp_viewer .x-grid-row-focused .x-grid-cell, .xcp_viewer .x-grid-row-focused .x-grid-rowwrap-div {
+  background-color: #CCCCCC !important;
+  border: #000000 1px solid;
+}
+
+
+    
+

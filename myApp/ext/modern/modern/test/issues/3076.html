@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title>TOUCH-3076</title>
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+
+    <script type="text/javascript">
+        Ext.application({
+            requires : [
+                'Ext.data.Store',
+                'Ext.dataview.DataView'
+            ],
+
+            launch : function () {
+                new Ext.dataview.DataView({
+                    fullscreen : true,
+                    itemTpl    : '{test} {[xindex]} {[xcount]}',
+                    store      : {
+                        fields : ['test'],
+                        data   : [
+                            { test : 'One'   },
+                            { test : 'Two'   },
+                            { test : 'Three' },
+                            { test : 'Four'  },
+                            { test : 'Five'  }
+                        ]
+                    }
+                });
+            }
+        });
+    </script>
+
+</head>
+<body>
+</body>
+</html>

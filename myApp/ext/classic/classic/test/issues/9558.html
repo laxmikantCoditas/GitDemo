@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>EXTJSIV-9558 / TICKET 11563</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+
+Ext.Loader.setConfig({ enabled: true });
+
+Ext.require('Ext.data.Store')
+Ext.require('Ext.form.Panel')
+Ext.require('Ext.tab.Panel')
+Ext.require('Ext.form.field.HtmlEditor')
+
+Ext.onReady(function () {
+
+    Ext.create('Ext.data.Store', {
+    
+        storeId: 'myStore',
+        proxy: {
+            type: 'ajax',
+            url: '9558.json',
+            reader: {
+                type: 'json'
+            }
+        },
+        fields: [
+            {
+                name: 'name'
+            },
+            {
+                name: 'note'
+            }
+        ]
+    
+    });
+    
+    Ext.create('Ext.form.Panel', {
+    
+        id: 'myForm',
+        title: 'My Form',
+        bodyPadding: 10,
+        height: 300,
+        width: 500,
+        trackResetOnLoad: true,
+    
+        items: [
+            {
+                xtype: 'tabpanel',
+                height: 200,
+                activeTab: 0,
+                items: [
+                    {
+                        xtype: 'panel',
+                        title: 'Tab 1',
+                        items: [
+                            {
+                                xtype: 'textfield',
+                                fieldLabel: 'name',
+                                name: 'name'
+                            }
+                        ]
+                    },
+                    {
+                        xtype: 'panel',
+                        layout: {
+                            type: 'fit'
+                        },
+                        title: 'Tab 2',
+                        items: [
+                            {
+                                xtype: 'htmleditor',
+                                height: 150,
+                                id: 'note',
+                                fieldLabel: '',
+                                name: 'note'
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                xtype: 'button',
+                text: 'load record',
+                handler: function() {
+                    Ext.getStore('myStore').load({
+                        callback: function(r,options,success){
+                            Ext.getCmp('myForm').loadRecord(r[0]);
+                        }
+                    });
+                }
+            }
+        ],
+    
+        renderTo: Ext.getBody()
+    });
+
+});
+
+</script>
+
+</body>
+</html>
+

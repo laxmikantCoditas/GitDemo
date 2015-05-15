@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        //your test case goes here
+Ext.onReady( function() {
+Ext.create('Ext.container.Viewport', {
+    layout: 'anchor',
+    defaults: {
+        bodyPadding: '10 20',
+        height: 64,
+        margin: 10,
+        padding: 0
+    },
+    items: [{
+        xtype: 'panel',
+        title: 'setLoading(true)',
+        html: 'This is the default loading mask',
+        listeners: {
+            afterrender: function() {
+                this.setLoading(true);
+            }
+        }
+    }, {
+        xtype: 'panel',
+        title: 'setLoading({ useMsg: false })',
+        html: 'This is a loading mask with message disabled',
+        listeners: {
+            afterrender: function() {
+                this.setLoading({ useMsg: false });
+            }
+        }
+    }, {
+        xtype: 'panel',
+        title: 'setLoading({ msg: \'\' })',
+        html: 'This is a loading mask with an empty string message',
+        listeners: {
+            afterrender: function() {
+                this.setLoading({ msg: '' });
+            }
+        }
+    }, {
+        xtype: 'panel',
+        title: 'setLoading({ msg: \'\', width: 32, height: 32 })',
+        html: 'This is a loading mask with an empty string message and fixed dimensions',
+        listeners: {
+            afterrender: function() {
+                this.setLoading({ msg: '', width: 32, height: 32 });
+            }
+        }
+    }]
+});
+});
+    </script>
+</body>
+</html>

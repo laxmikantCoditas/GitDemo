@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2761</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.application({
+            launch:function () {
+                Ext.create('Ext.navigation.View', {
+                    fullscreen:true,
+                    layout:{
+                        type:'card',
+                        animation:false
+                    },
+                    items:[
+                        {html:'test1'},
+                        {html:'test2'}
+                    ]
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

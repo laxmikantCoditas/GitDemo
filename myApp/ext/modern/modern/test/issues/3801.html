@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3801</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+         Ext.define("CustomListItem", 
+            {
+                extend: 'Ext.dataview.component.DataItem',
+                xtype : 'customlistitem',
+                requires: [
+                    'Ext.Img'
+                ],
+
+                config: {
+                    dataMap: {
+                        getName: {
+                            setHtml: 'name'
+                        },
+                        getAvatar: {
+                            setSrc: 'url'
+                        }
+                    },
+                    name:{
+                        cls:"name"
+                    },
+                    avatar: {
+                        docked: 'left',
+                        xtype : 'image',
+                        cls   : 'avatar',
+                        width: '48px',
+                        height: '48px'
+                    },
+
+                    cls: "customList",
+                    style: 'padding:5px',
+
+                    layout: {
+                        type: 'vbox'
+                    }
+                },
+
+                applyName: function(config) {
+                    return Ext.factory(config, Ext.Component, this.getName());
+                },
+
+                updateName: function(newName) {
+                    if (newName) {
+                        this.insert(0, newName);
+                    }
+                },
+
+                applyAvatar: function(config) {
+                    return Ext.factory(config, Ext.Img, this.getAvatar());
+                },
+
+                updateAvatar: function(newAvatar) {
+                    if (newAvatar) {
+                        this.add(newAvatar);
+                    }
+                },
+
+                updateTpl: Ext.emptyFn
+            }
+        );
+
+        var img = "http://images.nationalgeographic.com/wpf/media-live/photos/000/007/cache/spider-monkey_719_600x450.jpg"
+        Ext.setup({ 
+            requires: [
+                'Ext.dataview.DataView'
+            ],
+            onReady: function() {
+                var dv = Ext.create('Ext.dataview.DataView', 
+                    {                        
+                        fullscreen: true,
+                        defaultType  : 'customlistitem',
+                        useComponents: true,
+                        store: {
+                            fields: ['name', 'url'],
+                            data: [
+                                {name: 'Jamie', url: img},
+                                {name: 'Rob',   url: img},
+                                {name: 'Tommy', url: img},
+                                {name: 'Jacky', url: img},
+                                {name: 'Jamie', url: img},
+                                {name: 'Rob',   url: img},
+                                {name: 'Tommy', url: img},
+                                {name: 'Jacky', url: img},
+                                {name: 'Jamie', url: img},
+                                {name: 'Rob',   url: img},
+                                {name: 'Tommy', url: img},
+                                {name: 'Jacky', url: img},
+                                {name: 'Jamie', url: img},
+                                {name: 'Rob',   url: img},
+                                {name: 'Tommy', url: img},
+                                {name: 'Jacky', url: img},
+                                {name: 'Jamie', url: img},
+                                {name: 'Rob',   url: img},
+                                {name: 'Tommy', url: img},
+                                {name: 'Jacky', url: img},
+                                {name: 'Jamie', url: img},
+                                {name: 'Rob',   url: img},
+                                {name: 'Tommy', url: img},
+                                {name: 'Jacky', url: img},
+                                {name: 'Jamie', url: img},
+                                {name: 'Rob',   url: img},
+                                {name: 'Tommy', url: img},
+                                {name: 'Jacky', url: img},
+                                {name: 'Jamie', url: img},
+                                {name: 'Rob',   url: img},
+                                {name: 'Tommy', url: img},
+                                {name: 'Jacky', url: img},
+                                {name: 'Jamie', url: img},
+                                {name: 'Rob',   url: img},
+                                {name: 'Tommy', url: img},
+                                {name: 'Jacky', url: img},
+                                {name: 'Jamie', url: img},
+                                {name: 'Rob',   url: img},
+                                {name: 'Tommy', url: img},
+                                {name: 'Jacky', url: img},
+                                {name: 'Jamie', url: img},
+                                {name: 'Rob',   url: img},
+                                {name: 'Tommy', url: img},
+                                {name: 'Jacky', url: img},
+                                {name: 'Jamie', url: img},
+                                {name: 'Rob',   url: img},
+                                {name: 'Tommy', url: img},
+                                {name: 'Jacky', url: img},
+                                {name: 'Jamie', url: img},
+                                {name: 'Rob',   url: img},
+                                {name: 'Tommy', url: img},
+                                {name: 'Jacky', url: img},
+                                {name: 'Jamie', url: img},
+                                {name: 'Rob',   url: img},
+                                {name: 'Tommy', url: img},
+                                {name: 'Jacky', url: img},
+                                {name: 'Jamie', url: img},
+                                {name: 'Rob',   url: img},
+                                {name: 'Tommy', url: img},
+                                {name: 'Jacky', url: img},
+                                {name: 'Jamie', url: img},
+                                {name: 'Rob',   url: img},
+                                {name: 'Tommy', url: img},
+                                {name: 'Jacky', url: img},
+                                {name: 'Jamie', url: img},
+                                {name: 'Rob',   url: img},
+                                {name: 'Tommy', url: img},
+                                {name: 'Jacky', url: img},
+                                {name: 'Jamie', url: img},
+                                {name: 'Rob',   url: img},
+                                {name: 'Tommy', url: img},
+                                {name: 'Jacky', url: img},
+                                {name: 'Jamie', url: img},
+                                {name: 'Rob',   url: img},
+                                {name: 'Tommy', url: img},
+                                {name: 'Jacky', url: img},
+                                {name: 'Jamie', url: img},
+                                {name: 'Rob',   url: img},
+                                {name: 'Tommy', url: img},
+                                {name: 'Jacky', url: img},
+                                {name: 'Jamie', url: img},
+                                {name: 'Rob',   url: img},
+                                {name: 'Tommy', url: img},
+                                {name: 'Jacky', url: img},
+                                {name: 'Jamie', url: img},
+                                {name: 'Rob',   url: img},
+                                {name: 'Tommy', url: img},
+                                {name: 'Jacky', url: img},
+                                {name: 'Jamie', url: img},
+                                {name: 'Rob',   url: img},
+                                {name: 'Tommy', url: img},
+                                {name: 'Jacky', url: img},
+                                {name: 'Jamie', url: img},
+                                {name: 'Rob',   url: img},
+                                {name: 'Tommy', url: img},
+                                {name: 'Jacky', url: img},
+                                {name: 'Jamie', url: img},
+                                {name: 'Rob',   url: img},
+                                {name: 'Tommy', url: img},
+                                {name: 'Jacky', url: img},
+                                {name: 'Jamie', url: img},
+                                {name: 'Rob',   url: img},
+                                {name: 'Tommy', url: img},
+                                {name: 'Jacky', url: img},
+                                {name: 'Jamie', url: img},
+                                {name: 'Rob',   url: img},
+                                {name: 'Tommy', url: img},
+                                {name: 'Jacky', url: img},
+                                {name: 'Jamie', url: img},
+                                {name: 'Rob',   url: img},
+                                {name: 'Tommy', url: img},
+                                {name: 'Jacky', url: img}
+                            ]
+                        }
+                    }
+                )
+
+                Ext.Viewport.add(dv);
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

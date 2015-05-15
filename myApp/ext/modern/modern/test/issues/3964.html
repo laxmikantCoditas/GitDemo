@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>TOUCH-3964</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <script>
+        Ext.application({
+            requires: [
+                'Ext.Toolbar',
+                'Ext.data.Store',
+                'Ext.chart.*'
+            ],
+            launch: function () {
+                Ext.create('Ext.data.Store', {
+                    storeId: 'chartData1',
+                    fields: [
+                        {name: 'time', type: 'date', dateFormat: 'time'},
+                        'value'
+                    ],
+                    data: [
+                        {time: new Date(2011, 8, 1), value: 50},
+                        {time: new Date(2011, 8, 2), value: 35},
+                        {time: new Date(2011, 8, 3), value: 95},
+                        {time: new Date(2011, 8, 4), value: 42},
+                        {time: new Date(2011, 8, 5), value: 48},
+                        {time: new Date(2011, 8, 6), value: 19},
+                        {time: new Date(2011, 8, 7), value: 34},
+                        {time: new Date(2011, 8, 8), value: 39},
+                        {time: new Date(2011, 8, 9), value: 33},
+                        {time: new Date(2011, 8, 10), value: 70}
+                    ]
+                });
+
+                Ext.create('Ext.data.Store', {
+                    storeId: 'chartData2',
+                    fields: [
+                        'value1',
+                        'value2'
+                    ],
+                    data: [
+                        {value1: 0,  value2: 0},
+                        {value1: 150,  value2: 600},
+                        {value1: 4.4,  value2: 800},
+                        {value1: 13.33,  value2: 1200}
+                    ]
+                });
+
+                var months = [
+                        '',
+                        'January',
+                        'February',
+                        'March',
+                        'April',
+                        'May',
+                        'June',
+                        'July',
+                        'August',
+                        'September',
+                        'October',
+                        'November',
+                        'December'
+                ];
+
+                Ext.create('Ext.data.Store', {
+                    storeId: 'chartData3',
+                    fields: [
+                        'month',
+                        'value'
+                    ],
+                    data: [
+                        {month: months[(new Date(2011, 1)).getMonth()], value: 50},
+                        {month: months[(new Date(2011, 2)).getMonth()], value: 35},
+                        {month: months[(new Date(2011, 3)).getMonth()], value: 95},
+                        {month: months[(new Date(2011, 4)).getMonth()], value: 42},
+                        {month: months[(new Date(2011, 5)).getMonth()], value: 48},
+                        {month: months[(new Date(2011, 6)).getMonth()], value: 19},
+                        {month: months[(new Date(2011, 7)).getMonth()], value: 34},
+                        {month: months[(new Date(2011, 8)).getMonth()], value: 39},
+                        {month: months[(new Date(2011, 9)).getMonth()], value: 33},
+                        {month: months[(new Date(2011, 10)).getMonth()], value: 33},
+                        {month: months[(new Date(2011, 11)).getMonth()], value: 33},
+                        {month: months[(new Date(2011, 12)).getMonth()], value: 70}
+                    ]
+                });
+
+                var chart1 = Ext.create('Ext.chart.CartesianChart', {
+                    animate: false,
+                    store: 'chartData1',
+                    series: [
+                        {
+                            type: 'line',
+                            axis: 'left',
+                            xField: 'time',
+                            yField: 'value',
+                            fill: true,
+                            style: {
+                                lineWidth: 1,
+                                stroke: '#bada55'
+                            }
+                        }
+                    ],
+                    axes: [
+                        {
+                            type: 'numeric',
+                            position: 'left',
+                            fields: ['value'],
+                            minimum: 0,
+                            maximum: 100,
+                            // These dont seem to be applied.
+                            decimals: 4, // not supported
+                            grid: true,  // works
+                            increment: 10, // no effect
+                            dashSize: 100 // not supported
+                        },
+                        {
+                            type: 'time',
+                            dateFormat: 'Y-m-d',
+                            position: 'bottom',
+                            fields: ['time'],
+                            grid: true
+                        }
+                    ],
+                    listeners: {
+                        initialize: function () {
+//                            console.log('It was rendered');
+//                            console.log(JSON.stringify(this.config.axes[0], null, '    '));
+//                            console.log(this);
+                        }
+                    }
+                });
+
+                var chart2 = Ext.create('Ext.chart.CartesianChart', {
+                    animate: false,
+                    store: 'chartData2',
+                    innerPadding: 10,
+                    series: [
+                        {
+                            type: 'line',
+                            axis: 'left',
+                            xField: 'value2',
+                            yField: 'value1',
+                            style: {
+                                lineWidth: 2,
+                                stroke: '#bada55'
+                            },
+                            marker: {
+                                type: 'circle',
+                                fill: 'yellow',
+                                radius: 4
+                            }
+                        }
+                    ],
+                    axes: [
+                        {
+                            type: 'numeric',
+                            position: 'left',
+                            fields: ['value1'],
+                            style: {
+                                minorTicks: true
+                            },
+                            minimum: -40,
+                            maximum: 160,
+                            minorTickSteps: 4,
+                            majorTickSteps: 2
+                        },
+                        {
+                            type: 'numeric',
+                            position: 'bottom',
+                            fields: ['value2'],
+                            style: {
+                                minorTicks: true
+                            },
+                            minimum: 0,
+                            maximum: 1200,
+                            minorTickSteps: 7,
+                            majorTickSteps: 5
+                        }, // TODO: axes are not rendered correctly if we have more than two of them (separate issue)
+//                        {
+//                            type: 'numeric',
+//                            position: 'top',
+//                            fields: ['value2'],
+//                            style: {
+//                                minorTicks: true
+//                            },
+//                            minorTickSteps: 4
+//                        },
+//                        {
+//                            type: 'numeric',
+//                            position: 'right',
+//                            fields: ['value1'],
+//                            style: {
+//                                minorTicks: true
+//                            },
+//                            minorTickSteps: 2
+//                        }
+                    ]
+                });
+
+                var chart3 = {
+                    xtype: 'polar',
+                    store: 'chartData3',
+                    background: 'white',
+                    interactions: 'rotate',
+                    series: [
+                        {
+                            type: 'radar',
+                            xField: 'month',
+                            yField: 'value',
+                            style: {
+                                fillStyle: 'rgba(0,255,0,0.2)',
+                                strokeStyle: 'rgba(0,0,0,0.8)',
+                                lineWidth: 1
+                            }
+                        }
+                    ],
+                    axes: [
+                        {
+                            type: 'numeric',
+                            minimum: 0,
+                            maximum: 100,
+                            majorTickSteps: 5,
+                            position: 'radial',
+                            fields: 'value',
+                            grid: true,
+                            style: {
+                                estStepSize: 20
+                            },
+                            label: {
+                                fill: 'black'
+                            }
+                        },
+                        {
+                            type: 'category',
+                            position: 'angular',
+                            fields: 'month',
+                            grid: true,
+                            style: {
+                                estStepSize: 2
+                            },
+                            label: {
+                                fill: 'black'
+                            }
+                        }
+                    ]
+                };
+
+                function updateView(items) {
+                    Ext.Viewport.removeAll(false, false);
+                    Ext.Viewport.add(items);
+                }
+
+                Ext.Viewport.add({
+                    xtype: 'toolbar',
+                    docked: 'top',
+                    defaults: {
+                        handler: function (button) {
+                            updateView(button.item);
+                        }
+                    },
+                    items: [
+                        {
+                            xtype: 'button',
+                            text: "Reporter's test case (see comments)",
+                            item: chart1
+                        },
+                        {
+                            xtype: 'button',
+                            text: 'Cartesian chart',
+                            item: chart2
+                        },
+                        {
+                            xtype: 'button',
+                            text: 'Angular chart',
+                            item: chart3
+                        }
+                    ]
+                });
+
+                updateView(chart2);
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

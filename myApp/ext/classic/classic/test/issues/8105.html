@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        Ext.Loader.setConfig({enabled:true});
+        Ext.onReady(function() {
+
+            Ext.create('Ext.Button',{
+                renderTo: Ext.getBody(),
+                text: 'Add New Row',
+                handler: function() {
+                    Ext.create('Ext.container.Container', {
+                        id: Ext.id(),
+                        renderTo: 'test-table',
+                        autoEl: {
+                            tag: 'tr'
+                        },
+                        items: [{
+                            xtype: 'container',
+                            autoEl: {
+                                tag: 'td'
+                            },
+                            html: Ext.id() + ' skillport'},
+                            {
+                                xtype: 'container',
+                                autoEl: {
+                                    tag: 'td'
+                                },
+                                html: Ext.id() + ' skillsoft'}]
+                    });
+
+                }
+            })
+
+        });
+
+        
+    </script>
+</body>
+</html>

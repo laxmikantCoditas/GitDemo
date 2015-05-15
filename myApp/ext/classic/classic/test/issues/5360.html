@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="Stylesheet" type="text/css" href="../../resources/css/ext-all.css"/>
+    <title></title>
+    <script language="javascript" type="text/javascript" src="../../ext.js"></script>
+    <script language="javascript" type="text/javascript">
+        Ext.require(['Ext.container.Viewport', 'Ext.chart.*', 'Ext.data.*', 'Ext.Window', 'Ext.fx.target.Sprite', 'Ext.layout.container.Fit']);
+
+        var chart;
+        Ext.onReady(function() {
+            Ext.Loader.setConfig({ enabled: true });
+
+            Ext.define('LoadingPoint', {
+                extend: 'Ext.data.Model',
+                fields: ['colName', 'data1', 'data2', 'data3', 'data4', 'targetData'],
+                data: []
+            });
+
+            var store1 = Ext.create('Ext.data.Store', {
+                model: 'LoadingPoint',
+                data: [
+                    { colName: 'one', data1: 90, data2: 10, data3: 0, data4: 50, targetData: 100 },
+                    { colName: 'two', data1: 20, data2: 10, data3: 20, data4: 0, targetData: 100 },
+                    { colName: 'three', data1: 30, data2: 10, data3: 0, data4: 50, targetData: 100 },
+                    { colName: 'four', data1: 40, data2: 10, data3: 20, data4: 0, targetData: 100 },
+                    { colName: 'five', data1: 50, data2: 10, data3: 0, data4: 50, targetData: 100 },
+                    { colName: 'six', data1: 60, data2: 10, data3: 20, data4: 0, targetData: 100 },
+                    { colName: 'seven', data1: 70, data2: 10, data3: 0, data4: 50, targetData: 100 }
+                ]
+            });
+
+            chart = new Ext.chart.Chart({
+                animate: true,
+                store: store1,
+                shadow: false,
+                axes: [
+                    {
+                        type: 'Numeric',
+                        position: 'left',
+                        fields: [
+                            'data1',
+                            'data2',
+                            'data3',
+                            'data4',
+                            'targetData'
+                        ],
+                        label: {
+                            renderer: Ext.util.Format.numberRenderer('0.0')
+                        },
+                        grid: true,
+                        title: 'Hours',
+                        minimum: 0,
+                        adjustMaximumByMajorUnit: true
+                    },
+                    {
+                        type: 'Category',
+                        position: 'bottom',
+                        fields: ['colName'],
+                        grid: true,
+                        title: 'Week'
+                    }
+                ],
+                legend: {
+                    position: 'right'
+                },
+                series: [
+                    {
+                        type: 'column',
+                        axis: 'left',
+                        highlight: true,
+                        xField: 'colName',
+                        stacked: true,
+                        gutter: 10,
+                        yField: ['data1', 'data2', 'data3', 'data4'],
+                        title: ['A', 'B', 'C', 'D']
+                    },
+                    {
+                        type: 'line',
+                        axis: 'left',
+                        fill: false,
+                        smooth: 3,
+                        xField: 'colName',
+                        yField: 'targetData',
+                        title: 'Target'
+                    }
+                ]
+            });
+
+            Ext.create('Ext.container.Viewport',
+                {
+                    renderTo: Ext.getBody(),
+                    layout: 'fit',
+                    items: [chart]
+                });
+
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

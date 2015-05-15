@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Nested List Test Case</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-all-debug.js"></script>
+    <script type="text/javascript">
+        Ext.setup({
+            onReady: function () {
+
+                var data = {
+                    text: 'Groceries',
+                    items: [{
+                        text: 'Sparkling',
+                        gp: "S",
+                        leaf: true
+                    }, {
+                        text: 'Still',
+                        gp: "S",
+                        leaf: true
+                    }, {
+                        text: 'Deep',
+                        gp: "D",
+                        leaf: true
+                    }, {
+                        text: 'Muddy',
+                        gp: "M",
+                        leaf: true
+                    }, {
+                        text: 'Ale',
+                        gp: 'A',
+                        leaf: true
+                    }]
+                };
+
+                Ext.define('ListItem', {
+                    extend: 'Ext.data.Model',
+                    config: {
+                        fields: [{
+                            name: 'text',
+                            type: 'string'
+                        }, {
+                            name: 'gp',
+                            type: 'string'
+                        }]
+                    }
+                });
+
+                var store = Ext.create('Ext.data.TreeStore', {
+                    model: 'ListItem',
+                    defaultRootProperty: 'items',
+                    root: data
+                });
+
+                var nestedList = Ext.create('Ext.NestedList', {
+                    fullscreen: true,
+                    title: 'Groceries',
+                    displayField: 'text',
+                    store: store,
+                    listeners: {
+                        leafitemtap: function (nlist, list, index, listElem, record, e, opts) {
+                            var target = listElem.element.down(".x-list-item-body");
+
+                            var sp = Ext.create("Ext.Panel", {
+                                modal: true,
+                                hideOnMaskTap: true,
+                                centered: true,  // ADD THIS TO DISPLAY, BUT VIEWPORT SHIFTS
+                                items: [
+                                    {
+                                        xtype: "segmentedbutton",
+                                        items: [{ text: "A" }, { text: "B" }, { text: "C"}],
+                                        listeners: {
+                                            toggle: function (ctl, button, isPressed) {
+                                                sp.destroy();
+                                            }
+                                        }
+                                    }
+                                ],
+                                listeners: {
+                                    hide: function () {
+                                        sp.destroy();
+                                    }
+                                }
+                            });
+                            sp.showBy(target);
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+
+</head>
+<body></body>
+</html>

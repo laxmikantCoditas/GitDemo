@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <title></title>
+
+    <script type="text/javascript" src="../../../sencha-touch-all.js"></script>
+    <script type="text/javascript">
+        Ext.setup({
+            viewport: {
+                autoRender: false,
+                preventZooming: false
+            },
+            logger: {
+                writers: {
+                    remote: {
+                        xclass: 'Ext.log.writer.Remote',
+                        formatter: {
+                            xclass: 'Ext.log.formatter.Identity'
+                        },
+                        url: '/dolog.php'
+                    }
+                }
+            },
+            onReady: function() {
+                setTimeout(function() {
+                    run();
+                    setTimeout(function() {
+                        run1();
+                        setTimeout(function() {
+                            run2();
+
+                        }, 2000);
+                    }, 2000);
+                }, 100);
+            }
+        });
+
+        function run() {
+            Ext.Animator.run({
+                element: 'foo',
+//                preserveEndState: false,
+                from: {
+//                    transform: {
+//                        translate: [20, 30],
+//                        scale: 1,
+//                        rotate: 10
+//                    },
+//                    'background-color': 'green'
+                },
+                to: {
+                    transform: {
+                        translate: [100, 50],
+//                        scale: 2,
+//                        rotate: 45
+                    }
+                },
+                duration: 1000
+            });
+        }
+
+
+        function run1() {
+            Ext.Animator.run({
+                element: 'foo',
+//                preserveEndState: false,
+                from: {
+//                    left: 0,
+//                    top: 100,
+//                    transform: {
+//                        translate: [20, 30],
+//                        scale: 1,
+//                        rotate: 10
+//                    },
+//                    'background-color': 'green'
+                },
+                to: {
+                    left: 100,
+                    top: 50,
+                    width: 140,
+                    height: 140,
+                    transform: {
+                        translate: [50, 100],
+//                        scale: 2,
+//                        rotate: 45
+                    }
+                },
+                duration: 1000
+            });
+        }
+
+
+        function run2() {
+            Ext.Animator.run({
+                element: 'foo',
+//                preserveEndState: false,
+                from: {
+//                    transform: {
+//                        translate: [0, 0],
+//                        rotate: 45
+//                    }
+                },
+                to: {
+                    width: 40,
+                    height: 40,
+                    transform: {
+                        translate: [100, 0],
+//                        scale: 2,
+//                        rotate: 70
+                    }
+                },
+                duration: 1000
+            });
+        }
+
+    </script>
+
+    <style type="text/css">
+        #foo {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            background-color: red;
+            /*-webkit-backface-visibility: hidden;*/
+        }
+
+        #toolbar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 30px;
+            overflow: visible;
+        }
+    </style>
+</head>
+<body>
+
+<div id="foo">thu ti choi coi sao nao</div>
+<div id="toolbar">
+    <button onclick="run()">Do 0</button>
+    <button onclick="run1()">Do 1</button>
+    <button onclick="run2()">Do 2</button>
+</div>
+</body>
+</html>

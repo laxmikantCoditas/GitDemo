@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Test Case</title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+
+    <script type="text/javascript">
+        Ext.Loader.setConfig({
+            enabled: true
+        });
+
+        Ext.define('MyApp.store.MyJsonTreeStore', {
+            extend: 'Ext.data.TreeStore',
+
+            config: {
+                storeId: 'MyJsonTreeStore',
+                proxy: {
+                    type: 'memory'
+                },
+                fields: [
+                    {
+                        name: 'name',
+                        type: 'string'
+                    }
+                ]
+            }
+        });
+
+        Ext.application({
+            name: 'MyApp',
+            launch: function () {
+                var treeStore1 = Ext.create('MyApp.store.MyJsonTreeStore');
+                treeStore1.getRoot().data.name = 'Tennant';
+
+                console.log(treeStore1.getRoot().data.name);
+
+                var treeStore2 = Ext.create('MyApp.store.MyJsonTreeStore');
+                treeStore2.getRoot().data.name = 'Smith';
+
+                console.log(treeStore1.getRoot().data.name);
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>
+
+

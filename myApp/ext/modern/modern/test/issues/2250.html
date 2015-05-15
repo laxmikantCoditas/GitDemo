@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2250</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+
+    <script>
+        Ext.define('Demo.model.Item', {
+        	extend: 'Ext.data.Model',
+        	alternateClassName: 'Item',
+        	config: {
+        		fields: [
+        		{ name: 'id', type: 'int' },
+        		{ name: 'name', type: 'string' }
+        		]
+        	}
+        });
+
+
+        Ext.application({
+        	name: 'Demo',
+        	launch: function () {
+        		var store = Ext.create('Ext.data.Store', {
+        			model: 'Demo.model.Item'
+        		});
+
+
+        		var list = Ext.create('Ext.dataview.List', {
+        			emptyText: 'No items',
+        			width: 300,
+        			deferEmptyText: false,
+        			itemTpl: '{id} = {name}',
+        			store: store
+        		});
+
+
+        		store.load();
+        		store.add(Ext.create('Item', { id: 1, name: 'One' }));
+        		store.add(Ext.create('Item', { id: 2, name: 'Two' }));
+
+
+        		Ext.Viewport.add(list);
+        	}
+        });
+    </script>
+</head>
+<body></body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2474</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.application({
+            launch: function() {
+                Ext.Viewport.add({
+                    xtype: 'formpanel',
+                    items: [{
+                        xtype: 'fieldset',
+                        title: 'Test',
+                        items: {
+                          xtype: 'selectfield',
+                          name: 'category',
+                          label: 'What',
+                          options: [
+                              {text: '',  value: ''},
+                              {text: 'value1', value: 'value1'},
+                              {text: 'value2',  value: 'value2'}
+                          ]
+                        }
+                    }]
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

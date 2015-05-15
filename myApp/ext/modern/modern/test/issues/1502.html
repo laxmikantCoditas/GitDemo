@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../sencha-touch-all.js"></script>
+    <script>
+        Ext.application({
+            name: 'VGSRMobile',
+            launch: function() {
+                var listfmt = '<img src="{avatar}" height="50" width="50" >&nbsp;&nbsp;' +
+                    '{name}&nbsp;&mdash;&nbsp;{sex},&nbsp;&nbsp;{age},&nbsp;&nbsp;Cats OK:&nbsp;{goodcats},';
+
+                Ext.define('ListItem', {
+                    extend: 'Ext.data.Model',
+
+                    config: {
+                        fields: [
+                            {name: 'name',     type: 'string'},
+                            {name: 'avatar',   type: 'string'},
+                            {name: 'sex',      type: 'string'},
+                            {name: 'age',      type: 'string'},
+                            {name: 'goodkids', type: 'string'},
+                            {name: 'gooddogs', type: 'string'},
+                            {name: 'goodcats', type: 'string'},
+                            {name: 'house',    type: 'string'},
+                            {name: 'crate',    type: 'string'},
+                            {name: 'weight',   type: 'string'},
+                            {name: 'ns',       type: 'string'},
+                            {name: 'desc',     type: 'string'},
+                            {name: 'leaf',     type: 'type'}
+                        ]
+                    }
+                });
+
+                var store = Ext.create('Ext.data.TreeStore', {
+                    autoLoad: true,
+                    model: "ListItem",
+                    root: {},
+                    proxy: {
+                        type: 'ajax',
+                        url : 'vgsr_dogs.json'
+                    }
+                });
+
+                var petNL = Ext.create('Ext.dataview.NestedList', {
+                    iconCls: 'dog_icon',
+                    xtype: 'nestedlist',
+                    cardSwitchAnimation: 'wipe',
+                    title  : 'Available Dogs',
+                    toolbar: {
+                        items: [{
+                            iconMask: true,
+                            xtype: 'button',
+                            id: 'sortbuttton',
+                            name: 'sortbuttton',
+                            text: 'Sort List',
+                            handler: function() {
+                                //show the option sheet
+                                optionsSheet.show();
+                            }
+                        }]
+                    },    // end toolbar
+                    store: store,
+                    getItemTextTpl: function() {
+                        return listfmt;
+                    },
+                    getDetailCard: function(node) {
+                        if (node) {
+                            // display on iPad
+                            return {
+                                xtype: 'panel',
+                                styleHtmlContent: true,
+                                scrollable: true,
+                                items: {
+                                    docked : 'top',
+                                    xtype: 'toolbar',
+                                    title: node.get('name')
+                                },
+                                html: '<p align="center"><img src="' + node.get('avatar') + '"  ></p>' +
+                                      '<table width="96%" >' +
+                                      '<tr >' +
+                                      '<td>' + '<strong>Sex:</strong> ' + node.get('sex') + '</td>' +
+                                      '<td>' + '<strong>Age:</strong> ' + node.get('age') + '</td>' +
+                                      '<td>' + '<strong>Neutered/Spayed:</strong> ' + node.get('ns') + '</td>' +
+                                      '</tr><tr >' +
+                                      '<td>' + '<strong>Good with Dogs:</strong> ' + node.get('gooddogs') + '</td>' +
+                                      '<td>' + '<strong>Good with Kids:</strong> ' + node.get('goodkids') + '</td>' +
+                                      '<td>' + '<strong>Good with Cats:</strong> ' + node.get('goodcats') + '</td>' +
+                                      '</tr><tr >' +
+                                      '<td>' + '<strong>Weight:</strong> ' + node.get('weight') + '</td>' +
+                                      '<td>' + '<strong>House:</strong> ' + node.get('house') + '</td>' +
+                                      '<td>' + '<strong>Crate Trained:</strong> ' + node.get('crate') + '</td>' +
+                                      '</tr></table>' +
+                                      '<p style="width:96%">' + node.get('desc') + '</p>'
+                            }
+                        }
+                    }
+                });
+
+                Ext.create('Ext.TabPanel', {
+                    fullscreen: true,
+                    tabBarPosition: 'bottom',
+                    items: [petNL]
+                });
+
+                var optionsSheet;
+
+                optionsSheet = Ext.create('Ext.ActionSheet');
+
+                var sortAgebutton = Ext.create('Ext.Button', {
+                    text: 'Sort by Age',
+                    handler: function() {
+                        store.sort('age', 'ASC');
+                        //hide the sheet
+                        optionsSheet.hide();
+                    }
+                });
+
+
+                var catbutton = Ext.create('Ext.Button', {
+                    text: 'Show Good With Cats First',
+                    handler: function() {
+                        store.sort('goodcats', 'DESC');
+                        //hide the sheet
+                        optionsSheet.hide();
+                    }
+                });
+
+                var namebutton = Ext.create('Ext.Button', {
+                    text: 'Sort by Name',
+                    handler: function() {
+                        store.sort('name', 'ASC');
+                        //hide the sheet
+                        optionsSheet.hide();
+                    }
+                });
+
+                var malebutton = Ext.create('Ext.Button', {
+                    text: 'Show Males First',
+                    handler: function() {
+                        store.sort('sex', 'DESC');
+                        //hide the sheet
+                        optionsSheet.hide();
+                    }
+                });
+
+                var femalebutton = Ext.create('Ext.Button', {
+                    xtype: 'button',
+                    text: 'Show Females First',
+                    handler: function() {
+                        store.sort('sex', 'ASC');
+                        //hide the sheet
+                        optionsSheet.hide();
+                    }
+                });
+
+                var canSortbutton = Ext.create('Ext.Button', {
+                    text: 'Cancel',
+                    ui: 'decline',
+                    handler: function() {
+                        //hide the sheet
+                        optionsSheet.hide();
+                    }
+                });
+
+                optionsSheet.add(sortAgebutton);
+                optionsSheet.add(catbutton);
+                optionsSheet.add(namebutton);
+                optionsSheet.add(malebutton);
+                optionsSheet.add(femalebutton);
+                optionsSheet.add(canSortbutton);
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

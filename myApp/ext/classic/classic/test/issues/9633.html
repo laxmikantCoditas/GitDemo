@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+    <script type="text/javascript" src="../../ext.js"></script>
+    <script type="text/javascript">
+        Ext.require(['Ext.data.*', 'Ext.grid.*']);
+        Ext.onReady(function(){
+            Ext.define('company', {
+                extend: 'Ext.data.Model',
+                fields: [
+                    {name: 'company'},
+                    {name: 'desc'}
+                ]
+            });
+
+            var store = Ext.create('Ext.data.ArrayStore', {
+                model: 'company',
+                data: [
+                    ['3m Co', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed metus nibh, sodales a, porta at, vulputate eget, dui. Pellentesque ut nisl. '],
+                    ['Alcoa Inc', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed metus nibh, sodales a, porta at, vulputate eget, dui. Pellentesque ut nisl. '],
+                    ['Altria Group Inc', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed metus nibh, sodales a, porta at, vulputate eget, dui. Pellentesque ut nisl. '],
+                    ['American Express Company', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed metus nibh, sodales a, porta at, vulputate eget, dui. Pellentesque ut nisl. '],
+                    ['American International Group, Inc.', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed metus nibh, sodales a, porta at, vulputate eget, dui. Pellentesque ut nisl. '],
+                    ['AT&T Inc.', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed metus nibh, sodales a, porta at, vulputate eget, dui. Pellentesque ut nisl. ']
+                ],
+                groupField: 'company'
+            });
+
+            var cellEditing, grid = Ext.create('Ext.grid.Panel', {
+                renderTo: Ext.getBody(),
+                store : store,
+                title : 'Test',
+                //features: [{ftype:'grouping'}],
+                columns: [
+                    {
+                        text: 'Company',
+                        dataIndex: 'company',
+                        flex: 1,
+                        editor: {
+                            xtype: 'textfield'
+                        }
+                    },
+                    {
+                        text: 'Description',
+                        dataIndex: 'desc',
+                        flex: 1,
+                        editor: {
+                            xtype: 'textfield'
+                        }
+                    }
+                ],
+                selType: 'cellmodel',
+                plugins: [  cellEditing = Ext.create('Ext.grid.plugin.CellEditing', { clicksToEdit: 2 }) ],
+                tbar: [{
+                    text: 'Add Company',
+                    handler: function(btn) {
+                        var rec = new company({
+                            company: 'Sencha',
+                            desc: 'woohoo!'
+                        });
+
+                        store.insert(0,rec);
+
+                        cellEditing.startEditByPosition({
+                            row: 0,
+                            column: 0
+                        });
+                    }
+                }]
+            });
+        });
+    </script>
+
+</head>
+<body></body>
+</html>

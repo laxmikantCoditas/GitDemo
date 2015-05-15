@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4778</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+	    Ext.require('*');
+
+	    Ext.define('StuckButton.view.Main', {
+		    extend: 'Ext.Panel',
+		    xtype: 'main',
+		    requires: ['Ext.TitleBar'],
+		    config: {
+			    fullscreen: true,
+			    layout: 'hbox',
+//			    styleHtmlContent: true,
+//			    scrollable: true,
+			    items: [{
+				    docked: 'top',
+				    xtype: 'titlebar',
+				    title: 'Stuck Buttons',
+				    items: [{
+					    xtype: 'button',
+					    text: 'TB 1',
+					    align: 'left',
+					    handler: function(button) {
+						    //Ext.Msg.alert(button.getText(), button.getText() + ' tapped')
+					    }
+				    }, {
+					    xtype: 'button',
+					    text: 'TB 2',
+					    align: 'right',
+					    handler: function(button) {
+						    //Ext.Msg.alert(button.getText(), button.getText() + ' tapped')
+
+					    }
+				    }]
+			    }, {
+				    xtype: 'button',
+				    flex: 1,
+				    width: 100,
+				    height: 50,
+				    text: 'One',
+				    handler: function(button) {
+					    //Ext.Msg.alert(button.getText(), button.getText() + ' tapped')
+
+				    }
+			    },
+
+
+				    {
+					    xtype: 'button',
+					    width: 100,
+					    flex: 1,
+					    height: 50,
+					    text: 'Two',
+					    handler: function(button) {
+						    //Ext.Msg.alert(button.getText(), button.getText() + ' tapped')
+
+					    }
+				    }, {
+					    xtype: 'button',
+					    width: 100,
+					    flex: 1,
+					    height: 50,
+					    text: 'Three',
+					    handler: function(button) {
+						    //Ext.Msg.alert(button.getText(), button.getText() + ' tapped')
+
+					    }
+				    }]
+		    }
+	    });
+
+	    Ext.application({
+		    launch: function() {
+			    Ext.create('StuckButton.view.Main');
+
+		    } //launch
+	    }); //Ext.application
+    </script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>1426</title>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+
+    <script type="text/javascript">
+                Ext.application({
+                    name:'Sencha',
+                    launch:function () {
+                        Ext.create('Ext.TabPanel', {
+                            fullscreen:true,
+                            tabBarPosition:'bottom',
+                            defaults:{
+                                styleHtmlContent:true
+                            },
+                            items:[
+                                {
+                                    title:'Map',
+                                    iconCls:'maps',
+                                    xtype:'container',
+                                    layout:'fit',
+                                    items:[
+                                        {
+                                            xtype:'map',
+                                            layout:'fit'
+                                        },
+                                        {
+                                            xtype:'toolbar',
+                                            docked:'bottom',
+                                            ui:'light',
+                                            items:[
+                                                {
+                                                    xtype:'label',
+                                                    html:'Show:',
+                                                    style:'color:white;',
+                                                    itemId:'labelShow'
+                                                },
+                                                {
+                                                    xtype:'selectfield',
+                                                    store:{
+                                                        fields:['name'],
+                                                        data:[
+                                                            {name:'Cowper'},
+                                                            {name:'Everett'},
+                                                            {name:'University'},
+                                                            {name:'Forest'}
+                                                        ]
+                                                    },
+                                                    displayField:'name',
+                                                    valueField:'name'
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    title:'Locations',
+                                    iconCls:'locate',
+                                    xtype:'list',
+                                    store:{
+                                        fields:['name'],
+                                        data:[
+                                            {name:'Cowper'},
+                                            {name:'Everett'},
+                                            {name:'University'},
+                                            {name:'Forest'}
+                                        ]
+                                    },
+
+
+                                    itemTpl:'{name}'
+                                }
+                            ]
+                        });
+                    }
+                });
+    </script>
+</head>
+<body></body>
+</html>

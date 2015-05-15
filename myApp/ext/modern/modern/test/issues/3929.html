@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sencha Touch Issue Template</title>
+		<link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+		<script type="text/javascript" src="../../sencha-touch.js"></script>
+
+        <style>
+            .text-item {
+                width  : 200px;
+                height : 200px;
+                border : 1px solid #000;
+                margin : 1em;
+            }
+        </style>
+		<script type="text/javascript">
+            Ext.define('MyApp.view.DataItem', {
+                extend : 'Ext.dataview.component.DataItem',
+                xtype  : 'myapp-dataitem',
+
+                config : {
+                    width: null,
+                    text    : {
+                        cls  : 'text-item'
+                    },
+                    dataMap : {
+                        getText : {
+                            setHtml : 'text'
+                        }
+                    }
+                },
+
+                applyText : function(text) {
+                    return Ext.factory(text, Ext.Component, this.getText());
+                },
+
+                updateText : function(text) {
+                    if (text) {
+                        this.add(text);
+                    }
+                }
+            });
+
+            Ext.application({
+                name : 'MyApp',
+
+                viewport : {
+                    layout : {
+                        type  : 'vbox',
+                        align : 'stretch'
+                    }
+                },
+
+                launch : function () {
+
+                    Ext.Viewport.add([
+                        {
+                            xtype      : 'dataview',
+                            flex       : 1,
+                            inline     : {
+                                wrap : false
+                            },
+                            scrollable : 'horizontal',
+                            itemTpl    : '<div class="text-item">{text}</div>',
+                            store      : {
+                                fields : ['text'],
+                                data   : [
+                                    { text : 'One'   },
+                                    { text : 'Two'   },
+                                    { text : 'Three' },
+                                    { text : 'Four'  },
+                                    { text : 'Five'  },
+                                    { text : 'Six'   },
+                                    { text : 'Seven' },
+                                    { text : 'Eight' },
+                                    { text : 'Nine'  },
+                                    { text : 'Ten'   }
+                                ]
+                            },
+                            items      : [
+                                {
+                                    xtype  : 'toolbar',
+                                    docked : 'top',
+                                    title  : 'Using itemTpl (correct behavior)'
+                                }
+                            ]
+                        },
+                        {
+                            xtype         : 'dataview',
+                            flex          : 1,
+                            defaultType   : 'myapp-dataitem',
+                            scrollable    : 'horizontal',
+                            useComponents : true,
+                            inline        : {
+                                wrap : false
+                            },
+                            store         : {
+                                fields : ['text'],
+                                data   : [
+                                    { text : 'One'   },
+                                    { text : 'Two'   },
+                                    { text : 'Three' },
+                                    { text : 'Four'  },
+                                    { text : 'Five'  },
+                                    { text : 'Six'   },
+                                    { text : 'Seven' },
+                                    { text : 'Eight' },
+                                    { text : 'Nine'  },
+                                    { text : 'Ten'   }
+                                ]
+                            },
+                            items         : [
+                                {
+                                    xtype  : 'toolbar',
+                                    docked : 'top',
+                                    title  : 'Using Components (incorrect behavior'
+                                }
+                            ]
+                        }
+                    ]);
+
+                }
+            });
+		</script>
+	</head>
+</html>

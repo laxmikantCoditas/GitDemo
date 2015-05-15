@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Template</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <!--<script src="../../sencha-touch.js"></script>-->
+        <!--<script src="../../../../sencha-touch-2.0.0-pr2/sencha-touch-all-debug.js"></script>-->
+        <script src="../../../../sencha-touch-2.0.0-pr3/sencha-touch-all-debug.js"></script>
+
+        <script type="text/javascript">
+
+Ext.define('App.view.Index', {
+    extend: 'Ext.Container',
+
+    config: {
+        fullscreen: true,
+
+        items: [
+            {
+                xtype: 'textfield',
+                label: 'Field >',
+                listeners: {
+                    show: function() {
+                        console.log('Component: show');
+                    },
+                    painted: function() {
+                        console.log('Component: painted');
+                    },
+                    focus: function() {
+                        console.log('Component: focus');
+                    }
+                }
+            }
+        ]
+    }
+});
+
+Ext.define('App.controller.Application', {
+    extend: 'Ext.app.Controller',
+
+    views: ['Index'],
+
+    init: function() {
+        this.control({
+            'textfield': {
+                show: function() {
+                    console.log('Control: show');
+                },
+                painted: function() {
+                    console.log('Control: painted');
+                },
+                focus: function() {
+                    console.log('Control: focus');
+                }
+            }
+        })
+    }
+});
+
+Ext.application({
+    name: 'App',
+    controllers: ['Application'],
+
+    launch: function() {
+        setTimeout(function() {
+            Ext.Viewport.add({
+                xclass: 'App.view.Index'
+            });
+        }, 1000);
+    }
+});
+
+        </script>
+    </head>
+    
+    <body></body>
+</html>

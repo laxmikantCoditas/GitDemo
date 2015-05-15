@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.define('MyApp.B', {
+            extend: 'Ext.data.Model',
+            fields: [ 'id' ]
+        });
+
+        Ext.define('MyApp.A', {
+            extend: 'Ext.data.Model',
+            fields: [ 'id'],
+            hasOne: 'MyApp.B'
+        });
+
+        Ext.define('MyApp.AStore', {
+            extend: 'Ext.data.Store',
+            config: {
+                model: 'MyApp.A',
+                storeId: 'AStore'
+            }
+        });
+
+        Ext.application({
+            launch: function() {
+                var store = Ext.create('MyApp.AStore');
+                var record = store.add({id: '0'})[0];
+
+                record.setB(Ext.create('MyApp.B', { id: 'b' }));
+                console.log(record);
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

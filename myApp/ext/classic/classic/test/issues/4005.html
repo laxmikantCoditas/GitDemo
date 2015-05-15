@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/my-ext-theme.css" />
+<!--<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />-->
+<!--
+<style>
+div#singleorder.x-panel {
+  position: absolute;
+}
+</style>
+-->
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+Ext.onReady(function() {
+    Ext.create("Ext.panel.Panel", {
+	title: "Manual Sales Order Booking",
+	width: 1280,
+	height: 800,
+	layout: "absolute",
+	items: [{
+	    xtype: "grid",
+	    x: 5,
+	    y: 6,
+	    width: 650,
+	    height: 722,
+	    columns: []
+	},{
+	    xtype: "form",
+	    id: "singleorder",
+	    x: 665,
+	    y: 6,
+	    width: 600,
+	    height: 722,
+	    items: [{
+		xtype: "button",
+		text: "Book",
+		x: 40,
+		y: 250,
+		scale: "medium",
+		width: 60
+	    },{
+		xtype: "button",
+		text: "Clear",
+		x: 60,
+		y: 250,
+		scale: "medium",
+		width: 60
+	    }]
+	}],
+        renderTo: Ext.getBody()
+    });
+});
+</script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4763</title>
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+    <script>
+        Ext.require([
+            'Ext.chart.*',
+            'Ext.Panel',
+            'Ext.Toolbar'
+        ]);
+        Ext.setup({
+            onReady: function () {
+                var createChart = function () {
+                    return new Ext.chart.PolarChart({
+                        id: 'xxx-chart-id',
+                        title: 'chart',
+                        animate: true,
+                        interactions: ['rotate'],
+                        colors: ["#115fa6", "#94ae0a", "#a61120", "#ff8809", "#ffd13e"],
+                        store: {
+                            fields: ['name', 'data1', 'data2', 'data3', 'data4', 'data5'],
+                            data: [
+                                {'name': 'metric one', 'data1': 10, 'data2': 12, 'data3': 14, 'data4': 8, 'data5': 13},
+                                {'name': 'metric two', 'data1': 7, 'data2': 8, 'data3': 16, 'data4': 10, 'data5': 3},
+                                {'name': 'metric three', 'data1': 5, 'data2': 2, 'data3': 14, 'data4': 12, 'data5': 7},
+                                {'name': 'metric four', 'data1': 2, 'data2': 14, 'data3': 6, 'data4': 1, 'data5': 23},
+                                {'name': 'metric five', 'data1': 27, 'data2': 38, 'data3': 36, 'data4': 13, 'data5': 33}
+                            ]
+                        },
+                        series: [
+                            {
+                                type: 'pie',
+                                labelField: 'name',
+                                xField: 'data3',
+                                donut: 30
+                            }
+                        ],
+                        listeners: {
+                            itemtap: function () {
+                                console.log('itemtap');
+                            }
+                        }
+                    });
+                };
+
+                var panel = Ext.Viewport.add({
+                    xtype: 'panel',
+                    layout: 'fit',
+                    items: [
+                        {
+                            xtype: 'toolbar',
+                            docked: 'top',
+                            title: 'toolbar',
+                            items: [
+                                {
+                                    xtype: 'button',
+                                    text: 'Recreate Chart',
+                                    listeners: {
+                                        tap: function () {
+                                            panel.removeAll(true, false);
+                                            panel.add(createChart());
+
+                                            console.warn('Chart recreated');
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        createChart()
+                    ]
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

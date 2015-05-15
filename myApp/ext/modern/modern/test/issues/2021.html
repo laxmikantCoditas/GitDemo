@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2021</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+        <script>
+            Ext.define('Index', {
+                extend: 'Ext.tab.Panel',
+                xtype: 'index',
+                config: {
+                    fullscreen: true,
+                    autoMaximize: true,
+                    tabBar: {
+                        docked: 'bottom',
+                        layout: {
+                            pack: 'center'
+                        }
+                    },
+                    items: [
+                        {title: 'tab 1', html: 'hello'},
+                        {title: 'tab 2', html: 'hello'},
+                        {title: 'tab 3', html: 'hello'},
+                        {title: 'tab 4', html: 'hello'}
+                    ]
+                }
+            });
+
+            Ext.Loader.setConfig({
+                enabled: true
+            });
+
+            Ext.application({
+                name: 'Sencha',
+                launch: function() {
+                    var index = Ext.create('Index');
+                    index.setActiveItem(3);
+                }
+            });
+        </script>
+</head>
+<body></body>
+</html>

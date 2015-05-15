@@ -1,0 +1,44 @@
+{
+  "OrderId": 3,
+  "ContractId": 1,
+  "OrderNumber": "123",
+  "OrderDate": "2012-11-05T12:00:00+01:00",
+  "Status": {
+    "Id": 6,
+    "Description": "In bewerking",
+    "IsRejected": false,
+    "IsEditable": false
+  },
+  "DeliveryPeriod": {
+    "Id": 7,
+    "Days": 7,
+    "DeliveryCosts": 40.0000,
+    "Description": "Spoed (1 week)"
+  },
+  "DeliveryCosts": 40.0000,
+  "TotalCosts": 50.0000,
+  "DeliveryDate": "2012-11-25T00:00:00+01:00",
+  "CostAllocationId": 2,
+  "IncidentalOrderLines": [
+		{
+		  "Quantity": 20,
+		  "TotalPrice": 32.4000,
+		  "Article": {
+			"Id": 4,
+			"Number": "20001",
+			"Name": "afvalzak oranje asito 70x105x0,023 (20 z",
+			"Price": 1.62
+		  }
+		},
+		{
+		  "Quantity": 10,
+		  "TotalPrice": 6.4000,
+		  "Article": {
+			"Id": 5,
+			"Number": "20170",
+			"Name": "afvalzak grijs 60x65x0,015 (20 zak per r",
+			"Price": 0.64
+		  }
+		}
+	  ]
+}

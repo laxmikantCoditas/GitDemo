@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>TOUCH-1055</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+
+    <script type="text/javascript">
+
+        Ext.setup({
+            onReady: function() {
+                Ext.create('Ext.Container', {
+                    fullscreen: true,
+                    layout: 'vbox',
+                    items: [
+                        {
+                            xtype: 'button',
+                            text: 'Button',
+                            handler: function() {
+                                this.getParent().setMask({
+                                    xtype: 'loadmask'
+                                });
+                            }
+                        }
+                    ]
+                });
+            }
+        });
+
+    </script>
+
+    <style>
+        
+    </style>
+</head>
+<body>
+</body>
+</html>

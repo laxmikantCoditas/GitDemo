@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        Ext.Loader.require("Ext.List");
+        Ext.application({
+            launch: function () {
+                var myList = Ext.create('Ext.List', {
+                    fullscreen: true,
+                    mode: 'MULTI',
+                    items: [
+                        {xtype: 'toolbar', docked:'top', items:[
+                            {text: 'Select item #1', handler: function () {
+                                myList.select(1);
+                            }},
+                            {text:'Select item #3', handler: function () {
+                                myList.select(3);
+                            }},
+                            {text: 'Select items #0 & #2', handler: function () {
+                                myList.select(0);
+                                myList.select(2, true);
+                            }},
+                            {text:'Select all', handler: function () {
+                                myList.selectAll();
+                            }},
+                            {text:'Select #1-3', handler: function () {
+                                myList.selectRange(1,3);
+                            }}
+                            ]
+                        }
+                    ], // items
+                    store: {
+                        fields: ['name', 'league', 'division'],
+                        data: [{
+                            name: 'New York Yankees',
+                            league: 'AL',
+                            division: 'East'
+                        }, {
+                            name: 'Tampa Bay',
+                            league: 'AL',
+                            division: 'East'
+                        }, {
+                            name: 'Boston',
+                            league: 'AL',
+                            division: 'East'
+                        }, {
+                            name: 'Toronto',
+                            league: 'AL',
+                            division: 'East'
+                        }, {
+                            name: 'Baltimore',
+                            league: 'AL',
+                            division: 'East'
+                        }, {
+                            name: 'Detroit',
+                            league: 'AL',
+                            division: 'Central'
+                        }, {
+                            name: 'Cleveland',
+                            league: 'AL',
+                            division: 'Central'
+                        }, {
+                            name: 'Chicago White Sox',
+                            league: 'AL',
+                            division: 'Central'
+                        }, {
+                            name: 'Kansas City',
+                            league: 'AL',
+                            division: 'Central'
+                        }, {
+                            name: 'Minnesota',
+                            league: 'AL',
+                            division: 'Central'
+                        }, {
+                            name: 'Texas',
+                            league: 'AL',
+                            division: 'West'
+                        }, {
+                            name: 'Los Angeles Angels',
+                            league: 'AL',
+                            division: 'West'
+                        }, {
+                            name: 'Oakland',
+                            league: 'AL',
+                            division: 'West'
+                        }, {
+                            name: 'Seattle',
+                            league: 'AL',
+                            division: 'West'
+                        }] // data
+                    }, // store
+                    itemTpl: '{name}'
+                }); // create()
+            } // launch
+        }); // application()
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sencha Touch Issue Template</title>
+		<link rel="stylesheet" href="../../resources/css/bb10.css"/>
+		<script type="text/javascript" src="../../sencha-touch.js"></script>
+
+		<script type="text/javascript">
+			Ext.theme.name = 'Blackberry';
+
+			Ext.application({
+				name : 'Test',
+
+				requires : [
+					'Ext.Menu'
+				],
+
+				launch : function () {
+					Ext.Viewport.add({
+						xtype: 'button',
+						text: 'test'
+					});
+
+					var rightMenu = Ext.create('Ext.Menu', {
+						items: [
+							{ text: 'Settings', iconCls: 'settings' },
+							{ text: 'Downloads', iconCls: 'refresh' },
+							{ text: 'Site Info', iconCls: 'info' }
+						]
+					});
+
+                    var leftMenu = Ext.create('Ext.Menu', {
+						items: [
+							{ text: 'one', handler: function() {
+								Ext.Viewport.showMenu('right');
+							} },
+							{ text: 'one' },
+							{ text: 'one' }
+						]
+					});
+
+					var topMenu = Ext.create('Ext.Menu', {
+						ui: 'application',
+						items: [
+							{ text: 'one' },
+							{ text: 'one' },
+							{ text: 'one' }
+						]
+					});
+
+					var bottomMenu = Ext.create('Ext.Menu', {
+						ui: 'application',
+						items: [
+							{ text: 'one' },
+							{ text: 'one' },
+							{ text: 'one' }
+						]
+					});
+
+                    Ext.Viewport.setMenu(rightMenu, {
+                    	side: 'right'
+                    });
+
+                    Ext.Viewport.setMenu(leftMenu, {
+                    	side: 'left'
+                    });
+
+                    Ext.Viewport.setMenu(topMenu, {
+                    	side: 'top'
+                    });
+
+                    Ext.Viewport.setMenu(bottomMenu, {
+                    	side: 'bottom'
+                    });
+
+				}
+			});
+		</script>
+	</head>
+</html>

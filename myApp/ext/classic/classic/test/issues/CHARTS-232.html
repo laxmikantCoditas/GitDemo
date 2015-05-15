@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+Ext.onReady(function(){
+    Ext.require('Ext.data.Store');
+    Ext.require('Ext.chart.*');
+    Ext.require('Ext.layout.container.Fit');	
+
+    var store1 = Ext.create('Ext.data.Store', {
+	fields: [
+	    'PercentageMenRange',
+	    'PercentageMenTotal',
+	    'PercentageWomenRange',
+	    'PercentageWomenTotal',
+	    'PercentageUnknownRange',
+	    'PercentageUnknownTotal',
+	    'AgeRange',
+	    'PercentageContracts',
+	    'Lob',
+	    'Range'
+	],
+	data: [{
+	    "PercentageMenRange":98.12141585670268,
+	    "Range":"<50",
+	    "PercentageMenTotal":67.55375686445066,
+	    "RangeDesc":"50 yrs or Less",
+	    "Lob":"annuity",
+	    "PercentageUnknownRange":1.8785841432973336,
+	    "PercentageWomenRange":0.0,
+	    "PercentageContracts":68.84710771306717,
+	    "PercentageWomenTotal":0.0,
+	    "PercentageUnknownTotal":1.2933508486165155
+	}, {
+	    "PercentageMenRange":0.0,
+	    "Range":"50-59.5",
+	    "PercentageMenTotal":0.0,
+	    "RangeDesc":"50 to 59.5 yrs",
+	    "Lob":"annuity",
+	    "PercentageUnknownRange":100.0,
+	    "PercentageWomenRange":0.0,
+	    "PercentageContracts":1.2933508486165155,
+	    "PercentageWomenTotal":0.0,
+	    "PercentageUnknownTotal":1.2933508486165155
+	}, {
+	    "PercentageMenRange":0.0,
+	    "Range":"59.5-70",
+	    "PercentageMenTotal":0.0,
+	    "RangeDesc":"59.5 to 70 yrs",
+	    "Lob":"annuity",
+	    "PercentageUnknownRange":6.649163160060471,
+	    "PercentageWomenRange":93.35083683993952,
+	    "PercentageContracts":19.451332708832986,
+	    "PercentageWomenTotal":18.15798186021647,
+	    "PercentageUnknownTotal":1.2933508486165155
+	}, {
+	    "PercentageMenRange":87.57374220452706,
+	    "Range":">70",
+	    "PercentageMenTotal":9.1148578808668,
+	    "RangeDesc":"70 yrs or Greater",
+	    "Lob":"annuity",
+	    "PercentageUnknownRange":12.426257795472937,
+	    "PercentageWomenRange":0.0,
+	    "PercentageContracts":10.408208729483317,
+	    "PercentageWomenTotal":0.0,
+	    "PercentageUnknownTotal":1.2933508486165155
+	}]
+    });
+		    
+    Ext.create('Ext.chart.Chart', {
+	id: 'clientAgeChart',
+	renderTo: Ext.getBody(),
+	animate: false,
+	shadow: false,
+	theme: 'Base',
+	store: store1,
+	width: 330,
+	layout: {
+	    type: 'fit',
+	    align: 'top'
+	},
+	height: 300,
+	axes: [{
+	    type: 'Numeric',
+	    position: 'left',
+	    fields: ['PercentageMenTotal', 'PercentageUnknownTotal', 'PercentageWomenTotal', 'AgeRange'],
+	    title: false,
+	    title: 'Percentage of Contracts'//,
+	    //majorTickSteps: 10
+	}, {
+	    type: 'Category',
+	    position: 'bottom',
+	    fields: ['Range'],
+	    title: false
+	}],
+	series: [{
+	    type: 'column',
+	    axis: 'left',
+	    gutter: 80,
+	    xField: 'Range',
+	    yField: ['PercentageMenTotal', 'PercentageUnknownTotal', 'PercentageWomenTotal', 'AgeRange'],
+	    title: ['Men', 'Unknown', 'Women', 'AgeRange'],
+	    stacked: true
+	}]
+    });
+});
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <style type="text/css">
+        .box {
+            position: absolute;
+            border: 1px solid black;
+            width: 100px;
+            height: 100px;
+        }
+        .container {
+            border-color: red !important;
+            overflow: auto;
+        }
+        .rtl {
+            direction: rtl;
+        }
+    </style>
+</head>
+<body>
+    <div class="box container rtl" style="left:50px;top:50px;width:411px;height:150px;">
+        <div class="box" style="background-color: red; right: 0px;"></div>
+        <div class="box" style="background-color: green; right: 100px;"></div>
+        <div class="box" style="background-color: blue; right: 200px;"></div>
+        <div class="box" style="background-color: orange; right: 300px;"></div>
+        <div class="box" style="background-color: pink; right: 400px;"></div>
+        <div class="box" style="background-color: yellow; right: 500px;"></div>
+        <table style="position:absolute; top: 105px;">
+            <tr><td>A</td><td>B</td></tr>
+        </table>
+    </div>
+    <div class="box container rtl" style="left:50px;top:250px;width:380px;height:150px;">
+        <div class="box" style="background-color: red; right: 0px;"></div>
+        <div class="box" style="background-color: green; right: 100px;"></div>
+        <div class="box" style="background-color: blue; right: 200px;"></div>
+        <div class="box" style="background-color: orange; right: 300px;"></div>
+        <div class="box" style="background-color: pink; right: 400px;"></div>
+        <div class="box" style="background-color: yellow; right: 500px;"></div>
+    </div>
+
+    <div class="box container" style="left:50px;top:450px;width:411px;height:150px;">
+        <div class="box" style="background-color: red; left: 0px;"></div>
+        <div class="box" style="background-color: green; left: 100px;"></div>
+        <div class="box" style="background-color: blue; left: 200px;"></div>
+        <div class="box" style="background-color: orange; left: 300px;"></div>
+        <div class="box" style="background-color: pink; left: 400px;"></div>
+        <div class="box" style="background-color: yellow; left: 500px;"></div>
+        <table style="position:absolute; top: 105px;">
+            <tr><td>A</td><td>B</td></tr>
+        </table>
+    </div>
+    <div class="box container" style="left:50px;top:650px;width:380px;height:150px;">
+        <div class="box" style="background-color: red; left: 0px;"></div>
+        <div class="box" style="background-color: green; left: 100px;"></div>
+        <div class="box" style="background-color: blue; left: 200px;"></div>
+        <div class="box" style="background-color: orange; left: 300px;"></div>
+        <div class="box" style="background-color: pink; left: 400px;"></div>
+        <div class="box" style="background-color: yellow; left: 500px;"></div>
+    </div>
+</body>
+</html>

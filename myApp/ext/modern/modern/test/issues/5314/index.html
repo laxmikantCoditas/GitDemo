@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TOUCH-5314</title>
+
+	<script src="../../../sencha-touch-debug.js"></script>
+	<link rel="stylesheet" href="../../../resources/css/sencha-touch.css">
+
+	<script type="text/javascript">
+		Ext.define('Message', {
+			extend: 'Ext.data.Model',
+			config: {
+				idProperty: 'ID',
+				fields: [
+					{ name: 'STA', type: 'int'},
+					{ name: 'ID', type: 'auto' },
+					{ name: 'MSG', type: 'string' }
+				],
+				proxy: {
+					type: 'ajax',
+					url: 'data.json',
+					extraParams: {
+						'_method': 'list',
+						'_format': 'json'
+					},
+					reader: {
+						type: 'json',
+						rootProperty: 'data'
+					}
+				}
+			}
+		});
+
+		Ext.define('Messages', {
+			extend: 'Ext.data.Store',
+			config: {
+				storeId:"Messages",
+				model: 'Message',
+				autoLoad: true,
+				groupDir: 'ASC',
+				sorters: [
+					{property: 'STA', direction: 'DESC'}
+				],
+				grouper: {
+					groupFn: function(record) {
+						var sta = record.get('STA'),
+							id = record.get('ID'),
+							ret;
+
+						switch (sta) {
+							case 0:
+								ret = 'Opened (Status = 0)';
+								break;
+							case 1:
+								ret = 'New (Status = 1)';
+								break;
+						}
+						return ret;
+					}
+				}
+			}
+		});
+
+
+		Ext.application({
+			requires: [
+				'Ext.Panel',
+				'Ext.TitleBar',
+				'Ext.dataview.List',
+				'Ext.plugin.PullRefresh'
+			],
+			launch: function() {
+				var m = Ext.create("Messages");
+				m.load();
+				Ext.Viewport.add({
+					xtype: "panel",
+					fullScreen: true,
+					layout: 'fit',
+					items: [
+						{
+							docked: 'top',
+							xtype: 'titlebar',
+							title: 'Pull refresh'
+						},
+						{
+							xtype: 'list',
+							store: m,
+							grouped: true,
+							plugins: [
+								{
+									xclass: 'Ext.plugin.PullRefresh',
+									lastUpdatedDateFormat: 'Y/m/d H:i:s'
+								}
+							],
+							itemTpl: '<div class="message"><h4><b>ID:</b> {ID}, <b>STA:</b> {STA}, {MSG}</h4><div>'
+						}
+					]
+				});
+			}
+		});
+	</script>
+</head>
+<body>
+</body>
+</html>

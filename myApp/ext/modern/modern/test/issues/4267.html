@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4264</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+    <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <script type="text/javascript">
+
+
+        Ext.setup({
+            requires: [ ],
+            onReady: function() {
+
+
+                var map = Ext.create('widget.map', {
+                    id: 'detailMap'
+                });
+
+                Ext.Viewport.add(map);
+
+                console.log(map);
+
+                // fixes a bug in touch
+                //map.element.un('painted', 'setMapCenter', map);
+                //setMapCenter tries to call un on the map component which doesn't exist as when the on call is originall called during create
+                //it is placed on the element as it's the special painted event -- see if statement in doApplyListeners (guessing)
+
+                map.setMapCenter({
+                    latitude: 38.99,
+                    longitude: -76.9
+                });
+
+	    		console.log('note that even after setting lat long to College Park MD -- GO TERPS');
+	    		console.log('Map still renders the default lat/long of Mountain View, CA');
+                console.log('If you remove the painted listener event explicily from the maps element, it sets it correctly')
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

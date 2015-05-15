@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>List Pull Refresh Sandbox</title>
+
+    <link rel="stylesheet" href="../../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../../sencha-touch.js"></script>
+    
+    <script type="text/javascript" charset="utf-8">
+        Ext.Loader.setConfig({
+            enabled: true,
+            paths: {
+                'Twitter.proxy': '.'
+            }
+        });
+    
+        Ext.application({
+            requires: [
+                'Ext.data.Store',
+                'Ext.List',
+                'Ext.plugin.PullRefresh',
+                'Ext.plugin.ListPaging',
+                'Twitter.proxy.TwitterProxy'
+            ],
+            
+            launch: function() {
+                Ext.create('Ext.TabPanel', {
+                    fullscreen: true,
+                    
+                    items: [
+                        {
+                            title: 'PTR',
+                            xtype: 'list',
+                            
+                            itemTpl: '<div class="contact2"><strong>{firstName}</strong> {lastName}</div>',
+                            
+                            plugins: [
+                                'pullrefresh'
+                            ],
+
+                            store: {
+                                fields: ['firstName', 'lastName'],
+                                autoLoad: true,
+                                pageSize: 15,
+
+                                proxy: {
+                                    type: 'ajax',
+                                    url: 'contacts.json',
+
+                                    reader: {
+                                        type: 'json',
+                                        rootProperty: 'data',
+                                        totalProperty: 'total'
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            title: 'PTR + Paging',
+                            xtype: 'list',
+                            
+                            itemTpl: '{text}',
+                            
+                            plugins: [
+                                'pullrefresh',
+                                {
+                                    type: 'listpaging',
+                                    autoPaging: true
+                                }
+                            ],
+
+                            store: {
+                                fields: ['id', 'text'],
+                                storeId: 'tweetStore',
+                                autoLoad: false,
+                                pageSize: 15,
+                                remoteFilter: true,
+                                
+                                filters: [
+                                    {
+                                        value: 'test'
+                                    }
+                                ],
+
+                                proxy: {
+                                    type: 'twitter',
+                                    filterProperty: 'query'
+                                }
+                            }
+                        }
+                    ]
+                });
+                
+                Ext.getStore('tweetStore').load();
+                Ext.getStore('tweetStore').on('addrecords', function(store) {
+                    console.log("add: " + store.getCount());
+                });
+                
+                Ext.getStore('tweetStore').on('load', function(store) {
+                    console.log("load: " + store.getCount());
+                });
+            }
+        });
+        
+    </script>
+</head>
+<body></body>
+</html>

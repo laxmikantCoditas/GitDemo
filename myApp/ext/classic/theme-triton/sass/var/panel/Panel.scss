@@ -1,0 +1,10 @@
+$panel-header-font-size: round($font-size * 1.15) !dynamic;
+$panel-header-line-height: 20px !dynamic;
+$panel-header-padding: 11px 14px 12px !dynamic;
+$panel-header-font-weight: $font-weight !dynamic;
+$panel-frame-border-radius: 6px !dynamic;
+$panel-frame-border-width: 1px !dynamic;
+$panel-ignore-frame-padding: true !dynamic;
+
+$include-panel-light-ui: false !dynamic;
+$include-panel-light-framed-ui: false !dynamic;

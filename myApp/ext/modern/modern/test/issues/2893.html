@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TOUCH-2893</title>
+        
+        <script src="../../sencha-touch-debug.js"></script>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+        <script type="text/javascript">
+
+            Ext.application({
+                name: 'Test',
+
+                requires : [
+                    'Ext.form.Panel',
+                    'Ext.field.DatePicker'
+                ],
+            
+                launch: function() {
+                    new Ext.form.Panel({
+                        fullscreen : true,
+                        items      : [
+                            {
+                                xtype     : 'datepickerfield',
+                                label     : 'Normal',
+                                picker    : {
+                                    yearFrom : 2000,
+                                    yearTo   : 2012
+                                },
+                                listeners : {
+                                    change : function (field, value) {
+                                        console.log(value);
+                                    }
+                                }
+                            },
+                            {
+                                xtype     : 'datepickerfield',
+                                label     : 'Reverse',
+                                picker    : {
+                                    yearFrom : 2012,
+                                    yearTo   : 2000
+                                },
+                                listeners : {
+                                    change : function (field, value) {
+                                        console.log(value);
+                                    }
+                                }
+                            }
+                        ]
+                    });
+                }
+            });
+            
+        </script>
+    </head>
+    <body>
+        <div id="openLogin" class="x-hidden-display">
+            <div style="float:left;margin-top:8px;margin-right:10px">Log in using:</div>
+            <div class="providerlink" style="float:left;margin-left:5px">
+                <img class="google" src="http://www.fareclock.com/static/site/images/icons/google-icon.png" style="width:46px;height:46px">
+            </div>
+            <div class="providerlink" style="float:left;margin-left:5px">
+                <img class="yahoo" src="http://www.fareclock.com/static/site/images/icons/yahoo-icon.png" style="width:46px;height:46px">
+            </div>
+        </div>
+    </body>
+</html>

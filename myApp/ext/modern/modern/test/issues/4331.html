@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sencha Touch Issue Template</title>
+		<link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+		<script type="text/javascript" src="../../sencha-touch.js"></script>
+
+		<script type="text/javascript">
+			Ext.application({
+				name : 'Test',
+
+				requires : [
+
+				],
+
+				launch : function () {
+
+                    var view = Ext.create( 'Ext.Container', {
+                        fullscreen : true,
+                        layout: 'fit',
+                        items: [{
+                            xtype: 'textareafield',
+                            rows: 4,
+                            //To prevent mismatched height between outer and inner commponents
+                            /*listeners : {
+                                painted:function( view, eOpts){
+                                    //To get actual height, then reflect into inner input.
+                                    this.getComponent().input.setHeight( view.getHeight());
+                                }
+                            }*/
+                        }, {
+                            xtype: 'titlebar',
+                            docked: 'top',
+                            title: 'Text Area'
+                        }, {
+                            xtype: 'titlebar',
+                            docked: 'bottom',
+                            title: 'Text Area'
+                        }]
+                    });
+                    Ext.Viewport.add( view);
+                }
+			});
+		</script>
+	</head>
+</html>

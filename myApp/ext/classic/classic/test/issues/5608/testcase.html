@@ -1,0 +1,71 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>ExtJS 4 XTemplate</title>
+<link rel="stylesheet" type="text/css" href="../../../../SDK/extjs/resources/css/ext-all.css" />
+<script src="../../../../SDK/extjs/ext.js"></script>
+<script>
+Ext.onReady(function () {
+    var panel = Ext.create('Ext.panel.Panel', {
+	renderTo : document.body,
+	width    : 400,
+	height   : 400,
+	title    : 'Test'
+    });
+
+    var window1 = Ext.create('Ext.window.Window', {
+	width    : 200,
+	height   : 200,
+	title    : 'Window',
+	autoShow : true,
+	items    : [
+	    {
+		xtype   : 'button',
+		text    : 'Mask Panel',
+		handler : function() {
+		    panel.setLoading('baz', true);
+		}
+	    }
+	]
+    });
+
+    var window2 = Ext.create('Ext.window.Window', {
+	width    : 200,
+	height   : 200,
+	x: 400,
+	title    : 'Window2',
+	autoShow : true,
+	items    : [
+	    {
+		xtype   : 'button',
+		text    : 'Mask Window 1',
+		handler : function() {
+		    window1.setLoading('foobar', true);
+		}
+	    }
+	]
+    });
+
+/*
+    var window3 = Ext.create('Ext.window.Window', {
+	width    : 200,
+	height   : 200,
+	title    : 'Window3',
+	autoShow : true,
+	items    : [
+	    {
+		xtype   : 'button',
+		text    : 'Mask Window 2',
+		handler : function() {
+		    window2.setLoading(true);
+		}
+	    }
+	]
+    });
+    */
+});
+</script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../sencha-touch-all.js"></script>
+    <script src="../visual/charts/data.js"></script>
+    <script type="text/javascript">
+        Ext.require([
+            'Ext.draw.Component',
+            'Ext.chart.CartesianChart',
+            'Ext.Panel',
+            'Ext.chart.axis.Numeric',
+            'Ext.chart.series.Line',
+            'Ext.chart.series.Bar',
+            'Ext.chart.interactions.PanZoom',
+            'Ext.Button'
+        ]);
+        var seed = .5
+        var times = 0;
+
+        function random() {
+            seed *= 15.1;
+            seed -= Math.floor(seed);
+            return seed - 0.5;
+        }
+        Ext.setup({
+            onReady: function () {
+                var store = new OrderItems();
+                var cmp = {
+                    xtype: 'cartesian',
+                    store: store,
+                    interactions: ['panzoom'],
+                    width: 400,
+                    height: 300,
+                    innerPadding: {
+                        left: 12,
+                        top: 0,
+                        right: 12,
+                        bottom: 0
+                    },
+                    series: [
+                        {
+                            type: 'line',
+                            xField: 'id',
+                            yField: 'g1',
+                            style: {
+                                stroke: 'rgba(0,40,170,0.7)'
+                            }
+                        },
+                        {
+                            type: 'bar',
+                            xField: 'id',
+                            yField: 'g1',
+                            style: {
+                                lineJoin: 'butt',
+                                stroke: 'black',
+                                fill: 'rgb(157,223,200)',
+                                barWidth: 12
+                            }
+                        }
+                    ],
+                    axes: [
+                        {
+                            hidden: true,
+                            type: 'numeric',
+                            position: 'left',
+                            minimum: 0,
+                            maximum: 120,
+                            fields: 'g1'
+                        },
+                        {
+                            hidden: true,
+                            type: 'numeric',
+                            position: 'bottom',
+                            fields: 'id',
+                            visibleRange: [0, 0.5]
+                        }
+                    ]
+                }   , activeCmp, surface;
+
+                function interval() {
+                    if (!activeCmp) {
+                        activeCmp = Ext.Viewport.add(cmp);
+                    } else {
+                        activeCmp.destroy();
+                        activeCmp = null;
+                    }
+                    if (++times < 100) {
+                        setTimeout(interval, 100);
+                    } else {
+                        times = 0;
+                        setTimeout(interval, 5000);
+                    }
+                }
+
+                activeCmp = Ext.Viewport.add(cmp);
+                setTimeout(function () {
+                    activeCmp.destroy();
+                    activeCmp = null;
+                }, 1000);
+
+                setTimeout(interval, 5000);
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

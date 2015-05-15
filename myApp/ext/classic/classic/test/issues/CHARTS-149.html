@@ -1,0 +1,79 @@
+<html>
+<head>
+<title>CHARTS-149</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+<script type="text/javascript">
+Ext.require('*');
+
+Ext.define('Thing', {
+    extend: 'Ext.data.Model',
+    fields: [{
+        name: "Name",
+        type: "string"
+    }, {
+        name: "RecordCount",
+        type: "int"
+    }, {
+        name: "FunctionClassID",
+        type: "string"
+    }]
+});
+
+Ext.onReady(function(){
+
+    var store = Ext.create('Ext.data.Store', {
+        proxy: 'memory',
+        model: 'Thing',
+        data: [{
+            FunctionClassID: "bf2116f6-795f-e011-81d0-a4badbfe3575",
+            Name: "Business Critical",
+            RecordCount: "7"
+        }, {
+            FunctionClassID: "c02116f6-795f-e011-81d0-a4badbfe3575",
+            Name: "Business Important",
+            RecordCount: "9"
+        }, {
+            FunctionClassID: "c12116f6-795f-e011-81d0-a4badbfe3575",
+            Name: "Firm Obligation",
+            RecordCount: "13"
+        }, {
+            FunctionClassID: "c22116f6-795f-e011-81d0-a4badbfe3575",
+            Name: "Systemic",
+            RecordCount: "2"
+        }, {
+            FunctionClassID: "c32116f6-795f-e011-81d0-a4badbfe3575",
+            Name: "Technology",
+            RecordCount: "1"
+        }]
+    });
+
+    Ext.create('Ext.chart.Chart', {
+        width: 600,
+        height: 600,
+        renderTo: document.body,
+        store: store,
+        axes: [{
+            grid: true,
+            position: "left",
+            type: "Numeric",
+            fields: "RecordCount"
+        }, {
+            position: "bottom",
+            type: "Category",
+            fields: "Name"
+        }],
+        series: [{
+            axis: "left",
+            type: "column",
+            xField: "Name",
+            yField: "RecordCount"
+        }]
+    });
+});
+
+</script>
+</head>
+<body>
+</body>
+</html>

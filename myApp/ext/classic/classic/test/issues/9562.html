@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+
+Ext.onReady(function () {
+
+    Ext.define('TestResult', {
+        extend: 'Ext.data.Model',
+        fields: ['student',
+        {
+            name: 'mark1',
+            type: 'int'
+        }, {
+            name: 'mark2',
+            type: 'int'
+        }, {
+            name: 'mark3',
+            type: 'int'
+        }, {
+            name: 'mark4',
+            type: 'int'
+        }, {
+            name: 'mark5',
+            type: 'int'
+        }, {
+            name: 'mark6',
+            type: 'int'
+        }, {
+            name: 'mark7',
+            type: 'int'
+        }, {
+            name: 'mark8',
+            type: 'int'
+        }, {
+            name: 'mark9',
+            type: 'int'
+        }, {
+            name: 'mark10',
+            type: 'int'
+        }]
+    });
+
+    var grid = Ext.create('Ext.grid.Panel', {
+
+        forceFit: true,
+        height: 200,
+        title: 'Summary Test',
+        style: 'padding: 20px',
+        renderTo: document.body,
+        features: [{
+            ftype: 'summary',
+            dock: 'bottom'
+        }],
+        store: {
+            model: 'TestResult',
+            data: [{
+                student: 'Student 1',
+                mark1: 84,
+                mark2: 84,
+                mark3: 84,
+                mark4: 84,
+                mark5: 84,
+                mark6: 84,
+                mark7: 84,
+                mark8: 84,
+                mark9: 84,
+                mark10: 84
+            }, {
+                student: 'Student 2',
+                mark1: 84,
+                mark2: 84,
+                mark3: 84,
+                mark4: 84,
+                mark5: 84,
+                mark6: 84,
+                mark7: 84,
+                mark8: 84,
+                mark9: 84,
+                mark10: 84
+            }, {
+                student: 'Student 3',
+                mark1: 84,
+                mark2: 84,
+                mark3: 84,
+                mark4: 84,
+                mark5: 84,
+                mark6: 84,
+                mark7: 84,
+                mark8: 84,
+                mark9: 84,
+                mark10: 84
+            }, {
+                student: 'Student 4',
+                mark1: 84,
+                mark2: 84,
+                mark3: 84,
+                mark4: 84,
+                mark5: 84,
+                mark6: 84,
+                mark7: 84,
+                mark8: 84,
+                mark9: 84,
+                mark10: 84
+            }]
+        },
+        columns: [{
+            dataIndex: 'student',
+            text: 'Name',
+            summaryType: 'count',
+            summaryRenderer: function (value, summaryData, dataIndex) {
+                return Ext.String.format('{0} student{1}', value, value !== 1 ? 's' : '');
+            }
+        }, {
+            dataIndex: 'mark1',
+            text: 'Mark',
+            summaryType: 'sum'
+        }, {
+            dataIndex: 'mark2',
+            text: 'Mark',
+            summaryType: 'sum'
+        }, {
+            dataIndex: 'mark3',
+            text: 'Mark',
+            summaryType: 'sum'
+        }, {
+            dataIndex: 'mark4',
+            text: 'Mark',
+            summaryType: 'sum'
+        }, {
+            dataIndex: 'mark5',
+            text: 'Mark',
+            summaryType: 'sum'
+        }, {
+            dataIndex: 'mark6',
+            text: 'Mark',
+            summaryType: 'sum'
+        }, {
+            dataIndex: 'mark7',
+            text: 'Mark',
+            summaryType: 'sum'
+        }, {
+            dataIndex: 'mark8',
+            text: 'Mark',
+            summaryType: 'sum'
+        }, {
+            dataIndex: 'mark9',
+            text: 'Mark',
+            summaryType: 'sum'
+        }, {
+            dataIndex: 'mark10',
+            text: 'Mark',
+            summaryType: 'sum'
+        }]
+    });
+
+    Ext.EventManager.onWindowResize(grid.doLayout, grid);
+
+});
+
+    </script>
+</body>
+</html>

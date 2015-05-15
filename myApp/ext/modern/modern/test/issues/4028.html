@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4028</title>
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+    <script>
+        Ext.require([
+            'Ext.chart.*',
+            'Ext.Panel',
+            'Ext.Toolbar'
+        ]);
+        Ext.setup({
+            onReady: function () {
+                var store = new Ext.data.Store({
+                    fields: ['period', 'value'],
+                    data: [
+                        { period: '10-2011', value: 42 },
+                        { period: '11-2011', value: 18 },
+                        { period: '12-2011', value: 27 },
+                        { period: '01-2012', value: 8  },
+                        { period: '02-2012', value: 19 }
+                    ]
+                });
+
+
+                Ext.define('App.view.SampleDonut', {
+                    extend: 'Ext.chart.PolarChart',
+                    xtype: 'sampledonut',
+                    config: {
+                        store: store,
+                        animate: false,
+                        insetPadding: 20,
+                        showMarkers: true,
+                        colors: ["#115fa6", "#94ae0a", "#a61120", "#ff8809", "#ffd13e"],
+                        interactions: [
+                            {
+                                type: 'iteminfo',
+                                listeners: {
+                                    show: function (me, item, panel, e, interaction) {
+                                        panel.setHtml(item.record.get('period'));
+                                        panel.setWidth('25%');
+                                        console.log(item);
+                                    }
+                                }
+                            },
+                            'itemhighlight'
+                        ],
+                        legend: {
+                            docked: 'right',
+                            verticalWidth: 100
+                        },
+                        innerPadding: 45,
+                        series: [
+                            {
+                                type: 'pie',
+                                donut: 50,
+                                labelField: 'period',
+                                xField: 'value',
+                                highlight: {
+                                    margin: 20
+                                },
+                                label: {
+                                    field: 'period',
+                                    display: 'rotate',
+                                    contrast: true,
+                                    font: '18px Arial'
+                                },
+                                style: {
+                                    stroke: 'white',
+                                    miterLimit: 10,
+                                    lineCap: 'miter',
+                                    lineWidth: 2
+                                }
+                            }
+                        ]
+                    }
+                });
+
+                Ext.Viewport.add(new App.view.SampleDonut);
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,374 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>Crash</title>
+		<link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css"/>
+		<script type="text/javascript" src="../../sencha-touch-all.js"></script>
+		<script type="text/javascript">
+			Ext.setup({
+				onReady: function () {
+					Ext.Viewport.setLayout("fit");
+
+					var mainPanel = Ext.create('Ext.Panel', {
+						layout: 'fit'
+                                        });
+
+					Ext.Viewport.add(mainPanel);
+
+					var back = Ext.create('Ext.Button', {
+						ui: "back",
+						text: "Back",
+						hidden: true,
+						handler: function () {
+							back.hide(false);
+
+							mainPanel.removeAll(false, false);
+
+							tileViewPanel.setActiveIndex(gadgetsViewPanel.getActiveIndex());
+
+							for (var i = 0; i < gadgets.length; i++) {
+								gadgets[i].draw(false);
+							}
+
+							mainPanel.add(tileViewPanel.getPanel());
+						}
+					});
+
+					mainPanel.add(Ext.create('Ext.Toolbar', {
+						docked: "top",
+						items: [back]
+					}));
+
+					var tileViewPanel = new TileViewPanel();
+					mainPanel.add(tileViewPanel.getPanel());
+
+					var gadgetsViewPanel = new GadgetsViewPanel();
+					var gadgets = [];
+					for (var i = 0; i < 32; i++) {
+						gadgets[i] = new Gadget(i, tileViewPanel, gadgetsViewPanel, back, mainPanel, gadgets);
+					}
+				}
+			});
+
+			function extend(Child, Parent) {
+				var F = function () {
+				};
+				F.prototype = Parent.prototype;
+				Child.prototype = new F();
+				Child.prototype.constructor = Child;
+				Child.superclass = Parent.prototype;
+			}
+
+			function ViewPanel() {
+				this.panel = null;
+				this.carousel = null;
+
+				ViewPanel.prototype.create = function () {
+					this.panel = createViewPanel(this);
+				}
+
+				ViewPanel.prototype.setCarousel = function (carousel) {
+					this.carousel = carousel;
+				}
+
+				ViewPanel.prototype.getPanel = function () {
+					return this.panel;
+				}
+
+				ViewPanel.prototype.getActiveIndex = function () {
+					return this.carousel.getActiveIndex();
+				}
+
+				ViewPanel.prototype.setActiveIndex = function (activeIndex) {
+					this.carousel.setActiveItem(activeIndex);
+				}
+
+				ViewPanel.prototype.add = function (item) {
+					this.addItem(item);
+				}
+
+				ViewPanel.prototype.addItem = function (item) {
+					this.carousel.add(item);
+				}
+
+				this.create();
+			}
+
+			function GadgetsViewPanel() {
+				GadgetsViewPanel.superclass.constructor.call(this);
+			}
+			extend(GadgetsViewPanel, ViewPanel);
+
+			function TileViewPanel() {
+				this.lastFourTilesPanel = null;
+
+				TileViewPanel.superclass.constructor.call(this);
+
+				TileViewPanel.prototype.getActiveIndex = function () {
+					return TileViewPanel.superclass.getActiveIndex.call(this) * 4;
+				}
+
+				TileViewPanel.prototype.setActiveIndex = function (activeIndex) {
+					TileViewPanel.superclass.setActiveIndex.call(this, Math.floor(activeIndex / 4));
+				}
+
+				TileViewPanel.prototype.add = function (item) {
+					if ((this.lastFourTilesPanel == null) || (this.lastFourTilesPanel.isFull())) {
+						this.lastFourTilesPanel = new FourTilesPanel();
+						this.addItem(this.lastFourTilesPanel.getPanel());
+					}
+
+					this.lastFourTilesPanel.add(item);
+				}
+			}
+			extend(TileViewPanel, ViewPanel);
+
+			function FourTilesPanel() {
+				this.panel = null;
+				this.tilePanels = [];
+				this.nextItemIndex = 0;
+
+				FourTilesPanel.prototype.create = function () {
+					this.panel = createFourTilesPanel(this);
+				}
+
+				FourTilesPanel.prototype.addTilePanel = function (panel) {
+					this.tilePanels.push(panel);
+				}
+
+				FourTilesPanel.prototype.isFull = function () {
+					return (this.nextItemIndex >= this.tilePanels.length);
+				}
+
+				FourTilesPanel.prototype.add = function (item) {
+					if (this.nextItemIndex < this.tilePanels.length) {
+						this.tilePanels[this.nextItemIndex].add(item);
+						this.nextItemIndex++;
+					}
+				}
+
+				FourTilesPanel.prototype.getPanel = function () {
+					return this.panel;
+				}
+
+				this.create();
+			}
+
+			function createViewPanel(viewPanelObject) {
+				var carousel = Ext.create('Ext.Carousel', {
+					fullscreen: false
+				});
+				viewPanelObject.setCarousel(carousel);
+
+				var panel = Ext.create('Ext.Panel', {
+					layout: "fit",
+					items: [carousel]
+				});
+
+				return panel;
+			}
+
+			function createFourTilesPanel(fourTilesPanelObject) {
+				var panel1 = createSingleTilePanel(fourTilesPanelObject);
+				var panel2 = createSingleTilePanel(fourTilesPanelObject);
+				var panel3 = createSingleTilePanel(fourTilesPanelObject);
+				var panel4 = createSingleTilePanel(fourTilesPanelObject);
+
+				var topPanel = createHorizontalTilePanel(panel1, panel2);
+				var bottomPanel = createHorizontalTilePanel(panel3, panel4);
+
+				var panel = new Ext.Panel({
+					layout: "vbox",
+					items: [topPanel, bottomPanel]
+				});
+
+				return panel;
+			}
+
+			function createSingleTilePanel(fourTilesPanelObject) {
+				var panel = new Ext.Panel({
+					layout: "fit",
+					width: "50%"
+				});
+				fourTilesPanelObject.addTilePanel(panel);
+
+				return panel;
+			}
+
+			function createHorizontalTilePanel(leftPanel, rightPanel) {
+				return new Ext.Panel({
+					layout: "hbox",
+					height: "50%",
+					items: [leftPanel, rightPanel]
+				});
+			}
+
+			function Gadget(index, tileViewPanel, gadgetsViewPanel, back, mainPanel, gadgets) {
+				this.index = index;
+				this.tileViewPanel = tileViewPanel;
+				this.gadgetsViewPanel = gadgetsViewPanel;
+				this.back = back;
+				this.mainPanel = mainPanel;
+				this.gadgets = gadgets;
+				this.chartTileViewPanel = null;
+				this.chartGadgetsViewPanel = null;
+				this.chart = null;
+				this.inGadgetsView = false;
+
+				Gadget.prototype.create = function () {
+					this.chartTileViewPanel = new Ext.Panel({
+						layout: "fit"
+					});
+					this.tileViewPanel.add(this.chartTileViewPanel);
+
+					this.chartGadgetsViewPanel = new Ext.Panel({
+						layout: "fit"
+					});
+					this.gadgetsViewPanel.add(this.chartGadgetsViewPanel);
+
+					this.chart = ((index % 2 == 0) ? createBarChart(this) : createPieChart(this));
+
+					this.draw(false);
+				}
+
+				Gadget.prototype.draw = function (inGadgetsView) {
+					this.inGadgetsView = inGadgetsView;
+
+					this.chartTileViewPanel.removeAll(false, true);
+					this.chartGadgetsViewPanel.removeAll(false, true);
+
+					if (!this.inGadgetsView) {
+						this.chartTileViewPanel.add(this.chart);
+					}
+					else {
+						this.chartGadgetsViewPanel.add(this.chart);
+					}
+				}
+
+				Gadget.prototype.onEnterGadgetsView = function () {
+					if (this.inGadgetsView) {
+						return;
+					}
+
+					this.back.show(false);
+
+					this.mainPanel.removeAll(false, false);
+
+					this.gadgetsViewPanel.setActiveIndex(this.index);
+
+					for (var i = 0; i < this.gadgets.length; i++) {
+						this.gadgets[i].draw(true);
+					}
+
+					this.mainPanel.add(this.gadgetsViewPanel.getPanel());
+				}
+
+				this.create();
+			}
+
+			Ext.define("DVS.TappedChart", {
+				extend: 'Ext.chart.CartesianChart',
+				initComponent: function () {
+					this.addEvents("singletap");
+					this.callParent(arguments);
+				}
+			});
+
+			Ext.define("DVS.TappedPolarChart", {
+				extend: 'Ext.chart.PolarChart',
+				initComponent: function () {
+					this.addEvents("singletap");
+					this.callParent(arguments);
+				}
+			});
+
+			function createBarChart(gadget) {
+				var chart = new DVS.TappedChart({
+					animate: false,
+					shadow: false,
+					colors: ["red", "green", "blue"],
+					fullscreen: false,
+					legend: {
+						position: "right",
+						boxStroke: "#FFF"
+					},
+					store: Ext.create('Ext.data.JsonStore', {
+						fields: ["category", "indicator1", "indicator2", "indicator3"],
+						data: [
+							{ category: "Category 1", indicator1: 20, indicator2: 30, indicator3: 40 },
+							{ category: "Category 2", indicator1: 25, indicator2: 15, indicator3: 5 },
+							{ category: "Category 3", indicator1: 10, indicator2: 45, indicator3: 35 }
+						]
+					}),
+					axes: [
+						{
+							type: "numeric",
+							position: "left",
+							fields: ["indicator1", "indicator2", "indicator3"],
+							grid: true,
+							minimum: 0
+						},
+						{
+							type: "category",
+							position: "bottom",
+							fields: "category"
+						}
+					],
+					series: [{
+						type: "bar",
+						title: ["Indicator 1", "Indicator 2", "Indicator 3"],
+						showInLegend: true,
+						xField: "category",
+						yField: ["indicator1", "indicator2", "indicator3"],
+						stacked: false
+					}],
+					listeners: {
+						singletap: function () {
+							gadget.onEnterGadgetsView()
+						}
+					}
+				});
+
+				return chart;
+			}
+
+			function createPieChart(gadget) {
+				var chart = new DVS.TappedPolarChart({
+					animate: false,
+					shadow: false,
+					insetPadding: 25,
+					innerPadding: 25,
+					colors: ["red", "green", "blue"],
+					fullscreen: false,
+					legend: {
+						position: "right",
+						boxStroke: "#FFF"
+					},
+					store: new Ext.data.JsonStore({
+						fields: ["category", "indicator"],
+						data: [
+							{ category: "Category 1", indicator: 20 },
+							{ category: "Category 2", indicator: 30 },
+							{ category: "Category 3", indicator: 10 }
+						]
+					}),
+					series: [{
+						type: "pie",
+						title: ["Category 1", "Category 2", "Category 3"],
+						xField: "indicator",
+						labelField: "category",
+						showInLegend: true
+					}],
+					listeners: {
+						singletap: function () {
+							gadget.onEnterGadgetsView()
+						}
+					}
+				});
+				return chart;
+			}
+		</script>
+	</head>
+	<body/>
+</html>

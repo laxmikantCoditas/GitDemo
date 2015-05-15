@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>1272</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script src="../../sencha-touch.js"></script>
+
+        <script type="text/javascript">
+
+            Ext.require([
+                'Ext.data.Store',
+                'Ext.List'
+            ]);
+
+            Ext.define('Contact', {
+                extend : 'Ext.data.Model',
+
+                config : {
+                    fields: ['firstName', 'lastName']
+                }
+            });
+
+            Ext.setup({
+                onReady : function() {
+                    var store = Ext.create('Ext.data.Store', {
+                        model: 'Contact',
+
+                        data : [
+                            { firstName : 'Mitchell', lastName : 'Simoens'  },
+                            { firstName : 'Tommy',    lastName : 'Maintz'   },
+                            { firstName : 'Ed',       lastName : 'Spencer'  },
+                            { firstName : 'Jamie',    lastName : 'Avins'    },
+                            { firstName : 'Aaron',    lastName : 'Conran'   },
+                            { firstName : 'Dave',     lastName : 'Kaneda'   },
+                            { firstName : 'Michael',  lastName : 'Mullany'  },
+                            { firstName : 'Abraham',  lastName : 'Elias'    },
+                            { firstName : 'Jay',      lastName : 'Robinson' }
+                        ]
+                    });
+
+                    Ext.create('Ext.dataview.List', {
+                        fullscreen : true,
+                        store      : store,
+                        itemTpl    : '<div class="contact2"><strong>{firstName}</div>',
+                        listeners  : {
+                            itemdoubletap : function(list) {
+                                var store = list.getStore();
+
+                                store.sort('firstName');
+                            }
+                        }
+                    });
+                }
+            });
+
+
+        </script>
+    </head>
+
+    <body></body>
+</html>

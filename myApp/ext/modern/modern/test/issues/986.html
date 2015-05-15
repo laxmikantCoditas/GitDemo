@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>TOUCH-986</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script src="../../sencha-touch.js"></script>
+
+    <script type="text/javascript">
+
+        Ext.setup({
+            onReady: function() {
+                var fp = Ext.create('Ext.form.Panel', {
+                    floating: true,
+                    // modal: true,
+                    centered: true,
+                    width: 500,
+                    height: 700,
+                    items: [
+                        {
+                            xtype: 'fieldset',
+                            items: [
+                                {
+                                    xtype: 'textfield',
+                                    label: 'First',
+                                    name: 'one',
+                                    listeners: {
+                                        action: function() {
+                                            Ext.getCmp('second').focus();
+                                        }
+                                    }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    label: 'Second',
+                                    id: 'second',
+                                    name: 'two'
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    label: 'Third',
+                                    name: 'three'
+                                }
+                            ]
+                        }
+                    ]
+                });
+
+                fp.show();
+            }
+        });
+
+    </script>
+
+    <style>
+        
+    </style>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4264</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+
+
+        Ext.setup({
+            requires: [ ],
+            onReady: function() {
+	    		Ext.Viewport.add(Ext.create('Ext.navigation.View', {}));
+	    		console.log('note the nav bar has a title of undefined');
+	    		console.log('2.1.1 did not do this and simply rendered with no title or empty string');
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

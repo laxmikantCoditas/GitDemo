@@ -1,0 +1,1 @@
+Sandbox for testing various edge case aspects of MVC. Initially created to test http://www.sencha.com/forum/showthread.php?176429

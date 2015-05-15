@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>TOUCH-4502</title>
+    <style></style>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+    <script src="../../sencha-touch-all-debug.js"></script>
+    <script>
+        Ext.require(['Ext.chart.*']);
+        Ext.setup({
+            onReady: function () {
+                var chart = Ext.create('Ext.chart.PolarChart', {
+
+                    store: {
+                        fields: ['criteria', 'option A', 'option B'],
+                        data: [
+                            {'criteria': 'A', 'option A': 50, 'option B': 80},
+                            {'criteria': 'B', 'option A': 50, 'option B': 60},
+                            {'criteria': 'C', 'option A': 50, 'option B': 20}
+                        ]
+                    },
+
+
+                    itemId: 'Chart',
+
+                    series: [
+                        {
+                            type: 'radar',
+                            xField: 'criteria',
+                            yField: 'option B',
+                            style: {
+                                fillStyle: 'rgba(155, 0, 255, .2)',
+                                strokeStyle: 'rgba(0, 255, 0, 1)',
+                                lineWidth: 2
+                            }
+                        },
+                        {
+                            type: 'radar',
+                            xField: 'criteria',
+                            yField: 'option A',
+                            style: {
+                                fillStyle: 'rgba(155, 0, 255, .2)',
+                                strokeStyle: 'rgba(0, 255, 0, 1)',
+                                lineWidth: 2
+                            }
+                        }
+                    ],
+                    axes: [
+                        {
+                            type: 'numeric',
+                            position: 'radial',
+                            minimum: 0,
+                            maximum: 100,
+                            fields: ['option A', 'option B'],
+                            style: {
+                                estStepSize: 10
+                            },
+                            grid: true
+                        },
+                        {
+                            type: 'category',
+                            position: 'angular',
+                            fields: 'criteria',
+                            label: {
+                                font: '16px Arial',
+                                fontWeight: 'bold'
+                            },
+                            style: {
+                                lineWidth: 2,
+                                estStepSize: 1,
+                                stroke: 'rgba(125, 125, 125, 0.8)'
+                            },
+                            grid: true
+                        }
+                    ]
+                });
+
+                Ext.Viewport.add(chart);
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

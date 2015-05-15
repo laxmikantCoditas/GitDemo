@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TOUCH-2994</title>
+
+        <script src="../../sencha-touch-debug.js"></script>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+        <script type="text/javascript">
+
+            var data = {
+                text: 'Groceries',
+                tpl: 'ultra',
+                items: [{
+                    text: 'Drinks',
+                    tpl: 'top',
+                    items: [{
+                        text: 'Water',
+                        tpl: 'middle',
+                        items: [{
+                            text: 'Sparkling',
+                            tpl: 'bottom',
+                            leaf: true
+                        }, {
+                            text: 'Still',
+                            tpl: 'bottom',
+                            leaf: true
+                        }]
+                    }, {
+                        text: 'Coffee',
+                        tpl: 'middle',
+                        leaf: true
+                    }, {
+                        text: 'Espresso',
+                        tpl: 'middle',
+                        leaf: true
+                    }, {
+                        text: 'Redbull',
+                        tpl: 'middle',
+                        leaf: true
+                    }, {
+                        text: 'Coke',
+                        tpl: 'middle',
+                        leaf: true
+                    }, {
+                        text: 'Diet Coke',
+                        tpl: 'middle',
+                        leaf: true
+                    }]
+                }, {
+                    text: 'Fruit',
+                    tpl: 'top',
+                    items: [{
+                        text: 'Bananas',
+                        tpl: 'middle',
+                        leaf: true
+                    }, {
+                        text: 'Lemon',
+                        tpl: 'middle',
+                        leaf: true
+                    }]
+                }, {
+                    text: 'Snacks',
+                    tpl: 'top',
+                    items: [{
+                        text: 'Nuts',
+                        tpl: 'middle',
+                        leaf: true
+                    }, {
+                        text: 'Pretzels',
+                        tpl: 'middle',
+                        leaf: true
+                    }, {
+                        text: 'Wasabi Peas',
+                        tpl: 'middle',
+                        leaf: true
+                    }]
+                }]
+            };
+
+            Ext.define('ListItem', {
+                extend: 'Ext.data.Model',
+                config: {
+                    fields: [{
+                        name: 'text',
+                        type: 'string'
+                    },
+                    {
+                        name: 'tpl',
+                        type: 'string'
+                    },
+                    {
+                        name: 'cost',
+                        type: 'string'
+                    }]
+                }
+            });
+
+            var store = Ext.create('Ext.data.TreeStore', {
+                model: 'ListItem',
+                defaultRootProperty: 'items',
+                root: data
+            });
+
+            var tpls = {
+                ultra: '{text} ultra',
+                top: '{text} top',
+                middle: '{text} middle',
+                bottom: '{text} bottom'
+            };
+
+            Ext.setup({
+                icon: 'icon.png',
+                glossOnIcon: false,
+                onReady: function () {
+
+                    var nestedList = Ext.create('Ext.NestedList', {
+                        fullscreen: true,
+                        title: 'Groceries',
+                        displayField: 'text',
+                        store: store,
+                        getItemTextTpl: function (rec) {
+                            console.log(rec);
+                            return tpls[rec.raw.tpl];
+                        }
+                    });
+
+                }
+            });
+
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

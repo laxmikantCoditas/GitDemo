@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>1272</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script src="../../sencha-touch.js"></script>
+        <script type="text/javascript">
+            Ext.setup({
+                onReady: function () {
+                    var count = 50,
+                        rnd = Math.random(),
+                        viewport = Ext.Viewport,
+                        xtype = 'button',
+                        i, panel;
+                    renderTest = function() {
+                        for (i = 0; i < count; i++) {
+                            viewport.add({
+                                xtype: 'panel',
+                                html: 'HTML ' + parseInt(9999*rnd, 10),
+                                items: {
+                                    items: {
+                                        xtype: xtype,
+                                        text: 'Button ' + parseInt(9999*rnd, 10)
+                                    }
+                                }
+                            });
+                        }
+                        viewport.removeAll();
+                    };
+//                    window.setInterval(renderTest, 100);
+                }
+            });
+        </script>
+    </head>
+    <body></body>
+</html>

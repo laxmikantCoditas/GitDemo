@@ -1,0 +1,16 @@
+#!/bin/sh
+ABSPATH=$(cd "$(dirname "$0")"; pwd)
+COMMANDPATH="$ABSPATH/command"
+CMD="export PATH=\"$COMMANDPATH:\$PATH\""
+echo $CMD > ~/.sencha_command
+SENCHA_COMMAND=`cat ~/.profile | grep "source ~/.sencha_command"`
+if [ "$SENCHA_COMMAND" = "" ]
+then
+	echo "source ~/.sencha_command" >> ~/.profile
+fi
+SENCHA_COMMAND=`cat ~/.bash_profile | grep "source ~/.sencha_command"`
+if [ "$SENCHA_COMMAND" = "" ]
+then
+	echo "source ~/.sencha_command" >> ~/.bash_profile
+fi
+echo "Added $COMMANDPATH to your PATH. Please close this terminal and open another one."

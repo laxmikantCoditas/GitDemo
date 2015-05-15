@@ -1,0 +1,488 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Test Case</title>
+
+<link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+<script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+
+<script type="text/javascript">
+
+Ext.define('din.view.Monitor', {
+    extend     : 'Ext.Panel',
+    xtype      : 'monitorview',
+    config     : {
+
+        layout  : 'card',
+        title   : 'Dashboard',
+        iconCls : 'home'
+    },
+    initialize : function () {
+        monitorView = this;
+        NWSummPanel1Title = Ext.create('Ext.Panel', {
+            'id'     : 'NWPanel1Title',
+            'layout' : 'fit',
+            'flex'   : 1
+        });
+        NWSummPanel1 = Ext.create('Ext.Panel', {
+            'id'     : 'nwpanel1',
+            'layout' : 'fit',
+            'flex'   : 7
+        });
+        NWPanel1 = Ext.create('Ext.Panel', {
+            'id'     : 'nw1',
+            'layout' : {
+                type  : 'vbox',
+                align : 'stretch'
+            },
+            'flex'   : 1,
+            items    : [
+                NWSummPanel1,
+                NWSummPanel1Title
+            ]
+        });
+
+        //2nd PANEL
+        NWSummPanel2Title = Ext.create('Ext.Panel', {
+            'id'     : 'NWPanel2Title',
+            'layout' : 'fit',
+
+            'flex' : 1
+        });
+
+        NWSummPanel2 = Ext.create('Ext.Panel', {
+            'id'     : 'nwpanel2',
+            'layout' : 'fit',
+            'flex'   : 7
+        });
+
+        NWPanel2 = Ext.create('Ext.Panel', {
+            'id'     : 'nw2',
+            'layout' : {
+                type  : 'vbox',
+                align : 'stretch'
+            },
+            'flex'   : 1,
+            items    : [
+                NWSummPanel2,
+                NWSummPanel2Title
+            ]
+        });
+
+        NWSummPanel3Title = Ext.create('Ext.Panel', {
+            'id'     : 'NWPanel3Title',
+            'layout' : 'fit',
+            'flex'   : 1
+        });
+
+        NWSummPanel3 = Ext.create('Ext.Panel', {
+            'id'     : 'nwpanel3',
+            'layout' : 'fit',
+            'flex'   : 7
+        });
+
+        NWPanel3 = Ext.create('Ext.Panel', {
+            'id'     : 'nw3',
+            'layout' : {
+                type  : 'vbox',
+                align : 'stretch'
+            },
+            'flex'   : 1,
+            items    : [
+                NWSummPanel3,
+                NWSummPanel3Title
+            ]
+        });
+
+        NWSummaryPanel = Ext.create('Ext.Panel', {
+            'id'     : 'NWSummarypanel',
+            'layout' : {
+                type  : 'hbox',
+                align : 'stretch'
+
+            },
+            'flex'   : 3,
+            'style'  : 'margin-top: 10px;margin-left: 10px;margin-right: 5px;margin-bottom: 5px;',
+            'cls'    : 'panelBio',
+            'items'  : [
+                {
+                    docked : 'top',
+                    xtype  : 'toolbar',
+                    id     : 'NWTool',
+
+                    'cls' : 'panelTool',
+
+                    style : 'font-size: small;',
+                    items : [
+                        {xtype   : 'toolbar',
+                            flex : 9,
+                            cls  : 'panelTool',
+                            html : '<div class="dashTitle">First</div>'},
+                        {xtype : 'spacer'}
+                    ]
+                },
+                NWPanel1,
+                NWPanel2,
+                NWPanel3
+            ]
+        });
+
+        AlarmSummaryPanel = Ext.create('Ext.Panel', {
+            'id'     : 'AlarmSummarypanel',
+            'layout' : 'fit',
+            'flex'   : 1,
+
+            'style' : 'margin-top: 10px;margin-left: 5px;margin-right: 10px;margin-bottom: 5px;',
+
+            'cls'   : 'panelBio',
+            'items' : [
+                {
+                    docked : 'top',
+                    xtype  : 'toolbar',
+                    id     : 'alarmTool',
+                    items  : [
+                        {xtype   : 'toolbar',
+                            flex : 11,
+                            html : '<div class="dashTitle">Second</div>'},
+                        {xtype : 'spacer'}
+
+                    ]
+                }
+            ]
+        });
+
+        SChart = Ext.create('Ext.chart.CartesianChart', {
+            id     : 'topsessionchart',
+            renderTo : Ext.getBody(),
+            store        : {
+                fields : [
+                    {
+                        name : 'username',
+                        type : 'string'
+                    },
+                    {
+                        name : 'bps',
+                        type : 'double'
+                    }
+                ],
+                data   : [
+                    {username : "Username1", bps : 150},
+                    {username : "Username2", bps : 250},
+                    {username : "Username3", bps : 350},
+                    {username : "Username4", bps : 450},
+                    {username : "Username5", bps : 950},
+                    {username : "Username6", bps : 1050}
+                ]
+            },
+            shadow       : true,
+            animate      : true,
+            flipXY       : true,
+            interactions : ['panzoom'],
+            insetPadding : {top : 5, left : 20, right : 20, bottom : 0},
+            axes         : [
+                {
+                    type     : 'numeric',
+                    position : 'bottom',
+                    title    : {
+                        text      : ' Data ',
+                        fontSize  : 15,
+                        fillStyle : "white"
+                    },
+                    label    : {
+                        fillStyle : "white",
+                        fontSize  : 10
+                    },
+                    minimum  : 0
+                },
+                {
+                    type     : 'category',
+                    position : 'left',
+
+                    title : {
+                        text      : 'Users',
+                        fontSize  : 15,
+                        fillStyle : "white"
+                    },
+                    label : {
+                        fillStyle : "white",
+                        fontSize  : 10
+                    }
+                }
+            ],
+            series       : [
+                {
+                    type      : 'bar',
+                    xField    : 'username',
+                    yField    : 'bps',
+                    axis      : 'bottom',
+                    highlight : true,
+                    style     : {
+                        fill        : '#A5DF00',
+                        maxBarWidth : 30
+                    }
+                }
+            ]
+        });
+
+
+        this.SessionSummaryPanel = Ext.create('Ext.Panel', {
+            'id'      : 'SessionSummarypanel',
+            'layout'  : 'fit',
+            'flex'    : 1,
+            'padding' : 10,
+            'border'  : 5,
+
+            'style' : 'margin-top: 5px;margin-left: 10px;margin-right: 5px;margin-bottom: 5px;',
+            'cls'   : 'panelBio',
+            'items' : [
+                {
+                    docked : 'top',
+                    xtype  : 'toolbar',
+                    id     : 'topSessTool',
+
+                    'cls' : 'panelTool',
+
+                    style : 'font-size: small;',
+                    items : [
+                        {xtype   : 'toolbar',
+                            flex : 9,
+                            cls  : 'panelTool',
+                            html : '<div class="dashTitle">Third</div>'},
+                        {xtype : 'spacer'}
+                    ]
+                },
+                SChart
+            ]
+        });
+
+        PortSummaryPanel = Ext.create('Ext.Panel', {
+            'id'      : 'PortSummarypanel',
+            'layout'  : 'fit',
+            'flex'    : 3,
+            'padding' : 10,
+            'border'  : 5,
+
+            'style' : 'margin-top: 5px;margin-left: 5px;margin-right: 10px;margin-bottom: 3.5px;',
+            'cls'   : 'panelBio',
+            'items' : [
+                {
+                    docked : 'top',
+                    xtype  : 'toolbar',
+                    id     : 'portTool',
+
+                    'cls' : 'panelTool',
+
+                    style : 'font-size: small;',
+
+                    items : [
+                        {xtype   : 'toolbar',
+                            flex : 9,
+                            cls  : 'panelTool',
+                            html : '<div class="dashTitle">Fourth 1</div>'},
+                        {xtype : 'spacer'}
+
+                    ]
+                }
+            ]
+        });
+
+
+        SessionCountPanel = Ext.create('Ext.Panel', {
+            'id'      : 'SessionCountpanel',
+            'layout'  : 'fit',
+            'flex'    : 1,
+            'padding' : 10,
+            'border'  : 5,
+            'cls'     : 'panelBio',
+            'style'   : 'margin-top: 3.5px;margin-left: 5px;margin-right: 10px;margin-bottom: 5px;'
+
+        });
+
+        PortAndSessionCount = Ext.create('Ext.Panel', {
+            'id'     : 'PortAndSessionCount',
+            'layout' : {
+                type  : 'vbox',
+                align : 'stretch'
+
+            },
+            'flex'   : 1,
+            'cls'    : 'mainMonitorPanel',
+            items    : [
+                PortSummaryPanel,
+                SessionCountPanel
+            ]
+        });
+        SessionTrendPanel = Ext.create('Ext.Panel', {
+            'id'      : 'SessionTrendpanel',
+            'layout'  : 'fit',
+            'flex'    : 3,
+            'padding' : 10,
+            'border'  : 5,
+
+            'style' : 'margin-top: 5px;margin-left: 10px;margin-right: 5px;margin-bottom: 10px;',
+            'cls'   : 'panelBio',
+            'items' : [
+                {
+                    docked : 'top',
+                    xtype  : 'toolbar',
+                    id     : 'sessTrendTool',
+
+                    'cls' : 'panelTool',
+
+                    style : 'font-size: small;',
+                    items : [
+                        {xtype   : 'toolbar',
+                            flex : 9,
+                            cls  : 'panelTool',
+                            html : '<div class="dashTitle">Fifth</div>'
+                        }
+                    ]
+                }
+            ]
+        });
+
+        RFInterfPanel = Ext.create('Ext.Panel', {
+            'id'      : 'RFInterfPanel',
+            'layout'  : 'fit',
+            'flex'    : 2,
+            'padding' : 10,
+            'border'  : 5,
+
+            'style' : 'margin-top: 5px;margin-left: 5px;margin-right: 10px;margin-bottom: 10px;',
+            'cls'   : 'panelBio',
+            'items' : [
+                {
+                    docked : 'top',
+                    xtype  : 'toolbar',
+                    id     : 'rfTool',
+
+                    'cls' : 'panelTool',
+
+                    style : 'font-size: small;',
+                    items : [
+                        {xtype   : 'toolbar',
+                            flex : 10,
+                            cls  : 'panelTool',
+                            html : 'Sixth</div>'},
+                        {xtype : 'spacer'}
+                    ]
+                }
+            ]
+        });
+
+        NWandAlarmSumm = Ext.create('Ext.Panel', {
+            'id'     : 'NWAlarmpanel',
+            'layout' : {
+                type  : 'hbox',
+                align : 'stretch'
+            },
+            'flex'   : 1,
+            'cls'    : 'mainMonitorPanel',
+            items    : [
+                NWSummaryPanel,
+                AlarmSummaryPanel
+            ]
+        });
+
+
+        SessandPortSumm = Ext.create('Ext.Panel', {
+            'id'     : 'SessandPortpanel',
+            'layout' : {
+                type  : 'hbox',
+                align : 'stretch'
+            },
+            'flex'   : 1,
+            'cls'    : 'mainMonitorPanel',
+            items    : [
+                this.SessionSummaryPanel,
+                PortAndSessionCount
+            ]
+
+        });
+
+        SessTrendandRFInter = Ext.create('Ext.Panel', {
+            'id'     : 'SessTrendandRFInter',
+            'layout' : {
+                type  : 'hbox',
+                align : 'stretch'
+            },
+            'flex'   : 1,
+            'cls'    : 'mainMonitorPanel',
+            items    : [
+                SessionTrendPanel,
+                RFInterfPanel
+
+            ]
+        });
+
+        MonitorPanelObj = Ext.create('Ext.Panel', {
+            fullscreen : 'true',
+
+            id       : 'monitorpanelobj',
+            'layout' : {
+                type  : 'vbox',
+                align : 'stretch'
+            },
+            items    : [
+
+                NWandAlarmSumm,
+                SessandPortSumm,
+                SessTrendandRFInter
+            ]
+        });
+        this.add(MonitorPanelObj);
+    }
+});
+
+Ext.define('AppMain', {
+    extend     : 'Ext.Panel',
+    xtype      : 'appmain',
+    requires: [
+	'Ext.TabPanel',
+	'Ext.chart.*'
+    ],
+    config     : {
+        layout     : 'fit',
+        fullscreen : true
+
+    },
+    initialize : function () {
+        this.callParent(arguments);
+        CampusInsightView = this;
+
+        var hello = Ext.create('Ext.TabPanel', {
+            fullscreen     : true,
+            tabBarPosition : 'bottom',
+
+            defaults : {
+                styleHtmlContent : true
+            },
+
+            items : [
+                {
+
+                    iconCls : 'home',
+                    xtype   : 'monitorview'
+
+                }
+
+            ]
+        });
+        this.items = hello;
+    }
+});
+
+Ext.Loader.setConfig({
+    enabled : true
+});
+Ext.application({
+    name   : 'din',
+    launch : function () {
+        Ext.create('AppMain');
+    }
+});
+
+</script>
+</head>
+<body></body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript">
+        //<debug>
+        Ext.Loader.setPath({
+            'Gauge': 'app'
+        });
+        //</debug>
+
+        Ext.define('Gauge.model.DataValue', {
+            extend: 'Ext.data.Model',
+            config: {
+                //WORKAROUND for Sencha Ticket 9418 & 9557
+                useCache: false,
+                fields: [
+                    {name: 'value', type:'number'},
+                    {name: 'status', type:'number'}
+                ]
+            }
+        });
+
+        Ext.application({
+            name: 'Gauge',
+
+            requires: [
+                'Ext.MessageBox', 'Ext.chart.SpaceFillingChart',
+                'Ext.chart.series.Gauge'
+            ],
+
+            icon: {
+                '57': 'resources/icons/Icon.png',
+                '72': 'resources/icons/Icon~ipad.png',
+                '114': 'resources/icons/Icon@2x.png',
+                '144': 'resources/icons/Icon~ipad@2x.png'
+            },
+
+            isIconPrecomposed: true,
+
+            startupImage: {
+                '320x460': 'resources/startup/320x460.jpg',
+                '640x920': 'resources/startup/640x920.png',
+                '768x1004': 'resources/startup/768x1004.png',
+                '748x1024': 'resources/startup/748x1024.png',
+                '1536x2008': 'resources/startup/1536x2008.png',
+                '1496x2048': 'resources/startup/1496x2048.png'
+            },
+
+            launch: function() {
+                // Destroy the #appLoadingIndicator element
+
+                // Initialize the main view
+                //Ext.Viewport.add(Ext.create('Gauge.view.Main'));
+
+                //Part 1: The store
+                var myStore = Ext.create('Ext.data.Store', {
+                    model: 'Gauge.model.DataValue',
+                    storeId: 'gaugeStore',
+                    proxy: {
+                        type: 'memory',
+                        id: 'gauge-storage'
+                    }
+                });
+                // create the new store data.
+                var dataValue = Ext.create('Gauge.model.DataValue', {
+                    value : 50,
+                    status : 80
+                });
+
+                myStore.setData([dataValue]);
+                //Part 2: The chart
+                var chart = Ext.widget( 'spacefilling',{
+                    flex: 1,
+                    store: 'gaugeStore',
+                    animate: false,
+                    insetPadding: {
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                        bottom: 0
+                    },
+                    axes: [],
+                    series: [{
+                        field: 'value',
+                        type: 'gauge',
+                        minimum: 0,
+                        maximum: 100,
+                        donut: 65,
+                        totalAngle: Math.PI,
+                        subStyle: {
+                            fillStyle: ["#339933", "#32353b"]
+                        },
+                        style: {
+                            miterLimit: 10,
+                            lineCap: 'miter',
+                            lineWidth: 2
+                        }
+                    }]
+                });
+                //Part 3: The container
+                var panel = Ext.create('Ext.Panel', {
+                    items:[ chart], //displays the chart
+                    layout: 'vbox',
+                    // this is actually defined in the css, but here to illustrate the problem.
+                    // If I set the width and height on this container in sencha then the tap event
+                    // is not seen outside the div, but if done this way it is.
+                    style: {
+                        float: 'left',
+                        width: '25%',
+                        height: '100px',
+                        border: '1px solid red'
+                    }
+                });
+
+                panel.on('tap', this.onTap, this, {element: 'element'});
+
+                //Part 3: The container
+                Ext.create('Ext.Panel', {
+                    fullscreen: true,
+                    items:[ panel] //displays the chart
+                });
+            },
+
+            onTap: function() {
+                console.debug("you have tapped");
+            },
+
+            onUpdated: function() {
+                Ext.Msg.confirm(
+                        "Application Update",
+                        "This application has just successfully been updated to the latest version. Reload now?",
+                        function(buttonId) {
+                            if (buttonId === 'yes') {
+                                window.location.reload();
+                            }
+                        }
+                );
+            }
+        });
+    </script>
+
+</head>
+<body></body>
+</html>

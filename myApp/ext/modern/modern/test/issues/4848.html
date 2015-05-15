@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TOUCH-4848</title>
+
+	<script src="../../sencha-touch-debug.js"></script>
+	<link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+	<script type="text/javascript">
+
+		Ext.require([
+			'*'
+		]);
+
+		Ext.application({
+			launch: function() {
+				Ext.Viewport.add({
+					xtype: "container",
+					layout:"card",
+					activeItem: 2,
+					items: [
+						{
+							xtype:"toolbar",
+							docked:"top",
+							html:"I am a docked toolbar"
+						},
+						{
+							xtype: 'container',
+							title: 'Tab 1',
+							style:"background-color:red;opacity:.5;",
+							items: [
+								{
+									xtype: 'fieldset',
+									title: 'MyFieldSet',
+									items: [
+										{
+											xtype: 'textfield',
+											label: 'Field'
+										},
+										{
+											xtype: 'textfield',
+											label: 'Field'
+										}
+									]
+								},
+								{
+									xtype: 'button',
+									text: 'I should not be visible'
+								}
+							]
+						},
+						{
+							xtype: 'container',
+							title: 'Tab 2',
+							style:"background-color:blue;opacity:.5;",
+							items: [
+								{
+									xtype: 'button',
+									text: 'I am just in the middle'
+								}
+							]
+						},
+						{
+							xtype: 'container',
+							title: 'Tab 3',
+							style:"background-color:green;opacity:.5;",
+							items: [
+								{
+									xtype: 'button',
+									text: 'I should be visible'
+								}
+							]
+						}
+					]
+				})
+			}
+		});
+
+	</script>
+</head>
+<body>
+</body>
+</html>

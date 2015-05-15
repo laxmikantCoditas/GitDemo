@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2414</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.setup({
+            onReady:function () {
+                Ext.create('Ext.data.Store', {
+                    storeId:'store',
+                    data:{
+                        records:[
+                            {
+                                title:'Test 1'
+                            }
+                        ]
+                    },
+                    fields: ['title'],
+                    proxy:{
+                        type:'memory',
+                        reader:{
+                            type:'json',
+                            rootProperty:'records'
+                        }
+                    }
+                });
+                Ext.create('Ext.dataview.DataView', {
+                    fullscreen: true,
+                    showAnimation:'slideIn',
+                    hideAnimation:'slideOut',
+                    hidden:false,
+                    ui:'light',
+                    store:'store'
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

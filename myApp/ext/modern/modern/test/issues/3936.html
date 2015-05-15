@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3936</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+
+        var makeView = function(view) {
+            var title = "A New View";
+            //var titleLength = Math.random() * 25;
+            //for(var i = 0; i < titleLength;i++) title += "b";
+
+            view.push({
+                title: title,
+                xtype: 'button',
+                text: 'Push a new view!',
+                handler: function(){makeView(view)}
+            });
+        };
+
+        Ext.setup({ 
+            requires: [
+                'Ext.navigation.View'
+            ],
+            onReady: function() {
+               var view = new Ext.navigation.View({
+                    centered : true,
+                    modal    : true,
+                    width    : "80%",
+                    height   : "80%",
+                    items    :  {
+                        xtype: 'button',
+                        text: 'Push a new view!',
+                        title: "First View",
+                        handler: function(){makeView(view)}
+                        }
+                }).show();
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

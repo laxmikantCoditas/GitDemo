@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3726</title>
+
+	<!--
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.setup({
+            requires: [
+                'Ext.Panel', 'Ext.Button', 'Ext.Audio'
+            ],
+            onReady: function() {
+
+                Ext.Viewport.add({
+                    xtype: 'panel',
+	                items:[{
+		                xtype : 'button',
+		                height: 100,
+		                id: 'btn',
+		                text  : 'Play audio',
+		                handler: function() {
+			                var audio = this.getParent().down('audio');
+			                if (audio.isPlaying()) {
+				                audio.pause();
+				                this.setText('Play audio');
+			                } else {
+				                audio.play();
+				                this.setText('Pause audio');
+			                }
+		                }
+	                },{
+		                xtype: 'audio',
+		                url  : 'http://o5wap.ru/content/mp3/full/3/0/4/Maroon_5_-_Daylight.mp3',
+		                enableControls: false
+	                }]
+                });
+            }
+        });
+    </script>
+    -->
+	<script>
+		function playAudio() {
+			var a = document.getElementsByTagName("audio")[0];
+			if(!a.paused) {
+				a.pause();
+			}else{
+				a.play();
+				setTimeout(function() {
+					a.play();
+				}, 50);
+			}
+		}
+	</script>
+
+    <style>
+        #btn {
+	        padding:20px;
+	        background-color: blue;
+	        color: white;
+	        display: inline-block;
+        }
+    </style>
+
+</head>
+<body>
+	<div id="btn" onclick="playAudio();">do it</div>
+	<audio preload="auto" audio="true" src="http://o5wap.ru/content/mp3/full/3/0/4/Maroon_5_-_Daylight.mp3"></audio>
+</body>
+</html>

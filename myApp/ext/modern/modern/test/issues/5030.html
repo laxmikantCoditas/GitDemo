@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>TOUCH-5030</title>
+    <style></style>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+    <script src="../../sencha-touch-all-debug.js"></script>
+    <script>
+        Ext.require(['Ext.draw.*', 'Ext.Toolbar', 'Ext.SegmentedButton']);
+        Ext.setup({
+            onReady: function () {
+                var draw, rect,
+                    attrList, attrListIndex,
+                    intervalId;
+
+                function recreate() {
+                    clearInterval(intervalId);
+                    text = Ext.Viewport.add({
+                        docked: 'top',
+                        padding: 10,
+                        html: "All animations should be linear and take two seconds to complete, with the exception of the height animation that should take half a second and width animation that should be elastic."
+                    });
+                    Ext.Viewport.remove(draw);
+                    draw = Ext.Viewport.add({
+                        xtype: 'draw',
+                        fullscreen: true
+                    });
+                    rect = draw.getSurface().add({
+                        type: 'rect',
+                        x: 100,
+                        y: 100,
+                        width: 400,
+                        height: 200,
+                        fillStyle: 'lightblue',
+                        strokeStyle: 'navy',
+                        lineDash: [8, 8],
+                        lineWidth: 2,
+                        radius: 100
+                    });
+
+                    rect.fx.setEasing('linear');
+                    rect.fx.setDuration(2000);
+
+                    rect.fx.setDurationOn('height', 500);
+                    rect.fx.setEasingOn('width', 'elasticIn');
+
+                    attrListIndex = 0;
+                    attrList = [
+                        {
+                            lineDashOffset: 200
+                        },
+                        {
+                            width: 200
+                        },
+                        {
+                            lineDash: [5, 10, 20, 5]
+                        },
+                        {
+                            height: 400
+                        },
+                        {
+                            lineDashOffset: -200
+                        },
+                        {
+                            height: 200
+                        },
+                        {
+                            lineDash: [8, 8]
+                        },
+                        {
+                            width: 400
+                        }
+                    ];
+                    intervalId = setInterval(function () {
+                        if (!rect.setAttributes) {
+                            clearInterval(intervalId);
+                            return;
+                        }
+                        rect.setAttributes(attrList[attrListIndex]);
+                        if (attrListIndex < attrList.length - 1) {
+                            attrListIndex++;
+                        } else {
+                            attrListIndex = 0;
+                        }
+                    }, 2000);
+                }
+
+                recreate();
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+	data: [
+		{cat: 'Apr 12', DPO: 44, DSO: 53},
+		{cat: 'May 12', DPO: 44, DSO: 55},
+		{cat: 'Jun 12', DPO: 38, DSO: 52},
+		{cat: 'Jul 12', DPO: 39, DSO: 48},
+		{cat: 'Aug 12', DPO: 39, DSO: 49},
+		{cat: 'Sep 12', DPO: 38, DSO: 50},
+		{cat: 'Oct 12', DPO: 39, DSO: 50},
+		{cat: 'Nov 12', DPO: 41, DSO: 53},
+		{cat: 'Dec 11', DPO: 43, DSO: 49},
+		{cat: 'Jan 12', DPO: 63, DSO: 62},
+		{cat: 'Feb 12', DPO: 65, DSO: 64},
+		{cat: 'Mar 12', DPO: 70, DSO: 68},
+	]
+}

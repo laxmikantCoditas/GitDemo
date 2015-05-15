@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>1773</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+
+    <script type="text/javascript">
+        Ext.setup({
+            onReady:function () {
+                Ext.define('Myapp.view.MyCarousel', {
+                    extend:'Ext.Container',
+
+                    config:{
+                        fullscreen:true,
+                        layout:'vbox',
+                        items:[
+                            {
+                                id:'id1',
+                                xtype:'carousel',
+                                direction:'horizontal',
+                                directionLock:true,
+                                flex:1,
+                                items:[{
+                                    xtype:'panel',
+                                    html:"initial1"
+                                },
+                                {
+                                    xtype:'panel',
+                                    html:"intitial2"
+                                }]
+                            },
+                            {
+                                id:'id2',
+                                xtype:'carousel',
+                                direction:'vertical',
+                                directionLock:true,
+                                flex:3,
+                                items:[{
+                                    xtype:'panel',
+                                    html:"initial3"
+                                },
+                                {
+                                    xtype:'panel',
+                                    html:"intitial4"
+                                }]
+                            }
+                        ]
+                    }
+                });
+
+                new Myapp.view.MyCarousel();
+                var items = [
+                    {
+                        xtype:'panel',
+                        html:"text1"
+                    },
+                    {
+                        xtype:'panel',
+                        html:"text2"
+                    }
+                ];
+                var carousel = Ext.getCmp('id2');
+
+                carousel.removeAll();
+                for (var i=0; i<carousel.getItems().length;i++ ) {
+                    console.log('remove');
+                    carousel.removeAt(1, true);
+                }
+
+                carousel.add(items);
+
+                carousel.setActiveItem(0);
+            }
+        });
+
+    </script>
+</head>
+<body></body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        //your test case goes here
+        Ext.onReady(function() {
+			
+			Ext.create('Ext.form.Panel', {                
+		        preventHeader: true,
+		        width: 350,
+		        layout: 'anchor',
+		        defaults: {
+		            anchor: '100%'
+		        },
+		        items: [
+		            {            
+		                xtype: 'checkboxgroup',
+		                fieldLabel: 'Values',
+		                items: [
+		                    {
+		                        boxLabel: 'Item', 
+		                        name: 'item',
+		                        value: 'item'
+		                    }
+		                ],
+		                columns: 1,
+		                vertical: true
+		            }
+		        ],
+		    
+		        buttons: [
+		            {
+		                text: 'Add',
+		                handler: function(button) {                        
+		                    var panel = button.up('form'),
+		                        group = panel.down('checkboxgroup');
+		                    
+		                    group.add({
+		                        boxLabel: 'Item 2', 
+		                        name: 'item2',
+		                        value: 'item2'
+		                    }); 
+							
+							                                       
+		                }
+		            }
+		        ],
+		        
+		        renderTo: Ext.getBody()
+		});
+			
+		});
+    </script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Bar</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <link rel="stylesheet" href="../../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../../sencha-touch-all.js"></script>
+    <script src="data.js"></script>
+    <script>
+        Ext.setup({
+            requires: [
+                'Ext.chart.CartesianChart',
+                'Ext.chart.series.Line',
+                'Ext.chart.series.Bar',
+                'Ext.chart.axis.Numeric',
+                'Ext.chart.axis.Category',
+                'Ext.chart.axis.Time',
+                'Ext.chart.interactions.PanZoom',
+                'Ext.TitleBar',
+                'Ext.Toolbar',
+                'Ext.Button'
+            ],
+            onReady: function () {
+                if (location.search.match('svg')) {
+                    Ext.draw.Component.prototype.engine = 'Ext.draw.engine.Svg';
+                }
+                var store = new OrderItems(),
+                    cmp = new Ext.create("Ext.chart.CartesianChart", {
+                        store: store,
+                        colors: ["#43ffff", "#5bbbbb", "#538888", "#5da64e", "#e3e32e", "#878746", "#d5821d", "#d04646", "#6e4273", "#3e8aa8"],
+                        interactions: ['panzoom'],
+                        series: [
+                            {
+                                type: 'bar',
+                                xField: 'name',
+                                yField: ['g1', 'g2', 'g3', 'g4'],
+                                style: {
+                                    lineJoin: 'butt',
+                                    stroke: 'black',
+                                    fill: 'rgb(157,223,200)',
+                                    barWidth: 12
+                                }
+                            }
+                        ],
+                        axes: [
+                            {
+                                type: 'numeric',
+                                position: 'left',
+                                fields: 'g1'
+                            },
+                            {
+                                type: 'category',
+                                position: 'bottom',
+                                fields: 'name',
+                                visibleRange: [0, 0.5]
+                            }
+                        ]
+                    });
+                Ext.Viewport.add({
+                    layout: 'fit',
+                    items: [
+                        {
+                            xtype: 'titlebar',
+                            docked: 'top',
+                            title: 'Bar Chart',
+                            items: {
+                                text: 'Refresh',
+                                handler: function () {
+                                    store.generateData(100);
+                                }
+                            }
+                        },
+                        cmp
+                    ]
+                });
+
+                Ext.ComponentQuery.query('titlebar')[0].add(
+                    Ext.ComponentQuery.query('interaction')[0].getModeToggleButton()
+                );
+            }
+        });
+
+    </script>
+</head>
+<body>
+</body>
+</html>

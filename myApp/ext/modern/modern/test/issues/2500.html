@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2500</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+//        Ext.application({
+//            launch: function () {
+//                Ext.Viewport.add({
+//                    items:[{
+//                        xtype: 'audio',
+//                        id: 'audiotest',
+//                        url:'http://www.mfiles.co.uk/mp3-downloads/the-blue-danube-accomp.mp3',
+//                        listeners: {
+//                            painted: function() {
+//                                this.play();
+//                            }
+//                        }
+//                    }, {
+//                        xtype:'button',
+//                        text: 'Toggle',
+//                        handler: function () {
+//                            Ext.getCmp('audiotest').toggle();
+//                        }
+//                    }]
+//                });
+//            }
+//        });
+        Ext.application({
+            launch: function () {
+                Ext.Viewport.add({
+                    layout: 'fit',
+                    items:[{
+                        xtype: 'tabpanel',
+                        items: [{
+                            title: 'Panel One',
+                            html: 'Some Empty Panel'
+                        }, {
+                            title: 'Panel Two',
+                            items: [{
+                                xtype: 'audio',
+                                id: 'audiotest',
+                                url:'http://www.mfiles.co.uk/mp3-downloads/the-blue-danube-accomp.mp3',
+                                listeners: {
+                                    painted: function() {
+                                        this.play();
+                                    }
+                                }
+                            }, {
+                                xtype:'button',
+                                text: 'Toggle',
+                                handler: function () {
+                                    Ext.getCmp('audiotest').toggle();
+                                }
+                            }]
+                        }]
+                    }]
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

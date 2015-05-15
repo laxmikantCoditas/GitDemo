@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Paint</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css" type="text/css">
+    <script src="../../sencha-touch-all.js"></script>
+</head>
+<body>
+<script>
+    Ext.require(['Ext.TitleBar', 'Ext.draw.Component']);
+    Ext.setup({
+        onReady: function () {
+            function smoothenPart(y0, y1, y2, y3) {
+                if (y0 === undefined) {
+                    return [y1, 13 * y1 / 18 + y2 / 3 - y3 / 18, 5 * y1 / 18 + 5 * y2 / 6 - y3 / 9, y2];
+                } else if (y3 === undefined) {
+                    return [y1, -y0 / 9 + 5 * y1 / 6 + 5 * y2 / 18, -y0 / 18 + y1 / 3 + 13 * y2 / 18, y2];
+                } else {
+                    return [y1, -y0 / 9 + 5 * y1 / 6 + y2 / 3 - y3 / 18, -y0 / 18 + y1 / 3 + 5 * y2 / 6 - y3 / 9, y2];
+                }
+            }
+
+            function smoothenList(points) {
+                if (points.length < 6) {
+                    return points;
+                }
+                var result = [], beziers = [], x, y, bezier;
+                result.push(['M', points[0], points[1]]);
+                for (var i = 0; i < points.length - 2; i++) {
+                    x = smoothenPart(points[i - 2], points[i], points[i + 2], points[i + 4]);
+                    i++;
+                    y = smoothenPart(points[i - 2], points[i], points[i + 2], points[i + 4]);
+                    result.push(['C', x[1], y[1], x[2], y[2], x[3], y[3]]);
+                }
+                result.isBSegs = true;
+                return result;
+            }
+
+            var seed = .5, count = 0;
+
+            function random() {
+                seed *= 15.1;
+                seed -= Math.floor(seed);
+                return seed;
+            }
+
+            var cmp = new Ext.draw.Component({}),
+                sprite, list = [], old1 = [0, 0], old2 = [0, 0];
+            cmp.getSurface().element.setStyle({
+                'zIndex': 10
+            });
+            Ext.Viewport.add({
+                layout: 'fit',
+                items: [
+                    {
+                        xtype: 'titlebar',
+                        title: 'Smoothening and Cubic Bezier Curve rendering',
+                        docked: 'top'
+                    },
+                    cmp
+                ]
+            });
+
+            cmp.element.on('dragstart', function (e) {
+                var p0 = cmp.element.getXY(),
+                    p = [e.startX - p0[0], e.startY - p0[1]];
+                list = [p[0], p[1]];
+                count++;
+                sprite = cmp.getSurface().add({
+                    type: 'path',
+                    path: [],
+                    lineWidth: 30 * random() + 10,
+                    lineCap: 'round',
+                    lineJoin: 'round',
+                    strokeStyle: new Ext.draw.Color(random() * 127 + 128, random() * 127 + 128, random() * 127 + 128)
+                });
+                old1 = old2 = p;
+            });
+            cmp.element.on('drag', function (e) {
+                if (sprite) {
+                    var p = e.touches[0].point,
+                        p0 = cmp.element.getXY();
+                    p = [p.x - p0[0], p.y - p0[1]];
+                    list.push(p[0], p[1]);
+                    count++;
+                    var path = smoothenList(list);
+                    sprite.setAttributes({
+                        path: path
+                    });
+                }
+                cmp.getSurface().setDirty(true);
+                cmp.renderFrame();
+            });
+            cmp.element.on('dragend', function (e) {
+                var p0 = cmp.element.getXY(),
+                    p = [e.pageX - p0[0], e.pageY - p0[1]];
+                list.push(p[0], p[1]);
+                count++;
+                var path = smoothenList(list);
+                sprite.setAttributes({
+                    path: path
+                });
+                var newSprite = cmp.getSurface('back').add({
+                    type: 'path',
+                    path: smoothenList(list),
+                    lineWidth: sprite.attr.lineWidth,
+                    lineCap: 'round',
+                    lineJoin: 'round',
+                    strokeStyle: sprite.attr.strokeStyle
+                });
+                cmp.getSurface('back').setDirty(true);
+                cmp.getSurface('back').renderFrame();
+                
+                sprite.destroy();
+                sprite = null;
+            });
+        }
+    });
+</script>
+</body>
+</html>

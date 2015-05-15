@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html manifest="" lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title>TOUCH-4821</title>
+	<link rel="stylesheet" href="../../../resources/css/sencha-touch.css">
+	<script src="../../../sencha-touch-all-debug.js"></script>
+	<script>
+		Ext.Loader.setConfig({
+			enabled: true
+		});
+		Ext.define('User', {
+			extend: 'Ext.data.Model',
+			config: {
+				fields: ['id', 'name'],
+				hasMany: {
+					model: 'Order',
+					name: 'orders'
+				},
+				identifier: {
+					type: 'sequential'
+				},
+				proxy: {
+					type: 'ajax',
+					url: 'userData.json'
+				}
+			}
+		});
+
+		Ext.define('Order', {
+			extend: 'Ext.data.Model',
+			config: {
+				fields: ['id', 'status'],
+				hasMany: {
+					model: 'OrderItem',
+					name: 'orderItems'
+				}
+			}
+		});
+
+		Ext.define('OrderItem', {
+			extend: 'Ext.data.Model',
+			config: {
+				fields: ['id', 'quantity', 'price', 'name']
+			}
+		});
+
+		Ext.define('Users', {
+			extend: 'Ext.data.Store',
+			id: 'Users',
+			config: {
+				model: 'User',
+				autoLoad: false
+			}
+		});
+
+		Ext.application({
+			launch: function() {
+				Ext.create('Users');
+				this.start();
+			}, //launch
+
+			start: function() {
+				task = Ext.create('Ext.util.DelayedTask', function() {
+					this.getData();
+				}, this);
+				task.delay(1000);
+			},
+			getData: function() {
+				document.getElementById('count').innerHTML = 'Store count: ' + Ext.StoreMgr.getCount();
+				//console.log('Store count: ' + Ext.StoreMgr.getCount());
+				Ext.getStore('Users').load({
+					scope: this,
+					addRecords: false,
+					callback: function(records, operation, success) {
+						console.log('callback');
+						task.delay(1000);
+					}
+				});
+			}
+		}); //Ext.application
+	</script>
+</head>
+<body>
+	<div id="count"></div>
+</body>
+</html>

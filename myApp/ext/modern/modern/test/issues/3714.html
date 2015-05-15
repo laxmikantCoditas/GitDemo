@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3714</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.setup({
+            requires: [
+                'Ext.tab.Panel', 'Ext.TitleBar', 'Ext.navigation.View', 'Ext.form.Panel', 'Ext.form.FieldSet', 'Ext.field.Select'
+            ],
+            onReady: function() {
+                Ext.Viewport.add({
+                    xtype: 'container',
+                    layout: "vbox",
+                    items: [
+                        {
+                            xtype: 'titlebar',
+                            docked: 'top',
+                            title: 'Navigation',
+                            items: [
+                                {
+                                    iconCls: 'add',
+                                    iconMask: true,
+                                    align: 'left'
+                                },
+                                {
+                                    iconCls: 'add',
+                                    iconMask: true,
+                                    align: 'left'
+                                },
+                                {
+                                    text:"Logoff: Duder",
+                                    align: 'right'
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'navigationview',
+                            flex: 1,
+                            layout: {
+                                type: 'card',
+                                animation: null
+                            },
+                            navigationBar: {
+                                items: {
+                                    xtype: 'selectfield',
+                                    usePicker: true,
+                                    options: [
+                                        {text: 'First Option', value: 'first'},
+                                        {text: 'Second Option', value: 'second'},
+                                        {text: 'Third Option', value: 'third'}
+                                    ],
+                                    align: 'right'
+                                }
+                            },
+                            items: [
+                                {
+                                    items: [
+                                        {
+                                            xtype: 'button',
+                                            text: 'Push a new view!',
+                                            handler: function() {
+                                                var view = this.up("navigationview");
+                                                // use the push() method to push another view. It works much like
+                                                // add() or setActiveItem(). it accepts a view instance, or you can give it
+                                                // a view config.
+                                                view.push({
+                                                    title: 'SecondSecondSecondSecondSecondSecondSecondSecondSecond',
+                                                    html: 'Second view!'
+                                                });
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                });
+            }
+        })
+        ;
+    </script>
+</head>
+<body>
+</body>
+</html>

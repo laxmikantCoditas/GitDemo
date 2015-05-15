@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sencha Test</title>
+        
+        <script src="../../sencha-touch-debug.js"></script>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+        <script type="text/javascript">
+
+            Ext.define('Ux.field.Pattern', {
+                extend : 'Ext.field.Text',
+                xtype  : 'patternfield',
+
+                config : {
+                    component : {
+                        pattern : '[0-9]*'
+                    }
+                }
+            });
+
+            Ext.application({
+                name: 'Test',
+
+                requires : [
+                    'Ext.form.Panel'
+                ],
+            
+                launch: function() {
+                    var form = new Ext.form.Panel({
+                        fullscreen : true,
+                        items      : [
+                            {
+                                xtype : 'textfield',
+                                label : 'Text'
+                            },
+                            {
+                                xtype : 'patternfield',
+                                label : 'Numbers'
+                            }
+                        ]
+                    });
+                }
+            });
+            
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

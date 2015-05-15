@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Tab Bar</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <link rel="stylesheet" href="../../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../../sencha-touch.js"></script>
+
+    <style>
+        .baseCls.componentCls.cls {
+            background-color: green;
+        }
+
+        .baseCls.componentCls.cls.addCls {
+            background-color: red;
+        }
+
+        .fixedWidthBodyAndInner {
+            width: 100px;
+        }
+
+        .fixedWidthBodyAndInner .x-component-inner {
+            width: 150px;
+        }
+
+        .fixedWidth {
+            width: 100px;
+        }
+
+        .fixedHeight {
+            height: 100px;
+        }
+
+        .x-scroll-indicator {
+            background-color: #333;
+            opacity: 0.5;
+        }
+    </style>
+
+    <script>
+        Ext.setup({
+            onReady: function(){
+                var component1 = Ext.create('Ext.Component', {
+                    cls: 'cls',
+                    baseCls: 'baseCls',
+                    componentCls: 'componentCls',
+                    scrollable: true,
+                    height: 100,
+                    html: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim libero non eros congue mollis dignissim dui molestie.'
+                });
+
+                component1.addCls('fixedWidthBodyAndInner');
+                component1.render(document.body);
+
+                var component2 = Ext.create('Ext.Component', {
+                    cls: 'cls',
+                    baseCls: 'baseCls',
+                    componentCls: 'componentCls',
+                    scrollable: {
+                        width: 200
+                    },
+                    height: 100,
+                    width: 100,
+                    html: 'Lorem ipsum adipiscing elit. Donec dignissim libero non eros congue mollis dignissim dui molestie.Donec dignissim libero non eros congue mollis dignissim dui molestie.Donec dignissim libero non eros congue mollis dignissim dui molestie.'
+                });
+
+                component2.addCls('addCls');
+                component2.render(document.body);
+
+                var component3 = Ext.create('Ext.Component', {
+                    cls: 'cls',
+                    baseCls: 'baseCls',
+                    componentCls: 'componentCls',
+                    scrollable: true,
+                    html: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br /> Donec dignissim libero non eros congue mollis dignissim dui molestie.'
+                });
+
+                component3.addCls('fixedWidth');
+                component3.addCls('fixedHeight');
+
+                component3.render(document.body);
+
+
+//                var component2 = Ext.create('Ext.Component');
+//
+//                component2.render(document.body);
+//
+//                component2.setBaseCls('baseCls');
+//                component2.setComponentCls('componentCls');
+//                component2.setCls('cls');
+//                component2.addCls('addCls');
+//
+//                var component3 = Ext.create('Ext.Component', {
+//                    useBody: true,
+//                    useInner: true,
+//                    cls: 'body-inner'
+//                });
+//                component3.render(document.body);
+//
+//                var component4 = Ext.create('Ext.Component', {
+//                    useBody: true,
+//                    cls: 'body'
+//                });
+//                component4.render(document.body);
+//
+//                var component5 = Ext.create('Ext.Component', {
+//                    useInner: true,
+//                    cls: 'body-inner'
+//                });
+//                component5.render(document.body);
+//
+//                var component6 = Ext.create('Ext.Component', {
+//                    cls: 'body-inner',
+//                    html: 'test'
+//                });
+//                component6.render(document.body);
+//                component6.setUseInner(true);
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

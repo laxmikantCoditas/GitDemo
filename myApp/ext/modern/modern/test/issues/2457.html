@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2457</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.define('test.animation.controller.Test', {
+            extend:'Ext.app.Controller',
+
+            config:{
+                routes:{
+                    "$":"showPageOne",
+                    "page-one":"showPageOne",
+                    "page-two":"showPageTwo"
+                },
+
+                refs:{
+                    pageOneBtn:"pagetwo button[action=goto-page-one]",
+                    pageTwoBtn:"pageone button[action=goto-page-two]",
+
+                    pageOne:{
+                        selector:"pageone",
+                        xtype:"pageone",
+                        autoCreate:true
+                    },
+
+                    pageTwo:{
+                        selector:"pagetwo",
+                        xtype:"pagetwo",
+                        autoCreate:true
+                    }
+                },
+
+                control:{
+                    pageTwoBtn:{
+                        tap:function () {
+                            test.animation.app.redirectTo('page-two');
+                        }
+                    },
+                    pageOneBtn:{
+                        tap:function () {
+                            test.animation.app.redirectTo('page-one');
+                        }
+                    }
+                }
+            },
+
+            showPageOne:function () {
+                Ext.Viewport.setActiveItem(this.getPageOne());
+            },
+
+            showPageTwo:function () {
+                Ext.Viewport.setActiveItem(this.getPageTwo());
+            }
+        });
+
+        Ext.define('test.animation.view.PageOne', {
+            extend:'Ext.Panel',
+            xtype:'pageone',
+            fullscreen:true,
+            config:{
+                title:'Page One',
+                styleHtmlContent:true,
+                items:[
+                    {
+                        html:'<h1>Page One</h1>'
+                    },
+                    {
+                        xtype:'button',
+                        action:'goto-page-two',
+                        text:'Page Two'
+                    }
+                ]
+            }
+        });
+        Ext.define('test.animation.view.PageTwo', {
+            extend:'Ext.Panel',
+            xtype:'pagetwo',
+
+            config:{
+                fullscreen:true,
+                title:"Page Two",
+                styleHtmlContent:true,
+
+                // showAnimation: 'pop',
+                // showAnimation: 'fade',
+                // showAnimation: 'flip',
+                // showAnimation: 'slide',
+                showAnimation:{
+                    type:"slide",
+                    direction:'up'
+                },
+//                hideAnimation: "slideOut",	// Throws error - Uncaught TypeError: cannot call method 'getPageBox' of Null (Slide.js:62)
+//                hideAnimation: "slide",		// Throws same error
+//                hideAnimation: "popOut",		// No error, but on first run, shows blank panel; pressing browser back & then retrying works as expected
+//                hideAnimation: "fadeOut",    // No error, but on first run, shows blank panel; pressing browser back & then retrying works as expected
+
+//                hideAnimation:"fade", // Works, but looks funny when using as a hide animation
+//                hideAnimation: "pop",		// No error, but looks funny - see the destination panel before animation starts
+//                hideAnimation: "flip",		// Works, but looks funny - first shows a mirrored version of the destination panel, then it flips;
+                // seems like it should start with current panel and flip to destination panel; does same for showAnimation
+                // When no show animation defined, no error, but on first run, shows blank panel; pressing browser back &
+                // then retrying works as expected
+
+                items:[
+                    {
+                        xtype:'button',
+                        action:'goto-page-one',
+                        text:'Page One'
+                    }
+                ],
+                html:[
+                    '<img src="http://staging.sencha.com/img/sencha.png" />',
+                    '<h1>Welcome to Faux Preferences panel</h1>',
+                    '<h2>Sencha Touch (2.0.0)</h2>'
+                ].join("")
+            }
+        });
+
+        Ext.application({
+            name:'test.animation',
+
+            controllers:[
+                'Test'
+            ],
+
+            // No need to include in index.html if listed here
+            views:[
+                'PageOne',
+                'PageTwo'
+            ]
+        });
+    </script>
+</head>
+<body></body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        //your test case goes here
+Ext.Loader.setConfig({
+   enabled: true,
+   paths: {
+      'Ext.ux': '../../examples/ux'
+   }
+});
+Ext.require('Ext.ux.RowExpander');
+Ext.onReady( function() {
+Ext.create('Ext.data.Store', {
+    storeId:'simpsonsStore',
+    fields:[
+        {name:'id',type:'int'},
+        'name', 'email', 'phone', 
+        {name:'dob',type:'date'},
+        {name:'beer',type:'int'}
+    ],
+    data:{'items':[
+        {"id":"1","name":"Lisa", "email":"lisa@simpsons.com", "phone":"555-111-1224", "dob":"01/15/2000", "beer":"1"},
+        {"id":"2","name":"Bart", "email":"bart@simpsons.com", "phone":"555--222-1234", "dob":"02/13/1999", "beer":"27"},
+        {"id":"3","name":"Homer", "email":"home@simpsons.com", "phone":"555-222-1234", "dob":"07/04/1978", "beer":"29384"},                        
+        {"id":"4","name":"Marge", "email":"marge@simpsons.com", "phone":"555-222-1254", "beer":"125"}
+    ]},
+    proxy: {
+        type: 'memory',
+        reader: {
+            type: 'json',
+            root: 'items'
+        }
+    },
+    groupField: 'phone'
+});
+
+
+Ext.create('Ext.grid.Panel', {
+    requires: ['Ext.ux.RowExpander'],
+    closable: true,
+    title: 'Simpsons',
+    store: Ext.data.StoreManager.lookup('simpsonsStore'),
+    columns: [
+        {header: 'id', dataIndex: 'id', hidden: true },
+        {header: 'Name', dataIndex: 'name', editor: { xtype:'textarea' }},
+        {xtype: 'actioncolumn', width:25, iconCls: 'x-form-date-trigger'},
+        {header: 'Email', dataIndex: 'email', flex:1},
+        {header: 'Phone', dataIndex: 'phone', editor: { xtype:'textfield' }},
+        {header: 'DOB', dataIndex: 'dob', editor: { xtype: 'datefield' }},
+        {header: 'Beer Drank', dataIndex: 'beer', editor: { xtype:'numberfield' }},
+        {xtype: 'actioncolumn', width:25, iconCls: 'x-form-date-trigger'}
+    ],
+    height: 200,
+    width: 500,
+    renderTo: Ext.getBody(),
+    plugins: [{ ptype: 'cellediting' },{ ptype: 'rowexpander', rowBodyTpl: ['<div>{name} is drunk.</div>'] }]
+});
+});
+    </script>
+</body>
+</html>

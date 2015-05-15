@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TOUCH-5226</title>
+
+	<script src="../../sencha-touch-debug.js"></script>
+	<link rel="stylesheet" theme href="../../resources/css/bb10.css">
+
+	<script type="text/javascript">
+		/*var link = Ext.DomQuery.selectNode('link[theme]'),
+				os = 'sencha-touch.css',
+				userAgent = Ext.browser.userAgent;
+
+		if (userAgent.match('BB10')) os = 'bb10';
+		if (userAgent.match('Android')) os = 'mountainview';
+		if (userAgent.match('iPhone OS 4')) os = 'cupertino-classic';
+		if (userAgent.match('iPhone OS 7')) os = 'cupertino';
+		if (userAgent.match('Windows Phone')) os = 'wp';
+		link.href = '../../resources/css/' + os + '.css';*/
+
+		Ext.application({
+			requires: [
+				'Ext.Toast'
+			],
+			name: 'MyApp',
+			launch: function() {
+
+				Ext.toast('string');
+				Ext.toast('string with timeout', 2000);
+				Ext.toast({message: 'object with timeout', timeout: 4000});
+				Ext.toast({message: 'object without timeout'});
+
+			}
+		});
+	</script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TOUCH-3129</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script type="text/javascript" src="../../sencha-touch.js"></script>
+        
+        <script type="text/javascript">
+            Ext.application({
+                name : 'Test',
+
+                requires : [
+                    'Ext.form.Panel',
+                    'Ext.field.DatePicker',
+                    'Ext.field.TextArea',
+	                'Ext.MessageBox'
+                ],
+
+                launch : function () {
+
+                    new Ext.form.Panel({
+                        fullscreen : true,
+                        items      : [
+                            {
+                                xtype       : 'datepickerfield',
+                                placeHolder : 'Date'
+                            },
+                            {
+                                xtype       : 'textareafield',
+                                placeHolder : 'TextArea'
+                            },
+                            {
+                                xtype       : 'textareafield',
+                                placeHolder : 'TextArea2'
+                            },
+	                        {
+		                        xtype       : 'textareafield',
+		                        placeHolder : 'TextArea'
+	                        },
+	                        {
+		                        xtype       : 'textareafield',
+		                        placeHolder : 'TextArea2'
+	                        },
+	                        {
+		                        xtype       : 'textareafield',
+		                        placeHolder : 'TextArea'
+	                        },
+	                        {
+		                        xtype       : 'textareafield',
+		                        placeHolder : 'TextArea2'
+	                        },
+	                        {
+		                        xtype       : 'textareafield',
+		                        placeHolder : 'TextArea'
+	                        },
+	                        {
+		                        xtype       : 'textareafield',
+		                        placeHolder : 'TextArea2'
+	                        }
+                        ]
+                    });
+
+	                Ext.Msg.show({
+
+		                title : 'confirm',
+		                buttons : [{
+			                itemId: 'yes',
+			                text: 'Oui'
+		                },
+			                {
+				                itemId: 'no',
+				                text: 'Non'
+			                }],
+		                message : 'confirm exit?',
+		                fn : function(buttonId,value,opt){
+			                switch (buttonId) {
+				                case "yes" :
+					                console.log('close confirmed');
+					                break;
+				                case "no" :
+					                console.log('close canceled');
+					                break;
+			                }
+		                }
+	                });
+                }
+            });
+	</script>
+    </head>
+    <body>
+    </body>
+</html>

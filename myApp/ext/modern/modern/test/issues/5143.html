@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>TOUCH-5143</title>
+    <style></style>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+    <script src="../../sencha-touch-all-debug.js"></script>
+    <script>
+        Ext.require([
+            'Ext.chart.*',
+            'Ext.Toolbar',
+            'Ext.SegmentedButton'
+        ]);
+        Ext.setup({
+            onReady: function () {
+                var container, cartesian;
+                var isSvg = true;
+
+                var toolbar = Ext.Viewport.add({
+                    xtype: 'toolbar',
+                    docked: 'top',
+                    items: [
+                        {
+                            xtype: 'segmentedbutton',
+                            defaults: {
+                                width: 70
+                            },
+                            items: [
+                                {
+                                    text: 'Canvas',
+                                    pressed: !isSvg,
+                                    handler: function () {
+                                        isSvg = false;
+                                        updateChart();
+                                    }
+                                },
+                                {
+                                    text: 'SVG',
+                                    pressed: isSvg,
+                                    handler: function () {
+                                        isSvg = true;
+                                        updateChart();
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                });
+
+                function updateChart() {
+                    Ext.Viewport.remove(container);
+
+                    container = Ext.Viewport.add({
+                        xtype: 'container',
+                        layout: 'vbox'
+                    });
+
+                    container.add({
+                        xtype: 'container',
+                        styleHtmlContent: true,
+                        html: "The issue only happens in Safari (desktop or mobile). Notice the difference in rendering with other browsers. It shouldn't be there."
+                    });
+
+                    cartesian = container.add({
+                        xtype: 'chart',
+                        width: 500,
+                        height: 200,
+                        engine: 'Ext.draw.engine.' + (isSvg ? 'Svg' : 'Canvas'),
+                        store: {
+                            fields: ["Month", "Cash", "Investment", "DirectLiability", "ContLiability", "Asset", "escrownsecuritydeposit"],
+                            data: [
+                                {"Year": "2013", "id": "ext-record-380", "Month": "31-May-13", "Investment": 0, "Asset": 45177.15, "DirectLiability": 1805.08, "Cash": 45177.15, "modifiedescrow": 0, "modifiedsecurityDeposit": 0, "escrownsecuritydeposit": 0, "sumrecord": 46982.23, "ContLiability": 0},
+                                {"Year": "2013", "id": "ext-record-381", "Month": "28-Jun-13", "Investment": 0, "Asset": 41119.54, "DirectLiability": 262.25, "Cash": 41119.54, "modifiedescrow": 0, "modifiedsecurityDeposit": 0, "escrownsecuritydeposit": 0, "sumrecord": 41381.79, "ContLiability": 0},
+                                {"Year": "2013", "id": "ext-record-382", "Month": "31-Jul-13", "Investment": 0, "Asset": 37768.82, "DirectLiability": 43.66, "Cash": 37768.82, "modifiedescrow": 0, "modifiedsecurityDeposit": 0, "escrownsecuritydeposit": 0, "sumrecord": 37812.48, "ContLiability": 0},
+                                {"Year": "2013", "id": "ext-record-383", "Month": "30-Aug-13", "Investment": 0, "Asset": 37088.32, "DirectLiability": 5839.58, "Cash": 37088.32, "modifiedescrow": 0, "modifiedsecurityDeposit": 0, "escrownsecuritydeposit": 0, "sumrecord": 42927.9, "ContLiability": 0},
+                                {"Year": "2013", "id": "ext-record-384", "Month": "30-Sep-13", "Investment": 36507.01, "Asset": 36507.01, "DirectLiability": 7176.93, "Cash": 0, "modifiedescrow": 0, "modifiedsecurityDeposit": 0, "escrownsecuritydeposit": 0, "sumrecord": 43683.94, "ContLiability": 0},
+                                {"Year": "2013", "id": "ext-record-385", "Month": "01-Oct-13", "Investment": 5272.18, "Asset": 5272.18, "DirectLiability": 0, "Cash": 0, "modifiedescrow": 0, "modifiedsecurityDeposit": 0, "escrownsecuritydeposit": 0, "sumrecord": 5272.18, "ContLiability": 0}
+                            ]
+                        },
+                        axes: [
+                            {
+                                type: 'numeric',
+                                needHighPrecision: true,
+                                position: 'left',
+                                fields: [
+                                    'Cash', 'Investment', 'DirectLiability', 'ContLiability',  'deposits',
+                                    'escrownsecuritydeposit', 'Asset'
+                                ]
+                            },
+                            {
+                                type: 'category',
+                                position: 'bottom',
+                                fields: 'Month'
+                            }
+                        ],
+                        series: {
+                            type: 'line',
+                            xField: 'Month',
+                            yField: 'Cash',
+                            style: {
+                                smooth: 5,
+                                stroke: '#CAC980',
+                                lineWidth: 3
+                            }
+                        }
+                    });
+                }
+
+                updateChart();
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

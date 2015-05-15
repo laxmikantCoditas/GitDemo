@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        Ext.Loader.setConfig({
+            enabled: true
+        });
+        Ext.onReady(function () {
+            Ext.create('Ext.container.Viewport', {
+                layout: {
+                    align: 'stretch',
+                    type: 'vbox'
+                },
+                renderTo: Ext.getBody(),
+                items: [{
+                    xtype: 'toolbar',
+                    items: [{
+                        xtype: 'button',
+                        itemId: 'openBtn',
+                        text: 'Open',
+                        handler: function () {
+                            var win = Ext.widget('window', {
+                                width: 600,
+                                height: 500,
+                                itemId: 'pdfWindow',
+                                items: [{
+                                    xtype: 'component',
+                                    autoEl: {
+                                        tag: 'iframe',
+                                        src: 'http://www.selab.isti.cnr.it/ws-mate/example.pdf'
+                                    }
+                                }]
+                            });
+                            win.show();
+                        }
+                    }]
+                }, {
+                    xtype: 'panel',
+                    flex: 1,
+                    itemId: 'desktop',
+                    bodyStyle: 'background-color: #c0c0c0;'
+                }]
+            });
+
+        });
+        
+    </script>
+</body>
+</html>

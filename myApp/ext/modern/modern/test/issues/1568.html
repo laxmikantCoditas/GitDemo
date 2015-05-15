@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-1568</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+    <script type="text/javascript">
+
+        Ext.application({
+            name : 'Test',
+
+            requires : [
+                'Ext.navigation.View'
+            ],
+
+            launch : function () {
+                new Ext.navigation.View({
+                    fullscreen    : true,
+                    navigationBar : {
+                        docked      : 'top',
+                        rightButton : {
+                            text : 'Home'
+                        }
+                    },
+                    items         : [
+                        {
+                            title : 'Home',
+                            items : [
+                                {
+                                    html : 'This is home'
+                                },
+                                {
+                                    xtype   : 'button',
+                                    text    : 'Push View',
+                                    handler : function (button) {
+                                        var view = button.up('navigationview');
+
+                                        view.push({
+                                            title : 'Test',
+                                            html  : 'This is a test'
+                                        });
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    listeners     : {
+                        rightbuttontap : function (navBar) {
+                            var navView = navBar.up('navigationview');
+                            navView.reset();
+                        }
+                    }
+                });
+            }
+        });
+
+    </script>
+</head>
+<body>
+</body>
+</html>

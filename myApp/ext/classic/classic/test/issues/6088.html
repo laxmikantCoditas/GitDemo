@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>EXTJSIV-6088</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css"/>
+    <script src="../../ext.js"></script>
+    <script src="../../examples/example-data.js"></script>
+</head>
+<body>
+<a target="_blank" href="http://sencha.jira.com/browse/EXTJSIV-6088">EXTJSIV-6088</a><br/>
+<script charset="utf-8">
+    Ext.require(['Ext.draw.Component']);
+    Ext.onReady(function () {
+        store1.loadData(generateData(6, 20));
+
+        var donut = false,
+            chart = Ext.create('Ext.chart.Chart', {
+                renderTo: Ext.getBody(),
+                width: 800,
+                height: 600,
+                xtype: 'chart',
+                id: 'chartCmp',
+                animate: false,
+                store: store1,
+                shadow: true,
+                legend: {
+                    position: 'right'
+                },
+                insetPadding: 60,
+                theme: 'Base:gradients',
+                series: [
+                    {
+                        type: 'pie',
+                        field: 'data1',
+                        showInLegend: true,
+                        donut: donut,
+                        tips: {
+                            trackMouse: true,
+                            width: 140,
+                            height: 28,
+                            renderer: function (storeItem, item) {
+                                //calculate percentage.
+                                var total = 0;
+                                store1.each(function (rec) {
+                                    total += rec.get('data1');
+                                });
+                                this.setTitle(storeItem.get('name') + ': ' + Math.round(storeItem.get('data1') / total * 100) + '%');
+                            }
+                        },
+                        label: {
+                            field: 'name',
+                            display: 'rotate',
+                            contrast: true,
+                            font: '18px Arial'
+                        }
+                    }
+                ]
+            });
+        chart.setWidth(700);
+    });
+</script>
+</body>
+</html>

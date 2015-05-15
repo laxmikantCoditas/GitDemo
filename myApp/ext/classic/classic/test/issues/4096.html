@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Failed test case</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css"/>
+    <script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+<script type="text/javascript" charset="utf-8">
+    //your test case goes here
+    Ext.Loader.setConfig({ enabled: true });
+        Ext.Loader.setPath('Ext.ux', '../../examples/ux');
+
+        Ext.require([
+            'Ext.grid.*',
+            'Ext.data.*',
+            'Ext.ux.ajax.SimManager'
+        ]);
+
+        Ext.define('Task', {
+            extend: 'Ext.data.Model',
+            idProperty: 'taskId',
+            fields: [
+                {name: 'projectId', type: 'int'},
+                {name: 'project', type: 'string'},
+                {name: 'taskId', type: 'int'},
+                {name: 'description', type: 'string'},
+                //{name: 'estimate', type: 'float'},
+                {name: 'estimate', type: 'int', mapping: "estimate.actual"},
+
+                {name: 'rate', type: 'float'},
+                {name: 'cost', type: 'float'},
+                {name: 'due', type: 'date', dateFormat:'m/d/Y'}
+            ]
+        });
+
+        var myData = [
+            {projectId: 100, project: 'Forms: Field Anchoring', taskId: 112, description: 'Integrate 2.0 Forms with 2.0 Layouts', estimate: {actual:32, fake:35}, rate: 150, due:'06/24/2007'},
+            {projectId: 100, project: 'Forms: Field Anchoring', taskId: 113, description: 'Implement AnchorLayout', estimate: {actual:2, fake:5}, rate: 150, due:'06/25/2007'},
+            {projectId: 100, project: 'Forms: Field Anchoring', taskId: 114, description: 'Add support for multiple types of anchors', estimate: {actual:11, fake:5}, rate: 150, due:'06/27/2007'},
+            {projectId: 100, project: 'Forms: Field Anchoring', taskId: 115, description: 'Testing and debugging', estimate: {actual:56, fake:5}, rate: 0, due:'06/29/2007'},
+            {projectId: 101, project: 'Grid: Single-level Grouping', taskId: 101, description: 'Add required rendering "hooks" to GridView', estimate: {actual:32, fake:5}, rate: 100, due:'07/01/2007'},
+            {projectId: 101, project: 'Grid: Single-level Grouping', taskId: 102, description: 'Extend GridView and override rendering functions', estimate: {actual:32, fake:5}, rate: 100, due:'07/03/2007'},
+            {projectId: 101, project: 'Grid: Single-level Grouping', taskId: 103, description: 'Extend Store with grouping functionality', estimate: {actual:2, fake:2}, rate: 100, due:'07/04/2007'},
+            {projectId: 101, project: 'Grid: Single-level Grouping', taskId: 121, description: 'Default CSS Styling', estimate: {actual:16, fake:5}, rate: 100, due:'07/05/2007'},
+            {projectId: 101, project: 'Grid: Single-level Grouping', taskId: 104, description: 'Testing and debugging', estimate: {actual:23, fake:5}, rate: 100, due:'07/06/2007'},
+            {projectId: 102, project: 'Grid: Summary Rows', taskId: 105, description: 'Ext Grid plugin integration', estimate: {actual:4, fake:5}, rate: 125, due:'07/01/2007'},
+            {projectId: 102, project: 'Grid: Summary Rows', taskId: 106, description: 'Summary creation during rendering phase', estimate: {actual:3, fake:5}, rate: 125, due:'07/02/2007'},
+            {projectId: 102, project: 'Grid: Summary Rows', taskId: 107, description: 'Dynamic summary updates in editor grids', estimate: {actual:4, fake:5}, rate: 125, due:'07/05/2007'},
+            {projectId: 102, project: 'Grid: Summary Rows', taskId: 108, description: 'Remote summary integration', estimate: {actual:26, fake:45}, rate: 125, due:'07/05/2007'},
+            {projectId: 102, project: 'Grid: Summary Rows', taskId: 109, description: 'Summary renderers and calculators', estimate: {actual:46, fake:5}, rate: 125, due:'07/06/2007'},
+            {projectId: 102, project: 'Grid: Summary Rows', taskId: 110, description: 'Integrate summaries with GroupingView', estimate: {actual:6, fake:5}, rate: 125, due:'07/11/2007'},
+            {projectId: 102, project: 'Grid: Summary Rows', taskId: 111, description: 'Testing and debugging', estimate: {actual:436, fake:5}, rate: 125, due:'07/15/2007'}
+        ];
+
+        Ext.onReady(function(){
+
+            var store = Ext.create('Ext.data.Store', {
+                model: 'Task',
+                autoLoad: true,
+                data: myData,
+                proxy: {
+                    type: 'memory',
+                    reader: {
+                        type: 'json'
+                    }
+                },
+                sorters: {property: 'due', direction: 'ASC'},
+                groupField: 'project'
+            });
+
+            var grid = Ext.create('Ext.grid.Panel', {
+                width: 800,
+                height: 450,
+                title: 'Sponsored Projects',
+                renderTo: Ext.getBody(),
+                store: store,
+                viewConfig: {
+                    stripeRows: false
+                },
+                dockedItems: [{
+                    dock: 'top',
+                    xtype: 'toolbar',
+                    items: [{
+                        text: 'Show Summary',
+                        pressed: true,
+                        enableToggle: true,
+                        toggleHandler: function(btn, pressed){
+                            var view = grid.getView();
+                            view.getFeature('group').toggleSummaryRow(pressed);
+                            view.refresh();
+                        }
+                    }]
+                }],
+                features: [{
+                    id: 'group',
+                    ftype: 'groupingsummary',
+                    groupHeaderTpl: '{name}',
+                    hideGroupedHeader: true
+                }],
+                columns: [{
+                    text: 'Task',
+                    flex: 1,
+                    sortable: true,
+                    tdCls: 'task',
+                    dataIndex: 'description',
+                    hideable: false,
+                    summaryRenderer: function(value, summaryData, dataIndex) {
+                        return ((value === 0 || value > 1) ? '(' + value + ' Tasks)' : '(1 Task)');
+                    }
+                }, {
+                    header: 'Project',
+                    width: 20,
+                    sortable: true,
+                    dataIndex: 'project'
+                }, {
+                    header: 'Due Date',
+                    width: 80,
+                    sortable: true,
+                    dataIndex: 'due',
+                    renderer: Ext.util.Format.dateRenderer('m/d/Y')
+                }, {
+                    header: 'Estimate',
+                    width: 75,
+                    sortable: true,
+                    dataIndex: 'estimate',
+                    renderer: function(value, metaData, record, rowIdx, colIdx, store, view){
+                        return value + ' hours';
+                    },
+                    summaryRenderer: function(value, summaryData, dataIndex) {
+                        return value + ' hours';
+                    }
+                }, {
+                    header: 'Rate',
+                    width: 75,
+                    sortable: true,
+                    renderer: Ext.util.Format.usMoney,
+                    summaryRenderer: Ext.util.Format.usMoney,
+                    dataIndex: 'rate',
+                    summaryType: 'average'
+                }, {
+                    id: 'cost',
+                    header: 'Cost',
+                    width: 75,
+                    sortable: false,
+                    groupable: false,
+                    renderer: function(value, metaData, record, rowIdx, colIdx, store, view) {
+                        return Ext.util.Format.usMoney(record.get('estimate') * record.get('rate'));
+                    },
+                    dataIndex: 'cost',
+                    summaryRenderer: Ext.util.Format.usMoney
+                }]
+            });
+        });
+
+</script>
+</body>
+</html>

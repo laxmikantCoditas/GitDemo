@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3627</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+    <style type="text/css">
+        .navbar-list { background-color: #e6e6e6; }
+        .navbar-list-item { display: inline-block !important; vertical-align: top; padding: 16px 0px 16px 16px; }
+        .navbar-list-container { white-space: nowrap !important; }
+
+        .navbar-list-item-selected { background-color: #ffffff; /*-webkit-box-shadow: inset -10px 0 10px -10px black, inset 10px 0 10px -10px black;*/ }
+        .navbar-list-item-selected .list-menu-text { color: black; }
+        .navbar-list-item-pressed {}
+
+        .navbar-list-items-container { border-right: 0px solid white; padding-right: 16px; }
+        .navbar-list-item-text { width: 160px; height: 96px; overflow: hidden; white-space: normal; }
+        .navbar-list-item-text-title { font-family: 'Archer Bold'; font-size: 18px; text-transform: uppercase; color: #820024; }
+        .navbar-list-item-text-copy { font-family: 'Futura Book'; font-size: 13px; }
+    </style>
+
+    <script type="text/javascript">
+        Ext.define('Test.view.HList', {
+            extend: 'Ext.DataView',
+            xtype: 'hlist',
+
+
+            config: {
+                fullscreen: true,
+                baseCls: 'navbar-list',
+                selectedCls: 'navbar-list-item-selected',
+                pressedCls: 'navbar-list-item-pressed',
+                inline: {
+                    wrap: false
+                },
+                scrollable: {
+                    direction: 'horizontal',
+                    directionLock: true
+                },
+                itemTpl: [
+                    '<div class="navbar-list-items-container">',
+                    '<div style="background: transparent url(\'{img}\') 0 0 no-repeat; width: 96px; height: 96px; border: 1px solid #2c2c2c; float: left; margin-right: 16px;"></div>',
+                    '<div class="navbar-list-item-text">',
+                    '<div class="navbar-list-item-text-title">{title}</div>',
+                    '<div class="navbar-list-item-text-copy">{text}</div>',
+                    '</div>',
+                    '</div>'
+                ],
+                store: {
+                    fields: ['title', 'text', 'img'],
+                    data: [
+                        { title: 'About', text: 'Read something about us and find out why my name is Trinity. Or Jack? Mary? Handsome? Dr. Who?', img: 'resources/images/nav-about.jpg' },
+                        { title: 'Programs', text: 'We created lots and lots of blurry images. We\'re not really sure why. Maybe because they\'re blurry...?', img: 'resources/images/nav-programs.jpg' },
+                        { title: 'Locations', text: 'We are here, we are there, we are everywhere! Just check the map if you don\'t believe me.', img: 'resources/images/nav-locations.jpg' },
+                        { title: 'Blog', text: 'We wrote all sorts of jibberish, full of typos and spelling errors and put them on WordPress.', img: 'resources/images/nav-blog.jpg' },
+                        { title: 'Contact', text: 'No need to dream of close encounters of the third kind. Call us at Re-Mi-Do-Do-So. Operators are standing by.', img: 'resources/images/nav-contact.jpg' }
+                    ]
+                }
+            },
+
+
+            initialize: function () {
+                this.callParent(arguments);
+                this.select(0, false, false);
+            }
+
+        });
+
+        Ext.setup({
+            requires: [
+                'Ext.tab.Panel'
+            ],
+            onReady: function () {
+                Ext.Viewport.add({xtype: 'hlist'});
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

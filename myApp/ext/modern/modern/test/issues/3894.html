@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3894</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.define('MyListItem', {
+            extend: 'Ext.dataview.component.ListItem',
+            xtype: 'myListItem',
+            requires: [
+                'Ext.Panel',
+                'Ext.Label'
+            ],
+            config: {
+                body: {
+                    itemId: 'name'
+                },
+                label: {
+                    xtype: 'label',
+                    itemId: 'age',
+                    docked: 'bottom',
+                    style: 'font-size: 75%'
+                },
+                listeners: {
+                    updatedata: function(listItem, newData, eOpts) {
+                        if (newData != null) {
+                            listItem.getComponent('name').setHtml(newData.name);
+                            listItem.getComponent('age').setHtml(newData.age);
+                        }
+                    }
+                }
+            },
+            applyLabel: function(label) {
+                if (label && !label.isComponent) {
+                    label = Ext.factory(label, Ext.Component, this.getLabel());
+                }
+                return label;
+            },
+            updateLabel: function(label, oldLabel) {
+                if (label) {
+                    this.add(label);
+                } else if (oldLabel) {
+                    oldLabel.destroy();
+                }
+            }
+        });
+
+        Ext.setup({
+            requires: ['Ext.dataview.List'],
+            onReady: function() {
+                Ext.Viewport.add({
+                    xtype: 'list',
+                    title: 'Names',
+                    store: {
+                        fields: ['name', 'age'],
+                        data: [
+                            {name: 'Jamie', age: 100},
+                            {name: 'Rob', age: 21},
+                            {name: 'Tommy', age: 24},
+                            {name: 'Jacky', age: 24},
+                            {name: 'Ed', age: 26}
+                        ]
+                    },
+
+                    //itemTpl: '{name}:{age}',
+
+                    useComponents: true,
+                    defaultType: 'myListItem',
+
+                    listeners: {
+                        itemtap: function(list, index, item, record) {
+                            console.log(record);
+                            console.log('Item tapped:' + record.get('name'));
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

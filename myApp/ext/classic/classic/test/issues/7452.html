@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>
+7452
+</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css">
+<link rel="stylesheet" type="text/css" href="../../examples/shared/example.css">
+
+<script type="text/javascript" src="../../ext.js"></script>
+<script type="text/javascript">
+Ext.Loader.setConfig({
+    enabled: true,
+    paths: {
+        'Ext.ux': '../../examples/ux'
+    }
+});
+
+Ext.require([
+    'Ext.data.reader.*',
+    'Ext.data.*',
+    'Ext.grid.*', 
+    'Ext.tree.*', 
+    'Ext.ux.CheckColumn'
+]);
+
+Ext.define('MyModel', {
+    extend: 'Ext.data.Model',
+    alias: 'model.accountIndex',
+
+    fields: [{
+        name: 'id'
+    }, {
+        name: 'ledgerId',
+        type: 'int'
+    }, {
+        name: 'groupId',
+        type: 'int'
+    }, {
+        name: 'groupParentId',
+        type: 'int',
+        useNull: true
+    }, {
+        name: 'groupGroupsCount'
+    }, {
+        name: 'groupAccountsCount'
+    }, {
+        name: 'accountId'
+    }, {
+        name: 'accountType'
+    }, {
+        name: 'accountCategory'
+    }, {
+        name: 'accountCashFlowActivity'
+    }, {
+        name: 'name'
+    }, {
+        name: 'description'
+    }, {
+        name: 'balance',
+        type: 'float'
+    }, {
+        name: 'balanceType'
+    }, {
+        name: 'isActive',
+        type: 'boolean'
+    }, {
+        name: 'isEditable',
+        type: 'boolean'
+    }, {
+        name: 'isRemovable',
+        type: 'boolean'
+    }, {
+        convert: function(v, rec) {
+            return !Ext.isEmpty(rec.data.accountId);
+        },
+        name: 'isAccount',
+        type: 'boolean'
+    }, {
+        convert: function(v, rec) {
+            return !Ext.isEmpty(rec.data.accountId) ? 'icon-account' : 'icon-account-group';
+        },
+        name: 'iconCls',
+        type: 'string'
+    }]
+});
+
+Ext.onReady(function() {
+    Ext.define('MyStore', {
+        extend: 'Ext.data.TreeStore',
+        alias: 'store.accountIndex',
+
+        autoLoad: true,
+        storeId: 'store.accountIndex',
+        model: 'MyModel',
+        folderSort: true,
+        proxy: {
+            type: 'ajax',
+            url: '7452.json',
+            reader: {
+                type: 'json',
+                messageProperty: 'message',
+                root: 'children'
+            }
+        }
+    });
+
+    var treeStore = Ext.create('MyStore');
+
+    var tree = Ext.create('Ext.tree.Panel', {
+        store: treeStore,
+        width: 1024,
+        height: 768,
+        renderTo: Ext.getBody(),
+        rootVisible: false,
+        autoScroll: true,
+        animate: false,
+        columns: [{
+            xtype: 'treecolumn',
+            dataIndex: 'name',
+            //flex: 3,
+            text: 'Group/Account Name'
+        }, {
+            xtype: 'gridcolumn',
+            minWidth: 75,
+            dataIndex: 'accountId',
+            text: 'Account #'
+        }, {
+            xtype: 'gridcolumn',
+            minWidth: 85,
+            dataIndex: 'accountType',
+            text: 'Account Type'
+        }, {
+            xtype: 'gridcolumn',
+            minWidth: 85,
+            dataIndex: 'accountCashFlowActivity',
+            text: 'Cash Flow Activity'
+        }, {
+            xtype: 'gridcolumn',
+            width: 75,
+            dataIndex: 'balanceType',
+            text: 'Balance Type'
+        }, {
+            xtype: 'gridcolumn',
+            align: 'right',
+            dataIndex: 'balance',
+            //flex: 2,
+            text: 'Current Balance',
+            tooltip: 'Current balance is Previous Balance + Transaction Balance'
+        }, {
+            xtype: 'gridcolumn',
+            align: 'right',
+            dataIndex: 'balance',
+            //flex: 2,
+            text: 'Transaction Balance',
+            tooltip: 'Current balance is Previous Balance + Transaction Balance'
+        }, {
+            xtype: 'gridcolumn',
+            align: 'right',
+            dataIndex: 'balance',
+            //flex: 2,
+            text: 'Period Balance',
+            tooltip: 'Current balance is Previous Balance + Transaction Balance'
+        }],
+        dockedItems: [{
+            xtype: 'toolbar',
+            dock: 'top',
+            itemId: 'toolbar',
+            items: [{
+                xtype: 'button',
+                handler: function(button, event) {
+                    var me = this,
+                        panel = me.up('panel');
+
+                    panel.mask('Expanding tree...');
+                    panel.down('toolbar').disable();
+
+                    setTimeout(function () {
+                        panel.expandAll(function(){
+                            if (console && console.log) console.log('This prints BEFORE expanding is done!...');
+                            setTimeout(function () {
+                                panel.unmask();
+                                panel.down('toolbar').enable();
+                            }, 10);
+                        });
+                    }, 10);
+                },
+                itemId: 'expandall',
+                iconCls: 'icon-expand-all',
+                text: 'Expand All'
+            }, {
+                xtype: 'button',
+                handler: function(button, event) {
+                    var me = this,
+                        panel = me.up('panel');
+
+                    panel.mask('Collapsing tree...');
+                    panel.down('toolbar').disable();
+
+                    setTimeout(function () {
+                        panel.collapseAll(function(){
+                            if (console && console.log) console.log('This prints BEFORE expanding is done!...');
+                            setTimeout(function () {
+                                panel.unmask();
+                                panel.down('toolbar').enable();
+                            }, 10);
+                        });
+                    }, 10);
+                },
+                itemId: 'collapseall',
+                iconCls: 'icon-collapse-all',
+                text: 'Collapse All'
+            }]
+        }]
+    });
+});    
+</script>
+
+<style type="text/css">
+.icon-account {
+    background-image: url('../../examples/shared/icons/fam/cog.png') !important;
+}
+.icon-account-group {
+    background-image: url('../../examples/shared/icons/fam/folder_go.png') !important;
+}
+.icon-user {
+    background-image: url('../../examples/shared/icons/fam/user.png') !important;
+}
+
+.icon-user-add {
+    background-image: url('../../examples/shared/icons/fam/user_add.png') !important;
+}
+
+.icon-save {
+    background-image: url('../../examples/shared/icons/fam/save.gif') !important;
+}
+
+.icon-reset {
+    background-image: url('../../examples/shared/icons/fam/stop.png') !important;
+}
+
+.icon-grid {
+    background-image: url('../../examples/shared/icons/fam//grid.png') !important;
+}
+
+.icon-add {
+    background-image: url('../../examples/shared/icons/fam/add.png') !important;
+}
+
+.icon-delete {
+    background-image: url('../../examples/shared/icons/fam/delete.png') !important;
+} 
+
+.icon-expand-all {
+    background-image: url('../../examples/shared/icons/fam/connect.png') !important;
+}
+.icon-collapse-all {
+    background-image: url('../../examples/shared/icons/fam/connect.png') !important;
+}
+</style>
+</head>
+<body>
+    <h1>
+        Chart Of Accounts (COA)
+    </h1>
+    <h2>
+        Issues
+    </h2>
+    <ol class="feature-list">
+        <li>According to the docs, loadMask in viewConfig of TreePanel should be true by default. 
+            However unless I explicitly set it to true, load mask does not show. This can be done in code, but not when using Sencha Architect 2.1 (default values are simply omiited)</li>
+        <li>Overall TreeGrid performance is slow for larger sets of data (about 180 nodes). It behaves differently across browsers, script times out, and layout gets corrupted...</li>
+        <li>expandAll() and collapseAll() methods are very slow and thir callbacks do not execute "after expand/collapse finishes.." as they should according to documentation.
+            Also, I get "Unresponsive script" (timeout) when methods are called. Expand All/Collapse All is based on <a href="http://dev.sencha.com/deploy/ext-4.1.0-gpl/examples/tree/reorder.html">Sencha TreePanel reorder sample</a></li>
+        <li>disabling/enabling and masking/unmasking components during expandAll() and collapseAll() is non-functional and breaks layout in different browsers</li>
+    </ol>
+    <h2>
+        Mockup:
+    </h2>
+    <div id="poc-example"></div>
+</body>
+</html>

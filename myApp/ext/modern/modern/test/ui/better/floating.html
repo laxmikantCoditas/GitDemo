@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Better Components</title>
+
+    <link rel="stylesheet" href="../../../resources/css/sencha-touch.css" type="text/css" />
+    <link rel="stylesheet" href="layout.css" type="text/css" />
+
+    <script type="text/javascript" src="../../../sencha-touch-all.js"></script>
+    <script type="text/javascript">
+        Ext.setup({
+            requires: [
+                'Ext.Component',
+                'Ext.Container',
+                'Ext.Button'
+            ],
+
+            viewport: null,
+
+            onReady: function() {
+                container = new Ext.Container({
+                    id: 'test',
+                    width: 'inherit',
+                    height: 'inherit',
+                    layout: {
+                        type: 'hbox',
+                        pack: 'start'
+                    },
+                    items: [
+//                        {
+//                            ui: 'decline',
+//                            xtype: 'button',
+//                            text: 'Bar Longer Text asdf sdf safsadf asdfa',
+//                            centered: true
+//                        },
+
+                        {
+                            ui: 'action',
+                            xtype: 'button',
+                            text: 'Bar Longer Text sadfdsaf asd fsdafasdf',
+                            centered: true,
+                            width: 600
+                        },
+                        {
+                            ui: 'confirm',
+                            xtype: 'button',
+                            text: 'Bar Longer Text',
+                            width: 200
+                        },
+                        {
+                            ui: 'decline',
+                            xtype: 'button',
+                            text: 'Baz',
+                            flex: 1
+                        },
+
+                        {
+                            id: 'foo',
+                            ui: 'action',
+                            xtype: 'button',
+                            text: 'Foo safas fasdfj lkasdfjklsdjfkl',
+                            iconMask: true,
+                            iconCls: 'refresh',
+                            badgeText: '10',
+                            right: 0,
+                            floating: true
+                        },
+
+                        {
+
+                            centered: true,
+                            layout: 'hbox',
+                            items: [
+                                {
+                                    xtype: 'button',
+                                    ui: 'confirm',
+                                    text: 'Bara adfasdfsdf'
+                                },
+                                 {
+                                    xtype: 'button',
+                                    ui: 'confirm',
+                                    text: 'Bar'
+                                },
+                                 {
+                                    xtype: 'button',
+                                    ui: 'confirm',
+                                    text: 'Bar Longer Tsadfasdfext'
+                                }
+                            ]
+                        }
+                    ]
+                });
+
+                container.render(document.body);
+            }
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

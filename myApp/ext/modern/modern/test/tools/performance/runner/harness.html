@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Performance Test Harness</title>
+
+    <!-- ExtJS -->
+    <link rel="stylesheet" type="text/css" href="../../../extjs/resources/css/ext-all.css" />
+    <script type="text/javascript" src="../../../extjs/deploy/ext-all.js"></script>
+    
+    <script type="text/javascript" charset="utf-8">
+        Ext.define('GridCreator', {
+            config: {
+                rowCount: 10,
+                colCount: 10,
+                columns : [],
+                fields  : []
+            },
+            
+            constructor: function(config) {
+                this.initConfig(config);
+                
+                this.createColumns();
+            },
+            
+            createColumns: function() {
+                var colCount = this.getColCount(),
+                    columns  = [],
+                    fields   = [],
+                    i;
+                
+                for (i = 0; i < colCount; i++) {
+                    columns.push({
+                        header: 'Column ' + (i + 1),
+                        dataIndex: 'column' + (i + 1)
+                    });
+
+                    fields.push(columns[i].dataIndex);
+                }
+                
+                this.setColumns(columns);
+                this.setFields(fields);
+            },
+            
+            createData: function() {
+                var rowCount = this.getRowCount(),
+                    colCount = this.getColCount(),
+                    columns  = this.getColumns(),
+                    data     = [],
+                    i;
+                
+                //prepares a set of random data, creating one field for each column
+                for (i = 0; i < rowCount; i++) {
+                    data[i] = {};
+
+                    for (j = 0; j < colCount; j++) {
+                        data[i][columns[j].dataIndex] = "Row " + (i + 1) + " Column " + (j + 1);
+                    }
+                }
+                
+                return data;
+            },
+            
+            execute: function(callback, scope) {
+                var data = this.createData(),
+                    fields = this.getFields(),
+                    columns = this.getColumns(),
+                    startTime = new Date().getTime();
+                
+                var grid = Ext.create('Ext.grid.Panel', {
+                    width: 400,
+                    height: 400,
+
+                    store: {
+                        fields: fields,
+                        data: data
+                    },
+
+                    columns: columns
+                });
+                
+                grid.view.on('render', function() {
+                    var total = new Date() - startTime;
+                    
+                    callback.call(scope || this, {
+                        total: total,
+                        version: Ext.getVersion().toString()
+                    });
+                });
+
+                grid.render(Ext.getBody());
+            }
+        });
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

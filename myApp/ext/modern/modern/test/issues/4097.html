@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TOUCH-4097</title>
+
+	<script src="../../sencha-touch-debug.js"></script>
+	<link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+	<script type="text/javascript">
+
+		Ext.define('ConversionIssueModel', {
+			extend: 'Ext.data.Model',
+			config: {
+				fields: [
+					'id',
+					'name',
+					{ name: 'derivedName', convert: function(value, record) {
+						return record.get('name').toUpperCase();
+					} }
+				]
+			}
+		});
+
+		Ext.define('ModelWithDerivedFieldFixApplied', {
+			extend: 'Ext.data.Model'
+		});
+
+		Ext.define("ModifyResponseReader", {
+			extend: "Ext.data.reader.Json",
+			alias: "reader.modify-response-reader",
+			replacedData: [
+				{ id: 1, name: "Jim" },
+				{ id: 2, name: "Fred" },
+				{ id: 3, name: "Joe" }
+			],
+			called: false,
+			getData: function(data) {
+				if (this.called) {
+					data = this.replacedData;
+				} else {
+					this.called = true;
+				}
+
+				return data;
+			}
+		});
+
+		Ext.setup({
+			requires: [
+				'Ext.tab.Panel', 'Ext.data.Store', 'Ext.TitleBar', 'Ext.dataview.DataView', 'Ext.data.proxy.Direct'
+			],
+			onReady: function() {
+				var store = new Ext.data.Store({
+					model: 'ConversionIssueModel',
+					autoLoad: true,
+					data: [
+						{ "id": 1, "name": "Ian" },
+						{ "id": 2, "name": "Paul" },
+						{ "id": 3, "name": "Mike" }
+					],
+					proxy: {
+						type: 'memory',
+						reader: {
+							type: 'modify-response-reader'
+						}
+					}
+				});
+
+				Ext.Viewport.add([
+					{
+						xtype: 'titlebar',
+						docked: 'top',
+						title: 'Model Convert Issue',
+						items: [
+							{
+								iconCls: 'refresh',
+								iconMask: true,
+								align: 'right',
+								handler: function() {
+									store.load();
+								},
+								scope: this
+							}
+						]
+					},
+					{
+						xtype: 'dataview',
+						store: store,
+						itemTpl: '<div>ID: {id}, name: {name}, derivedName: {derivedName}</div>'
+					}
+				]);
+			}
+		});
+	</script>
+</head>
+<body>
+</body>
+</html>

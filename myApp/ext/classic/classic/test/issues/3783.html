@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+<script type="text/javascript" src="../../examples/example-data.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        Ext.require(['*']);
+     Ext.onReady(function () {
+
+
+     var store = Ext.create('Ext.data.JsonStore', {
+         fields: ['name', 'data1', 'data2', 'data3', 'data4', 'data5'],
+         data: [
+             {'name':'metric one', 'data1':10, 'data2':12, 'data3':14, 'data4':8, 'data5':13},
+             {'name':'metric two', 'data1':7, 'data2':8, 'data3':16, 'data4':10, 'data5':3},
+             {'name':'metric three', 'data1':5, 'data2':2, 'data3':14, 'data4':12, 'data5':7},
+             {'name':'metric four', 'data1':2, 'data2':14, 'data3':6, 'data4':1, 'data5':23},
+             {'name':'metric five', 'data1':27, 'data2':38, 'data3':36, 'data4':13, 'data5':33}                                                
+         ]
+     });
+
+
+         var win = Ext.create('Ext.Window', {
+             width: 800,
+             height: 600,
+             hidden: false,
+             maximizable: true,
+             title: 'Mixed Charts',
+             renderTo: Ext.getBody(),
+             layout: 'fit',
+             items: {
+                 id: 'chartCmp',
+                 xtype: 'chart',
+                 style: 'background:#fff',
+                 animate: true,
+                 theme: 'Base:gradients',
+                 store: store,
+                 legend: {
+                     position: 'top'
+                 },            
+                 axes: [{
+                     type: 'Category',
+                     position: 'bottom',
+                     fields: ['name'],
+                     title: 'Month of the Year',
+             grid: true
+                 }],
+                 series: [{
+                     type: 'area',
+                     highlight: true,
+                     xField: 'name',
+                     yField: ['data1', 'data2', 'data3', 'data4', 'data5'],
+                     tips: {
+                 trackMouse: true,
+                 width: 140,
+                 height: 28,
+                 renderer: function(storeItem, item) {
+                     this.setTitle(storeItem.get('name') + ': ' + storeItem.get(item.storeField));
+                 }
+                     },
+              listeners: {
+                 itemmouseup: function(item) {
+                     alert('caught mouse event: value is ' + item.storeItem.data[item.storeField]);
+                 }  
+             }         
+
+
+                 }]
+             }
+         });
+     });
+     
+    </script>
+</body>
+</html>

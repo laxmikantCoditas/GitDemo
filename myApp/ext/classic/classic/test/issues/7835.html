@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+
+        Ext.onReady(function () {
+            var grid = Ext.create('Ext.grid.Panel',{
+                viewConfig: {
+                    loadMask: false
+                },
+                border: false,
+                height: 200,
+                width: 400,
+                region: 'center',
+                columns: [{header: 'World'}], // One header just for show. There's no data,
+                store: Ext.create('Ext.data.ArrayStore', {
+                    proxy: {
+                        type: 'memory',
+                        isSynchronous: false
+                    }
+                }) // A dummy empty data store
+            });
+
+            Ext.create('Ext.window.Window', {
+                title: 'Hello',
+                height: 200,
+                width: 400,
+                layout: 'border',
+                items: [{ // Let's put an empty grid in just to illustrate fit layout
+                    xtype: 'panel',
+                    border: false,
+                    height: 200,
+                    width: 400,
+                    region: 'north'
+
+                },grid]
+            }).show();
+            grid.setLoading(true);
+        });
+        
+    </script>
+</body>
+</html>

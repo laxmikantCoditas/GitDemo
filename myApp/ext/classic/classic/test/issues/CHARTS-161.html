@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>CHARTS-161</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        Ext.require('Ext.chart.*');
+
+        Ext.define('Thing', {
+            extend: 'Ext.data.Model',
+            fields: ['data']
+        })
+
+        Ext.onReady(function(){
+
+            Ext.create('Ext.chart.Chart', {
+                width: 600,
+                height: 600,
+                renderTo: document.body,
+                animate: true,
+                store: {
+                    model: 'Thing',
+                    data: [{
+                        data: 10
+                    }, {
+                        data: 20
+                    }, {
+                        data: 30
+                    }, {
+                        data: 40
+                    }]
+                },
+                legend: {
+                    position: 'right'
+                },
+                series: [{
+                    showInLegend: true,
+                    donut: 40,
+                    type: 'pie',
+                    field: 'data',
+                    label: {
+                        field: 'data',
+                        display: 'rotate'
+                    },
+                    highlight: {
+                        segment: {
+                            margin: 20
+                        }
+                    }
+                }]
+            });
+        });
+    </script>
+</body>
+</html>

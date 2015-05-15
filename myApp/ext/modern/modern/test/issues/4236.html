@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4236</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+	    Ext.define('Blank.model.TestModel', {    extend: 'Ext.data.Model',
+
+
+		    requires: [ 'Ext.data.identifier.Uuid',
+			    'Ext.data.proxy.LocalStorage'],
+
+
+		    config: {
+			    identifier: 'uuid',
+			    fields:     [
+				    { name: 'instanceid', type: 'string' },
+				    { name: 'dataasofdate', type: 'date' },
+				    { name: 'dataasofdate_label', type: 'string' },
+				    { name: 'sessionid', type: 'string' },
+				    { name: 'authtype', type: 'string' },
+				    { name: 'rememberlogin', type: 'boolean' },
+				    { name: 'rememberloginuserid', type: 'string' },
+				    { name: 'loginstatus', type: 'string' },
+				    { name: 'loggedin', type: 'boolean' },
+				    { name: 'pwlength', type: 'integer' },
+				    { name: 'unviewedalerts', type: 'integer' }
+			    ],
+
+
+			    proxy: {
+				    type: 'localstorage',
+				    id: 'testmodels'
+			    }
+		    }
+	    });
+
+	    Ext.define('Blank.store.TestStore', {    extend: 'Ext.data.Store',
+
+		    config: {
+			    model: 'Blank.model.TestModel',
+			    storeId: 'TestModels'
+		    }
+	    });
+
+        Ext.setup({ 
+            requires: [ ],
+            onReady: function() {
+	            var ts = new Blank.store.TestStore();
+	            console.log('about to load store');
+	            ts.load();
+	            var recZero = ts.getAt(0);
+	            console.log('retrieved record:');
+	            console.log(recZero);
+	            console.log('loaded store');
+	            var tm = Ext.create('Blank.model.TestModel',
+			            {    "rememberlogin"      : true,
+				            "instanceid"          : "515",
+				            "dataasofdate"        : new Date(1364664723693),
+				            "dataasofdate_label"  : "Today, 1:32pm",
+				            "sessionid"           : "1255709312",
+				            "authtype"            : "tally",
+				            "rememberloginuserid" : "14",
+				            "loginstatus"         : "Logged in.",
+				            "loggedin"            : true,
+				            "pwlength"            : 5,
+				            "unviewedalerts"      : null,
+			            });
+	            console.log('stored record');
+	            console.log(tm);
+	            console.log('going to add() model to store');
+	            ts.add(tm);
+	            console.log('done adding model to store');
+	            console.log('going to sync() store');
+	            ts.sync();
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

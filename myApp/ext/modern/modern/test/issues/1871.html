@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test case template</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+
+    <script>
+        Ext.setup({
+            onReady:function () {
+                var dataPanel = Ext.create('Ext.Panel', {
+                    id:'dataPanel',
+                    layout:'fit',
+                    items:[
+                        {
+                            title:'Basic',
+                            xtype:'formpanel',
+                            id:'dataForm',
+                            items:[
+                                {
+                                    xtype:'fieldset',
+                                    title:'Personal data',
+                                    instructions:'* mandatory field',
+                                    defaults:{
+                                        labelWidth:'35%',
+                                        required:true,
+                                        clearIcon:true
+                                    },
+                                    items:[
+                                        {
+                                            xtype:'selectfield',
+                                            name:'disasterField',
+                                            label:'Disaster field',
+                                            options:[
+                                                {text:'Value1', value:'value1'},
+                                                {text:'Value2', value:'value2'},
+                                                {text:'Value3', value:'value3'}
+                                            ]
+                                        } ,
+                                        {
+                                            xtype:'textfield',
+                                            name:'name',
+                                            label:'Name',
+                                            autoCapitalize:true
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype:'panel',
+                                    items:[
+                                        {
+                                            text:'Salva',
+                                            xtype:'button',
+                                            width:135,
+                                            right:0,
+                                            height:50,
+                                            handler:function () {
+                                                alert("hello");
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                });
+                Ext.Viewport.add(dataPanel);
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

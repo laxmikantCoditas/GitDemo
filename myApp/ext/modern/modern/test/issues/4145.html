@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4145</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+	    Ext.define('TestModel', {
+		    extend: 'Ext.data.Model',
+		    config: {
+			    identifier:'uuid',
+			    fields: [
+					'uuid',
+				    'name',
+				    {name: 'time', type: 'date', dateFormat:'timestamp'}
+			    ]
+		    }
+	    });
+
+        Ext.setup({ 
+            requires: [
+                'Ext.tab.Panel', 'Ext.data.Store', 'Ext.TitleBar', 'Ext.dataview.DataView', 'Ext.data.proxy.LocalStorage'
+            ],
+            onReady: function() {
+	            var store = new Ext.data.Store({
+		            model: 'TestModel',
+		            autoLoad: true,
+		            data: [
+			            { "uuid": 1, "name": "ME", time:1364185126 },
+			            { "uuid": 2, "name": "you", time:1364271526 },
+			            { "uuid": 3, "name": "them", time:1364357926 }
+		            ],
+		            proxy: {
+			            type: 'localstorage'
+		            }
+	            });
+
+	            store.sync();
+
+	            Ext.Viewport.add([
+		            {
+			            xtype: 'titlebar',
+			            docked: 'top',
+			            title: 'Test Dates'
+		            },
+		            {
+			            xtype: 'dataview',
+			            store: store,
+			            itemTpl: '<div>name: {name}, time: {time}</div>'
+		            }
+	            ]);
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

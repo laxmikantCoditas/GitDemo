@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        Ext.onReady(function () {
+            var directFunction = function (opts, fn, proxy) {
+                var start = opts.start;
+                var end = opts.page * opts.limit;
+                var result = [];
+
+                if (end > data.length) {
+                    end = data.length;
+                }
+
+                for (var i = start; i < end; i++) {
+                    result.push(data[i]);
+                }
+
+                result.total = data.length;
+
+                fn(0,{
+                    status:true,
+                    result:result
+                });
+            }
+
+            directFunction.directCfg = {
+                method:{
+                    getArgs:function (params, order, paramsHash) {
+                        return [params];
+                    }
+                }
+            };
+
+            var data = [
+                { firstName:'Ed', lastName:'Spencer' },
+                { firstName:'Tommy', lastName:'Maintz' },
+                { firstName:'Aaron', lastName:'Conran' },
+                { firstName:'Jamie', lastName:'Avins' }
+            ];
+
+            var store = Ext.create('Ext.data.Store', {
+                fields:['firstName', 'lastName'],
+                pageSize:3,
+                autoLoad:true,
+                proxy:{
+                    type:'direct',
+                    directFn: directFunction,
+                    reader:{
+                        type:'json'
+                    }
+                }
+            });
+
+            new Ext.container.Viewport({
+                layout:'border',
+                renderTo:Ext.getBody(),
+                items:[
+                    new Ext.panel.Panel({
+                        region:'north',
+                        height:100,
+
+                        layout:{
+                            type:'vbox',
+                            align:'center'
+                        },
+
+                        id:'Header',
+                        margin:'0 0 5 0',
+                        items:[
+                            new Ext.button.Button({
+                                text:"Remove an entry",
+                                handler:function () {
+                                    data.splice(3, 1);
+                                    store.reload();
+                                }
+                            })
+                        ]
+                    }),
+                    new Ext.grid.Panel({
+                        id:"grid",
+                        region:'center',
+                        margin:'0 0 0 0',
+                        store:store,
+                        enableColumnResize:false,
+                        enableColumnMove:false,
+                        enableColumnHide:false,
+                        forceFit:true,
+                        hideHeaders:true,
+                        sortableColumns:false,
+                        columns:[{
+                            text:'A',
+                            dataIndex:'firstName'
+                        }
+                        ],
+                        dockedItems:[{
+                            xtype:'pagingtoolbar',
+                            store:store,
+                            dock:'bottom',
+                            pageSize:3,
+                            displayInfo:false,
+                            layout:{ pack:'center' }
+                        }
+                        ]
+                    })
+                ]
+            });
+        });
+    </script>
+</body>
+</html>

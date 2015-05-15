@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>TOUCH-1317</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script type="text/javascript">
+        Ext.define('MyField', {
+            xtype: 'mytextfield',
+            extend: 'Ext.field.Text',
+            config: {
+                bubbleEvents: ['change']
+            },
+            getBubbleTarget: function() {
+                return this.getParent();
+            }
+        });
+
+        Ext.define('MyView', {
+            extend: 'Ext.form.Panel',
+            config: {
+                items: [
+                    {
+                        xtype: 'mytextfield',
+                        label: 'toplevel'
+                    }
+                ]
+            },
+            initialize: function() {
+                this.callParent(arguments);
+
+                this.down('textfield').on('change', function() {
+                    console.log('change detected on field');
+                });
+
+                this.on('change', function() {
+                    console.log('change detected on form');
+                });
+            }
+        });
+
+        Ext.setup({
+            onReady: function() {
+                Ext.Viewport.add(new MyView);
+            }
+        });
+    </script>
+</head>
+
+<body></body>
+</html>

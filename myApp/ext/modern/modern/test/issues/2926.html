@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.define('Test.model.Test', {
+            extend: 'Ext.data.Model',
+             config: {
+                fields: [
+                    {name: 'id', type: 'int'},
+                    {name: 'name', type: 'auto'},
+                    {name: 'email', type: 'auto'}
+                ]
+            }
+        });
+
+        Ext.setup({
+            onReady: function() {
+                var store = Ext.create('Ext.data.Store',{
+                      model: 'Test.model.Test',
+                      storeId: 'TestStore',
+                      data: [
+                           {"id": 0,"name": "test0","email": "test0@domain.com"},
+                           {"id": 1,"name": "test1","email": "test1@domain.com"}
+                      ]
+                });
+
+                /* Works incorrectly */
+                store.filter([{property: 'id', value: 1}]); //yelds no items in store
+
+                console.log(store.data.items);
+                /*
+                //Works correctly
+                store.filter('id',1);
+
+                //Also works correctly
+                store.setFilters([{property: 'id', value: 1}]);
+                store.filter();
+                */
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

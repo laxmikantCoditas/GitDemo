@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>TOUCH-xxxx (TEST #2)</title>
+<style></style>
+<link rel="stylesheet" href="../../../resources/css/sencha-touch.css">
+<script src="../../../sencha-touch-all-debug.js"></script>
+<script>
+Ext.require([
+    'Ext.chart.*',
+    'Ext.dataview.List',
+    'Ext.Toolbar',
+    'Ext.Sheet',
+    'Ext.SegmentedButton'
+]);
+Ext.setup({
+    onReady: function () {
+        Ext.define('Extras.ToggleButton', {
+            extend: 'Ext.Button',
+            xtype: 'togglebtn',
+            config: {
+                isPressed: false
+            },
+            initialize: function () {
+                this.callParent( arguments );
+                this.on('tap', this.onButtonPress, this);
+                this.getIsPressed() ? this.addCls( this.getPressedCls() ) : this.removeCls( this.getPressedCls() );
+            },
+
+            onButtonPress: function () {
+                this.setIsPressed( ! this.getIsPressed() );
+                this.getIsPressed() ? this.addCls( this.getPressedCls() ) : this.removeCls( this.getPressedCls() );
+            }
+
+        });
+
+        var container, radar, notes;
+        var isSvg = false;
+
+        var toolbar = Ext.Viewport.add({
+            xtype: 'toolbar',
+            id: 'mmm',
+            docked: 'top',
+            items: [
+                {
+                    xtype: 'button',
+                    text: 'Refresh',
+                    handler: function () {
+                        store.setData(generateData(10));
+                    }
+                },
+                {
+                    xtype: 'segmentedbutton',
+                    defaults: {
+                        width: 70
+                    },
+                    items: [
+                        {
+                            text: 'Canvas',
+                            pressed: !isSvg,
+                            handler: function () {
+                                isSvg = false;
+                                updateChart();
+                            }
+                        },
+                        {
+                            text: 'SVG',
+                            pressed: isSvg,
+                            handler: function () {
+                                isSvg = true;
+                                updateChart();
+                            }
+                        }
+                    ]
+                },
+                {
+                    xtype: 'togglebtn',
+                    text: 'Show/hide notes',
+                    handler: function () {
+                        notes[this.getIsPressed() ? 'hide' : 'show']();
+                    }
+                }
+            ]
+        });
+
+
+        var store = Ext.create('Ext.data.Store', {
+            fields: ['name', 'g1', 'g2', 'g3', 'g4', 'g5']
+        });
+
+        function generateData(count) {
+            var data = [];
+            for (var i = 0; i < count; i++) {
+                data.push({
+                    name: 'Item-' + i,
+                    g1: 10 + Math.random() * 40,
+                    g2: 10 + Math.random() * 40,
+                    g3: 10 + Math.random() * 40,
+                    g4: 10 + Math.random() * 40,
+                    g5: 10 + Math.random() * 40
+                });
+            }
+            return data;
+        }
+
+
+        function updateChart() {
+            Ext.Viewport.remove(container);
+
+            store.setData(generateData(10));
+
+            container = Ext.Viewport.add({
+                xtype: 'container',
+                layout: 'vbox'
+            });
+
+            notes = container.add({
+                xtype: 'sheet',
+                styleHtmlContent: true,
+                hidden: true,
+                width: 800,
+                style: 'background: white',
+                html: "If you see yellow circles on top of this sheet, that's one issue.<br><br>" +
+                        "Note that the labels of the bold axis can get truncated.<br><br>" +
+                        "I believe this is normal behavior and is something that should be controlled with axis.margin.<br><br>" +
+                        "Adjusting axis.thickness based on the bouding box of the labels is computationally intensive for angular axes. " +
+                        "Plus, if some label is significantly larger that the others, " +
+                        "you probably wouldn't want to make the axis thick enough to accomodate that label, " +
+                        "you'd rather truncate it.<br><br>So angular axes are only thick enough to accommodate major ticks.<br><br>" +
+                        "Alternatively, we may choose not to shrink the axis region for each nested axis, " +
+                        "i.e. do <em>me.doSetSurfaceRegion(axis.getSurface(), region);</em> instead of " +
+                        "<em>me.doSetSurfaceRegion(axis.getSurface(), [shrinkBox.left, shrinkBox.top, width, height]);</em> " +
+                        "inside PolarChart.performLayout. But this won't affect the most common case anyway " +
+                        "(polar chart with a single angular axis; in this example the outermost axis has a margin set) " +
+                        "and will make behavior inconsistent.<br><br>Shrinking regions for angular axes is also important " +
+                        "to account for lineWidth of an axis (<em>shrinkBox[side] += halfLineWidth;</em>).<br><br>" +
+                        "Other notes: in this example control over z-order of series/axes would have been useful. " +
+                        "Another issue is that by design axis labels are rendered first, so ticks and axis line can overlap them." +
+                        "<br><br>While for cartesian charts innerPadding can be set separately for each of the four sides, " +
+                        "for polar charts only a single value makes sense."
+            });
+
+            radar = container.add({
+                xtype: 'polar',
+                flex: 1,
+                insetPadding: 20,
+                innerPadding: 80,
+                store: store,
+                interactions: 'rotate',
+                axes: [
+                    {
+                        type: 'category',
+                        position: 'angular',
+                        id: 'main-angular-axis',
+                        grid: true,
+                        style: {
+                            majorTickSize: 20,
+                            strokeStyle: 'rgb(73,112,142)'
+                        },
+                        margin: 20
+                    },
+                    {
+                        type: 'category',
+                        position: 'angular',
+                        linkedTo: 'main-angular-axis',
+                        label: {
+                            fontSize: 30
+                        },
+                        // Titles are not supported for angular axes.
+                        title: {
+                            text: 'Angular axis'
+                        },
+                        style: {
+                            majorTickSize: 50,
+                            lineWidth: 7,
+                            strokeStyle: '#49708E',
+                            lineCap: 'round'
+                        }
+                    },
+                    {
+                        type: 'numeric',
+                        id: 'radial-axis',
+                        position: 'radial',
+                        // Titles are not supported for the radial axes.
+                        title: {
+                            text: 'Radial axis'
+                        },
+                        label: {
+                            strokeStyle: 'rgb(73,112,142)',
+                            fontWeight: 'normal'
+                        },
+                        grid: {
+                            strokeStyle: 'rgba(73,112,142,0.5)'
+                        },
+                        listeners: {
+                            rangechange: function (range) {
+                                var fAxis = radar && radar.getAxis('fahrenheit-axis');
+                                if (fAxis) {
+                                    fAxis.setMinimum(range[0] * 1.8 + 32);
+                                    fAxis.setMaximum(range[1] * 1.8 + 32);
+                                }
+                            }
+                        }
+                    },
+                    {
+                        type: 'numeric',
+                        position: 'radial',
+                        style: {
+                            baseRotation: Math.PI / 2
+                        },
+                        linkedTo: 'radial-axis'
+                    },
+                    {
+                        id: 'fahrenheit-axis',
+                        type: 'numeric',
+                        position: 'radial',
+                        style: {
+                            baseRotation: Math.PI
+                        }
+                    },
+                    {
+                        id: 'independent',
+                        type: 'numeric',
+                        position: 'radial',
+                        minimum: 0,
+                        maximum: 200,
+                        style: {
+                            baseRotation: Math.PI * 3/2
+                        }
+                    }
+                ],
+                series: [{
+                    type: 'radar',
+                    xField: 'name',
+                    yField: 'g1',
+                    style: {
+                        fillStyle: 'rgba(133,214,109,0.3)',
+                        strokeStyle: 'black',
+                        lineWidth: 1
+                    },
+                    marker: {
+                        type: 'circle',
+                        fill: 'yellow',
+                        radius: 10
+                    }
+                }, {
+                    type: 'radar',
+                    xField: 'name',
+                    yField: 'g2',
+                    yAxis: 'independent',
+                    style: {
+                        fillStyle: 'rgba(234,255,131,0.3)',
+                        strokeStyle: 'black',
+                        lineWidth: 1
+                    }
+                }]
+            });
+        }
+
+        updateChart();
+    }
+});
+</script>
+</head>
+<body>
+</body>
+</html>

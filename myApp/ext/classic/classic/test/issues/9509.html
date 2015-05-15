@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css">
+    <script type="text/javascript" src="../../ext-all-debug.js"></script>
+    <script type="text/javascript">
+        Ext.onReady(function(){
+            var container = Ext.create('Ext.container.Viewport', {
+                layout: {
+                    type: 'border',
+                    padding: '5'
+                },
+                items: [{
+                    region: 'north',
+                    height: 150
+                }, {
+                    xtype: 'panel',
+                    bodyPadding: 5,
+                    region: 'west',
+                    title: 'Collapse/Width Panel',
+                    width: 200,
+                    split: {
+                        collapseOnDblClick: false
+                    },
+                    collapsible: true
+                }, {
+                    region: 'center'
+                }],
+                listeners: {
+                    /*
+                    beforerender: function(){
+                        var splitter = this.down('splitter');
+                        console.log(splitter);
+                        splitter.collapseOnDblClick = false;
+                    }
+                    */
+                }
+            });
+        });
+    </script>
+
+</head>
+<body></body>
+</html>

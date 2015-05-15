@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+Ext.require([
+    'Ext.form.*',
+    'Ext.data.*',
+    'Ext.chart.*',
+    'Ext.grid.Panel',
+    'Ext.layout.container.Column'
+]);
+ 
+Ext.onReady(function(){
+    Ext.define('Event', {
+        extend: 'Ext.data.Model',
+        fields: [
+            {name:"total", type: 'int', defaultValue: 0},
+            {name:"picture", type: 'int', defaultValue: 0},
+            {name:"text", type: 'int', defaultValue: 0},
+            {name:"audio", type: 'int', defaultValue: 0},
+            {name:"value", type: 'string'}
+        ]
+    });
+    var data = {"output":{"event_date":[{"total":"46794","picture":"3889","text":"26634","audio":"16271","value":"09/18/11"},{"total":"68936","picture":"4961","text":"40192","audio":"23783","value":"09/25/11"},{"total":"81146","picture":"5417","text":"49272","audio":"26457","value":"10/02/11"},{"total":"90988","picture":"5795","text":"56810","audio":"28383","value":"10/09/11"},{"total":"97782","picture":"6087","text":"62136","audio":"29559","value":"10/16/11"},{"total":"103998","picture":"6379","text":"66858","audio":"30761","value":"10/23/11"},{"total":"106796","picture":"6577","text":"68914","audio":"31305","value":"10/30/11"}]}};
+    // create the Data Store
+    var store = Ext.create('Ext.data.Store', {
+        model: 'Event',
+        autoLoad: true,
+        data: data,
+        proxy: {
+            type: 'memory',
+            reader: {
+                type: 'json',
+                root: 'output.event_date'
+            }
+        }
+    });
+ 
+    //create a bar series to be at the top of the panel.
+    var chart = Ext.create('Ext.chart.Chart', {
+        title: 'Line Chart',
+	renderTo: Ext.getBody(),
+        shadow: true,
+        animate: false,
+        mask: true,
+        store: store,
+	width: 800,
+	height: 700,
+        theme: 'Base:gradients',
+        axes: [{
+            id: 'x-axis-title',
+            type: 'Category',
+            position: 'bottom',
+            fields: ['value'],
+            grid: true,
+            label: {
+                font: '9px Arial bold'
+            }
+        },{
+            type: 'Numeric',
+            position: 'left',
+            fields: ['total','picture','text','audio'],
+            minimum: 0,
+            grid: false,
+            label: {
+                font: '9px Arial',
+                renderer: Ext.util.Format.numberRenderer('0,0')
+            }
+        }],
+        legend: {
+            position: 'bottom'
+        },
+        series: [{
+            type: 'line',
+            axis: 'left',
+            xField: 'value',
+            yField: 'total',
+            highlight: true,
+            stacked: false,
+            label: {
+                display: 'rotate',
+                field: ['total']
+            }
+        }]
+    });
+});
+        
+    </script>
+</body>
+</html>

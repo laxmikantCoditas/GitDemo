@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ext.Button</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" href="../../../resources/css/sencha-touch.css" type="text/css">
+
+        <style type="text/css">
+
+            .x-button {
+                float: left;
+            }
+
+        </style>
+
+        <script type="text/javascript" src="../../../sencha-touch.js"></script>
+        <script type="text/javascript">
+            Ext.require([
+                'Ext.Button'
+            ]);
+
+            var items = [];
+
+            /**
+             * config: ui
+             */
+            var uis = [
+                "normal", "plain", "small", "round",
+                "action", "decline", "confirm",
+                "action-small", "decline-small", "confirm-small",
+                "action-round", "decline-round", "confirm-round",
+            ];
+
+            Ext.each(uis, function(ui) {
+                items.push({
+                    ui: ui
+                });
+            });
+
+            items.push({ ui: "back" });
+            items.push({ ui: "forward" });
+
+            /**
+             * config: badgeText
+             */
+            Ext.each([1, "1", "One"], function(cfg) {
+                items.push({
+                    badgeText: cfg
+                });
+
+                items.push({
+                    badge: cfg
+                });
+            });
+
+            /**
+             * config: iconCls + iconAlign
+             */
+            Ext.each([null, "left", "right", "top", "bottom"], function(cfg) {
+                Ext.each(uis, function(ui) {
+                    items.push({
+                        text     : (cfg) ? "Button" : null,
+                        iconMask : true,
+                        iconCls  : "download",
+                        iconAlign: cfg,
+                        ui       : ui
+                    });
+                });
+            });
+
+
+            /**
+             * Show all the configs
+             */
+            Ext.setup({
+                tabletStartupScreen: 'tablet_startup.png',
+                phoneStartupScreen: 'phone_startup.png',
+                icon: 'icon.png',
+                glossOnIcon: false,
+
+                onReady: function() {
+
+                    Ext.each(items, function(item) {
+                        Ext.applyIf(item, {
+                            margin  : '5 5 0 5',
+                            text    : 'Button',
+                            ui      : 'normal',
+                            cls     : 'the-button',
+                            renderTo: Ext.getBody()
+                        });
+
+                        Ext.create('Ext.Button', item);
+                    });
+
+                    // Ext.create('Ext.Button', {
+                    //     renderTo: Ext.getBody(),
+                    //     // iconMask: true,
+                    //     text: 'download'
+                    // });
+                }
+            });
+        </script>
+    </head>
+<body>
+
+</body>
+</html>

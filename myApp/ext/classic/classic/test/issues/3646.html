@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FieldSet Legend not shown in FF3.6</title>
+    <link href="../../resources/css/ext-all.css" rel="stylesheet" />
+    <script type="text/javascript" src="../../ext.js" ></script>
+    <script type="text/javascript">
+        Ext.require(['Ext.form.Panel', 'Ext.form.FieldSet']);
+        Ext.onReady(function() {
+            window.form = Ext.create('Ext.form.Panel', {
+                renderTo: Ext.getBody(),
+                width : 300,
+                items: [{
+                    xtype: 'fieldset',
+                    id: 'fscmp',
+                    collapsible: true,
+                    title: 'Supposed to be shown on Firefox 3.6',
+                    html: 'Supposed to show title and a button on Firefox 3.6'
+                }]
+            });
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

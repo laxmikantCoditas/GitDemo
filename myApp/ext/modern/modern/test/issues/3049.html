@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title>TOUCH-3049</title>
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+
+    <script type="text/javascript">
+        Ext.application({
+            requires : [ 'Ext.MessageBox' ],
+
+            launch : function () {
+                function test() {
+                    Ext.Msg.show({
+                        title   : 'Warning',
+                        message : 'After the first show, the icon will disappear<br/><br/>This will open another Ext.Msg on OK<br/><br/>Title of this Ext.Msg isn\'t the best looking either',
+                        iconCls : Ext.MessageBox.WARNING,
+                        buttons : Ext.Msg.OK,
+                        fn      : function () {
+                            test();
+                        }
+                    });
+                }
+
+                test();
+            }
+        });
+    </script>
+
+</head>
+<body>
+</body>
+</html>

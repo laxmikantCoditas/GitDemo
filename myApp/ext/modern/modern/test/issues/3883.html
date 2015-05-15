@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript">
+        Ext.setup({
+            requires: [
+                'Ext.data.Store',
+                'Ext.TitleBar',
+                'Ext.field.Select'
+            ],
+            onReady:function () {
+                Ext.define('MobRolesModel', {
+                    extend: 'Ext.data.Model',
+                    config: {
+                        fields: [
+                            {
+                                name: 'DisplayName',
+                                type: 'string'
+                            },
+                            {
+                                name: 'DisplayID',
+                                type: 'string'
+                            }
+                        ]
+                    }
+                });
+
+                var myStore = Ext.create("Ext.data.Store", {
+                    model: 'MobRolesModel',
+                    storeId: 'rolesStore',
+                    autoLoad: true,
+                    data: [
+                        { DisplayName : 'Display1', DisplayID : 'D1'},
+                        { DisplayName : 'Display2', DisplayID : 'D2'},
+                        { DisplayName : 'Display3', DisplayID : 'D3'},
+                        { DisplayName : 'Display4', DisplayID : 'D4'},
+                        { DisplayName : 'Display5', DisplayID : 'D5'},
+                        { DisplayName : 'Display6', DisplayID : 'D6'},
+                        { DisplayName : 'Display7', DisplayID : 'D7'},
+                        { DisplayName : 'Display8', DisplayID : 'D8'},
+                        { DisplayName : 'Display9', DisplayID : 'D9'},
+                        { DisplayName : 'Display10', DisplayID : 'D10'},
+                        { DisplayName : 'Display11', DisplayID : 'D11'},
+                        { DisplayName : 'Display12', DisplayID : 'D12'},
+                        { DisplayName : 'Display13', DisplayID : 'D13'},
+                        { DisplayName : 'Display14', DisplayID : 'D14'},
+                        { DisplayName : 'Display15', DisplayID : 'D15'},
+                        { DisplayName : 'Display16', DisplayID : 'D16'},
+                        { DisplayName : 'Display17', DisplayID : 'D17'},
+                        { DisplayName : 'Display18', DisplayID : 'D18'},
+                        { DisplayName : 'Display19', DisplayID : 'D19'},
+                        { DisplayName : 'Display20', DisplayID : 'D20'},
+                        { DisplayName : 'Display21', DisplayID : 'D21'},
+                        { DisplayName : 'Display22', DisplayID : 'D22'},
+                        { DisplayName : 'Display23', DisplayID : 'D23'},
+                        { DisplayName : 'Display24', DisplayID : 'D24'},
+                        { DisplayName : 'Display25', DisplayID : 'D25'},
+                        { DisplayName : 'Display26', DisplayID : 'D26'},
+                        { DisplayName : 'Display27', DisplayID : 'D27'},
+                        { DisplayName : 'Display28', DisplayID : 'D28'},
+                        { DisplayName : 'Display29', DisplayID : 'D29'},
+                        { DisplayName : 'Display30', DisplayID : 'D30'}
+                    ]
+                });
+
+                var container = Ext.create('Ext.Container',{
+                    fullscreen: true,
+                    layout: 'vbox',
+                    items: [{
+                        xtype: 'titlebar',
+                        id: 'MobMainViewTitleBar',
+                        docked: 'top',
+                        flex: 1,
+                        title: 'SelectField Repro',
+                        items: [
+                            {
+                                xtype: 'button',
+                                iconCls: 'home',
+                                iconMask: true,
+                                align: 'left',
+                                id: 'MobMainViewButtonHome'
+                            },
+                            {
+                                store: 'rolesStore',
+                                label: 'Role:',
+                                xtype: 'selectfield',
+                                align: 'right',
+                                docked: 'right',
+                                id: 'MobMainViewSelectRole',
+                                usePicker: false,
+                                displayField: 'DisplayName',
+                                valueField: 'DisplayID',
+                                maxWidth: '200px',
+                                scrollToTopOnRefresh: false
+                            }]
+                    }],
+                    listeners : {
+                        painted : function() {
+                            var field = this.down('selectfield'),
+                                store = Ext.getStore('rolesStore'),
+                                record = store.getAt(20),
+                                displayName = record.data.DisplayName,
+                                displayID = record.data.DisplayID;
+                            field.setValue(displayName);
+                        }
+                    }
+                })
+
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>
+

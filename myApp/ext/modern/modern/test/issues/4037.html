@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4037</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.define('MyModel', {
+            extend: 'Ext.data.Model',
+            config: {
+                fields: [
+                    {name:'uuid'},
+                    {name: 'myID', type:"integer"},
+                    {name: 'name'},
+                    {name: 'date', type:'date'}
+                ]
+            }
+        });
+
+        Ext.setup({
+            requires:['Ext.data.Store','Ext.data.proxy.Sql'],
+            onReady: function() {
+                var s = Ext.create('Ext.data.Store', {
+                    model: 'MyModel',
+                    storeId: 'MyStore',
+                    autoLoad:true,
+                    filters :[
+                        {property:"uuid", value:"7c2bdb7d-de73-4d9f-af11-35416a723170"}
+                    ],
+                    autoSync: true,
+                    proxy: {
+                        type: 'sql'
+                    }
+                });
+
+              s.on("load", function(){
+                  if (s.getAllCount() == 0) {
+                      s.add({uuid: "7c2bdb7d-de73-4d9f-af11-35416a723170", name:"Bob", myID:1234, date:"2013-11-25 23:15:00.00"});
+                  } else {
+                    var m = s.getAt(0);
+                      m.set("name", "Bob Smith Fancy Pants");
+                  }
+
+                  console.log("Should be 1: " + s.getCount());
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<html>
+<head>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../sencha-touch-all.js"></script>
+    <title>Sort with `store.sort('a', 'DESC');`. List should not be changed.</title>
+</head>
+<body>
+    <script type="text/javascript">
+        Ext.setup({
+            onReady: function () {
+                var data = [], i;
+                for (i = 0; i < 10; i++) {
+                    data.push({
+                        a: i,
+                        b: i * 2,
+                        c: 100 - i
+                    });
+                }
+                var store = Ext.create('Ext.data.JsonStore', {
+                    fields: ['a', 'b', 'c'],
+                    data: data
+                });
+                var list = Ext.create('Ext.Panel', {
+                    fullscreen: true,
+                    items: [
+                        {
+                            docked: 'top',
+                            xtype: 'toolbar',
+                            items: [
+                                {
+                                    text: 'Click to sort with `store.sort(\'a\', \'DESC\');`. List should not be changed.',
+                                    handler: function () {
+                                        store.sort('a', 'DESC');
+                                    }
+                                }
+                            ]
+                        },
+                        Ext.create('Ext.dataview.DataView', {
+                            store: store,
+
+                            itemTpl: [
+                                '<span>2 * {a} = {b}; 100 - {a} = {c}</span>'
+                            ]
+                        })
+                    ]
+                });
+            }
+        });
+    </script>
+</body>
+</html>

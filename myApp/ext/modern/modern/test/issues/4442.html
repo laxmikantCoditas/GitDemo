@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>TOUCH-4442</title>
+    <style></style>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+    <script src="../../sencha-touch-all-debug.js"></script>
+    <script>
+        Ext.require(['Ext.Toolbar']);
+        Ext.setup({
+            onReady: function () {
+                function getPopup(scrollable, overflow, wide) {
+                    return {
+                        xtype: 'panel',
+                        modal: true,
+                        centered: true,
+                        width: 300,
+                        height: 300,
+                        styleHtmlContent: false,
+                        scrollable: scrollable,
+                        hideOnMaskTap: false,
+                        fullscreen: false,
+                        hidden: true,
+                        zIndex: 30,
+                        html: (function (wide) {
+                            var text = (new Array(overflow ? 20 : 2)).join('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ');
+                            if (wide) {
+                                return '<div style="width: 600px;">' + text + '</div>';
+                            } else {
+                                return text;
+                            }
+                        })(wide),
+                        items: [
+                            {
+                                docked: 'top',
+                                itemId: 'title',
+                                xtype: 'container',
+                                style: 'background: #ccc',
+                                padding: 10,
+                                html: 'Given direction: ' +
+                                      (Ext.isString(scrollable) ? scrollable : scrollable.direction)
+                            }
+                        ],
+                        listeners: {
+                            show: function () {
+                                var scrollable = this.getScrollable(),
+                                    scroller = scrollable.getScroller(),
+                                    title = this.down('#title');
+                                title.setHtml(title.getHtml() + '<br>' + 'Actual direction: ' + scroller.getDirection());
+                            }
+                        }
+                    };
+                }
+                var popup, scrollable = 'vertical', overflow = false, wide = false;
+                function updatePopup() {
+                    popup && popup.destroy();
+                    popup = Ext.Viewport.add(getPopup(scrollable, overflow, wide));
+                    popup.show('pop');
+                }
+                Ext.Viewport.add({
+                    xtype: 'toolbar',
+                    docked: 'top',
+                    defaults: {
+                        handler: function (button) {
+                            scrollable = button.scrollableCfg;
+                            updatePopup();
+                        }
+                    },
+                    items: [
+                        {
+                            xtype: 'button',
+                            text: 'Vertical',
+                            scrollableCfg: 'vertical'
+                        },
+                        {
+                            xtype: 'button',
+                            text: 'Horizontal',
+                            scrollableCfg: 'horizontal'
+                        },
+                        {
+                            xtype: 'button',
+                            text: 'Both',
+                            scrollableCfg: 'both'
+                        },
+                        {
+                            xtype: 'button',
+                            text: 'Auto',
+                            scrollableCfg: 'auto'
+                        },
+                        {
+                            xtype: 'spacer',
+                            width: 20
+                        },
+                        {
+                            xtype: 'button',
+                            text: 'More/less text',
+                            handler: function () {
+                                overflow = !overflow;
+                                updatePopup();
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            text: 'Width toggle',
+                            handler: function () {
+                                wide = !wide;
+                                updatePopup();
+                            }
+                        }
+                    ]
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

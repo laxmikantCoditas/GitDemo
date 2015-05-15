@@ -1,0 +1,9 @@
+{
+    "description": "Sencha - Buttons in VBox",
+    "archive_data_file": "../data/sencha-buttons-vbox.json",
+    "pages": [
+        {
+            "url": "http://127.0.0.1:8060/touch/test/telemetry/tests/sencha-buttons-vbox.html"
+        }
+    ]
+}

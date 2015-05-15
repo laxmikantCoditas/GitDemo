@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2219</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+
+    <script>
+        Ext.application({
+            name:'SenchaFiddle',
+            launch:function () {
+                var $ = this;
+                $.SubPanel1 = new Ext.Panel({
+                    id:"Panel1",
+                    layout:{
+                        type:'fit',
+                        animation:{}
+                    },
+                    autoDestroy:true,
+                    style:'background-color:#c30000;',
+                    items:[
+                        {
+                            docked:"top",
+                            xtype:"toolbar",
+                            title:"Title 1",
+                            ui:"light",
+                            items:[
+                                {
+                                    xtype:'spacer'
+                                },
+                                {
+                                    text:"Next",
+                                    handler:function () {
+                                        $.oPanel.animateActiveItem($.SubPanel2, { type:'slide', direction:'down'});
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    html:"Panel1 Content"
+                });
+
+                $.SubPanel2 = new Ext.Panel({
+                    id:"Panel2",
+                    layout:{
+                        type:'fit',
+                        animation:{}
+                    },
+                    autoDestroy:true,
+                    items:[
+                        {
+                            docked:"top",
+                            xtype:"toolbar",
+                            title:"Title 2",
+                            ui:"light",
+                            items:[
+                                {
+                                    text:"Back",
+                                    handler:function () {
+                                        $.oPanel.animateActiveItem('Panel1', {});
+                                    }
+                                },
+                                {
+                                    xtype:'spacer'
+                                },
+                                {
+                                    text:"Previous",
+                                    ui:'round',
+                                    xtype:"button",
+                                    handler:function () {
+                                        $.oPanel.animateActiveItem($.SubPanel1, { type:'slide', direction:'up'});
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    html:"Panel2 Content"
+                });
+
+                var BB1 = new Ext.Button({
+                    text:'Page1',
+                    ui:'round',
+                    handler:function () {
+                        $.oPanel.animateActiveItem($.SubPanel1, { type:'slide', direction:'right'});
+                    }
+                });
+                var BB2 = new Ext.Button({
+                    text:'Page2',
+                    ui:'round',
+                    handler:function () {
+                        $.oPanel.animateActiveItem($.SubPanel2, { type:'slide', direction:'right'});
+                    }
+                });
+
+
+                $.Toolbar = new Ext.Toolbar({
+                    docked:'top',
+                    items:[BB1, BB2]
+                });
+
+                $.oPanel = new Ext.Panel({
+                    fullscreen:true,
+                    layout:{
+                        type:'card',
+                        animation:{
+                            type:'flip'
+                        }
+                    },
+                    items:[{
+                        layout: 'fit',
+                        scrollable:{
+                            direction:'vertical'
+                        }, // Problem 2 Error
+                        items: $.Toolbar
+                    }]
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

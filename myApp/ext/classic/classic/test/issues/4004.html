@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        //your test case goes here
+Ext.Loader.setConfig({
+    enabled: true
+});
+
+Ext.require([
+    "Ext.selection.CellModel",
+    "Ext.grid.*",
+    "Ext.data.*",
+    "Ext.util.*",
+    "Ext.state.*",
+    "Ext.form.*",
+    "Ext.layout.*",
+    "Ext.tip.QuickTipManager",
+    "Ext.container.Viewport"
+]);
+
+var createColumns = function (n) {
+    var arr = [];
+    for (var i = 1; i <= n; i++) {
+	arr.push({
+	    header : "Column " + i,
+	    flex : 1,
+	    dataIndex : "col" + i,
+	    sortable : false,
+	    hideable : false,
+	    menuDisabled : true
+	});
+    }
+    return arr;
+};
+
+var createFakeData = function (count) {
+    var data = [];
+    for (var i = 0; i < count; i++) {
+	data.push({
+	     col1: i+1,
+	     col2: "LAMBORGHINI FERRARI PORSCHE",
+	     col3: "XYZ123",
+	     col4: "CLEARCOAT",
+	     col5: "ELECTRIC BLUE",
+	     col6: 9000000,
+	     col7: 9000000,
+	     col8: 8999557,
+	     col9: (8999557 * 0.33)
+	});
+    }
+    return data;
+};
+
+var update = function (n) {
+    var me = this;
+    var data = createFakeData(n),
+	ln = data.length,
+	records = [],
+	i = 0;
+
+    for (; i < ln; i++) {
+	records.push(Ext.ModelManager.create(data[i], "MyModel"));
+    }
+
+    me.store.loadData(records);
+};
+
+Ext.define("Grid", {
+    extend : "Ext.grid.Panel",
+    alias : "widget.grid-view",
+    requires : ["MyModel"],
+    frame: true,
+    selModel: {
+	selType: "cellmodel"
+    },
+    viewConfig : {
+	stripeRows : false
+    },
+    initComponent : function () {
+	var me = this;
+	me.store = Ext.create("Ext.data.Store", {
+	    model : "MyModel"
+	});
+
+	this.columns = createColumns(8);
+
+	this.callParent(arguments);
+	this.on("render", function (){
+	    update.call(this, 33);
+        })
+    }
+});
+
+Ext.define("MyModel", {
+    extend: "Ext.data.Model",
+    fields: [
+	 {name: "col1", type: "string"},
+	 {name: "col2", type: "string"},
+	 {name: "col3", type: "string"},
+	 {name: "col4", type: "string"},
+	 {name: "col41", type: "string"},
+	 {name: "col5", type: "string"},
+	 {name: "col6", type: "int", convert: this.abs},
+	 {name: "col7", type: "int", convert: this.abs},
+	 {name: "col8", type: "int", convert: this.abs},
+	 {name: "col9", type: "int", convert: this.abs}
+     ],
+     abs : function (value, record) {
+	 return Math.abs(value);
+     }
+});
+
+Ext.define("SouthGrid", {
+    extend : "Ext.grid.Panel",
+    alias : "widget.south-grid-view",
+    requires : ["MyModel"],
+    frame: true,
+    selModel: {
+	selType: "cellmodel"
+    },
+    viewConfig : {
+	stripeRows : false
+    },
+
+    initComponent : function () {
+	var me = this;
+	me.store = Ext.create("Ext.data.Store", {
+	    model: "MyModel"
+	});
+
+	this.columns = createColumns(3);
+	this.callParent(arguments);
+	this.on("render", function (){
+	    update.call(this, 3);
+	});
+    }
+});
+
+Ext.define("Tab", {
+    requires : ["Ext.tab.Panel", "Grid"],
+    extend : "Ext.tab.Panel",
+    alias : "widget.tab-view",
+    initComponent : function () {
+	this.items = [{
+	    title : "Module 1",
+	    xtype : "grid-view"
+	}];
+	this.callParent();
+    }
+});
+
+Ext.onReady(function (){
+    Ext.tip.QuickTipManager.init();
+
+    Ext.create("Ext.container.Viewport", {
+	layout: "border",
+	renderTo: Ext.getBody(),
+	items: [{
+	    region: "center",
+	    xtype: "tab-view"
+	},{
+	    region : "south",
+	    height : 120,
+	    split : true,
+	    header : false,
+	    collapsed : true,
+	    collapsible : true,
+	    preventHeader : true,
+	    hideCollapseTool : true,
+	    collapseMode : "mini",
+	    xtype : "south-grid-view"
+	}]
+    });
+});
+</script>
+</head>
+<body>
+</body>
+</html>

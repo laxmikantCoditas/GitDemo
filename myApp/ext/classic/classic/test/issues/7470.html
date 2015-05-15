@@ -1,0 +1,36 @@
+<html>
+<head>
+    <title>Border iframe reloading</title>
+
+    <link type="text/css" rel="stylesheet" href="../../../.build/sdk/resources/css/ext-all.css" />
+    
+    <script type="text/javascript" src="../../../.build/sdk/ext-all-debug.js"></script>
+
+    <script type="text/javascript">
+        Ext.onReady(function () {
+            Ext.create("Ext.Viewport", {
+                renderTo: Ext.getBody(),
+                layout: "fit",
+                items: [{
+                    layout: "border",
+                    items: [{
+                        width: 200,
+                        region: "west",
+                        collapsible: true,
+                        animCollapse: false,
+                        title: "East"
+                    }, {
+                        region: "center",
+                        contentEl: "iframe1",
+                        title: "Center"
+                    }]
+                }]
+            });
+        });
+    </script>
+</head>
+<body>
+    <iframe id="iframe1" src="7470-iframe.html" class="x-hidden"></iframe>
+</body>
+</html>
+

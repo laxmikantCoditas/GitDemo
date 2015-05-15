@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4081</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.setup({
+            requires: [
+	            'Ext.form.Panel', 'Ext.field.Text', 'Ext.field.Password','Ext.field.Email', 'Ext.Toolbar'
+            ],
+            onReady: function() {
+                var form = Ext.Viewport.add({
+	                xtype: 'formpanel',
+	                items:  [
+		                {
+			                xtype: 'textfield',
+			                name: 'name',
+			                label: 'Name',
+			                autoCapitalize: false
+		                },
+		                {
+			                xtype: 'passwordfield',
+			                name: 'password',
+			                label: 'Password'
+		                },
+		                {
+			                xtype: 'textfield',
+			                name: 'disabled',
+			                label: 'Disabled',
+			                disabled: true
+		                },
+		                {
+			                xtype: 'emailfield',
+			                name: 'email',
+			                label: 'Email',
+			                placeHolder: 'you@sencha.com'
+		                },
+		                {
+			                xtype: 'toolbar',
+			                docked: 'bottom',
+			                items: [
+				                {
+					                text: 'Callback',
+					                ui: 'confirm',
+					                scope: this,
+					                handler: function() {
+						                form.setMasked({
+							                xtype: 'loadmask',
+							                message: 'Saving...'
+						                });
+
+						                setTimeout(function() {
+                                            form.setMasked(false);
+						                }, 1000);
+					                }
+				                },
+				                {
+					                text: 'Hide',
+					                ui: 'confirm',
+					                scope: this,
+					                handler: function() {
+						                var items = Ext.ComponentQuery.query("mask");
+						                if(items.length > 0 ) {
+                                            form.setMasked(false);
+						                }
+					                }
+				                },
+				                {
+					                text: 'Show',
+					                ui: 'confirm',
+					                scope: this,
+					                handler: function() {
+						                form.setMasked({
+							                xtype: 'loadmask',
+							                message: 'Saving...'
+						                });
+					                }
+				                }
+			                ]
+		                }
+					]
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

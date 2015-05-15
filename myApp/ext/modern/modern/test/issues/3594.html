@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Touch Bug</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript">
+        Ext.define('DelayJsonP', {
+       		extend: 'Ext.data.proxy.JsonP',
+       		alias: 'proxy.delayjsonp',
+       		createRequestCallback: function(request, operation, callback, scope) {
+       			var me = this;
+       			return function(success, response, errorType) {
+       				delete me.lastRequest;
+       				Ext.Function.defer(function() {
+       					me.processResponse(success, operation, request, response, callback, scope);
+       				}, 2000);
+       			};
+       		}
+       	});
+
+        Ext.application({
+            name: 'App',
+            launch: function() {
+                Ext.create('Ext.Container', {
+               		fullscreen: true,
+               		scrollable: false,
+               		layout: 'fit',
+               		items: [{
+               			xtype: 'dataview',
+               			scrollable: 'vertical',
+               			store: {
+               				autoLoad: true,
+               				fields: ['from_user', 'text', 'profile_image_url'],
+               				proxy: {
+               					type: 'delayjsonp',
+               					url: 'http://search.twitter.com/search.json?q=Sencha+Touch',
+               					reader: {
+               						type: 'json',
+               						rootProperty: 'results'
+               					}
+               				}
+               			},
+               			itemTpl: '<img src="{profile_image_url}" /><h2>{from_user}</h2><p>{text}</p><div style="clear: both"></div>'
+               		}]
+               	});
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>
+

@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>EXTJSIV-4600</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css"/>
+    <script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+<script type="text/javascript" charset="utf-8">
+    //your test case goes here
+    Ext.application({
+        requires : [
+            'Ext.data.Model', 'Ext.data.JsonStore',
+            'Ext.window.Window', 'Ext.chart.Chart',
+            'Ext.chart.theme.Theme', 'Ext.chart.theme.Base',
+            'Ext.chart.series.Line', 'Ext.chart.axis.Numeric',
+            'Ext.layout.container.Fit'
+        ],
+        launch: function () {
+            var data = [];
+            for (var i = 0; i < 20000; i++) {
+                data[i] = {
+                    data1: i,
+                    data2: 100000 * Math.random() + 100000
+                }
+            }
+            var store = Ext.create('Ext.data.JsonStore', {
+                fields: [ 'data1', 'data2' ],
+                data : []
+            });
+            store.loadData(data);
+            var window = new Ext.Window({
+                width: 800,
+                height: 600,
+                title: 'Charts',
+                layout: 'fit',
+                items: [{
+                    xtype: 'chart',
+                    store: store,
+                    theme: 'Category1',
+                    legend: {
+                        position: 'right'
+                    },
+                    axes: [{
+                        position: 'left',
+                        type: 'Numeric',
+                        title: 'Y',
+                        fields: ['data2'],
+                        grid: {
+                            odd: {
+                                opacity: 0.3,
+                                fill: '#ddd',
+                                stroke: '#bbb',
+                                'stroke-width': 0.5
+                            }
+                        }
+                    }, {
+                        position: 'bottom',
+                        type: 'Numeric',
+                        title: 'X',
+                        fields: ['data1'],
+                        grid: {
+                            odd: {
+                                opacity: 0.3,
+                                fill: '#ddd',
+                                stroke: '#bbb',
+                                'stroke-width': 0.5
+                            }
+                        }
+                    }],
+                    series: [{
+                        type: 'line',
+                        xField: 'data1',
+                        yField: 'data2',
+                        axis: 'left'
+                    }]
+                }]
+            });
+            window.show();
+        }
+    });
+</script>
+</body>
+</html>

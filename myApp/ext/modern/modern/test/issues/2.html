@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sencha Test</title>
+        
+        <script src="../../sencha-touch-debug.js"></script>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+        <script type="text/javascript">
+
+            Ext.application({
+                name: 'Test',
+
+                requires : [
+                    'Ext.tab.Panel'
+                ],
+            
+                launch: function() {
+                    new Ext.Container({
+                        fullscreen : true,
+                        layout     : {
+                            type  : 'vbox',
+                            align : 'stretch'
+                        },
+                        items      : [
+                            {
+                                flex   : 1,
+                                layout : {
+                                    type  : 'hbox',
+                                    align : 'stretch'
+                                },
+                                items  : [
+                                    {
+                                        xtype          : 'tabpanel',
+                                        flex           : 1,
+                                        tabBarPosition : 'bottom',
+                                        items          : [
+                                            {
+                                                title   : 'Home',
+                                                html    : 'Go home!',
+                                                iconCls : 'home'
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        xtype          : 'tabpanel',
+                                        flex           : 1,
+                                        tabBarPosition : 'bottom',
+                                        items          : [
+                                            {
+                                                title : 'Home',
+                                                html  : 'Go home!'
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                flex   : 1,
+                                layout : {
+                                    type  : 'hbox',
+                                    align : 'stretch'
+                                },
+                                items  : [
+                                    {
+                                        xtype : 'tabpanel',
+                                        flex  : 1,
+                                        items : [
+                                            {
+                                                title   : 'Home',
+                                                html    : 'Go home!',
+                                                iconCls : 'home'
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        xtype : 'tabpanel',
+                                        flex  : 1,
+                                        items : [
+                                            {
+                                                title : 'Home',
+                                                html  : 'Go home!'
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    });
+                }
+            });
+            
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

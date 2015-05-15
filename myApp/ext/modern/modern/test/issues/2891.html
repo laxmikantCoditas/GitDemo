@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TOUCH-2891</title>
+
+        <script src="../../sencha-touch-debug.js"></script>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+        <script type="text/javascript">
+            Ext.application({
+                requires: ['Ext.form.Panel', 'Ext.field.Select', 'Ext.form.FieldSet'],
+
+                launch: function() {         
+                    Ext.create("Ext.form.Panel", {
+                        fullscreen: true, 
+                        items: [
+                        {
+                            xtype: 'fieldset',
+                            title: 'Select',
+                            items: [
+                                {
+                                    xtype: 'selectfield',
+                                    name : 'will_vote',
+                                    id : 'will_vote',
+                                    label: 'Will vote?',
+                                    options: [
+                                        {text: '',  value: ''},
+                                        {text: 'Undecided/Refused',  value: 'Undecided/Refused'},
+                                        {text: 'Definitely',  value: 'Definitely'},
+                                        {text: 'Likely', value: 'Likely'},
+                                        {text: 'Unlikely', value: 'Unlikely'},
+                                        {text: 'Not Voting',  value: 'Not Voting'}
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }); 
+            }});
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

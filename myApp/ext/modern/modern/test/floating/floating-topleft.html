@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script src="../../sencha-touch.js"></script>
+
+        <script type="text/javascript">
+
+Ext.setup({
+    viewport: {
+        autoMaximize: false
+    },
+    onReady: function() {
+        Ext.Viewport.add({
+            top: 100,
+            left: 100,
+
+            style: 'background:red',
+            width: 150,
+            height: 150,
+            html: 'top: 100<br />left: 100'
+        });
+    }
+});
+
+        </script>
+    </head>
+    
+    <body></body>
+</html>

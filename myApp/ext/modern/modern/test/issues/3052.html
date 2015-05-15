@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sencha Test</title>
+        
+        <script src="../../sencha-touch-all.js"></script>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+        <script type="text/javascript">
+
+Ext.setup({
+    onReady: function() {
+
+            
+        Ext.Viewport.setActiveItem({
+            xtype: 'formpanel',
+            items:
+            [
+                {
+                    xtype: 'fieldset',
+                    title: 'Personal',
+                    disabled: true,
+                    items:
+                    [
+                        {
+                            xtype: 'textfield',
+                            name: 'FirstName',
+                            label: 'First Name'
+                        },
+                        {
+                            xtype: 'selectfield',
+                            name: 'Country',
+                            label: 'Country',
+                            options: [{text: 'United Kingdom',  value: 'UK'},
+                            {text: 'United States', value: 'US'},
+                            {text: 'Canada',  value: 'CAN'}]
+                        }
+                    ]
+                }
+            ]
+        });
+        
+    }
+});
+            
+        </script>
+    </head>
+    <body>
+
+    </body>
+</html>

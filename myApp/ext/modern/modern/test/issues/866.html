@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test case template</title>
+        <link rel="stylesheet" href="../../deploy/resources/css/sencha-touch.css"/>
+        <script src="../../deploy/sencha-touch-all-debug.js"></script>
+        
+        <script>
+            Ext.setup({
+                onReady: function() {
+
+                    function handler() {
+                        alert('Button was clicked!');
+                    }
+
+                    Ext.Viewport.add({
+                        xtype: 'panel',
+                        items: [{
+                            xtype: 'panel',
+                            html: 'The two buttons below have what should be identical tap listeners attached. The only difference is that the second one uses the listeners format where each handler is an object with its own options. This second format does not fire correctly.'
+                        }, {
+                            xtype: 'button',
+                            text: 'Will fire',
+                            listeners: {
+                                tap: handler,
+                                delay: 100
+                            }
+                        }, {
+                            xtype: 'button',
+                            text: 'Will not fire',
+                            listeners: {
+                                tap: {
+                                    fn: handler,
+                                    delay: 100
+                                }
+                            }
+                        }]
+                    });
+
+                }
+            });
+        </script>
+    </head>
+    <body>
+        
+    </body>
+</html>

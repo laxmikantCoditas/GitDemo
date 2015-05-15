@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TOUCH-4982</title>
+
+	<script src="../../sencha-touch-debug.js"></script>
+	<link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+	<script type="text/javascript">
+		Ext.application({
+			name: 'Fiddle',
+
+			launch: function() {
+				var progressIndicator = Ext.create("Ext.ProgressIndicator");
+
+				var request = {
+					url: 'http://xhr2demo.sencha.com/form-upload.php',
+					method: 'POST',
+					xhr2: true,
+
+					progress: progressIndicator,
+
+					success: function(form, response) {
+						if(response) {
+							console.log(response.message);
+							for(var file in response.files) {
+								file = response.files[file];
+								console.log("-" + file.name +": " + file.size);
+							}
+						}
+					},
+					failure: function(form, response) {
+						console.log(response.message);
+					}
+				};
+
+				var form = Ext.create('Ext.form.Panel', {
+					fullscreen: true,
+					enableSubmissionForm: true,
+					items: [
+						{
+							xtype: 'textfield',
+							name: 'name',
+							label: 'Name'
+						},
+						{
+							xtype: 'emailfield',
+							name: 'email',
+							label: 'Email'
+						},
+						{
+							xtype: 'passwordfield',
+							name: 'password',
+							label: 'Password'
+						},
+						{
+							xtype: 'sliderfield',
+							name: 'testingslider',
+							values: [10, 20]
+						},
+						{
+							xtype: 'checkboxfield',
+							name: 'tomato',
+							label: 'Tomato',
+							value: 'tomato',
+							checked: true
+						},
+						{
+							xtype: 'datepickerfield',
+							label: 'Birthday',
+							name: 'birthday',
+							value: new Date()
+						},
+						{
+							xtype: 'radiofield',
+							name: 'color',
+							value: 'red',
+							label: 'Red',
+							checked: true
+						},
+						{
+							xtype: 'radiofield',
+							name : 'color',
+							value: 'green',
+							label: 'Green'
+						},
+						{
+							xtype:"filefield",
+							label: "Select image(s):",
+							name: "photos",
+							accept:"image/jpeg",
+							multiple: true
+						},
+						{
+							xtype: 'button',
+							text: "test",
+							handler: function() {
+								form.submit(request);
+							}
+						}
+					]
+				});
+
+				Ext.Viewport.add(form);
+
+			}
+
+		});
+	</script>
+</head>
+<body>
+</body>
+</html>

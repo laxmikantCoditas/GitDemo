@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript">
+        Ext.Loader.require(['Ext.chart.*', 'Ext.Button']);
+        Ext.setup({
+            onReady: function () {
+                Ext.create('Ext.chart.CartesianChart', {
+                    fullscreen: true,
+                    background: 'white',
+                    flipXY: false,
+                    store: {
+                        fields: ['name', 'g1', 'g2', 'g3', 'g4', 'g5'],
+                        data: [
+                            {name: 'Item-0',  g1: 2,  g2: 3,  g3: 4},
+                            {name: 'Item-1',  g1: -2, g2: undefined, g3: -4},
+                            {name: 'Item-2',  g1: -2, g2: 3,  g3: 4},
+                            {name: 'Item-3',  g1: 2, g2: 3,   g3: -4}
+                        ]
+                    },
+                    interactions: ['panzoom'],
+                    legend: {
+                        position: 'right',
+                        width: 80
+                    },
+                    axes: [
+                        {
+                            type: 'numeric',
+                            position: 'left',
+                            grid: true
+                        },
+                        {
+                            type: 'category',
+                            position: 'bottom'
+                        }
+                    ],
+                    series: [
+                        {
+                            type: 'bar',
+                            xField: 'name',
+                            yField: ['g1', 'g2', 'g3'],
+                            axis: 'bottom',
+                            highlight: true,
+                            showInLegend: true,
+                            label: {
+                                field: ['g1', 'g2', 'g3', 'g4', 'g5'],
+                                display: 'insideStart'
+                            },
+			                style: {
+                                stroke: 'rgb(40,40,40)',
+                                maxBarWidth: 50
+                            },
+                            subStyle: {
+                                fill: ['#E9662C', '#EBAF3C', '#00AC65', '#068894']
+                            }
+                        }
+                    ]
+                });
+                Ext.Viewport.add({
+                    xtype: 'container',
+                    docked: 'top',
+                    html: 'Three stacked bars should be displyed for each category (Item-#), except for Item-1 the yellow bar (g2) should be missing, but orange and green one still displayed.',
+                    styleHtmlContent: true
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

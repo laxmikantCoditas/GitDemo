@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>TOUCH-952</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script src="../../sencha-touch.js"></script>
+
+    <script type="text/javascript">
+
+        Ext.setup({
+            onReady: function() {
+                var fp = Ext.create('Ext.form.Panel', {
+                    floating: true,
+                    // modal: true,
+                    centered: true,
+                    width: 500,
+                    height: 700,
+                    listeners: {
+                        painted: function() {
+                            alert('painted');
+                        }
+                    }
+                });
+
+                fp.show();
+            }
+        });
+
+    </script>
+
+    <style>
+        
+    </style>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3343</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+    <script type="text/javascript">
+
+        Ext.require([
+            'Ext.field.DatePicker',
+            'Ext.form.Panel'
+        ]);
+
+        Ext.define('Test.controller.Test', {
+            extend : 'Ext.app.Controller',
+
+            config : {
+                refs : {
+                    myPanel : 'panel#mypanel'
+                },
+
+                control : {
+                    myPanel : {
+                        show : 'eventHandler'
+                    },
+
+                    'datepickerfield' : {
+                        change : 'onpickerchangehandler'
+                    },
+
+                    'textfield' : {
+                        change : 'ontextchangehandler'
+                    }
+                }
+            },
+
+            eventHandler : function () {
+                console.log('Form is shown!');
+            },
+
+            onpickerchangehandler : function () {
+                console.log('New date selected!');
+            },
+
+            ontextchangehandler : function () {
+                console.log('New text entered!');
+            }
+        });
+
+        Ext.application({
+            name : 'Test',
+
+            controllers : [
+                'Test'
+            ],
+
+            launch : function () {
+
+                var test = Ext.create('Ext.form.Panel', {
+                    height : 300,
+                    width  : 300,
+
+                    modal         : true,
+                    hideOnMaskTap : false,
+
+                    itemId : 'mypanel',
+
+                    items : [
+                        {
+                            xtype : 'datepickerfield',
+                            label : 'Date'
+                        },
+                        {
+                            xtype : 'textfield',
+                            label : 'Text'
+                        }
+                    ]
+                });
+
+                test.showBy(Ext.getBody(), "c-c?");
+
+            }
+        });
+
+    </script>
+</head>
+<body>
+</body>
+</html>

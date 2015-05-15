@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>SVG engine save/restore</title>
+    <style></style>
+    <link rel="stylesheet" href="../../../resources/css/sencha-touch.css">
+    <script src="../../../sencha-touch-all-debug.js"></script>
+    <script>
+        Ext.require(['Ext.draw.Component', 'CustomSprite', 'Ext.Toolbar']);
+        Ext.setup({
+            onReady: function () {
+                // The ctx.group functionality in the Ext.draw.engine.SvgContext is there to handle SVG elements removal
+                // from the DOM when corresponding sprite is destroyed.
+                // Each sprite is rendered in its own context for which a group ('g') element is created,
+                // so that all further drawing (until context is restored after the sprite has been rendered)
+                // happens inside that group. The reference to the group is stored in sprite.element.
+                //
+                // Additionally, all child elements within the surface.mainGroup are removed from the DOM
+                // after a call to surface.clear() or ctx.clear() next time ctx.restore() is called.
+                Ext.define('Override.draw.engine.Svg', {
+                    override: 'Ext.draw.engine.Svg',
+                    remove: function (sprite, destroySprite) {
+                        if (sprite && sprite.element) {
+                            //if sprite has an associated svg element remove it from the surface
+                            sprite.element.destroy();
+                            console.log('SVG element removed from DOM.');
+                            sprite.element = null;
+                        }
+                        this.callSuper(arguments);
+                    },
+                    clear: function () {
+                        console.log('SVG Surface.clear()');
+                        this.ctx.clear();
+                        this.defPosition = 0;
+                    }
+                });
+
+                var isSvg = true;
+                var toolbar = Ext.Viewport.add([{
+                    xtype: 'container',
+                    docked: 'top',
+                    styleHtmlContent: true,
+                    html: "There should be no differences in rendering between engines.<br><br>" +
+                          "Notice how surface.clear() doesn't work with SVG engine. With SVG engine the surface is only cleared when ctx.restore is called.<br><br>" +
+                          "Also, observe how destroying red sprite affects the image immidiately (element is removed from DOM) when SVG engine is used, but requires a redraw with Canvas engine."
+                },{
+                    xtype: 'toolbar',
+                    docked: 'top',
+                    items: [
+                        {
+                            xtype: 'button',
+                            text: 'Toggle engine: Svg',
+                            handler: function () {
+                                isSvg = !isSvg;
+                                this.setText('Toggle engine: ' + (isSvg ? 'Svg' : 'Canvas'));
+                                updateView();
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            text: 'Clear',
+                            handler: function () {
+                                // Only works with Canvas engine.
+                                draw.getSurface().clear();
+                                // The call below will clear the surface, but it's not a valid call here,
+                                // since in this context (the moment we press the button) we are out of states to restore.
+                                // This is not a problem in real life situations
+                                // where context is saved and restored for each rendered sprite.
+                                //draw.getSurface().ctx.restore();
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            text: 'Destroy red cicrle',
+                            handler: function () {
+                                circle.destroy();
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            text: 'Change red circle radius',
+                            handler: function () {
+                                circle.setAttributes({
+                                    // One weird thing noticed:
+                                    // changing 'scaling' looks the same as changing 'r' (radius)
+                                    // e.g. the stroke isn't scaled
+                                    // which isn't the expected behavior, IMO
+                                    scaling: 0.1 + Math.random()
+                                });
+                                // Another issue is that after a call to setAttributes we must
+                                // call the surface.renderFrame manually in order to see the changes,
+                                // (unless the sprite has the animation modifier set).
+                                // We shouldn't do this manually. Instead, a renderFrame call should
+                                // be scheduled, if it hasn't been scheduled already or
+                                // pendingRenderFrame is true.
+                            }
+                        }
+                    ]
+                }]);
+                var draw, circle;
+                function updateView() {
+                    Ext.Viewport.removeAll(true, false);
+                    draw = Ext.Viewport.add({
+                        xtype: 'draw',
+                        engine: 'Ext.draw.engine.' + (isSvg ? 'Svg' : 'Canvas'),
+                        fullscreen: true
+                    });
+                    var surface = draw.getSurface();
+                    circle = surface.add({
+                        type: 'circle',
+                        r: 100,
+                        cx: 500,
+                        cy: 400,
+                        fillStyle: 'red',
+                        strokeStyle: 'black',
+                        lineWidth: 3,
+                        fx: {
+                            easing: 'elasticIn',
+                            duration: 2500
+                        }
+                    });
+                    var custom = Ext.create('CustomSprite', {
+                        x: 200,
+                        y: 200,
+                        fillStyle: 'gold',
+                        strokeStyle: 'red',
+                        lineWidth: 3
+                    });
+                    surface.add(custom);
+                }
+                updateView();
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

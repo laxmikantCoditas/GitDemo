@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>1956</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <script src="../../sencha-touch.js"></script>
+
+    <script>Ext.Loader.setConfig({
+        enabled:true
+    });
+
+    Ext.application({
+        name:'TEST',
+        icon:'resources/images/icon.png',
+        tabletStartupScreen:'resources/images/tablet_startup.png',
+        phoneStartupScreen:'resources/images/phone_startup.png',
+        glossOnIcon:false,
+        viewport:{},
+
+
+        launch:function () {
+            var topPanel = Ext.create('Ext.Panel', {
+                id:'toppanel',
+                html:'<div/>TOP</div>',
+                docked:'top',
+                width:'100%',
+                height:50,
+                style:'background-color: red; color: white;'
+            });
+
+            var leftPanel = Ext.create('Ext.Panel', {
+                id:'leftpanel',
+                docked:'left',
+                layout:'fit',
+                width:'33%',
+                html:'<div/>LEFT</div>',
+                style:'background-color: green; color: white;'
+            });
+
+            var dataPanel = Ext.create('Ext.Panel', {
+                id:'dataPanel',
+                layout:'fit',
+                items:[
+                    {
+                        title:'Basic',
+                        xtype:'formpanel',
+                        id:'dataForm',
+                        layout:{
+                            type:'vbox',
+                            align:'stretch'
+                        },
+                        items:[
+                            {
+                                xtype:'fieldset',
+                                title:'Personal data',
+                                instructions:'* mandatory field',
+                                defaults:{
+                                    labelWidth:'35%',
+                                    required:true,
+                                    clearIcon:true
+                                },
+                                items:[
+                                    {
+                                        xtype:'selectfield',
+                                        name:'disasterField',
+                                        label:'Disaster field',
+                                        options:[
+                                            {text:'Value1', value:'value1'},
+                                            {text:'Value2', value:'value2'},
+                                            {text:'Value3', value:'value3'}
+                                        ]
+                                    } ,
+                                    {
+                                        xtype:'textfield',
+                                        name:'name',
+                                        label:'Name',
+                                        autoCapitalize:true
+                                    }
+                                ]
+                            },
+                            {
+                                xtype:'panel',
+                                items:[
+                                    {
+                                        text:'Salva',
+                                        xtype:'button',
+                                        width:135,
+                                        right:0,
+                                        height:50,
+                                        handler:function () {
+                                            alert("hello");
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            });
+
+            Ext.Viewport.add(topPanel);
+            Ext.Viewport.add(leftPanel);
+            Ext.Viewport.add(dataPanel);
+        }
+    });
+    </script>
+</head>
+<body></body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Button Examples</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css">
+    <script type="text/javascript" src="../../ext-all-debug.js"></script>
+    <style type="text/css">
+        button:focus, a:focus {
+            background-color:#ff0000;!important;
+        }
+    </style>
+    <script type="text/javascript">
+        Ext.require('Ext.button.*');
+        Ext.onReady(function() {
+            Ext.create('Ext.button.Button', {
+                text: 'Button1',
+                width: 200,
+                height: 100,
+                renderTo: Ext.getBody()
+            });
+        });
+    </script>
+</head>
+<body>
+<h1>Ext Buttons 4.2.0</h1>
+</body>
+</html>

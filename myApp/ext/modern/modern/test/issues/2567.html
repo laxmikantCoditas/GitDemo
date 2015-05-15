@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>2567</title>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+    Ext.Loader.require("Ext.List");
+    Ext.application({
+        launch:function () {
+            var myList = Ext.create('Ext.List', {
+                fullscreen:true,
+                items:[
+                    {xtype:'toolbar', docked:'top', items:[
+                        {text:'Move Up', handler:function () {
+                            var store = myList.getStore(),
+                                selected = myList.getSelection()[0],
+                                index = store.indexOf(selected),
+                                originalOrder = selected.get('order'),
+                                swap;
+                            if (index > 0) {
+                                swap = store.getAt(index - 1);
+                                selected.set('order', swap.get('order'));
+                                swap.set('order', originalOrder);
+                            }
+                        }},
+                        {text:'Move Down', handler:function () {
+                            var store = myList.getStore(),
+                                selected = myList.getSelection()[0],
+                                index = store.indexOf(selected),
+                                originalOrder = selected.get('order'),
+                                swap;
+                            if (index < store.getData().length - 1) {
+                                swap = store.getAt(index + 1);
+                                selected.set('order', swap.get('order'));
+                                swap.set('order', originalOrder);
+                                myList.select(selected);
+                            }
+                        }}
+                    ]
+                    }
+                ], // items
+                store:{
+                    fields:['name', 'league', 'division', 'order'],
+                    sorters:[
+                        {
+                            property:'order',
+                            direction:'ASC'
+                        }
+                    ],
+                    data:[
+                        {
+                            name:'New York Yankees',
+                            league:'AL',
+                            division:'East',
+                            order:14
+                        },
+                        {
+                            name:'Tampa Bay',
+                            league:'AL',
+                            division:'East',
+                            order:2
+                        },
+                        {
+                            name:'Boston',
+                            league:'AL',
+                            division:'East',
+                            order:3
+                        },
+                        {
+                            name:'Toronto',
+                            league:'AL',
+                            division:'East',
+                            order:4
+                        },
+                        {
+                            name:'Baltimore',
+                            league:'AL',
+                            division:'East',
+                            order:5
+                        },
+                        {
+                            name:'Detroit',
+                            league:'AL',
+                            division:'Central',
+                            order:6
+                        },
+                        {
+                            name:'Cleveland',
+                            league:'AL',
+                            division:'Central',
+                            order:7
+                        },
+                        {
+                            name:'Chicago White Sox',
+                            league:'AL',
+                            division:'Central',
+                            order:8
+                        },
+                        {
+                            name:'Kansas City',
+                            league:'AL',
+                            division:'Central',
+                            order:9
+                        },
+                        {
+                            name:'Minnesota',
+                            league:'AL',
+                            division:'Central',
+                            order:10
+                        },
+                        {
+                            name:'Texas',
+                            league:'AL',
+                            division:'West',
+                            order:11
+                        },
+                        {
+                            name:'Los Angeles Angels',
+                            league:'AL',
+                            division:'West',
+                            order:12
+                        },
+                        {
+                            name:'Oakland',
+                            league:'AL',
+                            division:'West',
+                            order:13
+                        },
+                        {
+                            name:'Seattle',
+                            league:'AL',
+                            division:'West',
+                            order:1
+                        }
+                    ] // data
+                }, // store
+                itemTpl:'{name} - {order}'
+            }); // create()
+        } // launch
+    }); // application()
+</script>
+
+</body>
+</html>

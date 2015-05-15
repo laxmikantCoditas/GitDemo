@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>3010</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.application({
+            launch:function () {
+                Ext.create('Ext.Container', {
+                    fullscreen:true,
+                    items:[
+                        {
+                            xtype:'titlebar', /* try toolbar instead! ;) */
+                            docked:'top',
+                            items:[
+                                {
+                                    xtype:'button',
+                                    text:'Looooooooong string!',
+                                    listeners:{
+                                        resize:function () {
+                                            console.log('resize');
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    width:200
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

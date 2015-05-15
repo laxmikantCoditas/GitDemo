@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3343</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+    <script type="text/javascript">
+
+        Ext.define('MyView', {
+              extend : 'Ext.TabPanel',
+              xtype  : 'myview',
+
+              config : {
+                  activeTab : 0
+              },
+
+              initialize : function () {
+                  this.callParent(arguments);
+
+                  this.formPanel = Ext.create('Ext.form.Panel', {
+                      title : 'formpanel'
+                  });
+
+                  this.formPanel.on({
+                      show  : 'onShow',
+                      hide  : 'onHide',
+                      scope : this
+                  });
+
+                  this.setItems(this.formPanel);
+              },
+
+              onHide : function (view) {
+                  console.log('onHide', view.id);
+              },
+
+              onShow : function (view) {
+                  console.log('onShow', view.id);
+              }
+          });
+
+          Ext.application({
+              launch : function () {
+                  var me = this;
+
+                  Ext.defer(function () {
+                      Ext.Viewport.setActiveItem({
+                          xtype : 'myview'
+                      });
+                  }, 1000);
+
+                  Ext.defer(function () {
+                      Ext.Viewport.setActiveItem({
+                          xtype : 'myview'
+                      });
+                  }, 3000);
+              }
+          });
+
+    </script>
+</head>
+<body>
+</body>
+</html>

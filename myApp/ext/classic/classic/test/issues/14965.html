@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Panel collapsed and resizable</title>
+<script type="text/javascript" src="../../examples/shared/include-ext.js"></script>
+<script type="text/javascript" src="14965.js"></script>
+<style type="text/css">
+    .button {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .grid {
+        width: 300px;
+        height: 100px;
+        padding: 10px;
+    }
+    
+    :focus {
+        outline: 2px solid red !important;
+    }
+</style>
+</head>
+<body>
+    <div id="beforeBtn"></div>
+    
+    <div id="view" class="view" tabindex="0">
+        <table class="grid" tabindex="-1">
+            <tr id="r1" tabindex="-1">
+                <td tabindex="-1"><span tabindex="0">Name: foo</span></td>
+                <td tabindex="-1"><a href="mailto:foo@bar.com">foo@bar.com</a></td>
+            </tr>
+            <tr id="r2" tabindex="-1">
+                <td tabindex="-1"><span tabindex="0">Name: bar</span></td>
+                <td tabindex="-1"><a href="mailto:bar@bar.com">bar@bar.com</a></td>
+            </tr>
+            <tr id="r3" tabindex="-1">
+                <td tabindex="-1"><span tabindex="0">Name: baz</span></td>
+                <td tabindex="-1"><a href="mailto:baz@bar.com">baz@bar.com</a></td>
+            </tr>
+        </table>
+    </div>
+    
+    <div id="afterBtn"></div>
+</body>
+</html>

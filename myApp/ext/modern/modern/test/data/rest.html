@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../sencha-touch-all.js"></script>
+    <script>
+        Ext.define('MyModel', {
+            extend: 'Ext.data.Model',
+
+            config: {
+                fields: [
+                    'field1',
+                    {name: 'field2', type: 'date', dateFormat: 'timestamp'},
+                    {name: 'field3', mapping: 'data.test', type: 'int'}
+                ],
+
+                proxy: {
+                    type: 'rest',
+                    url: 'rest.php',
+                    reader: {
+                        type: 'json',
+                        clientIdProperty: 'clientId',
+                        rootProperty: 'results',
+                        idProperty: 'IDPROPERTY'
+                    },
+                    writer: {
+                        type: 'json',
+                        root: 'records',
+                        encode: true,
+                        allowSingle: true
+                    }
+                }
+            }
+        });
+
+        Ext.setup({
+            onReady: function() {
+                var store = Ext.create('Ext.data.Store', {
+                    model: 'MyModel'
+                });
+
+                var dataview = Ext.create('Ext.DataView', {
+                    store: store,
+                    fullscreen: true,
+                    itemTpl: 'id: {id}, Field1: {field1}, Field2: {field2:date("d-m-Y")}, Field3: {field3}'
+                });
+
+                store.sort({
+                    property: 'id',
+                    direction: 'DESC'
+                });
+
+                store.add({
+                    id: 1,
+                    field1: 'blaat',
+                    field2: new Date().getTime()/1000,
+                    field3: 100
+                });
+
+                store.add({
+                    field1: 'test',
+                    field2: new Date().getTime()/1000,
+                    field3: 400
+                });
+
+                store.add({
+                    field1: 'another',
+                    field2: new Date().getTime()/1000,
+                    field3: 500
+                });
+
+                store.getAt(0).set({
+                    field1: 'updated'
+                });
+
+                store.sync();
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

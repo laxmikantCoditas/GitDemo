@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        Ext.onReady(function () {
+            Ext.create('Ext.data.Store', {
+                storeId: 'simpsonsStore',
+                fields: ['name', 'email', 'phone'],
+                data: {'items': [
+                    { 'name': 'Lisa', "email": "lisa@simpsons.com", "phone": "555-111-1224"  },
+                    { 'name': 'Bart', "email": "bart@simpsons.com", "phone": "555-222-1234" },
+                    { 'name': 'Homer', "email": "home@simpsons.com", "phone": "555-222-1244"  },
+                    { 'name': 'Marge', "email": "marge@simpsons.com", "phone": "555-222-1254"  }
+                ]},
+                proxy: {
+                    type: 'memory',
+                    reader: {
+                        type: 'json',
+                        root: 'items'
+                    }
+                }
+            });
+
+            Ext.create('Ext.grid.Panel', {
+                title: 'Simpsons',
+                store: Ext.data.StoreManager.lookup('simpsonsStore'),
+                columns: [
+                    { text: 'Really Really long Name', dataIndex: 'name' },
+                    { text: 'Email', dataIndex: 'email', flex: 1},
+                    { text: 'Phone', dataIndex: 'phone' }
+                ],
+                height: 200,
+                width: 400,
+                renderTo: Ext.getBody()
+            });
+        });
+        
+    </script>
+</body>
+</html>

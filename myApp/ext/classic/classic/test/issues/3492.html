@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>3492</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css"/>
+    <!--<script type='text/javascript' src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>-->
+    <script type="text/javascript" src="../../ext.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        Ext.require([
+                'Ext.panel.Panel',
+                'Ext.layout.container.Column'
+        ]);
+
+        window.logToScreen = Ext.emptyFn;
+        if (window.console) {
+            logToScreen = function (text) {
+                window.console.log(text);
+            }
+        } else {
+            logToScreen = function (text) {
+                document.getElementById('logs').innerHTML += (text + '<br/>');
+            }
+        }
+        Ext.onReady(function() {
+            function doit() {
+                Ext.create('Ext.Panel', {
+                    id: 'panel',
+                    frame: true,
+                    title: 'Column Layout',
+                    bodyPadding: 5,
+                    width: 750,
+                    layout: 'column',
+                    fieldDefaults: {
+                        labelAlign: 'left',
+                        msgTarget: 'side'
+                    },
+                    renderTo: 'form',
+                    items: [
+                        {
+                            columnWidth: 0.60,
+                            height: 350,
+                            html: 'Panel on the left',
+                            listeners: {
+                                resize: function(me, adjWidth, adjHeight) {
+                                    logToScreen(adjWidth + ', ' + adjHeight);
+                                }
+                            }
+                        },
+                        {
+                            columnWidth: 0.40,
+                            html: 'Panel on the right'
+                        }
+                    ]
+                });
+            }
+            doit();
+            Ext.get('retry').on('click', function() {
+                var p = Ext.getCmp('panel');
+                if (p) {
+                    p.destroy();
+                    doit();
+                }
+            });
+
+            function c1(dom){
+                dom.scrollWidth;
+            }
+
+            function c2(dom){
+                dom.clientWidth;
+            }
+
+            function c3(dom){
+                dom.offsetTop;
+            }
+
+            function testPerf() {
+                var target = Ext.get('tested'), i, start, n = 500, dom = target.dom;
+                start = new Date();
+                for (i = 0; i < n; i++) {
+                    dom.style.width = i % 10 + 10;
+                }
+                logToScreen('empty:' + (new Date() - start));
+
+                start = new Date();
+                for (i = 0; i < n; i++) {
+                    dom.style.width = i % 10 + 10;
+                    c1(dom);
+                }
+                logToScreen('scrollWidth:' + (new Date() - start));
+
+                start = new Date();
+                for (i = 0; i < n; i++) {
+                    dom.style.width = i % 10 + 10;
+                    c2(dom);
+                }
+                logToScreen('clientWidth:' + (new Date() - start));
+
+                start = new Date();
+                for (i = 0; i < n; i++) {
+                    dom.style.width = i % 10 + 10;
+                    c3(dom);
+                }
+                logToScreen('offsetTop:' + (new Date() - start));
+            }
+            Ext.get('ptest').on('click', testPerf);
+        });
+    </script>
+</head>
+<style type="text/css">
+
+</style>
+<body>
+    <div id="form"></div>
+    <button id="retry">Retry</button>
+    <button id="ptest">Test scrollWidth performance</button>
+    <div id="tested"></div>
+    <div id="console"></div>
+    <div id="logs"></div>
+</body>
+</html>

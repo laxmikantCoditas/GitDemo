@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body style="padding:10px">
+<script type="text/javascript" charset="utf-8">
+Ext.require('*');
+Ext.onReady(function() {
+    Ext.create('Ext.container.Container', {
+        id: 'outermost-autoheight',
+        renderTo: document.body,
+        width: 200,
+        style: 'border: 1px solid black',
+        layout: 'hbox',
+        items: [{
+            id: 'overflowX-vbox-container',
+            defaultType: 'component',
+            style: 'background-color:yellow',
+            xtype: 'container',
+            layout: 'vbox',
+            flex: 1,
+            overflowX: 'auto',
+            items: [{
+                width: 500,
+                id: 'top-box-500px',
+                style: 'background-color:red',
+                html: 'child 1 content asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf',
+                margins: '0 3 0 0'
+            }, {
+                id: 'bottom-box-narrow',
+                style: 'background-color:blue',
+                html: 'child 2 content',
+                margins: '0 0 0 2'
+            }]
+        }]
+    });
+});
+</script>
+</body>
+</html>

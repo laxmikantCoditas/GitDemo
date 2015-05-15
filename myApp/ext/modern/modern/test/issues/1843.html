@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css" type="text/css">
+
+    <title>Pull Refresh</title>
+
+    <script src="../../sencha-touch.js"></script>
+
+    <script type="text/javascript">
+
+        /**
+         * This examples illustrates the 'List Paging' and 'Pull Refresh' plugins
+         */
+        Ext.setup({
+            requires: [
+                'Ext.data.Store',
+                'Ext.List'
+            ],
+
+            icon: 'icon.png',
+            phoneStartupScreen:  'phone_startup.png',
+            tabletStartupScreen: 'tablet_startup.png',
+
+            onReady: function() {
+
+                Ext.define('TweetStore', {
+                    extend: 'Ext.data.Store',
+
+                    config: {
+                        fields: ['from_user', 'profile_image_url', 'text', 'created_at'],
+
+                        pageSize: 5,
+
+                        proxy: {
+                            type: 'jsonp',
+                            url: 'http://search.twitter.com/search.json',
+
+                            pageParam: 'page',
+                            limitParam: 'rpp',
+
+                            extraParams: {
+                                q: 'sencha'
+                            },
+
+                            reader: {
+                                type: 'json',
+                                rootProperty: 'blah'
+                            }
+                        }
+                    }
+                });
+
+                tweetStore = Ext.create('TweetStore');
+
+                Ext.define('TweetList', {
+                    extend: 'Ext.List',
+
+                    config: {
+                        store: tweetStore,
+                        limit: 5,
+                        disableSelection: true,
+
+                        plugins: [
+                            { xclass: 'Ext.plugin.ListPaging' },
+                            { xclass: 'Ext.plugin.PullRefresh' }
+                        ],
+
+                        emptyText: '<p class="no-searches">No tweets found matching that search</p>',
+
+                        itemTpl: Ext.create('Ext.XTemplate',
+                            '<img src="{profile_image_url}" />',
+                            '<div class="tweet">',
+                            '<h2>{from_user}</h2>',
+                            '<p>{text}</p>',
+                            '</div>'
+                        )
+                    }
+                });
+
+                Ext.Viewport.add({
+                    xclass: 'TweetList',
+                    width: 380,
+                    height: 420,
+                    centered: true,
+                    modal: true,
+                    hideOnMaskTap: false
+                }).show();
+            }
+        });
+
+    </script>
+
+    <style type="text/css">
+        h2 { font-weight: bold; padding-bottom: 3px; }
+        img { border-radius: 5px; float: left; }
+        .tweet {
+            font-size: 70%;
+            margin-left: 60px;
+            color: #333;
+            min-height: 50px;
+        }
+        .x-list-item { border-top: 1px solid white; }
+        .posted { float: right; }
+    </style>
+</head>
+<body></body>
+</html>

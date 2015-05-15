@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <!-- Stylesheets to handle CSS -->
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+    <script type="text/javascript" src="../../bootstrap.js"></script>
+    <script type="text/javascript" src="../../console.js"></script> 
+    <script type="text/javascript">
+        Ext.require([
+            '*'
+        ]);
+        
+
+        Ext.onReady(function() {
+            
+            Ext.define('LoanRecord', {
+                extend: 'Ext.data.Model',
+                fields: [
+                    "loan_number"     , "needs_research"  , "commit_number"   , "issue_date"      , "final_settle"    ,
+                    "early_fund_date" , "issue_type"      , "balance_type"    , "pool_type"       , "io_term"         ,
+                    "war_io_term"     , "sale_name"       , "bond_spec"       , "cusip_num"       , "pool_suffix"     ,
+                    "occupancy_code"  , "amort_term"      , "original_ltv"    , "borrower_name"   , "address"         ,
+                    "loan_amount"     , "hockey_team"     , "credit_score"    , "cost_of_gas"     , "favourite_band"  ,
+                    "marital_status"  , "note_rate"       , "cat_name"        , "dog_name"        , "movie_title"     ,
+                    "song_title"      , "instrument_owned", "magazine_read"   , "occupation"      , "console_game"    ,
+                    "fifa_team"       , "birthdate"       , "zodiac_sign"     , "employer"        , "eligible_fnma"   ,
+                    "eligible_fhmc"   , "eligible_gnma1"  , "eligible_gnma2"  
+                ]
+            });
+
+            var columns = [
+                { "id": "loan_number"     ,"header": "Loan Number",        "dataIndex": "loan_number"       },
+                { "id": "needs_research"  ,"header": "Needs Research",      "dataIndex": "needs_research"  },
+                { "id": "commit_number"   ,"header": "Commit #",            "dataIndex": "commit_number"   },
+                { "id": "issue_date"      ,"header": "Issue Date",          "dataIndex": "issue_date"      },
+                { "id": "final_settle"    ,"header": "Final Settle Date",   "dataIndex": "final_settle"    },
+                { "id": "early_fund_date" ,"header": "Early Fund Date",     "dataIndex": "early_fund_date" },
+                { "id": "issue_type"      ,"header": "Issue Type",          "dataIndex": "issue_type"      },
+                { "id": "balance_type"    ,"header": "Balance Type",        "dataIndex": "balance_type"    },
+                { "id": "pool_type"       ,"header": "Pool Type",           "dataIndex": "pool_type"       },
+                { "id": "io_term"         ,"header": "IO Term",             "dataIndex": "io_term"         },
+                { "id": "war_io_term"     ,"header": "War IO Term",         "dataIndex": "war_io_term"     },
+                { "id": "sale_name"       ,"header": "Sale Name",           "dataIndex": "sale_name"       },
+                { "id": "bond_spec"       ,"header": "Bond Spec",           "dataIndex": "bond_spec"       },
+                { "id": "cusip_num"       ,"header": "Cusip",               "dataIndex": "cusip_num"       },
+                { "id": "pool_suffix"     ,"header": "Pool Suffix",         "dataIndex": "pool_suffix"     },
+                { "id": "occupancy_code"  ,"header": "Occupance Code",      "dataIndex": "occupancy_code"  },
+                { "id": "amort_term"      ,"header": "Amort. Term",         "dataIndex": "amort_term"      },
+                { "id": "original_ltv"    ,"header": "Orig LTV",            "dataIndex": "original_ltv"    },
+                { "id": "borrower_name"   ,"header": "Borrower Name",       "dataIndex": "borrower_name"   },
+                { "id": "address"         ,"header": "Address",             "dataIndex": "address"         },
+                { "id": "loan_amount"     ,"header": "Loan Amount",         "dataIndex": "loan_amount"     },
+                { "id": "hockey_team"     ,"header": "Hockey Club",         "dataIndex": "hockey_team"     },
+                { "id": "credit_score"    ,"header": "Credit Score",        "dataIndex": "credit_score"    },
+                { "id": "cost_of_gas"     ,"header": "Cost of Gas",         "dataIndex": "cost_of_gas"     },
+                { "id": "favourite_band"  ,"header": "Favourite Band",      "dataIndex": "favourite_band"  },
+                { "id": "marital_status"  ,"header": "Marital Status",      "dataIndex": "marital_status"  },
+                { "id": "note_rate"       ,"header": "Note Rate",           "dataIndex": "note_rate"       },
+                { "id": "cat_name"        ,"header": "Cat Name",            "dataIndex": "cat_name"        },
+                { "id": "dog_name"        ,"header": "Dog Name",            "dataIndex": "dog_name"        },
+                { "id": "movie_title"     ,"header": "Favourite Movie",     "dataIndex": "movie_title"     },
+                { "id": "song_title"      ,"header": "Song Title",          "dataIndex": "song_title"      },
+                { "id": "instrument_owned","header": "Musical Instrument",  "dataIndex": "instrument_owned"},
+                { "id": "magazine_read"   ,"header": "Magazine",            "dataIndex": "magazine_read"   },
+                { "id": "occupation"      ,"header": "Occupation",          "dataIndex": "occupation"      },
+                { "id": "console_game"    ,"header": "VdataIndexeo Game",   "dataIndex": "console_game"    },
+                { "id": "fifa_team"       ,"header": "Soccer Club",         "dataIndex": "fifa_team"       },
+                { "id": "birthdate"       ,"header": "Birthdate",           "dataIndex": "birthdate"       },
+                { "id": "zodiac_sign"     ,"header": "Zodiac",              "dataIndex": "zodiac_sign"     },
+                { "id": "employer"        ,"header": "Employer",            "dataIndex": "employer"        },
+                { "id": "eligible_fnma"   ,"header": "FNMA Eligible",       "dataIndex": "eligible_fnma"   },
+                { "id": "eligible_fhmc"   ,"header": "FHMC Eligible",       "dataIndex": "eligible_fhmc"   },
+                { "id": "eligible_gnma1"  ,"header": "GNMA1 Eligible",      "dataIndex": "eligible_gnma1"  },
+                { "id": "eligible_gnma2"  ,"header": "GNMA2 Eligible",      "dataIndex": "eligible_gnma2"  }
+            ];
+
+            var store = new Ext.data.Store({
+                model: 'LoanRecord',
+                autoLoad: true,
+                proxy: {
+                    type: 'ajax',
+                    url: 'loans.json', 
+                    reader: {
+                        type: 'json',
+                        root: 'records',
+                        totalProperty: 'count',
+                        successProperty: 'success'
+                    }
+                }
+            });
+            
+            store.on('load', function() {
+                console.markTimeline('grid creation');
+                var grid = Ext.create('Ext.grid.Panel', {
+                    store: store,
+                    columns: columns,
+                    columnLines: true,
+                    frame: true,
+                    height: 400,
+                    width: 600,
+                    viewConfig: {
+                        trackOver: false
+                    },
+                    loadMask: true
+                });
+                console.markTimeline('grid creation done');
+                grid.render('grid');
+                console.markTimeline('grid rendering done');
+                var btn = new Ext.Button({
+                    renderTo: Ext.getBody(),
+                    text: 'Refresh',
+                    handler: function() {
+                        var view = grid.getView();
+                        
+                        console.markTimeline('begin 5x refresh', true);
+                        for (var i = 0; i < 5; i++) {
+                            view.refresh();
+                        }
+                        console.markTimeline('after 5x refresh', true);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+
+<div id="grid"></div>
+</body>
+</html>

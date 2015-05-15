@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        .touched {
+            background-color: green !important;
+        }
+
+        #foo, #bar {
+            width: 200px;
+            height: 200px;
+            margin: 20px;
+            background-color: red;
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = function() {
+            document.addEventListener('touchstart', function(e) {
+                console.log(e.changedTouches[0].tada = 'hehe');
+                console.log(e.touches[0].tada);
+            }, false);
+
+//            document.getElementById('foo').addEventListener('touchstart', function(e) {
+//                this.className = 'touched';
+//            }, false);
+//
+//            document.getElementById('bar').addEventListener('touchstart', function(e) {
+//                this.className = 'touched';
+//            }, false);
+        };
+    </script>
+</head>
+<body>
+    <div id="foo"></div>
+    <div id="bar"></div>
+</body>
+</html>

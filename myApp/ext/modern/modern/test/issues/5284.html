@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TOUCH-5284</title>
+
+	<script src="../../sencha-touch-debug.js"></script>
+	<link rel="stylesheet" href="../../resources/css/mountainview.css">
+
+	<script type="text/javascript">
+		Ext.setup({
+			requires: [
+				'Ext.tab.Panel'
+			],
+			onReady: function() {
+				var panel = Ext.create('Ext.tab.Panel', {
+					tabBarPosition: 'bottom',
+
+					items: [
+						{
+							title: 'Welcome',
+							iconCls: 'home',
+
+							items: [
+								{
+									docked: 'top',
+									xtype: 'titlebar',
+									title: 'My Application'
+								},
+								{
+									xtype: 'toolbar',
+									docked: 'bottom',
+									items: [
+										{
+											text: 'Button 1',
+											action: 'button1'
+										},
+										{
+											text: 'Button 2',
+											action: 'button2'
+										}
+									]
+								},
+								{
+
+									xtype: 'searchfield',
+									itemId: 'search-field',
+									docked: 'top',
+									label: 'Search',
+									placeHolder: 'Search'
+
+								}
+							],
+							html: ['This is my application']
+						}
+					]
+				});
+				Ext.Viewport.add(panel);
+			}
+		});
+	</script>
+</head>
+<body>
+</body>
+</html>

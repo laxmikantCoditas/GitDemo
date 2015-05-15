@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Border Layout Gap Bug</title>
+	<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+	<script type="text/javascript" src="../../ext.js"></script>
+	<script type="text/javascript">
+		
+		Ext.onReady(function() {
+			
+			var viewport = Ext.create('Ext.Viewport',{
+				layout  : 'fit',
+	            items   : [{
+	                xtype   : 'container',
+	                id      : 'mainform',
+	                layout  : 'border',
+	                items   : [{
+						xtype		: 'container',
+						region		: 'north',
+						html		: 'North Region',
+						title 		: 'North',
+						bodyPadding	: 20,
+					},{
+						xtype		: 'panel',
+						region		: 'west',
+						title 		: 'West',
+						html		: 'West Region',
+						bodyPadding	: 20,
+						width		: 200,
+						split		: true
+					},{
+						xtype		: 'container', //<changing to panel fixes the bug
+						region      : 'center',
+						id			: 'centerPanel',
+						autoScroll  : true,
+						layout		: {
+							type		: 'table',
+							tableAttrs	: {width: '100%'}
+						}
+					}]
+				}]
+			});
+
+			Ext.getCmp('centerPanel').add([
+				{
+					xtype		: 'panel',
+					title 		: 'Panel 1',
+					bodyPadding	: 20,
+					width		: 200,
+					height		: 200,
+					html		: 'Big children panel to force parent scroll'
+				}			
+			]);
+		});
+	</script>
+</head>
+<body>
+</body>
+</html>

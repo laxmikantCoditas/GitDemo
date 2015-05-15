@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        //your test case goes here
+Ext.onReady(function() {
+    var dataItems = [];
+    for(var i = 0; i != 1000; ++i) {
+        dataItems.push({name: "Name "+i, phone: '555-'+i})
+    }
+    var store = Ext.create('Ext.data.Store', {
+        fields: ['name', 'phone'],
+        data: {
+            'items': dataItems
+        },
+        proxy: {
+            type: 'memory',
+            reader: {
+                type: 'json',
+                root: 'items'
+            }
+        }
+    });
+
+    var grid = Ext.create('Ext.grid.Panel', {
+        title: 'Names',
+        store: store,
+        selType: 'cellmodel',
+        columns: [
+        {
+            header: 'Name',
+            dataIndex: 'name',
+            width: 1000
+        },
+        {
+            header: 'Phone',
+            dataIndex: 'phone'
+        }
+        ],
+
+        renderTo: Ext.getBody(),
+
+        manageResize: function() {
+            var windowHeight = window.innerHeight - 30;
+            if(!windowHeight) {
+                windowHeight = document.documentElement.clientHeight - 30;
+            }
+            var newGridHeight = windowHeight - this.getEl().getTop();
+            if(newGridHeight < 200) {
+                newGridHeight = 200;
+            }
+            this.setHeight(newGridHeight);
+            this.doLayout();
+        }
+
+    });
+
+    Ext.EventManager.onWindowResize(grid.manageResize, grid);
+    grid.manageResize();
+});
+    </script>
+</body>
+</html>

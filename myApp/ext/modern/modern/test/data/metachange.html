@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../sencha-touch-all.js"></script>
+    <script>
+        Ext.setup({
+            onReady: function() {
+                var store = Ext.create('Ext.data.Store', {
+                    proxy: {
+                        type: 'ajax',
+                        url: 'metaload.json',
+                        reader: {
+                            type: 'json'
+                        }
+                    }
+                });
+
+                var dataview = Ext.create('Ext.DataView', {
+                    store: store,
+                    fullscreen: true,
+                    itemTpl: 'Field1: {field1}, Field2: {field2:date("d-m-Y")}, Field3: {field3}'
+                });
+
+                store.load();
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

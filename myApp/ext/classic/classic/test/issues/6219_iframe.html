@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+    <script type="text/javascript" src="../../ext-all.js"></script>
+
+    <script type="text/javascript">
+
+        function scrolled() {
+            console.log("scrolled");
+        }
+
+        Ext.require(['*']);
+
+        Ext.onReady(function(){
+
+            var win = new Ext.window.Window({
+                id: 'myWindow',
+                resizable:false,
+                constrain:false,
+                constrainHeader:false,
+                minimizable:false,
+                maximizable:false,
+                stateful:false,
+                modal:true,
+                width:450,
+                height:220,
+                closeAction:'hide',
+                bodyPadding:10,
+                layout:{
+                    type:'table',
+                    columns:1,
+                    tableAttrs: {
+                        style: {width: '100%'}
+                    }
+                }
+            });
+
+
+
+
+
+
+            var viewport = Ext.create('Ext.Viewport', {
+                id: 'myViewport',
+                layout : {type:'vbox',align:'stretch'},
+                //this.cls = 'plain';
+                style : {
+                    backgroundColor:'#ffffff'
+                },
+                defaults : {
+                    border:true
+                },
+                items : [{
+                    //region:'north',
+                    height:30,
+                    xtype:'container',
+                    layout:'card',
+                    itemId:'accountFilterViewCard',
+                    hidden: true
+                },{
+                    layout:'fit',
+                    xtype:'container',
+                    flex:1,
+                    //region:'center',
+                    margin:2,
+                    defaults:{
+                        border:true
+                    },
+                    items:[{
+                        //layout:'border',
+                        layout:{type:'vbox',align:'stretch'},
+                        xtype:'container',
+                        itemId:'viewportBorderRegion',
+                        defaults:{
+                            border:true,
+                            layout:'fit'
+                        },
+                        items:[{
+                            //region:'north',
+                            //xtype: 'msgs-view'
+                            border:true,
+                            height: 100,
+                            html: "this is message view"
+                        },{
+                            //region:'center',
+                            border:true,
+                            layout:'fit',
+                            flex:1,
+                            height: 400,
+                            html: "this is the grid panel"
+                        }]
+                    }]
+                },{
+                    //region:'south',
+                    id:'disclaimerTxt',
+                    html: "this is the disclaimer",
+                    height: 20,
+                    border:true,
+                    items: [
+                        {
+                            xtype: 'button',
+                            text: 'show',
+                            handler: function(){
+                                win.show();
+                            }
+                        }
+                    ]
+                }]
+            });
+
+        });
+
+
+    </script>
+
+</head>
+<body onScroll='scrolled();'>
+</body>
+</html>

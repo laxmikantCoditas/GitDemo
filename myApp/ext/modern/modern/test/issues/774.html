@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test case template</title>
+        <link rel="stylesheet" href="../../deploy/resources/css/sencha-touch.css"/>
+        <script src="../../deploy/sencha-touch-all-debug.js"></script>
+        
+        <script>
+            Ext.setup({
+                onReady: function() {
+
+                    Ext.create('Ext.tab.Panel', {
+                        fullscreen: true,
+
+                        activeItem: 1, //should select second tab by default
+
+                        items: [
+                            {
+                                title: 'Tab 1',
+                                html: 'I should NOT be displayed by default.'
+                            },
+                            {
+                                title: 'Tab 2',
+                                html: 'I should be displayed by default.'
+                            }
+                        ]
+                    });
+
+                }
+            });
+        </script>
+    </head>
+    <body>
+        
+    </body>
+</html>

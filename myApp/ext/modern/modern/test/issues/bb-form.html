@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sencha Touch Issue Template</title>
+		<link rel="stylesheet" href="../../resources/css/bb10.css"/>
+		<script type="text/javascript" src="../../sencha-touch-all-debug.js"></script>
+		<script type="text/javascript">
+
+    Ext.Loader.setConfig({
+        enabled: true
+    });
+
+    // Ext.extend('Ext.bb.overrides.field.Text', {
+    //     overrides: 'Ext.field.Text',
+
+    //     config: {
+    //         labelAlign: 'top'
+    //     }
+    // });
+
+	Ext.application({
+		launch : function () {
+      //       sheet = Ext.create('Ext.bb.CrossCut', {
+      //           defaults: {
+      //               handler: function() {
+      //                   sheet.hide();
+      //               }
+      //           },
+		    //     items: [
+      //               {
+      //                   text: 'New',
+      //                   iconMask: true,
+      //                   iconCls: 'compose'
+      //               },
+      //               {
+      //                   text: 'Reply',
+      //                   iconMask: true,
+      //                   iconCls: 'reply'
+      //               },
+      //               {
+      //                   text: 'Settings',
+      //                   iconMask: true,
+      //                   iconCls: 'settings'
+      //               }
+      //           ]
+		    // });
+
+            
+
+            Ext.Viewport.add({
+                xclass: 'Ext.form.Panel',
+                items: [
+                    {
+                        xtype: 'fieldset',
+                        items: [
+                            {
+                                xclass: 'Ext.field.Text',
+                                label: 'Username',
+                                labelAlign: 'top'
+                            },
+                            {
+                                xclass: 'Ext.field.Text',
+                                label: 'Password',
+                                labelAlign: 'top'
+                            },
+                            {
+                                xclass: 'Ext.field.Toggle',
+                                label: 'Enable Notifications',
+                                labelWidth: '50%'
+                            }
+                        ]
+                    }
+                ]
+            });
+		}
+	});
+		</script>
+	</head>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3286</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.setup({ 
+            requires: ['Ext.data.Store'],
+            onReady: function() {
+                var data1 = '<html></html>';
+                var data2 = '{ "doesnt_matter":"kittens" }';
+
+                var store = Ext.create('Ext.data.Store', {
+                    fields: [
+                        'doesnt_matter'
+                    ],
+
+                    data: data1,
+
+                    proxy: {
+                        type: 'memory',
+
+
+                        reader: {
+                            type: 'json'
+                        }
+                    }
+                });
+
+
+                store.load({
+                    callback: function(records, operation, success) {
+                        console.log("Store load callback");
+                        console.log(success);
+                    }
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

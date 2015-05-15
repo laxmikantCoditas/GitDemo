@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+
+<style type="text/css">
+    #foo1, #foo2 {
+        margin: 80px 40px;
+    }
+    
+</style>
+
+<script type="text/javascript" charset="utf-8">
+
+
+    Ext.require([
+        'Ext.form.*',
+        'Ext.grid.*',
+        'Ext.tree.*',
+        'Ext.window.MessageBox',
+        'Ext.tip.*',
+        'Ext.chart.*',
+        
+        'Ext.data.*',
+        'Ext.data.reader.*',
+        'Ext.data.Store',
+        'Ext.Array',
+        'Ext.panel.*',
+        'Ext.container.*',
+        'Ext.layout.*',
+        'Ext.DomHelper',
+        'Ext.String'
+    ]);
+
+    Ext.onReady(function() {
+
+        var reader, combo1, combo2;
+
+        combo1 = Ext.create('Ext.form.ComboBox', {
+            id:'state1',
+            forceSelection:true,
+            store: [
+                ['AL', 'Alabama\n\rAL<b>TEST</b>'] ,
+                ['AK', 'Alaska<AK>'] ,
+                ['AZ', 'Arizona<script>alert(10)<\/script>']
+            ],
+            renderTo: 'foo1'
+        });
+
+        combo2 = Ext.create('Ext.form.ComboBox', {
+            id:'state2',
+            forceSelection:true,
+            store: [
+                ['AL', 'Alabama&#010;&#013;<b>AL</b>'] ,
+                ['AK', 'Alaska&lt;AK&gt;'] ,
+                ['AZ', 'Arizona&lt;script&gt;alert(10)&lt;\/script&gt;']
+            ],
+            renderTo: 'foo2'
+        });
+
+        combo1.getStore().getProxy().getReader().getData = function(data) {
+            console.log("getData="+data);
+            return data;
+        };
+        combo1.getStore().reload();
+
+    });
+        
+</script>
+
+
+</head>
+
+<body>
+
+<div id='foo1'></div>
+<div id='foo2'></div>
+
+
+</body>
+</html>

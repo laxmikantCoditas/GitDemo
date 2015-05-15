@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title>Ticket </title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+    <script type="text/javascript" src="../../ext.js"></script>
+
+    <style type="text/css">
+        .x-grid-cell-inner {
+            white-space: normal !important;
+        }
+    </style>
+
+    <script type="text/javascript">
+        Ext.Loader.setConfig({enabled: true});
+        Ext.require('*');
+
+        Ext.onReady(function () {
+            Ext.create('Ext.data.Store', {
+                storeId: 'simpsonsStore',
+                fields: ['items'],
+                data: {'items': [ 'A', 'B', 'C'
+                ]},
+                proxy: {
+                    type: 'memory',
+                    reader: {
+                        type: 'json',
+                        root: 'items'
+                    }
+                }
+            });
+
+            Ext.create('Ext.grid.Panel', {
+                title: 'Word wrap issue',
+                store: Ext.data.StoreManager.lookup('simpsonsStore'),
+                renderTo: Ext.getBody(),
+                height: 400,
+                width: 600,
+
+                columns: [
+                    {
+                        text: 'User Access', dataIndex: 'items', width: 400,
+                        editor: new Ext.form.field.ComboBox({
+                            triggerAction: 'all',
+
+                            store: [
+                                ['mustBeLoggedInToSee', 'mustBeLoggedInToSee'],
+                                ['Public', 'Public'],
+                                ['Business Category', 'Business Category'],
+                                ['Master Manager', 'Master Manager'],
+                                ['Basic User', 'Basic User'],
+                                ['FullUser', 'FullUser'],
+                                ['BasciAdmin', 'BasciAdmin'],
+                                ['SuperUser', 'SuperUser'],
+                                ['FullAdmin', 'FullAdmin'],
+                                ['extrArgs', 'extrArgs'],
+                                ['ExternalUser', 'ExternalUser'],
+                                ['InternalUser', 'InternalUser'],
+                                ['Manager', 'Manager'],
+                                ['Sponsor', 'Sponsor'],
+                                ['HasDefault', 'HasDefault'],
+                                ['HasTN', 'HasTN'],
+                                ['HasSuper', 'HasSuper']
+                            ],
+
+                            multiSelect: true,
+                            forceSelection: true
+                        })
+                    }
+                ],
+                selType: 'cellmodel',
+                plugins: [
+                    Ext.create('Ext.grid.plugin.CellEditing', {
+                        clicksToEdit: 1
+                    })
+                ]
+            });
+        });
+    </script>
+</head>
+
+<body>
+</body>
+</html>

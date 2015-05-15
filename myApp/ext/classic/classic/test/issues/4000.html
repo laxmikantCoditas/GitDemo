@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        //your test case goes here
+ function gridFilters() {
+    var dataItems = [];
+    for(var i = 0; i != 100; ++i) {
+        var data = {
+            name: "Name "+i,
+            gender: 'Male',
+            age: Math.floor(Math.random()*100)
+        };
+        if(i % 2 == 0) {
+            data.gender = 'Female';
+        }
+        dataItems.push(data);
+    }
+    var store = Ext.create('Ext.data.Store', {
+        fields: ['name', 'gender', 'age'],
+        data: {
+            'items': dataItems
+        },
+        proxy: {
+            type: 'memory',
+            reader: {
+                type: 'json',
+                root: 'items'
+            }
+        }
+    });
+
+    var grid = Ext.create('Ext.grid.Panel', {
+        title: 'Names',
+        store: store,
+        height: 300,
+        width: 300,
+
+        columns: [
+        {
+            header: 'Name',
+            dataIndex: 'name',
+            editor: 'textfield',
+            width: 200
+        },
+        {
+            header: 'Gender',
+            dataIndex: 'gender',
+            renderer: function(value) {
+                return Ext.util.Format.htmlEncode(value);
+            },
+            editor: {
+                xtype: 'combobox',
+                store: ['Male', 'Female']
+            },
+            width: 100
+        },
+        {
+            header: 'Age',
+            dataIndex: 'age',
+            editor: 'numberfield',
+            width: 100
+        }
+        ],
+
+        selType: 'rowmodel',
+        plugins: [
+        Ext.create('Ext.grid.plugin.RowEditing', {
+            autoCancel: false,
+            clicksToEdit: 1
+        })
+        ],
+
+        renderTo: Ext.getBody()
+    });
+}
+Ext.onReady(gridFilters);
+    </script>
+</body>
+</html>

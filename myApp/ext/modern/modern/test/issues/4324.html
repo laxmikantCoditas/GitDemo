@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sencha Touch Issue Template</title>
+		<link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+		<script type="text/javascript" src="../../sencha-touch.js"></script>
+
+		<script type="text/javascript">
+			Ext.application({
+				name : 'Test',
+
+				requires : [
+
+				],
+
+				launch : function () {
+                    Ext.Viewport.add({
+                        items : [
+                            {
+                                xtype     : 'togglefield',
+                                label     : 'Toggle',
+                                listeners : {
+                                    change : function(field, newValue, oldValue) {
+                                        console.log(newValue, oldValue);
+                                    }
+                                }
+                            },
+                            {
+                                xtype   : 'button',
+                                text    : 'setValue',
+                                handler : function() {
+                                    var field = Ext.Viewport.down('togglefield');
+
+                                    field.setValue(true);
+                                }
+                            }
+                        ]
+                    });
+				}
+			});
+		</script>
+	</head>
+</html>

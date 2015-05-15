@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2283</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+
+    <script>
+        Ext.setup({
+            onReady:function () {
+                Ext.Viewport.add([{
+                    id:'titlebar',
+                    ui:'bvBranding',
+                    xtype: 'titlebar',
+                    docked:'top',
+                    title:'Default',
+                    items:[{
+                        iconCls:'settings',
+                        iconMask:true,
+                        align:'right',
+                        id:'setBttn'
+                    }]
+                }, {
+                    xtype: 'formpanel',
+                    items:[{
+                        xtype:'fieldset',
+                        title:'Select',
+                        items:[{
+                            xtype:'selectfield',
+                            usePicker:true,
+                            label:'Choose one',
+                            options:[
+                                {text:'First Option', value:'first'},
+                                {text:'Second Option', value:'second'},
+                                {text:'Third Option', value:'third'}
+                            ]
+                        }]
+                    }]
+                }]);
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

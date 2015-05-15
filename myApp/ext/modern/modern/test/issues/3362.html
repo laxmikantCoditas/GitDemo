@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3362</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+    <script type="text/javascript">
+        Ext.define('app.model.Idea', {
+            extend: 'Ext.data.Model',
+
+            config: {
+                fields      : [
+                    {name: 'id', type: 'auto'},
+                    {name: 'name', type: 'auto'}
+                ],
+                associations: [
+                    {
+                        type          : 'hasMany',
+                        model         : 'app.model.IdeaComment',
+                        autoLoad      : true,
+                        associatedName:'comments'
+                    }
+                ]
+            }
+        });
+
+        Ext.define('app.model.IdeaComment', {
+            extend: 'Ext.data.Model',
+
+            config: {
+                fields: [
+                    {name: 'id', type: 'auto'},
+                    {name: 'idea_id', type: 'auto'},
+                    {name: 'body', type: 'auto'},
+                    {name: 'parent_id', type: 'auto'}
+                ],
+
+                associations: [
+                    {
+                        type          : 'belongsTo',
+                        model         : 'app.model.Idea'
+                    },
+                    {
+                        type          : 'hasMany',
+                        model         : 'app.model.IdeaComment',
+                        autoLoad      : true,
+                        associatedName:'replies'
+                    }
+                ]
+            }
+        });
+
+        Ext.define('app.store.Ideas', {
+            extend: 'Ext.data.Store',
+            config: {
+                model: 'app.model.Idea',
+
+                // sample data
+                data : [
+                    {
+                        id        : 1,
+                        name      : 'Improve number of social media fans',
+                        comments  : [
+                            {
+                                id       : 5322451,
+                                idea_id  : 1,
+                                author   : 'Jessie Jackson',
+                                timestamp: 1345678646,
+                                body     : 'I just posted a comment',
+                                replies  : [
+                                    {
+                                        id       : 5322452,
+                                        parent_id: 5322451,
+                                        author   : 'John Johnson',
+                                        timestamp: 1345679649,
+                                        body     : 'Good point, this is my reply'
+                                    }
+                                ]
+                            },
+                            {
+                                id       : 5322454,
+                                idea_id  : 1,
+                                author   : 'Judy Berger',
+                                timestamp: 1345678646,
+                                body     : 'I just posted another comment',
+                                replies  : [
+                                    {
+                                        id       : 5322457,
+                                        parent_id: 5322454,
+                                        author   : 'Mark Spencer',
+                                        timestamp: 1345679649,
+                                        body     : 'Blah blah'
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        });
+
+        Ext.define('app.view.idea.Comments', {
+            extend: 'Ext.Container',
+
+            config: {
+                comments: {
+                    tpl: [
+                         '<h1>{name}</h1>',
+                        '<tpl for="comments">',
+                            '<div class="comment">-- {body}</div>',
+                            '<tpl for="replies">',
+                                '<div class="reply">---- {body}</div>',
+                            '</tpl>',
+                        '</tpl>'
+                    ].join('')
+                }
+            },
+
+            initialize: function () {
+                this.add([
+                    this.getComments()
+                ]);
+                this.callParent();
+            },
+
+            updateRecord: function (record) {
+                this.getComments().setRecord(record);
+                console.log(record.data.comments.length);
+                console.log(record.raw.comments.length);
+            },
+
+            applyComments: function (cfg) {
+                return Ext.factory(cfg, Ext.Component, this.getComments());
+            }
+        });
+
+        Ext.application({
+            onReady: function() {
+                var store = Ext.create('app.store.Ideas');
+                var container = Ext.Viewport.add(Ext.create('app.view.idea.Comments'));
+                var r = store.getAt(0);
+                container.setRecord(r);
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        Ext.Loader.setConfig({enabled:true});
+        Ext.onReady(function () {
+            Ext.create('Ext.form.Panel',
+                    {
+                        title:'Simple Form',
+                        bodyPadding:5,
+                        width:350,
+                        layout:'anchor',
+                        defaults:{
+                            anchor:'100%'
+                        },
+
+                        items:[
+                            {
+                                xtype:'tabpanel',
+                                width: 200,
+                                height: 200,
+                                listeners: {
+
+                                },
+                                items:[
+                                    {
+                                        title:'tab1',
+                                        items:[
+                                            {
+                                                title:'tab1 inner1',
+                                                items:[
+                                                    {
+                                                        xtype:'displayfield',
+                                                        fieldLabel:'Field1',
+                                                        value:'Value1'
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                title:'tab1 inner2',
+                                                items:[
+                                                    {
+                                                        xtype:'displayfield',
+                                                        fieldLabel:'Field2',
+                                                        value:'Value2'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        title:'tab2',
+                                        items:[
+                                            {
+                                                title:'tab2 inner1',
+                                                items:[
+                                                    {
+                                                        xtype:'displayfield',
+                                                        fieldLabel:'Field3',
+                                                        value:'Value3'
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                title:'tab2 inner2',
+                                                items:[
+                                                    {
+                                                        xtype:'displayfield',
+                                                        fieldLabel:'Field4',
+                                                        value:'Value4'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ],
+                        renderTo:Ext.getBody()
+                    }).getEl().addKeyMap(
+                    {
+                        key:Ext.EventObject.T,
+                        fn:function () {
+                            alert('Key event - T');
+                        }
+                    })
+        });
+
+        
+    </script>
+</body>
+</html>

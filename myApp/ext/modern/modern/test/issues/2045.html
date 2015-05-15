@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2045</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+
+    <script>
+        var view;
+
+
+        var carouselItems = [
+            {
+                xtype:"container", html:"Page one"
+            },
+            {
+                xtype:"container", html:"Page two"
+            },
+        ];
+
+
+        var myCarousel = {
+            "xtype":"carousel",
+            "items":carouselItems,
+            id:"carousel"
+        }
+
+
+        function breakCarousel() {
+            var carousel = view.down('#carousel');
+            carousel.removeAll();
+            carousel.setItems(carouselItems);
+            carousel.setActiveItem(0);
+        }
+
+
+        Ext.application({
+            name:'Sencha',
+
+            launch:function () {
+                window.onresize = function () {
+                    layoutTiles(bookDescriptors);
+                }
+
+                view = Ext.create('Ext.Panel', {
+                    fullscreen:true,
+                    layout:'fit',
+                    items:[ myCarousel,
+                        {
+                            xtype:"button",
+                            text:"Break",
+                            height:"40px",
+                            top:"100px",
+                            listeners:{
+                                tap:function () {
+                                    breakCarousel();
+                                }
+                            }
+                        }
+                    ]
+                })
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Strict//EN">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Group HTML issue</title>
+	<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+	<script type="text/javascript" src="../../ext.js"></script>
+	<script type="text/javascript">
+		
+		// Test Case:
+		// Group by Seniority, and collapse one group. The group will get hidden, since the HTML markup will break
+		
+		// Test case
+		Ext.onReady(function() {
+
+			var store = Ext.create('Ext.data.Store', {
+				storeId: 'employeeStore',
+				fields: ['name', 'seniority', 'department'],
+				//groupField: 'department',
+				data: {
+					'employees': [{
+						"name": "Dwight Schrute",
+						"seniority": "<img src=\"http://docs.sencha.com/extjs/4.2.1/extjs-build/examples/writer/images/stop.png\" style=\"visibility:hidden\">2",
+						"department": "Sales"
+					}, {
+						"name": "Michael Scott",
+						"seniority": "<img src=\"http://docs.sencha.com/extjs/4.2.1/extjs-build/examples/writer/images/stop.png\">7",
+						"department": "Management"
+					}, {
+						"name": "Jim Halpert",
+						"seniority": "<img src=\"http://docs.sencha.com/extjs/4.2.1/extjs-build/examples/writer/images/stop.png\" style=\"visibility:hidden\">3",
+						"department": "Sales"
+					}, {
+						"name": "Kevin Malone",
+						"seniority": "<img src=\"http://docs.sencha.com/extjs/4.2.1/extjs-build/examples/writer/images/stop.png\" style=\"visibility:hidden\">4",
+						"department": "Accounting"
+					}, {
+						"name": "Angela Martin",
+						"seniority": "<img src=\"http://docs.sencha.com/extjs/4.2.1/extjs-build/examples/writer/images/stop.png\">5",
+						"department": "Accounting"
+					}]
+				},
+				proxy: {
+					type: 'memory',
+					reader: {
+						type: 'json',
+						root: 'employees'
+					}
+				}
+			});
+
+
+			Ext.create('Ext.grid.Panel', {
+				title 	: 'Employees',
+				store	: Ext.data.StoreManager.lookup('employeeStore'),
+				columns	: [{
+					text		: 'Name',
+					dataIndex	: 'name'
+				}, {
+					text		: 'Seniority',
+					dataIndex	: 'seniority'
+				}],
+				features: [{
+					ftype: 'grouping'
+				}],
+				width	: 400,
+				height	: 275,
+				renderTo: Ext.getBody()
+			});
+			
+		});
+	</script>
+</head>
+<body></body>
+</html>

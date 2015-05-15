@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../sencha-touch-all.js"></script>
+    <script>
+        Ext.define('User', {
+            extend: 'Ext.data.Model',
+            config: {
+                fields: [
+                    {name: 'firstName', type: 'string'},
+                    {name: 'lastName',  type: 'string'}
+                ]
+            }
+        });
+
+        Ext.setup({
+            onReady: function() {
+                var data = [
+                    {firstName: 'Ed',    lastName: 'Spencer'},
+                    {firstName: 'Tommy', lastName: 'Maintz'},
+                    {firstName: 'Aaron', lastName: 'Conran'},
+                    {firstName: 'Jamie', lastName: 'Avins'}
+                ];
+
+                var store1 = Ext.create('Ext.data.Store', {
+                    model: 'User',
+                    storeId: 'test-store-1',
+                    data : data
+                });
+                store1.setAutoDestroy(true);
+
+                var view = Ext.create('Ext.DataView', {
+                    fullscreen: true,
+                    store: store1,
+                    itemTpl: '{firstName} {lastName}'
+                });
+
+                Ext.Viewport.setActiveItem(view);
+
+                var store2 = Ext.create('Ext.data.Store', {
+                    model: 'User',
+                    storeId: 'test-store-2',
+                    data : data
+                });
+                store2.setAutoDestroy(true);
+                view.setStore(store2);
+
+                console.log(store1.isDestroyed);
+
+
+                view.destroy();
+
+                console.log(store2.isDestroyed);
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

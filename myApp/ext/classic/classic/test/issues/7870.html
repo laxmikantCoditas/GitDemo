@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Test</title>
+    <script type="text/javascript" src="../../ext-all-dev.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+    <script type="text/javascript">
+        Ext.onReady(function(){
+            Ext.create('Ext.window.Window', {
+                title: 'Window',
+                autoShow: true,
+                height: 400,
+                width: 400,
+                layout: 'fit',
+                items: [{
+                    bodyPadding: 5,
+                    xtype: 'form',
+                    border: false,
+                    autoScroll: true,
+                    items: [{
+                        xtype: 'panel',
+                        title: 'panel 1',
+                        height: 200
+                    }, {
+                        xtype: 'panel',
+                        title: 'panel 2',
+                        height: 200
+                    }, {
+                        xtype: 'panel',
+                        title: 'panel 3',
+                        height: 200
+                    }]
+                }]
+            });
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>TOUCH-5079</title>
+    <style></style>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+    <script src="../../sencha-touch-all-debug.js"></script>
+    <script>
+        Ext.require(['Ext.data.JsonStore', 'Ext.chart.*']);
+        Ext.setup({
+            onReady: function () {
+                function generateData(n){
+                    var data = [], i,
+                        floor = Math.floor,
+                        random = Math.random;
+
+                    for (i = 0; i < (n || 12); i++) {
+                        data.push({
+                            name: i,
+                            g1: floor(random() * 200),
+                            g2: floor(random() * 200),
+                            g3: floor(random() * 200),
+                            g4: floor(random() * 200),
+                            g5: floor(random() * 200)
+                        });
+                    }
+                    return data;
+                }
+
+                var store = Ext.create('Ext.data.JsonStore', {
+                    fields: ['name', 'g1', 'g2', 'g3', 'g4', 'g5'],
+                    data: generateData(8)
+                });
+
+                Ext.Viewport.add({
+                    xtype: 'chart',
+                    fullscreen: true,
+                    legend: true,
+                    store: store,
+                    background: 'white',
+                    colors: ['#334D5C', '#45B29D', '#EFC94C', '#E27A3F', '#DF5A49'],
+                    interactions: [
+                        {
+                            type: 'panzoom',
+                            zoomOnPanGesture: true,
+                            axes: {
+                                left: {
+                                    allowPan: false,
+                                    allowZoom: false
+                                },
+                                bottom: {
+                                    allowPan: true,
+                                    allowZoom: true
+                                }
+                            }
+                        }
+                    ],
+                    series: [
+                        {
+                            type: 'bar',
+                            stacked: false,
+                            xField: 'name',
+                            yField: ['g1', 'g2', 'g3', 'g4', 'g5'],
+                            style: {
+                                stroke: 'rgb(40,40,40)'
+                            }
+                        }
+                    ],
+                    axes: [
+                        {
+                            type: 'numeric',
+                            position: 'left',
+                            fields: ['g1', 'g2', 'g3', 'g4', 'g5'],
+                            label: {
+                                rotate: {
+                                    degrees: -30
+                                }
+                            }
+                        },
+                        {
+                            type: 'category',
+                            position: 'bottom',
+                            fields: 'name'
+                        }
+                    ]
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

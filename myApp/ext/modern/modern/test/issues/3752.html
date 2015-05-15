@@ -1,0 +1,119 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Chart Bug</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript">
+        Ext.setup({
+            requires: [
+                'Ext.data.JsonStore',
+                'Ext.Button',
+                'Ext.Panel',
+                'Ext.chart.CartesianChart',
+                'Ext.chart.axis.Numeric',
+                'Ext.chart.axis.Category',
+                'Ext.chart.series.Line'
+            ],
+            onReady:function () {
+
+                var data = [
+                    { name: 'Jan', value: 110},
+                    { name: 'Feb', value: 252},
+                    { name: 'Mar', value: 952},
+                    { name: 'Apr', value: 325},
+                    { name: 'May', value: 123},
+                    { name: 'Jun', value: 52},
+                    { name: 'Jul', value: 1122},
+                    { name: 'Aug', value: 35},
+                    { name: 'Sep', value: 172},
+                    { name: 'Oct', value: 752},
+                    { name: 'Nov', value: 810},
+                    { name: 'Dec', value: 410}
+                ];
+
+                var data2 = [
+                    { name: 'Blo', value: 110},
+                    { name: 'Rge', value: 252},
+                    { name: 'Fre', value: 952},
+                    { name: 'Men', value: 325},
+                    { name: 'Dor', value: 123},
+                    { name: 'Kan', value: 52},
+                    { name: 'Tag', value: 1422}, // A different value than above to make it clear that the data set is loaded but the x-axis is not updated
+                    { name: 'Sen', value: 35},
+                    { name: 'Ile', value: 172},
+                    { name: 'Oag', value: 752},
+                    { name: 'And', value: 810},
+                    { name: 'Who', value: 410} // Comment out this line and all is well
+                ]
+
+                var store = Ext.create('Ext.data.JsonStore', {
+                    data: data,
+                    fields: ['name', 'value']
+                });
+
+                var container = Ext.create('Ext.Container', {
+                    layout: 'fit',
+                    fullscreen: true,
+                    items: [
+                        {
+                            xtype: 'container',
+                            left: 10,
+                            top: 30,
+                            width: 100,
+                            layout: 'fit',
+                            items: [
+                                {
+                                    xtype: 'button',
+                                    text: 'Refresh',
+                                    height: 80,
+                                    listeners: {
+                                        tap: function(){
+                                            var chart = container.down('chart'),
+                                                store = chart.getStore();
+                                            store.setData(data2);
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'chart',
+                            store: store,
+                            height: 200,
+                            left: 120,
+                            width: "75%",
+                            series: [
+                                {
+                                    type: 'line',
+                                    xField: 'name',
+                                    yField: 'value',
+                                    style: {
+                                        fill: 'rgba(0,40,170,0.3)',
+                                        stroke: 'black'
+                                    }
+                                }
+                            ],
+                            axes: [
+                                {
+                                    type: 'numeric',
+                                    position: 'left',
+                                    title: 'Number of Hits'
+
+                                },
+                                {
+                                    type: 'category',
+                                    position: 'bottom',
+                                    title: 'Month of the Year'
+                                }
+                            ]
+                        }
+                    ]
+                })
+            }
+        });
+    </script>
+
+</head>
+<body></body>
+</html>

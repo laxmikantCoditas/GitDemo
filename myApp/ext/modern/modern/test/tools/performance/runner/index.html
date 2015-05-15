@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Performance Test Runner</title>
+
+    <!-- ExtJS -->
+    <link rel="stylesheet" type="text/css" href="../../../extjs/resources/css/ext-all.css" />
+    <script type="text/javascript" src="../../../extjs/bootstrap.js"></script>
+    
+    <script type="text/javascript" charset="utf-8">
+        Ext.require(['Ext.chart.*', 'Ext.Window', 'Ext.layout.container.Fit', 'Ext.fx.target.Sprite']);    
+    
+        Ext.require(['Ext.grid.Panel']); 
+        Ext.require(['Suite', 'Case', 'Run', 'Result']);
+        
+        Ext.onReady(function() {
+            suite = Ext.create('Suite');
+            suite.cases().add([
+                {url: 'panel/simple.js'},
+                {url: 'panel/withHeader.js'},
+                {url: 'grid/simple10Rows.js'},
+                // {url: 'grid/simple100Rows.js'},
+                // {url: 'grid/simple500Rows.js'},
+                // {url: 'grid/10Rows5Columns.js'},
+                // {url: 'grid/10Rows10Columns.js'},
+                // {url: 'grid/10Rows50Columns.js'},
+                // {url: 'grid/50Rows50Columns.js'},
+                {url: 'grid/100Rows50Columns.js'},
+                {url: 'grid/100Rows100Columns.js'},
+                {url: 'combination/themes'}
+            ]);
+            
+            suite.execute(function() {
+                Ext.create('Ext.grid.Panel', {
+                    renderTo: Ext.getBody(),
+                    height: 400,
+                    width : 700,
+                    forceFit: true,
+                    title : suite.cases().getCount() + " test cases run on Ext JS " + suite.getVersion(),
+                    bbar: [
+                        {
+                            text: 'Executed ' + suite.getRunCount() + ' tests in ' + suite.getDuration() + ' seconds'
+                        }
+                    ],
+                    store: suite.getResults(),
+                    
+                    columns: [
+                        {header: 'Test',     dataIndex: 'url', width: 300},
+                        {header: '# Runs',   dataIndex: 'count'},
+                        {header: 'Avg (ms)', dataIndex: 'average'},
+                        {header: 'Min (ms)', dataIndex: 'min'},
+                        {header: 'Max (ms)', dataIndex: 'max'},
+                        {header: 'Deviation', dataIndex: 'deviation'}
+                    ]
+                });
+                
+                return;
+                suite.getResults().each(function(result) {
+                    var uniques = {},
+                        times = result.get('times'),
+                        length = times.length,
+                        data = [],
+                        colCount = 50,
+                        min = Math.min.apply(Math, times),
+                        max = Math.max.apply(Math, times),
+                        range = max - min,
+                        i, time, roundedTime;
+                        
+                    for (i = 0; i < length; i++) {
+                        // roundedTime = Math.round(times[i] / colCount * range);
+                        // console.log(roundedTime);
+                        // uniques[roundedTime] = (uniques[roundedTime] || 0) + 1;
+                        
+                        uniques[times[i]] = (uniques[times[i]] || 0 ) + 1;
+                    }
+                    
+                    for (time in uniques) {
+                        data.push({
+                            time: time,
+                            count: uniques[time]
+                        });
+                    }
+                    
+                    console.log(data);
+                    
+                    
+                    Ext.create('Ext.chart.CartesianChart', {
+                        height: 300,
+                        width: 400,
+                        renderTo: Ext.getBody(),
+
+                        store: {
+                            fields: ['time', 'count'],
+                            data: data
+                        },
+                        
+                        axes: [{
+                            type: 'Numeric',
+                            minimum: min,
+                            maximum: max,
+                            position: 'bottom',
+                            fields: ['time']
+                        },
+                        {
+                            type: 'Numeric',
+                            position: 'left',
+                            fields: ['count']
+                        }],
+
+                        series: [
+                            {
+                                type: 'column',
+                                axis: 'left',
+                                xField: 'time',
+                                yField: 'count'
+                            }
+                        ]
+                    });
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

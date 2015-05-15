@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript">
+        Ext.Loader.setConfig({
+            enabled: true
+        });
+        Ext.application({
+	launch: function () {
+                var form = Ext.create('Ext.form.Panel', {
+                    fullscreen: true,
+                    layout: 'vbox',
+                    submitOnAction: false,
+                    standardSubmit: true,
+                    method: 'put',
+                    url: "http://www.ynet.co.il",
+                    defaults: {
+                        required: true
+                    },
+                    listeners: {
+                        beforesubmit: {
+                            order: 'before',
+                            fn: function (e, a) {
+                                alert('inside beforesubmit');
+                                return false;
+                            }
+                        }
+                    },
+                    items: [
+                        {
+                            xtype: 'textfield',
+                            label: 'text91c',
+                            required: true
+                        },
+                        {
+                            xtype: 'textfield',
+                            label: 'text2',
+                            required: true
+                        },
+                        {
+                            xtype: 'button',
+                            text: 'text2',
+                            listeners: {
+                                tap: function () {
+                                    form.submit();
+                                }
+                            }
+                        }
+                    ]
+                });
+
+                form.show();
+            }
+        });
+    </script>
+
+</head>
+<body></body>
+</html>

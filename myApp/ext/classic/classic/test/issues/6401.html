@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+<script type="text/javascript" charset="utf-8">
+Ext.onReady(function () {
+    Ext.create('Ext.Viewport', {
+        layout: 'border',
+        items: [
+            {
+                region: 'west',
+                width: 300,
+                layout: 'fit',
+                style: 'border: 1px solid blue;',
+                items: {
+                    html: 'left panel'
+                }
+            },
+            {
+                region: 'center',
+                layout: {
+                    type: 'hbox',
+                    align: 'stretch'
+                },
+                autoScroll: true,
+                itemId: 'scrollingContainer',
+                defaults: {
+                    style: 'border: 1px solid red;',
+                    width: 300
+                },
+                items: [
+                    { html: 'panel 1' },
+                    { html: 'panel 2' },
+                    { html: 'panel 3' },
+                    { html: 'panel 4' },
+                    { html: 'panel 5' },
+                    { html: 'panel 6' }
+                ]
+            },
+            {
+                region: 'south',
+                layout: {
+                    type: 'hbox',
+                    pack: 'center'
+                },
+                defaults: {
+                    margin: 5
+                },
+                items: [
+                    {
+                        xtype: 'button',
+                        text: 'Load',
+                        listeners: {
+                            click: function() {
+                                this.up('viewport').getComponent('scrollingContainer').items.each(function(item) {
+                                    item.setLoading('Loading...');
+                                });
+                            }
+                        }
+                    },
+                    {
+                        xtype: 'button',
+                        text: 'Unload',
+                        listeners: {
+                            click: function() {
+                                this.up('viewport').getComponent('scrollingContainer').items.each(function(item, index) {
+                                    if(index < 2) {
+                                        item.setLoading(false);
+                                    }
+                                });
+                            }
+                        }
+                    }
+                ]
+            }
+        ]
+    });
+});
+</script>
+</body>
+</html>

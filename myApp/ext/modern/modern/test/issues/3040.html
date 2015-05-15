@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<!--
+
+  Created using /
+  Source can be edited via /opiyuf/5/edit
+
+-->
+<head>
+    <title>TOUCH-3040</title>
+        <script src="../../sencha-touch-debug.js"></script>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+</head>
+<body><script>
+// this custom reader is purely for jsbin - you won't need this
+// jsbin doesn't return xml with the correct response content-type
+Ext.define('HackXmlJsbin', {
+    extend: 'Ext.data.reader.Xml',
+  alias: 'reader.hack',
+  getResponseData: function(response) {
+    var oParser = new DOMParser();  
+
+         response.responseXML = oParser.parseFromString(response.responseText, "text/xml");
+        return this.callParent([response]);
+  }
+}); 
+
+
+// real code
+Ext.define('DataSet', {
+    extend: 'Ext.data.Model',
+    config: {
+        fields: [
+          { name:"deltaQuantity", mapping: 'Column[Id=DELTA_QUANTITY] @Value'},
+          { name:"price", mapping: 'Column[Id=PRICE] @Value'}
+        ]
+    }
+});
+
+var store = Ext.create('Ext.data.Store', {
+    model: 'DataSet',
+    proxy: {
+        type: 'ajax',
+        url : '/ivivot',
+        reader: {
+          type: 'hack',
+          record: 'Row',
+          root: 'XMLResponse > DataSetGroup > DataSet > Row'
+        } 
+    }
+});
+
+Ext.setup({
+    onReady: function() {           
+        Ext.Viewport.add({
+           xtype: 'list',
+           store: store,
+          itemTpl: '<h1>{deltaQuantity} / {price}</h1>'
+        });
+        store.load();
+    }
+});
+
+
+
+
+</script>
+</body>
+</html>

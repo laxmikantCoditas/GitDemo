@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css">
+    <script type="text/javascript" src="../../ext-all-debug.js"></script>
+    <script type="text/javascript">
+
+        Ext.onReady(function () {
+            var store = Ext.create('Ext.data.Store', {
+                storeId:'employeeStore',
+                fields:['name', 'seniorityField', 'department'],
+                groupField: 'seniorityField',
+                data: {'employees':[
+                    { "name": "Michael Scott",  "seniorityField": 7, "department": "Management" },
+                    { "name": "Dwight Schrute", "seniorityField": 2, "department": "Sales" },
+                    { "name": "Jim Halpert",    "seniorityField": 3, "department": "Sales" },
+                    { "name": "Kevin Malone",   "seniorityField": 4, "department": "Accounting" },
+                    { "name": "Angela Martin",  "seniorityField": 5, "department": "Accounting" }
+                ]},
+                proxy: {
+                    type: 'memory',
+                    reader: {
+                        type: 'json',
+                        root: 'employees'
+                    }
+                }
+            });
+
+            Ext.create('Ext.grid.Panel', {
+                title: 'Employees',
+                store: Ext.data.StoreManager.lookup('employeeStore'),
+                columns: [
+                    { text: 'Name',     dataIndex: 'name' , locked:true},
+                    { text: 'Seniority', dataIndex: 'seniorityField' }
+                ],
+                features: [{ftype:'grouping'}],
+                width: 200,
+                height: 275,
+                renderTo: Ext.getBody()
+            });
+        });
+
+    </script>
+
+</head>
+<body></body>
+</html>

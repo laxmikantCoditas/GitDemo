@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sencha Test</title>
+        
+        <script src="../../sencha-touch-all.js"></script>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+        <script type="text/javascript">
+
+            Ext.application({
+                name: 'Test',
+            
+                launch: function() {
+                    var form = Ext.create('Ext.form.Panel', {
+                        fullscreen: true,
+                        items: [
+                            {
+                                xtype: 'radiofield',
+                                name : 'color',
+                                value: 'red',
+                                label: 'Red',
+                                checked: true
+                            },
+                            {
+                                xtype: 'radiofield',
+                                name : 'color',
+                                value: 'green',
+                                label: 'Green'
+                            },
+                            {
+                                xtype: 'radiofield',
+                                name : 'color',
+                                value: 'blue',
+                                label: 'Blue'
+                            }
+                        ]
+                    });
+
+                    console.log('get', form.getValues());
+                    console.log('set', form.setValues({ 'color': 'green' }));
+                    console.log('get', form.getValues());
+                }
+            });
+            
+        </script>
+    </head>
+    <body>
+        <div id="openLogin" class="x-hidden-display">
+            <div style="float:left;margin-top:8px;margin-right:10px">Log in using:</div>
+            <div class="providerlink" style="float:left;margin-left:5px">
+                <img class="google" src="http://www.fareclock.com/static/site/images/icons/google-icon.png" style="width:46px;height:46px">
+            </div>
+            <div class="providerlink" style="float:left;margin-left:5px">
+                <img class="yahoo" src="http://www.fareclock.com/static/site/images/icons/yahoo-icon.png" style="width:46px;height:46px">
+            </div>
+        </div>
+    </body>
+</html>

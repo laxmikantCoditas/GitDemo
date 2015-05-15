@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Collapsed Panel Example</title>
+<link rel="stylesheet" type="text/css" href="../../../resources/css/ext-all.css" />
+<style type="text/css">
+    .x-tool-panel-collapse-toggle {
+        background-position: 0 -210px;
+    }
+    .x-panel-collapsed .x-tool-panel-collapse-toggle {
+        background-position: 0 -195px;
+    }
+</style>
+<script type="text/javascript" src="../../../ext.js"></script>
+<script type="text/javascript">
+
+Ext.require([
+    '*'
+]);
+
+function go () {
+    cp = new Ext.panel.Panel({
+        renderTo: document.body,
+        width: 300,
+        height: 100,
+        collapsed: true,
+        collapsible: true,
+        title: 'This should be collapsed',
+        html: '<h1>Header</h1>This is text'
+    });
+}
+
+Ext.onReady(function () {
+    Ext.Perf.setup();
+    Ext.Perf.monitor('go', function () {
+        go();
+    });
+    Ext.Perf.report();
+})
+</script>
+</head>
+<body style="padding:10px">
+</body>
+</html>

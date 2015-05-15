@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script src="../../sencha-touch.js"></script>
+    </head>
+    <body>
+         
+<script type="text/javascript">
+Ext.application({
+    name: 'test',
+    launch: function() {
+        first = Ext.widget('button', {
+            text: 'Hello',
+            handler: function() {
+                alert('tapped');
+            }
+        });
+
+        Ext.Viewport.add(first);
+    }
+});
+
+(function() {
+    back = Ext.widget('button', {
+        text: 'hi'
+    });
+})();
+</script>
+
+    
+    </body>
+</html>

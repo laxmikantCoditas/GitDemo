@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript">
+        Ext.setup({
+            requires: [
+                'Ext.Panel',
+                'Ext.form.FieldSet',
+                'Ext.field.Radio',
+                'Ext.field.Spinner'
+            ],
+            onReady:function () {
+                Ext.create('Ext.Panel', {
+                    fullscreen: true,
+                    disabled: true,
+                    items: [
+                        {
+                            xtype: 'fieldset',
+                            items: [
+                                {
+                                    xtype: 'radiofield',
+                                    id: 'RbOri',
+                                    name: 'RadioGroup',
+                                    checked: true
+                                },
+                                {
+                                    xtype: 'radiofield',
+                                    id: 'RbVer',
+                                    name: 'RadioGroup'
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'spinnerfield',
+                            maxLength: 2,
+                            maxValue: 99,
+                            minValue: 0,
+                            stepValue: 10
+                        }
+                    ]
+                })
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

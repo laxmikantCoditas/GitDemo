@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>TOUCH-3835</title>
+    <link href="../../resources/css/sencha-touch.css" rel="stylesheet" />
+    <script src="../../sencha-touch-all.js"></script>
+    <script type="text/javascript">
+        Ext.define('TestModel', {
+            extend : 'Ext.data.Model',
+            config : {
+                fields : [
+                    {name : 'field1'},
+                    {name : 'field2'},
+                    {name : 'field3'}
+                ]
+            }
+        });
+
+        Ext.application({
+            launch: function() {
+                var store = Ext.create('Ext.data.Store', {
+                    model : 'TestModel',
+                    data  : [{
+                        field1: 'test',
+                        field3: 'test2'
+                    }]
+                });
+
+
+                var list = Ext.create('Ext.dataview.List', {
+                    store: store,
+                    itemTpl: '{field1} - {field3}',
+                    emptyText: 'This list is empty, can you see the child container?',
+                    flex: 1,
+                    useSimpleItems: false,
+                    infinite: false,
+                    items: [{
+                        xtype: 'container',
+                        html: [
+                            '<div>This is the child container.</div>'
+                        ],
+                        scrollDock: 'top'
+                    }, {
+                        xtype: 'button',
+                        text: 'test',
+                        scrollDock: 'top'
+                    }, {
+                        xtype: 'button',
+                        text: 'bottom scrolldock',
+                        scrollDock: 'bottom',
+                        handler: function() {
+                            store.removeAll();
+                        }
+                    }]
+                });
+
+                Ext.Viewport.add(list);
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

@@ -1,0 +1,136 @@
+<DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<title>EXTJSIV-6931 - Labels on Time axis do not respect "step" config</title>
+	<meta http-equiv="content-type" content="text/html;charset=UTF-8">
+	<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css">
+	<script type="text/javascript" src="../../ext-all.js"></script>
+</head>
+<body>
+
+<script type="text/javascript">
+
+
+Ext.require([
+    'Ext.data.JsonStore',
+    'Ext.chart.Chart',
+    'Ext.chart.series.Column',
+    'Ext.chart.series.Line',
+    'Ext.chart.axis.Time',
+]);
+
+
+
+Ext.onReady(function()
+{
+	var newDate = function(str) {
+            var year    = parseInt(str.substr(0,4)),
+                month   = parseInt(str.substr(5,2)) - 1,
+                day     = parseInt(str.substr(8,2)),
+                hour    = parseInt(str.substr(11,2)),
+                minute  = parseInt(str.substr(14,2));
+            return new Date(year, month, day, hour, minute);
+        },
+
+	    chart = Ext.create("Ext.chart.Chart", {
+        "theme":"Sky",
+        "width":1000,
+        "height":450,
+        "renderTo":Ext.getBody(),
+        "animate":{"easing":"ease","duration":500},
+        "insetPadding":80,
+        "shadow":false,
+    
+        "legend":{
+            "position":"right",
+            "padding":5,
+            "labelFont":"12px Verdana"
+        },
+    
+        "store":Ext.create("Ext.data.JsonStore", { 
+            fields: ["XDate","Y1"], 
+            sorters: [{
+                sorterFn: function (a, b) {
+                    var a = a.data, b = b.data;
+                    return (a.XDate - b.XDate === 0 ? a.Y1 - b.Y1 : a.XDate - b.XDate);
+                }
+            }],
+            data: [
+                // Times should be specified as full ISO-8601 dates to avoid browser incompatibilities
+                // (partial dates may give different results regarding UTC vs locale)
+                {"XDate":newDate("2012-06-20 00:00"),"Y1":4},
+                {"XDate":newDate("2012-06-29 00:00"),"Y1":5},
+                {"XDate":newDate("2012-06-30 23:59"),"Y1":3},
+                {"XDate":newDate("2012-05-17 08:00"),"Y1":3},
+                {"XDate":newDate("2012-05-28 17:00"),"Y1":4.5},
+                {"XDate":newDate("2012-06-01 00:00"),"Y1":1},
+                {"XDate":newDate("2012-06-11 00:00"),"Y1":3},
+                {"XDate":newDate("2012-06-19 00:00"),"Y1":2},
+                {"XDate":newDate("2012-06-17 17:00"),"Y1":2},
+                {"XDate":newDate("2012-06-04 00:00"),"Y1":2},
+                {"XDate":newDate("2012-11-19 00:00"),"Y1":5}
+            ]
+        }),
+    
+        "series":[{
+            "type":"line",          // column / line / scatter
+            "axis": "bottom",       // bind the columns to the bottom axis
+            "xField":"XDate",
+            "yField":"Y1",
+            "showInLegend":true,
+            "showMarkers":true,
+            "markerConfig":{"radius":8,"type":"circle","fill":"#8df08c"},
+            "style":{"stroke-width":2, "opacity":0.5, "width":5},
+            "label":{"display":"middle","field":"Y1"},
+
+
+			"tips": {
+			  "trackMouse": true,
+			  "width": 150,
+			  "height": 28,
+			  "renderer": function(storeItem, item) {
+				this.setTitle(Ext.Date.format(storeItem.data.XDate, 'M d, Y - g:ia'));
+			  }
+			}
+
+        }],
+            
+        "axes":[
+            {
+                "type": "Time",
+                "position": "bottom",
+                "fields": ["XDate"],
+                "grid": true,
+                "label": {"font":"12px Verdana", "rotate":{"degrees":30}},
+                "dateFormat": "d-M-Y",
+                "fromDate": newDate("2012-05-27 00:00"),
+                "toDate": newDate("2012-07-05 00:00"),
+                "constrain": true,
+
+                "step": [Ext.Date.MONTH, 1/2],      // compare with [Ext.Date.DAY, 15] and see the difference
+                "minorTickSteps": [Ext.Date.DAY, 1],
+
+                "title": null                
+            },
+            {
+                "type": "Numeric",
+                "position": "left",
+                "fields": ["Y1"],
+                "grid": true,
+                "title": null,
+                "label": {"font":"12px Verdana","rotate":{"degrees":0}},
+                "minimum": 0,
+                "maximum": 5,
+                "majorTickSteps": 4,
+                "minorTickSteps": 1
+            }
+        ]
+
+    });
+});
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TOUCH-4749</title>
+
+	<script src="../../../sencha-touch-debug.js"></script>
+	<link rel="stylesheet" href="../../../resources/css/sencha-touch.css">
+
+	<script type="text/javascript">
+		Ext.setup({
+			requires: [
+				'Ext.data.Store',
+				'Ext.data.Model',
+				'Ext.data.reader.Xml'
+			],
+			onReady: function() {
+				Ext.define('User', {
+					extend: 'Ext.data.Model',
+					config: {
+						fields: ['id', 'name', 'email']
+					}
+				});
+
+				var store = Ext.create('Ext.data.Store', {
+					model: 'User',
+					storeId: 'Users',
+					proxy: {
+						type: 'ajax',
+						url: 'users.xml',
+						reader: {
+							type: 'xml',
+							record: 'user'
+						}
+					}
+				});
+
+
+				store.on("load", function() {
+					store.each(function (item, index, length) {
+						console.log(index, item.get('name'));
+					});
+				});
+				store.load();
+			}
+		});
+	</script>
+</head>
+<body>
+</body>
+</html>

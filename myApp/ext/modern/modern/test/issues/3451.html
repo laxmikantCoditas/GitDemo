@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3451</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.define('simplestore027test.model.valueModel', {
+            extend: 'Ext.data.Model',
+
+            config: {
+                idProperty : 'QUERY_NAME',
+                hasOne : [
+                    {
+                        model          : 'simplestore027test.model.TXT_SYMBOLSModel',
+                        name           : 'TXT_SYMBOLS',
+                        associationKey : 'TXT_SYMBOLS'
+                    }
+                ]
+            }
+        });
+
+        Ext.define('simplestore027test.model.TXT_SYMBOLSModel', {
+            extend : 'Ext.data.Model',
+            config : {
+                hasMany : [
+                    {
+                        model          : 'simplestore027test.model.RRWS_S_TEXT_SYMBOLSModel',
+                        name           : 'RRWS_S_TEXT_SYMBOLS',
+                        associationKey : 'RRWS_S_TEXT_SYMBOLS'
+                    }
+                ]
+            }
+        });
+
+        Ext.define('simplestore027test.model.RRWS_S_TEXT_SYMBOLSModel', {
+            extend : 'Ext.data.Model',
+            config : {
+                idProperty : 'SYM_NAME',
+                fields     : [
+                    'SYM_NAME',
+                    'SYM_VALUE'
+                ]
+            }
+        });
+
+        Ext.define("simplestore027test.view.Main", {
+            extend: "Ext.Container",
+            requires: [
+                'Ext.TitleBar',
+                'Ext.data.Store'
+            ],
+            alias: "widget.mainview",
+
+            config: {
+                fullscreen: true,
+                items: [
+                    {
+                        xtype: "titlebar",
+                        title: "Web Service Test",
+                        docked: "top",
+                        items: [
+                            {
+                                xtype: "button",
+                                text: 'Get Data',
+                                ui: 'action',
+                                itemId: "getDataButton"
+                            },
+                            {
+                                xtype: "button",
+                                text: 'Get Data 2',
+                                ui: 'action',
+                                itemId: "getData2Button"
+                            },
+                            { xtype: 'spacer' },
+                            {
+                                xtype: "button",
+                                text: 'Show Data',
+                                ui: 'action',
+                                itemId: "showDataButton"
+                            }
+
+                        ]
+                    },
+                    {
+                        html: [
+                        '<h1>2.0.1</h1>',
+                        "<p>...</p>"
+                    ].join("")
+                }],
+                listeners: [{
+                    delegate: "#getDataButton",
+                    event: "tap",
+                    fn: "onGetDataButtonTap"
+
+                },
+                {
+                    delegate: "#getData2Button",
+                    event: "tap",
+                    fn: "onGetData2ButtonTap"
+
+                },
+                {
+                    delegate: "#showDataButton",
+                    event: "tap",
+                    fn: "onShowDataButtonTap"
+
+                }
+                ]
+            },
+
+             onGetDataButtonTap: function () {
+                console.log("getDataCommand");
+
+                var jsonTestString = {
+                    "values": {
+                        "QUERY_NAME": "FirstQuery",
+                        "TXT_SYMBOLS": {
+                            "RRWS_S_TEXT_SYMBOLS": [
+                                {
+                                    "SYM_NAME": "AUTHOR",
+                                    "SYM_VALUE": "DocBrown"
+                                },
+                                {
+                                    "SYM_NAME": "REPTNAME",
+                                    "SYM_VALUE": "QRY01_CLIENT_COST_SALES"
+                                },
+                                {
+                                    "SYM_NAME": "REPTXTLG",
+                                    "SYM_VALUE": "qry01_client_cost_sales"
+                                },
+                                {
+                                    "SYM_NAME": "USER",
+                                    "SYM_VALUE": "Einstein"
+                                }
+                            ]
+                        }
+                    }
+                };
+
+                var store = Ext.create('Ext.data.Store', {
+                    model: 'simplestore027test.model.valueModel',
+                    data: jsonTestString,
+
+                    storeId: 'loadedQueriesStore',
+
+                    proxy: {
+                        type   : 'memory',
+                        reader: {
+                            type:'json',
+                            rootProperty:'values'
+                        }
+                    }
+                });
+            },
+
+            onGetData2ButtonTap: function () {
+                console.log("getData2Command");
+
+                var jsonTestString = {
+                    "values": {
+                        "QUERY_NAME": "SecondQuery",
+                        "TXT_SYMBOLS": {
+                            "RRWS_S_TEXT_SYMBOLS": [
+                                {
+                                    "SYM_NAME": "AUTHOR",
+                                    "SYM_VALUE": "MartyMcFly"
+                                },
+                                {
+                                    "SYM_NAME": "REPTNAME",
+                                    "SYM_VALUE": "QRY02_Whatever"
+                                },
+                                {
+                                    "SYM_NAME": "REPTXTLG",
+                                    "SYM_VALUE": "qry02_whatever"
+                                }
+                            ]
+                        }
+                    }
+                };
+
+                var store = Ext.create('Ext.data.Store', {
+                    model: 'simplestore027test.model.valueModel',
+                    data: jsonTestString,
+
+                    storeId: 'helperQueriesStore',
+
+                    proxy: {
+                        type   : 'memory',
+                        reader: {
+                            type:'json',
+                            rootProperty:'values'
+                        }
+                    }
+                });
+            },
+
+            onShowDataButtonTap: function () {
+                console.log("showDataCommand");
+
+                var loadedQueriesStore = Ext.getStore('loadedQueriesStore');
+                console.log("loadedQueriesStore");
+                console.log(loadedQueriesStore);
+
+
+                var helperQueriesStore = Ext.getStore('helperQueriesStore');
+                console.log("helperQueriesStore");
+                console.log(helperQueriesStore);
+
+                if (loadedQueriesStore) {
+                    console.log("----    loadedQueriesStore");
+
+                    var qry01 = loadedQueriesStore.getAt(0);
+                    if (qry01) {
+                        console.log(qry01);
+                        var TXT_SYMBOLS  = qry01.getTXT_SYMBOLSModel().RRWS_S_TEXT_SYMBOLS();
+                        console.log('technical name: ');
+                        console.log(TXT_SYMBOLS.getById('REPTNAME').get('SYM_VALUE'));
+                    }
+                }
+
+                if (helperQueriesStore) {
+                    console.log("----    helperQueriesStore");
+
+                    var qry01 = helperQueriesStore.getAt(0);
+                    if (qry01) {
+                        console.log(qry01);
+                        var TXT_SYMBOLS  = qry01.getTXT_SYMBOLSModel().RRWS_S_TEXT_SYMBOLS();
+                        console.log('technischer Name: ');
+                        console.log(TXT_SYMBOLS.getById('REPTNAME').get('SYM_VALUE'));
+                    }
+                }
+            }
+
+        });
+
+        Ext.application({
+            name : 'Test',
+            launch : function () {
+                Ext.create('simplestore027test.view.Main');
+            }
+        });
+
+    </script>
+</head>
+<body>
+</body>
+</html>

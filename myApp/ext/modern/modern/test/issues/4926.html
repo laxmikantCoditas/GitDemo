@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4926</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+	    Ext.application({
+		    name: 'Fiddle',
+
+		    launch: function() {
+			    var button = Ext.create('Ext.Button', {
+				    text: 'X',
+				    id: 'rightButton',
+				    width: 100
+			    });
+
+			    Ext.create('Ext.Container', {
+				    fullscreen: true,
+				    layout: {
+					    type: 'hbox',
+					    pack: 'center',
+					    align: 'start'
+				    },
+				    items: [
+					    button]
+			    });
+
+			    Ext.create('Ext.Panel', {
+				    html: 'Floating Panel',
+				    left: 0,
+				    padding: 10,
+				    width: 300
+			    }).showBy(button, 'tl-bc?');
+		    }
+	    });
+    </script>
+</head>
+<body>
+</body>
+</html>

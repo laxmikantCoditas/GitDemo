@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title>Focus Lost Test Case</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css">
+    <script type="text/javascript" src="../../ext-all-debug.js"></script>
+    <script type="text/javascript">
+        Ext.require('*');
+        Ext.onReady(function(){
+            var grid = Ext.create('Ext.grid.Panel', {
+                width: 600,
+                store: {
+                    fields: ['id', 'value'],
+                    data: [
+                        {id: 1, value: 'Initial value'},
+                        {id: 2, value: 'Initial value'}
+                    ]
+                },
+                columns: [
+                    {text: 'id', dataIndex: 'id'},
+                    {text: 'value', dataIndex: 'value', flex: 1}
+                ],
+                renderTo: Ext.getBody()
+            });
+
+            var form = Ext.create('Ext.form.Panel', {
+                title: 'Form',
+                bodyPadding: 5,
+                width: 600,
+                layout: 'anchor',
+                defaultType: 'textfield',
+                items: [
+                    {
+                        fieldLabel: 'value',
+                        name: 'value',
+                        anchor: '100%'
+                    }]
+            });
+
+            new Ext.container.Viewport({
+                layout: 'auto',
+                items: [ grid, form ]
+            });
+
+            form.down('.textfield').focus();
+            grid.getSelectionModel().select(0);
+
+            setInterval(function() {
+                grid.getStore().getRange(0, 0)[0].set('value', form.down('[name=value]').getValue());
+            }, 100);
+        });
+    </script>
+
+</head>
+<body></body>
+</html>
+

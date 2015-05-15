@@ -1,0 +1,156 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Chart Bug</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript">
+        Ext.setup({
+            requires: [
+                'Ext.data.JsonStore',
+                'Ext.Button',
+                'Ext.Panel',
+                'Ext.chart.CartesianChart',
+                'Ext.chart.axis.Numeric',
+                'Ext.chart.axis.Category',
+                'Ext.chart.series.Line'
+            ],
+            onReady:function () {
+
+                var data1 = [
+                    { name: 'Jan', value: 110},
+                    { name: 'Feb', value: 252},
+                    { name: 'Mar', value: 952},
+                    { name: 'Apr', value: 325},
+                    { name: 'May', value: 123},
+                    { name: 'Jun', value: 52},
+                    { name: 'Jul', value: 1122},
+                    { name: 'Aug', value: 35},
+                    { name: 'Sep', value: 172},
+                    { name: 'Oct', value: 752},
+                    { name: 'Nov', value: 810},
+                    { name: 'Dec', value: 410}
+                ];
+
+                var data2 = [
+                    { name: 'Janvier', value: 210},
+                    { name: 'Fevrier', value: 952},
+                    { name: 'Mars', value: 352},
+                    { name: 'Avril', value: 725},
+                    { name: 'Mai', value: 23},
+                    { name: 'Juin', value: 1552},
+                    { name: 'Juil', value: 22},
+                    { name: 'Aout', value: 135},
+                    { name: 'Septembre', value: 772},
+                    { name: 'Octobre', value: 152},
+                    { name: 'Novembre', value: 410},
+                    { name: 'Decembre', value: 110}
+                ];
+
+                var myStore1 = Ext.create('Ext.data.JsonStore', {
+                    data: data1,
+                    fields: ['name', 'value']
+                });
+
+                var myStore2 = Ext.create('Ext.data.JsonStore', {
+                    data: data2,
+                    fields: ['name', 'value']
+                });
+
+                var emptyStore = Ext.create('Ext.data.JsonStore', {
+                    data: [],
+                    fields: ['name', 'value']
+                });
+
+                var container = Ext.create('Ext.Container', {
+                    layout: 'fit',
+                    fullscreen: true,
+                    items: [
+                        {
+                            xtype: 'container',
+                            left: 10,
+                            top: 30,
+                            width: 120,
+                            items: [
+                                {
+                                    xtype: 'button',
+                                    text: 'Store 1',
+                                    top: 10,
+                                    height: 30,
+                                    width: 120,
+                                    listeners: {
+                                        tap: function(){
+                                            var chart = container.down('chart');
+                                            chart.setStore(myStore1);
+                                        }
+                                    }
+                                },
+                                {
+                                    xtype: 'button',
+                                    text: 'Store 2',
+                                    top: 60,
+                                    width: 120,
+                                    height: 30,
+                                    listeners: {
+                                        tap: function(){
+                                            var chart = container.down('chart');
+                                            chart.setStore(myStore2);
+                                        }
+                                    }
+                                },
+                                {
+                                    xtype: 'button',
+                                    text: 'Empty',
+                                    top: 110,
+                                    width: 120,
+                                    height: 30,
+                                    listeners: {
+                                        tap: function(){
+                                            var chart = container.down('chart');
+                                            chart.setStore(emptyStore);
+                                        }
+                                    }
+                                },
+                            ]
+                        },
+                        {
+                            xtype: 'chart',
+                            store: myStore1,
+//                            animate: false,
+                            height: 200,
+                            left: 150,
+                            width: "70%",
+                            series: [
+                                {
+                                    type: 'line',
+                                    xField: 'name',
+                                    yField: 'value',
+                                    style: {
+                                        fill: 'rgba(0,40,170,0.3)',
+                                        stroke: 'black'
+                                    }
+                                }
+                            ],
+                            axes: [
+                                {
+                                    type: 'numeric',
+                                    position: 'left',
+                                    title: 'Number of Hits'
+
+                                },
+                                {
+                                    type: 'category',
+                                    position: 'bottom',
+                                    title: 'Month of the Year'
+                                }
+                            ]
+                        }
+                    ]
+                })
+            }
+        });
+    </script>
+
+</head>
+<body></body>
+</html>

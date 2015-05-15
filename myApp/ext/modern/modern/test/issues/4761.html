@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sencha Touch Issue Template</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script type="text/javascript" src="../../sencha-touch.js"></script>
+
+    <script type="text/javascript">
+        Ext.application({
+            name: 'Test',
+
+            requires: [
+
+            ],
+
+            launch: function () {
+                Ext.select("span.to-be-destroyed", false).destroy();
+
+                if (Ext.select("span.to-be-destroyed", false).elements.length != 0) {
+                    alert("These span elements should be removed");
+                }
+            }
+        });
+    </script>
+</head>
+<body>
+<table>
+    <tbody>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><span><span class="to-be-destroyed">TO BE DESTROYED</span></span></td>
+        <td><span><span class="to-be-destroyed">TO BE DESTROYED</span></span></td>
+    </tr>
+    <tr>
+        <td><span><span class="to-be-destroyed">TO BE DESTROYED</span></span></td>
+        <td><span><span class="to-be-destroyed">TO BE DESTROYED</span></span></td>
+        <td><span><span class="to-be-destroyed">TO BE DESTROYED</span></span></td>
+        <td><span><span class="to-be-destroyed">TO BE DESTROYED</span></span></td>
+        <td><span><span class="to-be-destroyed">TO BE DESTROYED</span></span></td>
+        <td><span><span class="to-be-destroyed">TO BE DESTROYED</span></span></td>
+        <td><span><span class="to-be-destroyed">TO BE DESTROYED</span></span></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

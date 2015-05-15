@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4908</title>
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+	    Ext.application({
+		    name: 'Fiddle',
+		    requires: [
+			    'Ext.MessageBox',
+			    'Ext.form.Panel',
+			    'Ext.form.FieldSet',
+			    'Ext.form.DatePicker'
+		    ],
+
+		    launch: function() {
+			    Ext.create('Ext.form.Panel', {
+				    fullscreen: true,
+				    scrollable: 'vertical',
+				    items: [{
+					    xtype: 'fieldset',
+					    items: [{
+						    xtype: 'datepickerfield',
+						    label: 'Birthday',
+						    name: 'birthday',
+						    value: new Date()
+					    }, {
+						    xtype: 'datepickerfield',
+						    label: 'Date',
+						    name: 'adate',
+						    value: new Date()
+					    }, {
+						    xtype: 'datepickerfield',
+						    label: 'Date 2',
+						    name: 'adate2',
+						    value: new Date()
+					    }, {
+						    xtype: 'datepickerfield',
+						    label: 'Date 3',
+						    name: 'adate3',
+						    value: new Date()
+					    }, {
+						    xtype: 'datepickerfield',
+						    label: 'Date 4',
+						    name: 'adate4',
+						    value: new Date()
+					    }]
+				    }, {
+					    xtype: 'toolbar',
+					    docked: 'top',
+					    items: [{
+						    text: 'Tap Me',
+						    handler: function() {
+							    Ext.Msg.alert('Title', 'See the fields contents on original form disappear on WP/IE 10.', Ext.emptyFn);
+						    }
+					    }]
+				    }]
+			    });
+		    }
+	    });
+    </script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,14 @@
+[{
+    "text": "Folder A", 
+    "cls": "folder",
+    "children": [{
+        "text": "Folder B",
+        "children": [{
+            "text": "Folder C",
+            "children": [{
+                "text": "Leaf",
+                "leaf": true
+            }]
+        }]
+    }]
+}]

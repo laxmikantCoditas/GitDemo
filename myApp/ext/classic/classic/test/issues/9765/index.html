@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+    <title>Issue 9765</title>
+
+    <link rel="stylesheet" href="../../../resources/css/ext-all.css" />
+    <script type="text/javascript" src="../../../ext.js"></script>
+
+    <script src="app.js"></script>
+</head>
+<body>
+    <h2>Steps to Reproduce the Issue</h2>
+
+    <ul>
+        <li>Delete the last record from the store.</li>
+        <li>Delete the new last record from the store (what had previously been the next to last record).</li>
+        <li>Call store.rejectChanges()</li>
+    </ul>
+
+    <p>In this example...</p>
+
+    <ul>
+        <li>Select Marge, click "Remove Selected Record."</li>
+        <li>Select Homer, click "Remove Selected Record."</li>
+        <li>Click "Undo Changes"</li>
+    </ul>
+
+    <p>
+        You'll see an alert() box if an error occurs.
+    </p>
+
+    <div id="grid"></div>
+</body>
+</html>

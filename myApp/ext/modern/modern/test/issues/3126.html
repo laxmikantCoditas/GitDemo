@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TOUCH-3126</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script type="text/javascript" src="../../sencha-touch.js"></script>
+
+        <script type="text/javascript">
+            Ext.define('MyApp.view.MyNestedList', {
+                extend : 'Ext.dataview.NestedList',
+
+                config : {
+                    displayField : 'name',
+                    store        : true
+                },
+
+                applyStore : function() {
+                    return new MyApp.store.MyJsonTreeStore();
+                }
+            });
+
+            Ext.define('MyApp.store.MyJsonTreeStore', {
+                extend   : 'Ext.data.TreeStore',
+
+                config : {
+                    autoLoad            : true,
+                    data                : [
+                        {
+                            id    : 1,
+                            name  : 'Web Developer',
+                            items : [
+                                {
+                                    id   : 1,
+                                    name : 'Dominic',
+                                    leaf : true
+                                }
+                            ]
+                        },
+                        {
+                            id    : 3,
+                            name  : 'Translator',
+                            items : [
+                                {
+                                    id   : 3,
+                                    name : 'Jessica',
+                                    leaf : true
+                                },
+                                {
+                                    id   : 4,
+                                    name : 'Jill',
+                                    leaf : true
+                                }
+                            ]
+                        }
+                    ],
+                    model               : 'MyApp.model.MyModel',
+                    storeId             : 'MyJsonTreeStore',
+                    defaultRootProperty : 'items'
+                }
+            });
+
+            Ext.define('MyApp.model.MyModel', {
+                extend : 'Ext.data.Model',
+                config : {
+                    idProperty          : 'tree_id',
+                    fields : [
+                        {
+                            name: 'tree_id'
+                        },
+                        {
+                            name : 'id'
+                        },
+                        {
+                            name : 'name'
+                        }
+                    ]
+                }
+            });
+
+            Ext.application({
+                name : 'Test',
+
+                launch : function () {
+                    var nestedList = new MyApp.view.MyNestedList();
+
+                    Ext.Viewport.add(nestedList);
+
+                    console.log(nestedList.getStore())
+
+                }
+            });
+	</script>
+    </head>
+    <body>
+
+    </body>
+</html>

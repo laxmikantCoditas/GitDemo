@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+        <script type="text/javascript" src="bootstrap.js"></script>
+        <script type="text/javascript" src="resources/helper.js"></script>
+        <script type="text/javascript">
+            if (parent && parent.Test) {
+                Ext.require("*");
+                Ext.setup({
+                    viewport: null,
+
+                    onReady: function() {
+                        _bootstrap.loadSpecs(function(){
+                            var env = jasmine.getEnv();
+                            env.addReporter(parent.Test.SandBox.reporter);
+//                            parent.Test.SandBox.phantomReporter = new jasmine.PhantomJsReporter();
+//                            env.addReporter(parent.Test.SandBox.phantomReporter);
+//                            env.addReporter(new jasmine.EyeReporter());
+                            env.execute();
+                        });
+                    }
+                });
+            }
+        </script>
+    </head>
+    <body></body>
+</html>

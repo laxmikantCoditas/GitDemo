@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sencha Touch Issue Template</title>
+		<link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+		<script type="text/javascript" src="../../sencha-touch.js"></script>
+
+		<script type="text/javascript">
+			Ext.application({
+				name : 'Test',
+
+				requires : [
+					
+				],
+
+				launch : function () {
+					Ext.Viewport.add({
+					    xtype : 'container',
+					    items : [
+					        {
+					            xtype : 'segmentedbutton',
+					            items : [
+					                {
+					                    text : 'One'
+					                },
+					                {
+					                    text : 'Two'
+					                },
+					                {
+					                    text : 'Three'
+					                }
+					            ]
+					        },
+					        {
+					            height : 10
+					        },
+					        {
+					            xtype   : 'button',
+					            text    : 'Hide 2nd',
+					            handler : function (button) {
+					                var cnt = button.up('container'),
+					                    seg = cnt.down('segmentedbutton'),
+					                    btn = seg.down('[text=Two]');
+
+					                btn.setHidden(true);
+					            }
+					        },
+					        {
+					            xtype   : 'button',
+					            text    : 'Show 2nd',
+					            handler : function (button) {
+					                var cnt = button.up('container'),
+					                    seg = cnt.down('segmentedbutton'),
+					                    btn = seg.down('[text=Two]');
+
+					                btn.setHidden(false);
+					            }
+					        },
+					        {
+					            xtype   : 'button',
+					            text    : 'Hide 3rd',
+					            handler : function (button) {
+					                var cnt = button.up('container'),
+					                    seg = cnt.down('segmentedbutton'),
+					                    btn = seg.down('[text=Three]');
+
+					                btn.setHidden(true);
+					            }
+					        },
+					        {
+					            xtype   : 'button',
+					            text    : 'Show 3rd',
+					            handler : function (button) {
+					                var cnt = button.up('container'),
+					                    seg = cnt.down('segmentedbutton'),
+					                    btn = seg.down('[text=Three]');
+
+					                btn.setHidden(false);
+					            }
+					        }
+					    ]
+					});
+				}
+			});
+		</script>
+	</head>
+</html>

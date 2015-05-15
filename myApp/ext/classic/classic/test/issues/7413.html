@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        Ext.onReady(function(){
+            Ext.state.Manager.setProvider(new Ext.state.CookieProvider({
+                expires: new Date(new Date().getTime()+(1000*60*60*24*7)) //7 days from now
+            }));
+
+            var list =  [
+                {"Name":"High","Color":"#d50202","Sound":"test.mp3","Order":1,"ID":4},
+                {"Name":"High","Color":"#d50202","Sound":"test2.mp3","Order":1,"ID":8},
+                {"Name":"High","Color":"#d50202","Sound":"test2.mp3","Order":1,"ID":3},
+                {"Name":"High","Color":"#d50202","Sound":"test3.mp3","Order":1,"ID":6},
+                {"Name":"Medium","Color":"#f4c932","Sound":"test3.mp3","Order":2,"ID":1},
+                {"Name":"Medium","Color":"#f4c932","Sound":"test3.mp3","Order":2,"ID":2},
+                {"Name":"Low","Color":"#89c7d6","Sound":"test1.mp3","Order":3,"ID":7},
+                {"Name":"Low","Color":"#89c7d6","Sound":"test1.mp3","Order":3,"ID":9},
+                {"Name":"Low","Color":"#89c7d6","Sound":"test1.mp3","Order":3,"ID":5}];
+
+            var myBorderPanel = Ext.create("Ext.container.Viewport", {
+                layout:{type:"vbox",align:"stretch"},
+                autoScroll:false,
+                items:  [{
+                    title:"grid1",
+                    id:"grid1",
+                    xtype:"grid",
+                    border:true,
+                    stateful:true,
+                    stateId:"grid1cookie",
+                    autoScroll:true,
+                    flex:1,
+                    margin:"0 20 0 20",
+                    features: [
+                        Ext.create('Ext.grid.feature.Grouping',{
+                            groupHeaderTpl: Ext.create("Ext.XTemplate",
+                            "{groupValue}")
+                        })
+                    ],
+                    store: Ext.create('Ext.data.JsonStore',{
+                        model:"Model",
+                        storeId:'store',
+                        fields:["Name", "Color", "Order", "Sound", "ID"],
+                        autoLoad:true,
+                        groupField: 'Name',
+                        data : list
+                    }),
+                    columns:[
+                        {
+                            header: "Order",
+                            dataIndex: 'Order',
+                            flex:1,
+                            sortable:true
+                        },
+                        {
+                            header: "Color",
+                            dataIndex: 'Color',
+                            flex:1,
+                            sortable:true
+                        },
+                        {
+                            header: "Sound",
+                            dataIndex: 'Sound',
+                            flex:1,
+                            sortable:true
+                        }
+                    ]
+                }]
+            });
+        });
+    </script>
+</body>
+</html>

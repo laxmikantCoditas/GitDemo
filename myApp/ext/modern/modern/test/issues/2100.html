@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2100</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+
+    <script>
+        Ext.setup({
+            onReady:function () {
+                Ext.Viewport.add({
+                    xtype:'panel',
+                    html:'This is a centered and modal panel',
+                    modal:true,
+                    hideOnMaskTap:true,
+                    centered:false,
+                    height:100,
+                    width:200
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

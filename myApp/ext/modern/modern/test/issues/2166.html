@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2166</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+
+    <script>
+        Ext.application({
+            launch:function () {
+                Ext.Viewport.add({
+                    layout: 'vbox',
+                    items:[{
+                        xtype:'audio',
+                        cls:'myAudio',
+                        url:'../../examples/audio/crash.mp3'
+                    }, {
+                        xtype:'button',
+                        text: 'Change',
+                        handler:function () {
+                            var audio = Ext.Viewport.down('.audio');
+                            audio.setUrl('sound_sample.mp3');
+                            audio.play();
+                        }
+                    }]
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

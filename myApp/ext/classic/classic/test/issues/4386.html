@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>EXTJS-4386</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css"/>
+<script type="text/javascript" src="../../ext.js"></script>
+<script type="text/javascript">
+Ext.require('*');
+Ext.onReady(function () {
+    var storeCenter = Ext.create('Ext.data.Store', {
+        data: {'rows':[
+            {"cn":"1","fullname":"Ed"},
+            {"cn":"2","fullname":"Don"}
+        ]},
+        fields:[
+            {name:'cn'},
+            {name:'fullname'}
+        ],
+        proxy: {
+            type:'memory',
+            reader: {
+                type: 'json',
+                root: 'rows'
+            }
+        }
+    });
+    Ext.create('Ext.panel.Panel', {
+        renderTo: document.body,
+        title: 'Unsized Border layout Panel',
+        layout: 'border',
+        items: [{
+            xtype: 'gridpanel',
+            title: 'Common usage, A single item using region: "center"',
+            region: 'center',
+            store: storeCenter,
+            columns: [{
+                text: 'id', dataIndex: 'cn'
+            }, {
+                text: 'Name', dataIndex: 'fullname', flex: 1
+            }]
+        }]
+    });
+});
+</script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>TOUCH-5047</title>
+    <style></style>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+    <script src="../../sencha-touch-all-debug.js"></script>
+    <script>
+        Ext.require(['Ext.chart.*', 'Ext.Toolbar']);
+
+        Ext.define('Ext.overrides.chart.series.sprite.Line', {
+            override: 'Ext.chart.series.sprite.Line',
+
+            renderAggregates: function (aggregates, start, end, surface, ctx, clip, region) {
+                console.log('\n%crenderAggregates', 'color: green',
+                        '\nstart:', start,
+                        '\nend:', end,
+                        '\ndelta:', end - start,
+                        '\nclip:', clip,
+                        '\nregion:', region,
+                        '\naggregates:', aggregates);
+                this.callParent(arguments);
+            },
+
+            drawStroke: function (surface, ctx, start, end, list, xAxis) {
+                var attr = this.attr,
+                    smooth = attr.smooth,
+                    start = list[2],
+                    smoothX = this.smoothX,
+                    smoothY = this.smoothY;
+                console.log('%cdrawStroke', 'color: brown',
+                        '\nsmoothX.length:', smooth && smoothX.length,
+                        '\nstart:', start,
+                        '\nstart * 3:', start * 3,
+                        '\nlist.length', list.length);
+                this.callParent(arguments);
+            }
+        });
+
+        Ext.setup({
+            onReady: function () {
+                var fromDate = Date.now();
+                var data = (function () {
+                    var data = [],
+                        start = 1000,
+                        count = 3000,
+                        third = (count / 3) | 0,
+                        i = 0,
+                        x = 0;
+                    for (; i < count; i++) {
+                        data.push({
+//                            x: new Date(fromDate + i * 1000 * 60 * 15),
+                            value: start = start + 25 - Math.random() * 50,
+                            x: x += i > third && i < count - third ? 1 : 100,
+                            index: i
+                        });
+                    }
+                    return data;
+                })();
+                var toDate = data[data.length - 1].date;
+
+                var toolbar = Ext.Viewport.add({
+                    xtype: 'toolbar',
+                    docked: 'top'
+                });
+                var chart = Ext.Viewport.add({
+                    xtype: 'chart',
+                    itemId: 'timeSeriesChart',
+                    colors: [
+                        '#115fa6',
+                        '#94ae0a',
+                        '#a61120',
+                        '#ff8809',
+                        '#ffd13e',
+                        '#a61187',
+                        '#24ad9a',
+                        '#7c7474',
+                        '#a66111'
+                    ],
+                    store: {
+                        fields: ['date', 'value', 'index', 'x'],
+                        data: data
+                    },
+                    axes: [
+                        {
+                            type: 'numeric',
+                            fields: 'value',
+                            grid: {
+                                odd: {
+                                    fill: '#e8e8e8'
+                                }
+                            },
+                            needHighPrecision: true,
+                            position: 'left'
+                        },
+//                        {
+//                            type: 'time',
+//                            fields: 'x',
+//                            dateFormat: 'd.m.Y H:i:s',
+//                            step: [Ext.Date.MINUTE, 15]
+//                        },
+                        {
+                            type: 'numeric',
+                            fields: 'x',
+                            position: 'bottom',
+                            grid: {
+                                odd: {
+                                    fill: '#e8e8e8'
+                                }
+                            }
+                        }
+                    ],
+                    series: [
+                        {
+                            type: 'line',
+                            colors: 'rgba(0,200,0,0.3)',
+                            style: {
+                                smooth: true,
+                                stroke: 'rgb(0,200,0)'
+
+                            },
+                            xField: 'x',
+                            yField: 'value'
+                        }
+                    ],
+                    interactions: [
+                        {
+                            type: 'panzoom',
+                            zoomOnPanGesture: true
+                        }
+                    ]
+                });
+                var panzoom = chart.getInteractions()[0];
+                toolbar.add(panzoom.getModeToggleButton());
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

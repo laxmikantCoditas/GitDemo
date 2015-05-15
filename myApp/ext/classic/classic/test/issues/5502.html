@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+
+        Ext.onReady(function () {
+            Ext.util.CSS.createStyleSheet(
+                    '.zoom-slider-tic { '
+                            + 'position: absolute;'
+                            + 'top: 1px;'
+                            + 'left: 50px; '
+                            + 'z-index: 100; '
+                            + 'border-left: 1px solid;'
+                            + 'border-right: 1px solid  rgba(255, 255, 255, 0.5);'
+                            + 'height: 15px;'
+                            + 'overflow: visible;'
+                            + '}'
+                    , 'myId'
+            );
+
+            Ext.create('Ext.slider.Single', {
+                width:200,
+                value:50,
+                increment:10,
+                minValue:0,
+                maxValue:100,
+                renderTo:Ext.getBody(),
+                 listeners:{
+                 scope:this,
+                 afterrender:function (slider) {
+                 var dh = Ext.core.DomHelper;
+                 debugger;
+                 dh.append(slider.id, {tag:'div', cls:'zoom-slider-tic'});
+                 }
+                 }
+
+            });
+        });
+
+
+    </script>
+
+</body>
+</html>

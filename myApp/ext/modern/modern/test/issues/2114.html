@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2114</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script src="../../sencha-touch.js"></script>
+
+        <script>
+            Ext.setup({
+                onReady: function () {
+
+                    var formBase = {
+                        id: 'myform',
+                        items: [
+                            {
+                                xtype: 'fieldset',
+                                title: 'Reset Test',
+                                items: [
+                                    {
+                                        xtype: 'checkboxfield',
+                                        label: 'Checkbox',
+                                        checked: true,
+
+                                        name: 'data[bar]', // if this attribute doesn't have brackets it works fine
+                                    },
+                                    {
+                                        xtype: 'button',
+                                        text: 'Reset Form, this will hang',
+                                        handler: function () {
+                                            Ext.getCmp('myform').reset();
+                                        }
+                                   }
+
+                                ]
+                            },
+
+                        ]
+                    };
+
+                    Ext.apply(formBase, {
+                        autoRender: true,
+                        modal: true,
+                        hideOnMaskTap: false,
+                        height: 505,
+                        width: 480,
+                        centered: true,
+                        fullscreen: true
+                    });
+
+                    form = Ext.create('Ext.form.Panel', formBase);
+                    form.show();
+                }
+            });
+        </script>
+    </head>
+    <body></body>
+</html>

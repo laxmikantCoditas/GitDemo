@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4546</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script type="text/javascript" src="../../sencha-touch.js"></script>
+
+    <script type="text/javascript">
+        Ext.application({
+            name : 'Test',
+
+            requires : [
+                'Ext.form.Panel',
+                'Ext.field.Select'
+            ],
+
+            launch : function() {
+                Ext.Viewport.add({
+                    xtype : 'formpanel',
+                    items : [
+                        {
+                            xtype   : 'selectfield',
+                            label   : 'Choose one',
+                            options : [
+                                { text : 'First Option',  value : 'first'  },
+                                { text : 'Second Option', value : 'second' },
+                                { text : 'Third Option',  value : 'third'  }
+                            ]
+                        },
+                        {
+                            xtype       : 'selectfield',
+                            label       : 'Choose one',
+                            autoSelect  : false,
+                            options     : [
+                                { text : 'First Option',  value : 'first'  },
+                                { text : 'Second Option', value : 'second' },
+                                { text : 'Third Option',  value : 'third'  }
+                            ]
+                        },
+                        {
+                            xtype       : 'selectfield',
+                            label       : 'Choose one',
+                            autoSelect  : false,
+                            value       : 'second',
+                            options     : [
+                                { text : 'First Option',  value : 'first'  },
+                                { text : 'Second Option', value : 'second' },
+                                { text : 'Third Option',  value : 'third'  }
+                            ]
+                        }
+                    ]
+                });
+            }
+        });
+    </script>
+</head>
+</html>

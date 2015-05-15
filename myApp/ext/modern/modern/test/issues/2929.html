@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TOUCH-2929</title>
+
+        <script src="../../sencha-touch-debug.js"></script>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+        <script type="text/javascript">
+
+            Ext.application({
+                launch: function() {
+                    var data = {
+                        kids: [
+                            { name: 'Aubrey', toys: [{name: 'buzz'}, {name: 'woody'}]},
+                            { name: 'Cale', toys: [{name: 'buzz'}]},
+                            { name: 'Nikol', toys: [{name: 'woody'}]},
+                            { name: 'Solomon', toys: []}
+                        ]
+                    };
+                    var tpl = new Ext.XTemplate(
+                        '<tpl for="kids">',
+                            '<tpl for="toys">',
+                                '<p>{parent.name} owns a {name}</p>',
+                            '</tpl>',
+                        '</tpl></p>'
+                    );
+                    tpl.overwrite(Ext.get('test'), data);
+                }
+            });
+
+        </script>
+    </head>
+    <body>
+    <div id="test"></div>
+    </body>
+</html>

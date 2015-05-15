@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sencha Test</title>
+        
+        <script src="../../sencha-touch-debug.js"></script>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+        <script type="text/javascript">
+
+            Ext.application({
+                name: 'Test',
+
+                requires : [
+                    'Ext.Toolbar',
+                    'Ext.Panel'
+                ],
+            
+                launch: function() {
+                    new Ext.Container({
+                        fullscreen : true,
+                        layout     : {
+                            type : 'card'
+                        },
+                        items      : [
+                            {
+                                xtype  : 'toolbar',
+                                docked : 'top',
+                                items  : [
+                                    {
+                                        text    : 'Set Active id',
+                                        handler : function (button) {
+                                            var cnt = button.up('container[fullscreen]');
+
+                                            cnt.setActiveItem('#comp2');
+                                        }
+                                    },
+                                    {
+                                        text    : 'Set Active itemId',
+                                        handler : function (button) {
+                                            var cnt = button.up('container[fullscreen]');
+
+                                            cnt.setActiveItem('#comp3');
+                                        }
+                                    },
+                                    {
+                                        text    : 'Set Active ComponentQuery',
+                                        handler : function (button) {
+                                            var cnt = button.up('container[fullscreen]');
+
+                                            cnt.setActiveItem('[action=four]');
+                                        }
+                                    },
+                                    {
+                                        text    : 'Set Active Not a Child',
+                                        handler : function (button) {
+                                            var cnt = button.up('container[fullscreen]');
+
+                                            //expect when the panel is added to be blank
+                                            cnt.setActiveItem('panel');
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                html : 'One',
+                                id   : 'comp1'
+                            },
+                            {
+                                html : 'You found me via my id!',
+                                id   : 'comp2'
+                            },
+                            {
+                                html   : 'You found me via my itemId!',
+                                itemId : 'comp3'
+                            },
+                            {
+                                html   : 'You found me using a ComponentQuery selector!',
+                                action : 'four'
+                            }
+                        ]
+                    });
+                }
+            });
+            
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

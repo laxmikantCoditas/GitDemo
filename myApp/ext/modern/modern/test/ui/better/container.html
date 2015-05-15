@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Better Components</title>
+
+    <link rel="stylesheet" href="../../../resources/css/sencha-touch.css" type="text/css" />
+    <link rel="stylesheet" href="layout.css" type="text/css" />
+
+    <script type="text/javascript" src="../../../sencha-touch-all.js"></script>
+    <script type="text/javascript">
+        Ext.setup({
+            requires: [
+                'Ext.Component',
+                'Ext.Container',
+                'Ext.Button'
+            ],
+
+            viewport: null,
+
+            onReady: function() {
+//                console.profile();
+                container = new Ext.Container({
+                    id: 'test',
+                    width: 'inherit',
+                    height: 'inherit',
+                    layout: 'hbox',
+                    dockedItems: [
+                        {
+                            ui: 'confirm',
+                            xtype: 'button',
+                            text: 'Card 1',
+                            dock: 'bottom'
+                        }
+                    ],
+                    items: [
+                        {
+                            ui: 'decline',
+                            xtype: 'button',
+                            text: 'Docked Left 1',
+                            docked: 'right'
+                        },
+                        {
+                            ui: 'decline',
+                            xtype: 'button',
+                            text: 'Docked Right 1',
+                            docked: 'right'
+                        },
+                        {
+                            ui: 'action',
+                            xtype: 'button',
+                            text: 'Foo foo foo',
+                            centered: true,
+                            width: 200
+                        },
+                        {
+                            ui: 'confirm',
+                            xtype: 'button',
+                            text: 'Inner 1',
+                            flex: 1
+                        },
+                        {
+                            ui: 'confirm',
+                            xtype: 'button',
+                            text: 'Inner Longer 2',
+                            flex: 2
+                        },
+                        {
+                            ui: 'decline',
+                            xtype: 'button',
+                            text: 'Docked Top 1',
+                            docked: 'top'
+                        },
+                        {
+                            ui: 'decline',
+                            xtype: 'button',
+                            text: 'Docked Top 2',
+                            docked: 'top'
+                        },
+                        {
+                            ui: 'confirm',
+                            xtype: 'button',
+                            text: 'Baz baz baz',
+                            centered: true,
+                            height: 200
+                        },
+                        {
+                            ui: 'confirm',
+                            xtype: 'button',
+                            text: 'Inner 3',
+                            flex: 3
+                        },
+                        {
+                            ui: 'normal',
+                            xtype: 'button',
+                            text: 'Dock Bottom',
+                            docked: 'bottom'
+                        }
+                    ]
+                });
+//                console.profileEnd();
+
+                container.render(document.body);
+            }
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

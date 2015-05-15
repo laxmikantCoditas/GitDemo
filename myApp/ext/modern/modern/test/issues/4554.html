@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>TOUCH-4554</title>
+		<link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+		<script type="text/javascript" src="../../sencha-touch.js"></script>
+
+		<script type="text/javascript">
+			Ext.application({
+				name: 'Surfspace',
+
+
+				requires: [
+					'Ext.MessageBox',
+					'Ext.dataview.List',
+					,'Ext.data.proxy.JsonP', 'Ext.plugin.PullRefresh'
+				],
+
+				launch: function() {
+					var list = {
+						xtype     : 'list',
+						plugins: [
+							{
+								xclass: 'Ext.plugin.PullRefresh',
+								pullRefreshText: 'Pull down to refresh!',
+								scrollerAutoRefresh: true
+							}
+						],
+
+						itemTpl: [
+							'<tpl for=".">',
+							'<tpl if="img">',
+							'<img src="{img}" />',
+							'</tpl>',
+							'</tpl>'
+						],
+
+						store     : {
+							storeId: 'Reports',
+							fields:[{ name: 'img', type: 'string', mapping: 'img_url'} ],
+
+							proxy: {
+								type: 'jsonp',
+								url: 'https://surf-space.com/wp-admin/admin-ajax.php',
+								extraParams: {
+									action: 'report-list'
+								},
+								reader: {
+									type: 'json',
+									rootProperty: 'data'
+								}
+							}
+							/*
+							 data: [
+							 { img_url: 'https:\/\/d88ty4yng64j5.cloudfront.net\/wp-content\/uploads\/spots\/user_reports\/1\/1_1369053584_small.jpg' },
+							 { img_url: 'https:\/\/d88ty4yng64j5.cloudfront.net\/wp-content\/uploads\/spots\/user_reports\/191\/191_1368893288_small.jpg' },
+							 { img_url: 'https:\/\/d88ty4yng64j5.cloudfront.net\/wp-content\/uploads\/spots\/user_reports\/1\/1_1368860222_small.jpg' },
+							 { img_url: 'https:\/\/d88ty4yng64j5.cloudfront.net\/wp-content\/uploads\/spots\/user_reports\/474\/474_1368797231_small.jpg' },
+							 { img_url: 'https:\/\/d88ty4yng64j5.cloudfront.net\/wp-content\/uploads\/spots\/user_reports\/1\/1_1368776100_small.jpg' },
+							 { img_url: 'https:\/\/d88ty4yng64j5.cloudfront.net\/wp-content\/uploads\/spots\/user_reports\/47\/47_1368718915_small.jpg' },
+							 { img_url: 'https:\/\/d88ty4yng64j5.cloudfront.net\/wp-content\/uploads\/spots\/user_reports\/537\/537_1368703729_small.jpg' },
+							 { img_url: 'https:\/\/d88ty4yng64j5.cloudfront.net\/wp-content\/uploads\/spots\/user_reports\/425\/425_1368693848_small.jpg' },
+							 { img_url: 'https:\/\/d88ty4yng64j5.cloudfront.net\/wp-content\/uploads\/spots\/user_reports\/242\/242_1368675905_small.jpg' },
+							 { }
+							 ]*/
+						}
+					}
+
+					Ext.Viewport.add(list);
+					var store = Ext.getStore("Reports");
+					store.load();
+				}
+			});
+		</script>
+	</head>
+</html>

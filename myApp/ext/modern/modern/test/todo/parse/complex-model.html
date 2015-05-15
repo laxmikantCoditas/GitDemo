@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Parse - Complex Test</title>
+
+	<script src="http://www.parsecdn.com/js/parse-1.2.9.min.js"></script>
+	<script src="../../../sencha-touch-debug.js"></script>
+	<link rel="stylesheet" href="../../../resources/css/sencha-touch.css">
+
+	<script type="text/javascript">
+		Parse.initialize("6RfVEOtN8WIbsyR2mLhDtfCx6cVmh0skVEsr8kGN", "Yf1TTAXDuvDBDF21nc8ZBZJwokXyFukhaKXaGGD7");
+
+		Ext.setup({
+			requires: [
+				'Ext.ux.parse.Store',
+				'Ext.ux.parse.Model',
+				'Ext.dataview.List'
+			],
+
+			onReady: function() {
+				Ext.define('MyApp.model.Comment', {
+					extend: 'Ext.ux.parse.Model',
+					config: {
+						fields: ['id', 'body']
+					}
+				});
+
+				Ext.define('MyApp.model.Test', {
+					extend: 'Ext.ux.parse.Model',
+					config: {
+						fields: ['id', 'label', 'duration'],
+						belongsTo: "'MyApp.model.Post'"
+					}
+				});
+
+				Ext.define('MyApp.model.Post', {
+					extend: 'Ext.ux.parse.Model',
+
+					config: {
+						fields: ['id', 'body', 'stuff', 'geo', 'edit'],
+						associations: [
+							{ type: 'relation', autoLoad: true, model: 'MyApp.model.Test'},
+							{ type: 'pointer', include: true, model: 'MyApp.model.Comment', name: "comment"}
+						]
+					}
+				});
+
+				var model = window.m = Ext.create("MyApp.model.Post", {id: "ubOmQ1utnR"});
+
+
+				model.monitorRelations().then(function(){
+					model.load({
+						success: function() {
+							console.log("All Set and Ready to go!");
+
+							/*var t = Ext.create("MyApp.model.Test", {});
+							model.tests().add(t);
+*/
+							/*var c = window.c = Ext.create("MyApp.model.Comment", {body:"I am a new Comment"});
+							model.set("comment", c);*/
+						}
+					});
+				});
+
+
+
+				var list = Ext.create("Ext.List", {
+					store: model.tests(),
+					itemTpl: "{label}"
+				});
+
+				Ext.Viewport.add(list);
+
+				/*model.load({
+					scope: this,
+					success: function(record) {
+						record.get("comment").load({
+							success: function() {
+								record.set("body", "time: " + Ext.Date.format(new Date(), "h:m:s"));
+								record.save(
+										{
+											success: function(record) {
+												console.log("Saved");
+												console.log(record);
+											},
+											failure: function(a, b) {
+												console.log("Error: " + b.error);
+											}
+										}
+								);
+							}
+						});
+					},
+					failure: function(response, operation) {
+
+					}
+				});*/
+			}
+		});
+	</script>
+</head>
+<body>
+</body>
+</html>

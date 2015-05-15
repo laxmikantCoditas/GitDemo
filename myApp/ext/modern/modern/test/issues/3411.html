@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3411</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.setup({
+            
+            requires: [
+                'Ext.Container',
+                'Ext.Panel',
+                'Ext.Map',
+                'Ext.TitleBar',
+                'Ext.Spacer'
+            ],
+                   
+            onReady: function() {
+                /**
+                 * Get the address of the user's current location.
+                 */
+                var getGeoLocation = function() {
+                    
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(
+                            function(position) {
+                                onGeoUpdate(position);
+                            },
+                            function(error) {
+                                onGeoError(error);
+                            },
+                            {maximumAge:5000}
+                        );
+                    }
+                };
+
+                // Handle location updates
+                var onGeoUpdate = function(pos) {
+                    var coords, marker;
+                    
+                    // Place a marker at the location
+                    if (pos && pos.coords) {
+                        
+                        coords = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+                        
+                        // Show the marker
+                        marker = new google.maps.Marker({
+                            title: 'lat: ' + coords.lat() + ' lng: ' + coords.lng(),
+                            position: coords,
+                            map: Ext.ComponentQuery.query('mapview')[0].getMap()
+                        });
+                    }
+                    else {
+                        Ext.Msg.alert("onGeoUpdate", "Invalid coordinates");
+                    }
+                };
+                
+                var onGeoError = function(error) {
+                    
+                    var pos, title, msg;
+
+
+                    title = "Location Error";
+                    
+                    if (error.code === 1) {
+                        msg = "Permission denied. Unable to get the list of representatives for this location.";
+                    }
+                    else if (error.code === 2) {
+                        msg = "Position unavailable.";
+                    }
+                    else if (error.code === 3) {
+                        msg = "Geolocation request timed-out.";
+                    }
+                    else {
+                        msg = "Unknown error getting the current location.";
+                    }
+                    
+                    Ext.Msg.alert(title, msg);
+                };
+                
+                Ext.define('MainView', {
+                    extend: 'Ext.Container',
+                    xtype: 'mainview',
+                    config: {
+                        layout: 'card',
+                        items: [
+                            {
+                                xtype: 'titlebar',
+                                title: 'Main',
+                                docked: 'top',
+                                items: [
+                                    {
+                                        xtype: 'button',
+                                        text: 'back',
+                                        align: 'left',
+                                        itemId: 'backButton',
+                                        hidden: true
+                                    },
+                                    {
+                                        xtype: 'button',
+                                        text: 'show map',
+                                        align: 'right',
+                                        itemId: 'mapButton'
+                                    }
+                                ]
+                            },
+                            {
+                                xtype: 'panel',
+                                html: 'Main View',
+                            },
+                        ],
+                    }
+                });
+                
+                Ext.define('SettingsView', {
+                    extend: 'Ext.Container',
+                    xtype: 'settingsview',
+                    
+                    config: {
+                        layout: 'fit',
+                        items: [
+                            {
+                                xtype: 'mapview'
+                            }
+                        ],
+                    }
+                });
+                
+                Ext.define('MapView', {
+                    extend: 'Ext.Map',
+                    xtype: 'mapview',
+                    
+                    config: {
+                        mapOptions: {
+                            disableDefaultUI: true,
+                            zoomControl: false,
+                            zoom: 8
+                        },
+                        listeners: {
+                            maprender: function(view, map) {
+                                getGeoLocation();
+                            }
+                        }
+                    }
+                });
+                
+                Ext.Viewport.add(Ext.create('MainView'));
+
+
+                var make = function(){ 
+                    Ext.ComponentQuery.query('mainview')[0].add(Ext.create('SettingsView'));
+                    Ext.ComponentQuery.query('mainview')[0].setActiveItem('settingsview');
+                    Ext.ComponentQuery.query('mainview titlebar')[0].setTitle('Settings');
+                    Ext.ComponentQuery.query('mainview titlebar #backButton')[0].show();
+                    Ext.ComponentQuery.query('mainview titlebar #mapButton')[0].hide();
+                };
+
+                var kill  = function() {
+                    Ext.ComponentQuery.query('settingsview')[0].destroy();
+                    Ext.ComponentQuery.query('mainview')[0].setActiveItem(0);
+                    Ext.ComponentQuery.query('mainview titlebar')[0].setTitle('Main');
+                    Ext.ComponentQuery.query('mainview titlebar #backButton')[0].hide();
+                    Ext.ComponentQuery.query('mainview titlebar #mapButton')[0].show();
+
+                };
+                //setTimeout(make, 1000);
+                //setTimeout(kill, 3000);
+                //setTimeout(make, 4000);
+                
+                // Create and show the map
+                Ext.ComponentQuery.query('#mapButton')[0].on('tap', make);
+                
+                // Destroy the map and show the main view
+                Ext.ComponentQuery.query('#backButton')[0].on('tap', kill);
+            },
+        });
+
+
+    </script>
+</head>
+<body>
+</body>
+</html>

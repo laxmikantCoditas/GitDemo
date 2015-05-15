@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2071</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script src="../../sencha-touch.js"></script>
+
+        <script>
+            Ext.define('App.Panel', {
+                extend: 'Ext.Panel',
+                config: {
+                    foo: null
+                }
+            });
+            Ext.setup({
+                onReady:function () {
+                    Ext.ComponentQuery.pseudos.hasCls = function (cmps, cls) {
+                        var len = cmps.length,
+                            results = [],
+                            i = 0,
+                            c;
+
+                        for (; i < len; i++) {
+                            c = cmps[i];
+                            if (Ext.Array.contains(c.getCls(), cls)) {
+                                results.push(c);
+                            }
+                        }
+
+                        return results;
+                    };
+
+                    var panel=Ext.create('App.Panel', {
+                        fullscreen: true,
+                        cls: 'foo',
+                        foo: 'foo'
+                    });
+                    Ext.Viewport.add(panel);
+
+                    if(Ext.Viewport.query('panel:hasCls(foo)').length!=1) {
+                        console.error('Expected a panel with cls foo');
+                    }
+                    if(Ext.Viewport.query('panel[foo=foo]').length!=1) {
+                        console.error('Expected a panel with foo foo');
+                    }
+                    panel.setCls('bar');
+                    panel.setFoo('bar');
+                    if(Ext.Viewport.query('panel[cls=bar]').length!=1) {
+                        console.error('Expected a panel with cls bar');
+                    }
+                    if(Ext.Viewport.query('panel[foo=bar]').length!=1) {
+                        console.error('Expected a panel with foo bar');
+                    }
+                    if(Ext.Viewport.query('panel[_foo=bar]').length>0) {
+                        console.error('Expected not to have a panel with _foo bar');
+                    }
+                }
+            });
+        </script>
+    </head>
+    <body></body>
+</html>

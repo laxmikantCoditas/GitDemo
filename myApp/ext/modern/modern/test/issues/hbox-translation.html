@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sencha Touch Issue Template</title>
+        <style>
+            .container {
+                height: 100px;
+                width: 100px;
+                position: absolute;
+                border: 1px solid black;
+            }
+
+            .fix {
+                position: absolute;
+                height: 100%;
+                min-width: 100%;
+            }
+
+            .inner {
+                position: relative;
+                display: -ms-flexbox;
+                display: -webkit-flex;
+                display: -moz-flexbox;
+                display: flex;
+                -ms-flex-direction: row;
+                -webkit-flex-direction: row;
+                -moz-flex-direction: row;
+                flex-direction: row;
+                border: 5px solid green;
+            }
+
+            .item {
+                width: 75px;
+                height: 75px;
+            }
+        </style>
+	</head>
+    <body>
+        <div class="container">
+            <div class="fix">
+                <div class="inner">
+                    <div class="item" style="border: 1px solid orange;"></div>
+                    <div class="item" style="border: 1px solid blue;"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

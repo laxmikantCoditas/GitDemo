@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Absolute Layout Example</title>
+<link rel="stylesheet" type="text/css" href="../../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../../ext.js"></script>
+<script type="text/javascript">
+
+Ext.require([
+    'Ext.panel.Panel',
+    'Ext.container.Viewport',
+    'Ext.perf.Monitor'
+]);
+
+function go () {
+    var start = new Date(),
+        panel; /* = Ext.create('Ext.panel.Panel', {
+            width: 400,
+            height: 400,
+            id: 'outerPanel',
+            //resizable: true,
+            renderTo: document.body,
+            bodyStyle: 'background-color:red',
+            dockedItems: [{
+                xtype: 'component',
+                id: 'topDock',
+                html: 'Top<br>test',
+                dock: 'top',
+                style: 'border: 1px solid'
+            }, {
+                xtype: 'component',
+                id: 'rightDock',
+                html: 'Right test',
+                dock: 'right',
+                style: 'border: 1px solid'
+            }, {
+                xtype: 'component',
+                id: 'bottomDock',
+                html: 'Bottom<br>test',
+                dock: 'bottom',
+                style: 'border: 1px solid'
+            }, {
+                xtype: 'component',
+                id: 'leftDock',
+                html: 'Left test',
+                dock: 'left',
+                style: 'border: 1px solid'
+                }],
+            layout: {
+                type: 'hbox'
+            },
+            items: [{
+                flex: 1,
+                height: 100,
+                id: 'leftFlex',
+                bodyStyle: 'background-color:green'
+            }, {
+                flex: 1,
+                height: 100,
+                id: 'rightFlex',
+                bodyStyle: 'background-color:blue'
+            }]
+        }); */
+
+    var which = 1; // change between 0 and 1 to switch between 1 panel and 50
+
+    if (which == 1) {
+        var items = [];
+        for (var y = 0; y++ < 10; ) {
+            var row = {
+                xtype: 'panel',
+                //height: 100,
+                flex: 1,
+                layout: {
+                    type: 'hbox',
+                    align: 'stretch'
+                },
+                items: []
+            }
+            for (var x = 0; x++ < 5; ) {
+                var title = 'Panel ' + x + ',' + y;
+                row.items.push(new Ext.Panel({
+                    flex: 1,
+                    title: title,
+                    id: title,
+                    bodyStyle: 'background-color: blue; color:white;',
+                    html: 'Body ' + x + ',' + y
+                }));
+            }
+            items.push(row);
+        }
+
+        new Ext.container.Viewport({
+            layout: {
+                type: 'vbox',
+                align: 'stretch'
+            },
+            items: items
+        });
+    } else {
+        new Ext.Panel({
+            renderTo: document.body,
+            height: 300,
+            width: 400,
+            title: "Test Panel",
+            bodyStyle: 'background-color: blue; color:white;',
+            html: 'Body'
+        });
+    }
+
+    var dt = new Date() - start;
+    Ext.log('totalTime = ' + dt);
+}
+
+Ext.onReady(function () {
+    if (1) {
+        Ext.Perf.setup();
+        Ext.Perf.monitor('go', function () {
+            go();
+        });
+        Ext.Perf.report();
+    } else {
+        go();
+    }
+})
+</script>
+</head>
+<body>
+</body>
+</html>

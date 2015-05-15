@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../sencha-touch-all.js"></script>
+    <script>
+        Ext.Loader.setPath({
+            'Ext.data': '../../src/data'
+        });
+
+        Ext.define('MyModel', {
+            extend: 'Ext.data.Model',
+
+            config: {
+                fields: [
+                    'field1',
+                    {name: 'field2', type: 'date', dateFormat: 'timestamp'},
+                    {name: 'field3', mapping: 'data.test', type: 'int'}
+                ],
+
+                proxy: {
+                    type: 'ajax',
+                    api: {
+                        read: 'read.json',
+                        update: 'update.json',
+                        create: 'create.json',
+                        destroy: 'destroy.json'
+                    },
+                    reader: {
+                        type: 'json',
+                        clientIdProperty: 'clientId',
+                        rootProperty: 'results',
+                        idProperty: 'IDPROPERTY'
+                    },
+                    writer: {
+                        type: 'json',
+                        //root: 'records',
+                        encode: true,
+                        allowSingle: true
+                    }
+                }
+            }
+        });
+
+        Ext.setup({
+            onReady: function() {
+                var store = Ext.create('Ext.data.Store', {
+                    model: 'MyModel'
+                });
+
+                var dataview = Ext.create('Ext.DataView', {
+                    store: store,
+                    fullscreen: true,
+                    itemTpl: 'id: {id}, Field1: {field1}, Field2: {field2:date("d-m-Y")}, Field3: {field3}'
+                });
+
+                store.sort({
+                    property: 'field2',
+                    direction: 'DESC'
+                });
+
+                store.load(function() {
+                    var newInstance = MyModel.create({
+                        field1: 'blaat4',
+                        field2: new Date().getTime()/1000,
+                        field3: 400
+                    });
+
+                    store.add(newInstance);
+
+                    newInstance.save();
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

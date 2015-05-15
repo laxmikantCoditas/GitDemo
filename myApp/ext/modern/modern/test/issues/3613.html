@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>TOUCH-3613</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+</head>
+<body>
+<script type="text/javascript" charset="utf-8">
+    Ext.setup({
+        requires: ['Ext.TitleBar', 'Ext.chart.CartesianChart', 'Ext.chart.series.Line'],
+        onReady: function () {
+            Ext.Viewport.add({
+                layout: 'fit',
+                items: [
+                    {
+                        xtype: 'titlebar',
+                        docked: 'top',
+                        title: 'Allow legend scrolling to be disabled (charts)',
+                        items: [
+                            {
+                                align: 'right',
+                                text: '<a target="_blank" href="http://sencha.jira.com/browse/TOUCH-3613">TOUCH-3613</a>'
+                            },
+                            {
+                                align: 'right',
+                                text: 'Disable legend scrollable',
+                                handler: function () {
+                                    var legend = Ext.ComponentQuery.query('legend')[0];
+                                    legend.setScrollable(false);
+                                }
+                            },
+                            {
+                                align: 'right',
+                                text: 'Enable legend scrollable',
+                                handler: function () {
+                                    var legend = Ext.ComponentQuery.query('legend')[0];
+                                    legend.setScrollable(true);
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        xtype: 'chart',
+                        store: {
+                            fields: ['x', 'y'],
+                            data: [
+                                {
+                                    x: 0,
+                                    y: 1
+                                },
+                                {
+                                    x: 1,
+                                    y: 3
+                                },
+                                {
+                                    x: 2,
+                                    y: 4
+                                },
+                                {
+                                    x: 3,
+                                    y: 2
+                                }
+                            ]
+                        },
+                        legend: {
+                            docked: 'top',
+                            scrollable: true
+                        },
+                        series: {
+                            type: 'line',
+                            xField: 'x',
+                            yField: 'y',
+                            title: 'The only series here',
+                            style: {
+                                stroke: 'blue',
+                                smooth: true
+                            }
+                        }
+                    }
+                ]
+            });
+        }
+    });
+</script>
+</body>
+</html>

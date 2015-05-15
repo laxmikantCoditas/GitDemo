@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2709</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        //Functions to help bench marking the performance.
+        var benchmark = {
+            start:function (name) {
+                window['___' + name] = Date.now();
+            },
+            end:function (name) {
+                var diff = Date.now() - window['___' + name];
+                window['___' + name] = undefined;
+                console.log(name + ' took ' + diff + 'ms to execute');
+            }
+        }
+
+        Ext.application({
+            requires:['Ext.Button'],
+            launch:function () {
+                var tbar = this.buildTbar();
+                var panel = this.buildPanel();
+                Ext.Viewport.add([tbar, panel]);
+            },
+            buildTbar:function () {
+                return {
+                    xtype:'toolbar',
+                    id:'topbar',
+                    docked:'top',
+                    items:[
+                        {
+                            text:'tap me',
+                            name:'myBtn',
+                            handler:function (btn) {
+                                benchmark.start('show_modal');
+                                if (!window.modal) {
+                                    window.modal = Ext.create('Ext.Panel', {
+                                        modal:true, //by setting model to false gets better performance
+                                        width:100,
+                                        height:100,
+                                        centered:true, //performance is better set back to true
+                                        hideOnMaskTap:true
+                                    });
+                                    Ext.Viewport.add(window.modal);
+                                }
+
+                                window.modal.showBy(btn);
+                                benchmark.end('show_modal');
+                            }
+                        },
+                        {
+                            text:'Toggle Toolbar',
+                            name:'myBtn2',
+                            handler:function (btn) {
+                                benchmark.start('toggle_tbar');
+                                btn.shown = !btn.shown;
+                                if (btn.shown) {
+                                    Ext.ComponentQuery.query('toolbar')[1].hide();
+                                } else {
+                                    Ext.ComponentQuery.query('toolbar')[1].show();
+                                }
+                                benchmark.end('toggle_tbar');
+                            }
+                        }
+                    ]
+                }
+            },
+            buildPanel:function () {
+                return {
+                    xtype:'tabpanel',
+                    items:[
+                        {
+                            title:'list',
+                            layout:'fit',
+                            items:{
+                                xtype:'panel',
+                                layout:'fit',
+                                items:[
+                                    this.buildList()
+                                ]
+                            }
+                        },
+                        {
+                            title:'list in Nested panel',
+                            layout:'fit',
+                            items:{
+                                xtype:'panel',
+                                layout:'hbox',
+                                defaults:{flex:1, style:'border: solid blue 2px' },
+                                items:[
+                                    {xtype:'component', html:'component'},
+                                    this.buildList()
+                                ]
+                            }
+                        },
+                        {
+                            title:'more! Nested panel',
+                            layout:'fit',
+                            items:{
+                                xtype:'panel',
+                                layout:'hbox',
+                                defaults:{flex:1, style:'border: solid red 2px' },
+                                items:[
+                                    {xtype:'component', html:'component in level 1'},
+                                    {
+                                        xtype:'panel',
+                                        layout:'hbox',
+                                        defaults:{flex:1, style:'border: solid blue 2px' },
+                                        items:[
+                                            {xtype:'component', html:'component in level 2'},
+                                            this.buildList()
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            buildList:function () {
+                return Ext.create('Ext.List', {
+                    itemTpl:'{name}',
+                    store:{
+                        fields:['name'],
+                        data:[
+                            {name:'Cowper'},
+                            {name:'Everett'},
+                            {name:'University'},
+                            {name:'Forest'},
+                            {name:'Cowper'},
+                            {name:'Everett'},
+                            {name:'University'},
+                            {name:'Forest'},
+                            {name:'Cowper'},
+                            {name:'Everett'},
+                            {name:'University'},
+                            {name:'Forest'},
+                            {name:'Cowper'},
+                            {name:'Everett'},
+                            {name:'University'},
+                            {name:'Forest'},
+                            {name:'Cowper'},
+                            {name:'Everett'},
+                            {name:'University'},
+                            {name:'Forest'},
+                            {name:'Cowper'},
+                            {name:'Everett'},
+                            {name:'University'},
+                            {name:'Forest'},
+                            {name:'Cowper'},
+                            {name:'Everett'},
+                            {name:'University'},
+                            {name:'Forest'},
+                            {name:'Cowper'},
+                            {name:'Everett'},
+                            {name:'University'},
+                            {name:'Forest'},
+                            {name:'Cowper'},
+                            {name:'Everett'},
+                            {name:'University'},
+                            {name:'Forest'},
+                            {name:'Cowper'},
+                            {name:'Everett'},
+                            {name:'University'},
+                            {name:'Forest'},
+                            {name:'Cowper'},
+                            {name:'Everett'},
+                            {name:'University'},
+                            {name:'Forest'},
+                            {name:'Cowper'},
+                            {name:'Everett'},
+                            {name:'University'},
+                            {name:'Forest'},
+                            {name:'Cowper'},
+                            {name:'Everett'},
+                            {name:'University'},
+                            {name:'Forest'},
+                            {name:'Cowper'},
+                            {name:'Everett'},
+                            {name:'University'},
+                            {name:'Forest'},
+                            {name:'Cowper'},
+                            {name:'Everett'},
+                            {name:'University'},
+                            {name:'Forest'},
+                            {name:'Cowper'},
+                            {name:'Everett'},
+                            {name:'University'},
+                            {name:'Forest'}
+                        ]
+                    }
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

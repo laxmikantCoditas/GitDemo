@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'SenchaToolbox'
+		'SenchaToolbox.DLL'
+		{
+			val AppID = s '%APPID%'
+		}
+	}
+}

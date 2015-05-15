@@ -1,0 +1,26 @@
+HKCR
+{
+	SenchaToolbox.Toolbox.1 = s 'Toolbox Class'
+	{
+		CLSID = s '{98B196C0-F768-41E3-A2E7-B51E80B80478}'
+	}
+	SenchaToolbox.Toolbox = s 'Toolbox Class'
+	{
+		CLSID = s '{98B196C0-F768-41E3-A2E7-B51E80B80478}'
+		CurVer = s 'SenchaToolbox.Toolbox.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {98B196C0-F768-41E3-A2E7-B51E80B80478} = s 'Toolbox Class'
+		{
+			ProgID = s 'SenchaToolbox.Toolbox.1'
+			VersionIndependentProgID = s 'SenchaToolbox.Toolbox'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{DEB3C39B-4DE1-4F15-9344-E061ADACB3E6}'
+		}
+	}
+}

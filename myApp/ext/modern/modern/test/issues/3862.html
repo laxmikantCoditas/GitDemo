@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>TOUCH-3862</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script src="../../sencha-touch.js"></script>
+
+		<script type="text/javascript">
+			Ext.application({
+				name : 'Test',
+
+				requires : [
+					'Ext.data.Store',
+					'Ext.dataview.DataView',
+					'Ext.Toolbar'
+				],
+
+				launch : function () {
+
+					Ext.Viewport.add({
+						xtype : 'dataview',
+						height: 300,
+						itemTpl : '{foo}',
+						store : {
+							fields : [ 'foo' ],
+							data : [
+								{ 'foo' : 'one' },
+								{ 'foo' : 'two' }
+							]
+						},
+						items : [{
+							xtype : 'toolbar',
+							docked : 'top',
+							items : [{
+								text : 'Any Records Selected?',
+								handler : function(button) {
+									var dataview = button.up('dataview'),
+									store = dataview.getStore();
+									console.log(store);
+									store.each(function(record) { 
+										console.log(record.get('foo') + ' is selected:', dataview.isSelected(record)); 
+									});
+								}
+							}]
+						}],
+						listeners : {
+							order : 'before',
+							select : function () { 
+								console.log("stopping select .... or so we think");
+								return false; 
+							}
+						}
+					});
+
+				}
+			});
+		</script>
+	</head>
+</html>

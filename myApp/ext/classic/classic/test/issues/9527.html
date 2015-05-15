@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case - 9527</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        //your test case goes here
+
+Ext.Loader.setConfig({
+    enabled: true
+});
+
+Ext.require('Ext.form.Panel')
+Ext.require('Ext.tab.Panel')
+Ext.require('Ext.form.field.HtmlEditor')
+
+Ext.onReady(function () {
+
+    Ext.create('Ext.form.Panel', {
+        id: 'myForm',
+        title: 'My Form',
+        bodyPadding: 10,
+        height: 300,
+        width: 500,
+    
+        items: [{
+            xtype: 'tabpanel',
+            height: 200,
+            activeTab: 0,
+            items: [
+                {
+                    xtype: 'panel',
+                    title: 'Tab 1',
+                    items: [
+                        {
+                            xtype: 'textfield',
+                            fieldLabel: 'Label'
+                        }
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    title: 'Tab 2',
+                    items: [
+                        {
+                            xtype: 'htmleditor',
+                            height: 150,
+                            fieldLabel: ''
+                        }
+                    ]
+                }
+            ]
+        }],
+        renderTo: Ext.getBody()
+    });
+
+});
+
+    </script>
+</body>
+</html>
+

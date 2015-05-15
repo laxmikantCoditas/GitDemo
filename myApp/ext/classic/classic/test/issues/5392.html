@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+
+     Ext.onReady(function(){
+        Ext.define('PPM.model.XYZ', {
+            extend: 'Ext.data.Model',
+            fields: ['count', 'name', 'salary', 'rating']
+        });
+
+        Ext.define('PPM.store.MyStore', {
+            extend: 'Ext.data.Store',
+            model: 'PPM.model.XYZ',
+            pageSize: 20,
+            buffered: true,
+            purgePageCount: 0,
+            proxy: {
+                type: 'memory'
+            }
+        });
+
+        Ext.define('PPM.view.PlanningGrid', {
+            extend: 'Ext.grid.Panel',
+            alias: 'widget.planning_grid',
+            iconCls: 'icon-grid',
+            selModel: 'rowmodel',
+            multiSelect: true,
+            // do not reset the scrollbar when the view refreshs
+            // infinite scrolling does not support selection
+            disableSelection: true,
+            verticalScroller: {
+               	xtype: 'paginggridscroller',
+               	activePrefetch: false
+            },
+            initComponent: function () {
+                // you might want to use applyIf instead. so that you can
+                // pass in values in the config object
+                Ext.apply(this, {
+                    store: Ext.create('PPM.store.MyStore'),
+                    columns: [
+			{
+                        text     : 'Count',
+                        locked   : true,
+                        width    : 100,
+                        sortable : false,
+                        dataIndex: 'count'
+                    	},
+			{
+                        text     : 'Name',
+                        locked   : true,
+                        width    : 100,
+                        sortable : false,
+                        dataIndex: 'name'
+                    },
+                    {
+                        text     : 'Count Unlocked',
+                        locked   : false,
+                        width    : 100,
+                        sortable : false,
+                        dataIndex: 'count'
+                    },
+                    {
+                        text     : 'Rating',
+                        flex     : 1,
+                        sortable : true,
+                        dataIndex: 'rating'
+                    },{
+                        text     : 'Salary',
+                        flex     : 1,
+                        // locked   : true,
+                        sortable : true,
+                        dataIndex: 'salary'
+                    }],
+                    viewConfig: {
+                        stripeRows: true,
+                        trackOver: false
+                    },
+                    normalViewConfig: {
+			scroll: 'vertical'
+                   },
+		lockedViewConfig: {
+			scroll: false
+		},
+                    plugins: [Ext.create('Ext.grid.plugin.CellEditing', {
+                        clicksToEdit: 1
+                    })]
+                });
+
+                this.callParent(arguments);
+            }
+
+        });
+
+        Ext.create('PPM.view.PlanningGrid', {
+            title: "Planning Grid",
+            height: 500,
+            width: 500,
+            renderTo:Ext.getBody(),
+            listeners: {
+                render: function() {
+                    var store   = this.getStore(),
+                            data    = this.createFakeData(5000),
+                            records = this.generateRecords(data);
+
+                    store.cacheRecords(records);
+                    store.guaranteeRange(0, 49);
+
+                }
+            },
+
+            // these two methods are just to simulate some data for this example
+            createFakeData: function(count) {
+                var firstNames   = ['Ed', 'Tommy', 'Aaron', 'Abe', 'Jamie', 'Adam', 'Dave', 'David', 'Jay', 'Nicolas', 'Nige'],
+                        lastNames    = ['Spencer', 'Maintz', 'Conran', 'Elias', 'Avins', 'Mishcon', 'Kaneda', 'Davis', 'Robinson', 'Ferrero', 'White'],
+                        ratings      = [1, 2, 3, 4, 5],
+                        salaries     = [100, 400, 900, 1500, 1000000];
+
+                var data = [];
+                for (var i = 0; i < (count || 25); i++) {
+                    var ratingId    = Math.floor(Math.random() * ratings.length),
+                            salaryId    = Math.floor(Math.random() * salaries.length),
+                            firstNameId = Math.floor(Math.random() * firstNames.length),
+                            lastNameId  = Math.floor(Math.random() * lastNames.length),
+
+                            rating      = ratings[ratingId],
+                            salary      = salaries[salaryId],
+                            name        = Ext.String.format("{0} {1}", firstNames[firstNameId], lastNames[lastNameId]);
+
+                    data.push({
+			count: i,
+                        rating: rating,
+                        salary: salary,
+                        name: name
+                    });
+                }
+                return data;
+            },
+            generateRecords: function(data) {
+                var ln = data.length,
+                        records = [],
+                        i = 0;
+
+                for (; i < ln; i++) {
+                    records.push(Ext.create('PPM.model.XYZ', data[i]));
+                }
+                return records;
+            }
+        });
+        });
+    </script>
+</body>
+</html>

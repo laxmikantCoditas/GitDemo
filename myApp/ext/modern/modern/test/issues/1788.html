@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>1788</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+
+    <script type="text/javascript">
+        Ext.setup({
+            onReady:function () {
+                var carousel = Ext.create('Ext.carousel.Carousel', {
+                    fullscreen : true,
+                    items      : [
+                        {
+                            html : 'One'
+                        },
+                        {
+                            html : 'Two'
+                        },
+                        {
+                            xtype  : 'toolbar',
+                            docked : 'top',
+                            items  : [
+                                {
+                                    text    : 'Mask One',
+                                    handler : function(btn) {
+                                        var carousel = btn.up('carousel');
+//                                            one      = carousel.down('container[html=One]');
+
+                                        carousel.mask();
+                                    }
+                                },
+                                {
+                                    text    : 'Unmask One',
+                                    handler : function(btn) {
+                                        var carousel = btn.up('carousel');
+//                                            one      = carousel.down('container[html=One]');
+
+                                        carousel.unmask();
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                });
+                console.log(carousel);
+            }
+        });
+
+    </script>
+</head>
+<body></body>
+</html>

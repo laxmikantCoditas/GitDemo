@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3958</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.setup({ 
+            requires: [
+                'Ext.field.Number'
+            ],
+            onReady: function() {
+                var f = Ext.create('Ext.field.Number', {
+                    minValue:10,
+                    maxValue:100
+                });
+
+                f.setValue('');
+                console.log(f.getValue());
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

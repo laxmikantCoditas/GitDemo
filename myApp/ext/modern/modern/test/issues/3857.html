@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sencha Touch Issue Template</title>
+		<link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+		<script type="text/javascript" src="../../sencha-touch.js"></script>
+
+		<script type="text/javascript">
+			Ext.application({
+				name : 'Test',
+
+				requires : [
+
+				],
+
+				launch : function () {
+                    Ext.define('DataItemView', {
+                        extend: 'Ext.dataview.component.DataItem',
+                        xtype: 'dataitemview',
+
+                        config: {
+                           items: [{
+                              xtype: 'button',
+                              itemId: 'nameButton',
+                              flex: 1
+                           }, {
+                              xtype: 'component',
+                              itemId: 'ageText',
+                              flex: 1
+                           }],
+                           layout: 'hbox'
+                        },
+
+                        updateRecord: function(record) {
+                           var name_btn = this.getComponent('nameButton'),
+                               age_text = this.getComponent('ageText');
+                           name_btn.setText(record.get('name'));
+                           age_text.setHtml(record.get('age'));
+                        }
+                    });
+
+                    var store = Ext.create('Ext.data.Store', {
+                       fields: ['name', 'age'],
+                       data: [
+                          {name: 'Jamie Avins',  age: 100},
+                          {name: 'Rob Dougan',   age: 21},
+                          {name: 'Tommy Maintz', age: 24},
+                          {name: 'Jacky Nguyen', age: 24},
+                          {name: 'Ed Spencer',   age: 26}
+                       ]
+                    });
+
+                    var record = store.getAt(0);
+
+                    // Create the data view to use it
+                    Ext.create('Ext.DataView', {
+                        fullscreen: true,
+                        store: store,
+                        useComponents: true,
+                        defaultType: 'dataitemview'
+                    });
+
+                    if(1) {
+                        // fails with:
+                        // Cannot read property 'updateRecord' of undefined
+                       record.set('age', 99);
+                    } else {
+                       // works
+                       Ext.defer(function() {
+                          record.set('age', 99);
+                       }, 2000);
+                    }
+                 }
+			});
+		</script>
+	</head>
+</html>

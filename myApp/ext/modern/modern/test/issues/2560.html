@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sencha Test</title>
+        
+        <script src="../../sencha-touch-all.js"></script>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+        <script type="text/javascript">
+
+        Ext.setup({
+            onReady: function() {
+                
+                a = Ext.create('Ext.Panel', {
+                    width: 200,
+                    height: 200,
+                    html: 'testing'
+                });
+
+                b = Ext.create('Ext.Button', {
+                    top: 0,
+                    left: 0,
+                    width: 20,
+                    height: 10,
+                    text: 'a',
+                    draggable: {
+
+                    }
+                });
+                b.show();
+
+                b.getDraggable().on({
+                    drag: function() {
+                        a.showBy(b);
+                    }
+                })
+
+                
+                
+            }
+        });
+            
+        </script>
+    </head>
+    <body>
+
+    </body>
+</html>

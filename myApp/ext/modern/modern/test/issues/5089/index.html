@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>TOUCH-5089</title>
+    <style></style>
+    <link rel="stylesheet" href="../../../resources/css/sencha-touch.css">
+    <script src="../../../sencha-touch-all-debug.js"></script>
+    <script>
+        Ext.Loader.require(['Ext.chart.*', 'Ext.Button']);
+        Ext.setup({
+            onReady: function () {
+                function getRainbow(type, id) {
+                    return {
+                        id: id,
+                        type: type,
+                        stops: [
+                            {
+                                offset: 0,
+                                color: '#78C5D6'
+                            },
+                            {
+                                offset: 0.14,
+                                color: '#449AA7'
+                            },
+                            {
+                                offset: 0.28,
+                                color: '#79C267'
+                            },
+                            {
+                                offset: 0.42,
+                                color: '#C4D546'
+                            },
+                            {
+                                offset: 0.56,
+                                color: '#F5D63D'
+                            },
+                            {
+                                offset: 0.70,
+                                color: '#F18B32'
+                            },
+                            {
+                                offset: 0.84,
+                                color: '#E767A1'
+                            },
+                            {
+                                offset: 1,
+                                color: '#BF62A6'
+                            }
+                        ]
+                    };
+                }
+
+                Ext.create("Ext.chart.CartesianChart", {
+                    fullscreen: true,
+                    background: 'white',
+                    flipXY: false,
+                    gradients: [
+                        { // mixed config
+                            id: 'glow',
+                            type: 'radial',
+                            stops: {
+                                0: {
+                                    color: 'gold'
+                                },
+                                100: {
+                                    color: 'brown'
+                                }
+                            }
+                        },
+                        {
+                            id: 'salad',
+                            angle: 0,
+                            stops: [
+                                {
+                                    offset: 0,
+                                    color: 'green'
+                                },
+                                {
+                                    offset: 1,
+                                    color: 'yellow'
+                                }
+                            ]
+                        },
+                        getRainbow('radial', 'radial-rainbow'),
+                        getRainbow('linear', 'linear-rainbow')
+                    ],
+                    store: {
+                        fields: ['name', 'g1', 'g2', 'g3', 'g4', 'g5'],
+                        data: [
+                            {"name": "Item-0", "g1": 18.34, "g2": 0.04, "g3": 22.35, "g4": 10.50, "g5": 18.42},
+                            {"name": "Item-3", "g1": 21.37, "g2": 2.13, "g3": 12.98, "g4": 63.82, "g5": 18.85},
+                            {"name": "Item-5", "g1": 18.22, "g2": 4.62, "g3": 8.26, "g4": 97.63, "g5": 34.37},
+                            {"name": "Item-6", "g1": 28.51, "g2": 12.43, "g3": 28.67, "g4": 108.29, "g5": 47.84},
+                            {"name": "Item-7", "g1": 34.43, "g2": 4.40, "g3": 9.89, "g4": 127.27, "g5": 36.90},
+                            {"name": "Item-8", "g1": 21.65, "g2": 13.87, "g3": 5.44, "g4": 112.49, "g5": 16.29},
+                            {"name": "Item-9", "g1": 12.98, "g2": 35.44, "g3": 16.37, "g4": 135, "g5": 16.78},
+                            {"name": "Item-10", "g1": 22.96, "g2": 38.70, "g3": 18.15, "g4": 114.96, "g5": 8.51},
+                            {"name": "Item-12", "g1": 20.87, "g2": 62.07, "g3": 25.96, "g4": 87.79, "g5": 3.18},
+                            {"name": "Item-13", "g1": 25.10, "g2": 78.46, "g3": 26.04, "g4": 91.54, "g5": 12.41},
+                            {"name": "Item-14", "g1": 16.87, "g2": 56.80, "g3": 1.39, "g4": 71.78, "g5": 16.54}
+                        ]
+                    },
+                    interactions: ['panzoom'],
+                    legend: {
+                        position: 'right',
+                        width: 80
+                    },
+                    axes: [
+                        {
+                            type: 'numeric',
+                            position: 'left',
+                            grid: true,
+                            minimum: 0,
+                            grid: {
+                                odd: {
+                                    stroke: 'green'
+                                },
+                                even: {
+                                    stroke: '#ccc'
+                                }
+                            }
+                        },
+                        {
+                            type: 'category',
+                            position: 'bottom'
+                        }
+                    ],
+                    series: [
+                        {
+                            type: 'bar',
+                            xField: 'name',
+                            yField: ['g1', 'g2', 'g3'],
+                            axis: 'bottom',
+                            highlight: true,
+                            // BUG: Legend dots are blank, if series use gradients instead of flat colors.
+                            // And legend dots are too small it makes it almost meaningless to apply gradients to them.
+                            // Especially given the fact that we will add another type of gradient in the future ('pattern').
+                            // Since we plan to reimplement the legend component altogether anyway, we should consider
+                            // this issue while doing so.
+                            showInLegend: true,
+                            // BUG: Chart's background property appears to be broken.
+                            // Setting series background works, but its behavior is strange.
+                            // When we comment out the line series, we'll see the background
+                            // of the bar series.
+                            // Alternatively, we can specify background for the line series
+                            // and it will be visible.
+                            // So only background of the topmost series is visible,
+                            // and it fills the whole main region of the chart, not just
+                            // the bounding box of the series.
+                            // So it can be considered chart's background, not series' background.
+                            background: 'url(#glow)',
+                            style: {
+                                stroke: 'rgb(40,40,40)',
+                                maxBarWidth: 60
+                            },
+                            subStyle: {
+                                fill: [
+                                    'url(#radial-rainbow)',
+                                    {
+                                        type: 'linear',
+                                        degrees: 90,
+                                        stops: [
+                                            {
+                                                offset: 0,
+                                                color: 'red'
+                                            },
+                                            {
+                                                offset: 1,
+                                                color: 'maroon'
+                                            }
+                                        ]
+                                    },
+                                    'url(#salad)'
+                                ]
+                            }
+                        },
+                        {
+                            type: 'line',
+                            xField: 'name',
+                            // BUG: Line smoothing does not work correctly. First three line segments are not smoothed.
+                            smooth: true,
+                            yField: ['g4'],
+                            style: {
+                                // BUG: In IE11 if we hide the line series in the legend and show it again,
+                                // the line will remain black until animation is complete,
+                                // at which time we will see a gradient line.
+                                stroke: 'url(#linear-rainbow)',
+                                lineWidth: 10,
+                                // Shadow gradients don't work anywhere.
+                                // Tested on desktop (Chrome, Safari, IE11) and mobile (iOS, Android).
+                                // That's not our bug, though, but a canvas limitation (see shadow_gradient.html).
+
+                                // MISSING FEATURE: Shadows in general don't work with SVG engine.
+                                // In canvas, shadow is a property of the context, which is used by fill and stroke
+                                // operations. In SVG shadows are typically achieved by creating a blurred copy
+                                // of an element, which is expensive.
+                                // It would be nice to use filters for this (see http://www.w3schools.com/svg/svg_feoffset.asp),
+                                // but at the time of this writing they are not universally supported:
+                                // desktop Chrome, IE11, Safari 6 do, Android 4.1 stock browser and iOS 5.1 Safari don't.
+                                shadowColor: 'url(#salad)',
+                                shadowOffsetX: 5,
+                                shadowOffsetY: 7,
+                                shadowBlur: 5
+                            }
+                        }
+                    ]
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

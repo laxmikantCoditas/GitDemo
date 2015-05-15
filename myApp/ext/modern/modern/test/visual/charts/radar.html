@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Radar</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <link rel="stylesheet" href="../../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../../sencha-touch-all.js"></script>
+    <script src="data.js"></script>
+    <script>
+        Ext.require(['Ext.chart.PolarChart',
+                     'Ext.Toolbar',
+                     'Ext.TitleBar',
+                     'Ext.chart.series.Radar',
+                     'Ext.chart.axis.Numeric',
+                     'Ext.chart.axis.Category',
+                     'Ext.draw.modifier.Highlight',
+                     'Ext.chart.interactions.Rotate',
+                     'Ext.chart.interactions.ItemHighlight',
+                     'Ext.Button']);
+        Ext.setup({
+            onReady: function () {
+                var store = new OrderItems();
+                store.generateData(40);
+                var cmp = new Ext.chart.PolarChart({
+                    store: store,
+                    interactions: [
+                        'rotate',
+                        'itemhighlight'
+                    ],
+                    insetPadding: 15,
+                    innerPadding: 40,
+                    series: [
+                        {
+                            type: 'radar',
+                            xField: 'id',
+                            yField: 'g1',
+                            marker: {
+                                type: 'path',
+                                path: [
+                                    ['M' , 0, 1],
+                                    ['L', 1, 0],
+                                    ['L', 0, -1],
+                                    ['L', -1, 0],
+                                    ['Z']
+                                ],
+                                scale: 5,
+                                stroke: 'rgba(143,203,203,0.90)',
+                                miterLimit: 1,
+                                lineCap: 'butt',
+                                lineWidth: 1,
+                                highlightCfg: {
+                                    scale: 10
+                                },
+                                modifiers: [
+                                    {
+                                        type: 'highlight'
+                                    }
+                                ]
+                            },
+                            style: {
+                                fillStyle: 'rgba(0,0,255,0.1)',
+                                strokeStyle: 'rgba(0,0,0,0.8)',
+                                lineWidth: 1
+                            }
+                        }
+                    ],
+                    axes: [
+                        {
+                            type: 'numeric',
+                            position: 'radial',
+                            fields: 'g1',
+                            grid: true,
+                            style: {
+                                estStepSize: 20
+                            },
+                            label: {
+                                fill: 'black',
+                                y: -5
+                            }
+                        },
+                        {
+                            type: 'category',
+                            position: 'angular',
+                            fields: 'id',
+                            grid: true,
+                            style: {
+                                estStepSize: 2
+                            },
+                            label: {
+                                fill: 'black'
+                            }
+                        }
+                    ]
+                });
+                Ext.Viewport.add({
+                    layout: 'fit',
+                    items: [
+                        {
+                            xtype: 'titlebar',
+                            docked: 'top',
+                            title: 'Radar Chart',
+                            items: {
+                                text: 'Refresh',
+                                handler: function () {
+                                    store.generateData(30 + 30 * Math.random());
+                                }
+                            }
+                        },
+                        cmp
+                    ]
+                });
+            }
+        });
+
+    </script>
+</head>
+<body>
+</body>
+</html>

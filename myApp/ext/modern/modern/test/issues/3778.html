@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3778</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.setup({ 
+            requires: [
+                'Ext.form.Panel',
+                'Ext.form.FieldSet',
+                'Ext.field.Number',
+                'Ext.field.Spinner',
+                'Ext.field.Password',
+                'Ext.field.Email',
+                'Ext.field.Url',
+                'Ext.field.DatePicker',
+                'Ext.field.Select',
+                'Ext.field.Hidden',
+                'Ext.field.Radio',
+                'Ext.field.Slider',
+                'Ext.field.Toggle',
+                'Ext.field.Search'
+            ],
+
+            onReady: function() {
+                Ext.define('MainView', {
+                    extend: 'Ext.Container',
+                    xtype:"mainview",
+
+                    config: {
+                        layout:'card',
+                        items: [
+                            {
+                                xtype: 'titlebar',
+                                title: 'Main',
+                                docked: 'top'
+                            },
+                            {
+                                xtype: 'datepickerfield',
+                                destroyPickerOnHide: true,
+                                name : 'date',
+                                label: 'Start Date',
+                                value: new Date(),
+                                picker: {
+                                    yearFrom: 1990
+                                }
+                            }
+                        ]
+                    }
+                });
+                Ext.Viewport.add(Ext.create('MainView'));
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

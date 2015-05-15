@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>TOUCH-4704</title>
+	<link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+	<script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript">
+        Ext.define('crash.view.Main', {
+	        alternateClassName: ['X'],
+	        extend: 'Ext.Panel',
+	        requires: [
+		        'Ext.Button', 'Ext.MessageBox'
+	        ],
+	        statics: {
+		        webSocket: null
+	        },
+	        config: {
+		        layout: 'vbox',
+		        items: [
+			        {
+				        xtype: 'panel',
+				        items: {
+					        xtype: 'button',
+					        html: 'Crash app',
+					        listeners: {
+						        tap: function () {
+							        if (X.webSocket != null) {
+								        X.webSocket.close();
+								        X.webSocket = null;
+							        }
+
+							        X.webSocket = new WebSocket('ws://whateverblabla:12345/websocket');
+							        X.webSocket.onclose = function (evt) {
+								        // comment out line below and the app will stay alive no problem
+								        Ext.Msg.alert('message', 'onclose');
+								        X.webSocket = null;
+							        };
+						        }
+					        }
+				        }
+			        },
+			        {
+				        xtype: 'panel',
+				        items: {
+					        xtype: 'button',
+					        html: 'Test',
+					        listeners: {
+						        tap: function () {
+							        Ext.Msg.alert('message', 'Hi there');
+						        }
+					        }
+				        }
+			        }
+		        ]
+	        }
+        });
+
+        Ext.application({
+            launch: function () {
+                Ext.Viewport.add(Ext.create('crash.view.Main'));
+
+            } //launch
+        }); //Ext.application
+    </script>
+</head>
+
+<body></body>
+
+</html>

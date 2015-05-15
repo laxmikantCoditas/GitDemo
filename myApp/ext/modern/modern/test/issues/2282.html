@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2282</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+
+    <style>
+        .x-container-horiz .x-container {
+            display: inline-block !important;
+        }
+        .x-container-horiz .x-inner {
+            white-space: nowrap !important;
+        }
+    </style>
+
+    <script>
+        Ext.Loader.setConfig({enabled:true});
+
+        Ext.application({
+            name:'ScrollTest',
+            getList:function (left) {
+                return Ext.create('Ext.List', {
+                    width:200,
+                    height:350,
+                    store:{
+                        fields:['name'],
+                        data:[
+                            {name:'Cowper'},
+                            {name:'Everett'},
+                            {name:'University'},
+                            {name:'Forest'}
+                        ]
+                    },
+                    itemTpl:'{name}'
+                });
+            },
+            launch:function () {
+                var Panel = Ext.create('Ext.Panel', {
+                    height:400,
+                    width:500
+                });
+
+                var mainScreen = Ext.create('Ext.Container', {
+                    id:'mainScreen',
+                    scrollable: 'horizontal',
+                    cls: 'x-container-horiz',
+                    items:[
+                        this.getList(0),
+                        Panel,
+                        this.getList(850),
+                        this.getList(1100)
+                    ]
+                });
+                Ext.Viewport.add(mainScreen);
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

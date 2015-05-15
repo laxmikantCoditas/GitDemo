@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ext.Sheet</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" href="../../../resources/css/sencha-touch.css" type="text/css">
+
+        <style type="text/css">
+
+            .the-button {
+                float: left;
+            }
+
+        </style>
+
+        <script type="text/javascript" src="../../../sencha-touch.js"></script>
+        <script type="text/javascript">
+            Ext.require([
+                'Ext.Sheet'
+            ]);
+
+            /**
+             * Show all the configs
+             */
+            Ext.setup({
+                tabletStartupScreen: 'tablet_startup.png',
+                phoneStartupScreen: 'phone_startup.png',
+                icon: 'icon.png',
+                glossOnIcon: false,
+
+                onReady: function() {
+
+                    // Ext.each(items, function(item) {
+                    //     Ext.applyIf(item, {
+                    //         margin  : '5 5 0 5',
+                    //         text    : 'Button',
+                    //         ui      : 'normal',
+                    //         cls     : 'the-button',
+                    //         renderTo: Ext.getBody()
+                    //     });
+
+                    //     Ext.create('Ext.Button', item);
+                    // });
+
+                    var sheet = Ext.create('Ext.Sheet', {
+                        height: 100,
+                        enter: 'left',
+                        // stretchY: true,
+                        // stretchX: true,
+                        html:'asdasd'
+                    });
+
+                    sheet.show();
+
+                    // Ext.create('Ext.Button', {
+                    //     renderTo: Ext.getBody(),
+                    //     // iconMask: true,
+                    //     text: 'download'
+                    // });
+                }
+            });
+        </script>
+    </head>
+<body>
+
+</body>
+</html>

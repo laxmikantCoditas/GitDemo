@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <title>Modal Window Example</title>
+        <!-- Ext includes -->
+        <link rel="stylesheet" type="text/css" href="../../resources/css/ext-sandbox.css" />
+        <script type="text/javascript" charset="utf-8" src="../../builds/ext-all-sandbox.js"> </script>
+        <script type="text/javascript">
+            Ext4.onReady(function(){
+                var win=Ext4.create('Ext4.window.Window', {  
+						modal: true,
+						plain: true,
+						draggable: true,
+						resizeable:true,
+						autoShow: true,
+						height: 200,
+						width: 500,
+						layout:'auto',
+						html: '<h1>This is a Modal Window</h1>'             
+                });
+                
+            });
+        </script>
+    </head>
+    <body>
+	Type : test case
+	Module: Window
+	Ticket: EXTJSIV-4460
+	Changelog: no
+	Comments: Modal Window not modal in sandbox
+    </body>
+</html>

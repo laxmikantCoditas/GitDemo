@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>3574</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+/**
+Adding Ext.grid.RowNumberer as xtype:'rownumberer' to a grids columns config incorrectly sets the numbering columns width. However using Ext.create('Ext.grid.RowNumberer') works fine.
+Simply toggle between the different creation methods for RowNumberer to see the bug.
+
+http://dev.sencha.com/deploy/ext-4.0.2a/docs/#/api/Ext.grid.RowNumberer-cfg-width
+*/
+
+Ext.onReady(function() {
+    // create the data store
+    var store = Ext.create('Ext.data.Store', {
+        fields: ['a'],
+        data: [{
+            a: 1
+        }, {
+            a: 2
+        }, {
+            a: 3
+        }]
+    });
+
+    // create the Grid
+    var grid = Ext.create('Ext.grid.Panel', {
+        store: store,
+        columns: [
+	        //Ext.create('Ext.grid.RowNumberer')
+	        { xtype: 'rownumberer' }
+        ],
+        height: 350,
+        width: 600,
+        renderTo: document.body
+    });
+});
+
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+    Ext.require([
+        'Ext.data.*'
+    ]);
+    Ext.onReady(function (){
+        var myData = [
+            [1,1,1],
+            [2,2,2] 
+        ];
+
+        var store = Ext.create('Ext.data.ArrayStore', {
+            fields: [
+                {name: 'one',	 type: 'float'},
+                {name: 'two',	 type: 'float'},
+                {name: 'three',	 type: 'float'}
+            ],
+            data: myData
+        });
+
+       var editor = Ext.create('Ext.grid.plugin.CellEditing', {
+           clicksToEdit: 1,
+           listeners: {
+               edit: function(ed, oe) {
+                   //alert('New value (edit): ' + e.value);
+                   var tmp_2 = oe.record.get('two');
+                   var tmp_3 = oe.record.get('three');
+
+                   tmp_2++; 
+                   tmp_3++; 
+
+                   oe.record.set('two',tmp_2); 
+                   oe.record.set('three',tmp_3); 
+
+               }
+           }
+       });
+
+       var grid = Ext.create('Ext.grid.Panel', {
+           store: store,
+           columns: [{
+               text	 : 'One',
+               width	: 75,
+               dataIndex: 'one',
+               field	: 'textfield'
+           },{
+               text	 : 'Two',
+               width	: 75,
+               dataIndex: 'two',
+               field	: 'textfield'
+           },{
+               text	 : 'Three',
+               width	: 75,
+               dataIndex: 'three',
+               field	: 'textfield'
+           }],
+           height: 300,
+           width: 500,
+           renderTo: Ext.getBody(),
+           plugins: [editor]
+       });
+    });
+    </script>
+</body>
+</html>

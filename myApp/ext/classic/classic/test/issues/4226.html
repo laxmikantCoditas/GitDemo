@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+<script type="text/javascript" charset="utf-8">
+Ext.require(['Ext.*', 'Ext.window.*']);
+Ext.application({
+    name: 'DEMO',
+
+    launch: function () {
+        var origins = [
+            [25, 25],
+            [150, 25]
+        ];
+        var boxDef = {
+            0: 100,
+            // width
+            1: 25,
+            // height
+            style: {
+                border: '1px solid red',
+                textAlign: 'center'
+            }
+        };
+        var fractionalOffset = 0.999;
+        var downShift = 100;
+        cases = ["no-animation", "animation"];
+        var win = Ext.create('Ext.window.Window', {
+            width: 390,
+            height: 250,
+            layout: 'absolute',
+            listeners: {
+                'render': function (win) {
+                    for (var i = 0; i < 2; i++) {
+                        for (var j = 0; j < origins.length; j++) {
+                            pos = origins[j].slice(0);
+                            pos[j] += fractionalOffset;
+                            for (var k = 0; k < cases.length; k++) {
+                                var cmp = win.add({
+                                    xtype: 'container',
+                                    id: cases[k] + '<br>(' + pos[0] + ',' + pos[1] + ')',
+                                    html: cases[k] + '<br>(' + pos[0] + ',' + pos[1] + ')',
+                                    width: boxDef[0],
+                                    height: boxDef[1],
+                                    style: boxDef.style
+                                });
+                                // Positioning
+                                if (k == 0) {
+                                    cmp.setPosition(pos[0], pos[1])
+                                } else {
+                                    // NOTE: Passing the same anim config to setPosition works fine.
+                                    // It's only when you go through animate() that you see the truncation.
+                                    cmp.animate({
+                                        from: {
+                                            left: 0,
+                                            top: 0
+                                        },
+                                        to: {
+                                            left: pos[0],
+                                            top: pos[1]
+                                        },
+                                        duration: 5000
+                                    });
+                                }
+                                pos[(j + 1) % 2] += boxDef[(j + 1) % 2];
+                            }
+                            if (i == 0) {
+                                var ct = win.add({
+                                    xtype: 'container',
+                                    style: {
+                                        border: '1px solid black'
+                                    },
+                                    x: origins[j][0],
+                                    y: origins[j][1],
+                                    width: boxDef[0] * (j == 0 ? 1 : 2),
+                                    height: boxDef[1] * (j == 0 ? 2 : 1)
+                                });
+                            }
+                        }
+                        // Shift down and do it again without bounding box
+                        Ext.Array.map(origins, function (v) {
+                            v[1] += downShift;
+                        });
+                    }
+
+                }
+            }
+        });
+        win.show();
+    }
+});
+</script>
+<div id="pagebody"></div>
+</body>
+</html>

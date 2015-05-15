@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2363</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+
+    <script>
+
+        Ext.application({
+            name:'App',
+            launch:function () {
+                var transformDetails = {
+                    scale: 0,
+                    angle: 0
+                };
+
+                var updateTransform = function() {
+                    if (!cmp) {
+                        cmp = component.down('image');
+                    }
+                    cmp.element.setStyle('-webkit-transform', 'scaleX(' + transformDetails.scale + ') scaleY(' + transformDetails.scale + ') rotate(' + transformDetails.angle + 'deg)');
+                };
+
+                var component = Ext.Viewport.add({
+                            xtype      : 'panel',
+                            centered   : true,
+                            width      : 300,
+                            height     : 300,
+                            modal      : true,
+                            scrollable : 'both',
+                            items      : [
+                                {
+                                    xtype     : 'image',
+                                    height    : 250,
+                                    width     : 250,
+                                    src       : 'http://www.sencha.com/files/blog/old/blog/wp-content/uploads/2010/06/sencha-logo.png',
+                                    listeners : {
+                                        pinch  : {
+                                            element : 'element',
+                                            fn      : function(e) {
+                                                transformDetails.scale = e.scale;
+                                                updateTransform();
+                                            }
+                                        },
+                                        rotate : {
+                                            element : 'element',
+                                            fn      : function(e) {
+                                                transformDetails.angle = e.angle;
+                                                updateTransform();
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }),
+                        cmp;
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

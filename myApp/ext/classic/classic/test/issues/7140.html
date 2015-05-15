@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+<script type="text/javascript" charset="utf-8">
+Ext.require([
+    'Ext.grid.column.*',
+    'Ext.grid.header.*',
+    'Ext.grid.property.*',
+    'Ext.grid.Panel',
+    'Ext.grid.ColumnLayout',
+    'Ext.grid.Scroller',
+    'Ext.grid.View',
+    'Ext.data.reader.Reader',
+    'Ext.data.reader.Json',
+    'Ext.data.AbstractStore',
+    'Ext.data.Store',
+    'Ext.data.JsonStore',
+    'Ext.grid.feature.Grouping'
+]);
+   
+myData2 = [{"name":"Different Record","location":"Unknown","symbol":"LOC100128714","foldChange":-30.5366522025964,"did":"ING:3di1u","pvalue":0.0341648,"unmappedId":"LOC100128714","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]}];
+myData = [{"name":"LOC100128714","location":"Unknown","symbol":"LOC100128714","foldChange":-30.5366522025964,"did":"ING:3di1u","pvalue":0.0341648,"unmappedId":"LOC100128714","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"glutamate receptor, metabotropic 3","location":"Plasma Membrane","symbol":"GRM3","foldChange":-84.17908949206,"did":"ING:9f0","pvalue":0.0182424,"unmappedId":"GRM3","proteinFamily":"G-protein coupled receptor","logRatio":0.0,"evidenceType":[false,false,false,true]},{"name":"melanoma antigen family A, 1 (directs expression of antigen MZ2-E)","location":"Plasma Membrane","symbol":"MAGEA1","foldChange":-16.9662991527415,"did":"ING:3myi","pvalue":0.0427717,"unmappedId":"MAGEA1","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"FEV (ETS oncogene family)","location":"Nucleus","symbol":"FEV","foldChange":-41.9497410493818,"did":"ING:5e8","pvalue":0.0252526,"unmappedId":"FEV","proteinFamily":"transcription regulator","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"bestrophin 3","location":"Nucleus","symbol":"BEST3","foldChange":-293.816172906945,"did":"ING:3qa1","pvalue":9.25646E-5,"unmappedId":"BEST3","proteinFamily":"ion channel","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"odorant binding protein 2A","location":"Extracellular Space","symbol":"OBP2A","foldChange":105.667653291058,"did":"ING:3rfy","pvalue":0.00427713,"unmappedId":"OBP2A","proteinFamily":"transporter","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"tryptophan hydroxylase 1","location":"Cytoplasm","symbol":"TPH1","foldChange":-270.023282983263,"did":"ING:86f","pvalue":1.0859E-5,"unmappedId":"TPH1","proteinFamily":"enzyme","logRatio":0.0,"evidenceType":[true,false,false,false]},{"name":"sulfotransferase family 4A, member 1","location":"Cytoplasm","symbol":"SULT4A1","foldChange":-21.7395474028982,"did":"ING:3pvn","pvalue":0.0311876,"unmappedId":"SULT4A1","proteinFamily":"enzyme","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"cyclin-dependent kinase 5, regulatory subunit 2 (p39)","location":"Nucleus","symbol":"CDK5R2","foldChange":-35.1034275707208,"did":"ING:a47","pvalue":0.015621,"unmappedId":"CDK5R2","proteinFamily":"other","logRatio":0.0,"evidenceType":[true,false,false,false]},{"name":"zinc finger, DHHC-type containing 22","location":"Unknown","symbol":"ZDHHC22","foldChange":-49.0584585826599,"did":"ING:3unb","pvalue":0.0172667,"unmappedId":"ZDHHC22","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"transcription factor AP-2 delta (activating enhancer binding protein 2 delta)","location":"Nucleus","symbol":"TFAP2D","foldChange":22.1172483021573,"did":"ING:3mht","pvalue":0.0378301,"unmappedId":"TFAP2D","proteinFamily":"transcription regulator","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"TSPY-like 6","location":"Unknown","symbol":"TSPYL6","foldChange":-242.632668437274,"did":"ING:3nmx","pvalue":0.0410757,"unmappedId":"TSPYL6","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"fibroblast growth factor 19","location":"Extracellular Space","symbol":"FGF19","foldChange":-19.4990238875668,"did":"ING:9n0","pvalue":0.0484321,"unmappedId":"FGF19","proteinFamily":"growth factor","logRatio":0.0,"evidenceType":[true,false,false,false]},{"name":"unc-13 homolog A (C. elegans)","location":"Plasma Membrane","symbol":"UNC13A","foldChange":-17.9027585816639,"did":"ING:95a","pvalue":0.0244386,"unmappedId":"UNC13A","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"septin 14","location":"Cytoplasm","symbol":"SEPT14","foldChange":-221.547156484237,"did":"ING:3r0a","pvalue":0.00181998,"unmappedId":"SEPT14","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"killer cell immunoglobulin-like receptor, two domains, long cytoplasmic tail, 1","location":"Plasma Membrane","symbol":"KIR2DL3 (includes others)","foldChange":-31.15992811419,"did":"ING:866","pvalue":0.037923,"unmappedId":"KIR2DL3 (includes others)","proteinFamily":"transmembrane receptor","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"synaptotagmin IV","location":"Cytoplasm","symbol":"SYT4","foldChange":-52.815152921183,"did":"ING:beg","pvalue":0.0227094,"unmappedId":"SYT4","proteinFamily":"transporter","logRatio":0.0,"evidenceType":[false,false,false,true]},{"name":"DDB1 and CUL4 associated factor 12-like 2","location":"Unknown","symbol":"DCAF12L2","foldChange":-27.5794159486081,"did":"ING:1dakj","pvalue":0.0333716,"unmappedId":"DCAF12L2","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"odorant binding protein 2B","location":"Extracellular Space","symbol":"OBP2B","foldChange":172.821631997792,"did":"ING:3rg1","pvalue":0.00109948,"unmappedId":"OBP2B","proteinFamily":"transporter","logRatio":0.0,"evidenceType":[false,false,false,true]},{"name":"Usher syndrome 2A (autosomal recessive, mild)","location":"Extracellular Space","symbol":"USH2A","foldChange":-58.2218993667245,"did":"ING:3snt","pvalue":0.0188314,"unmappedId":"USH2A","proteinFamily":"other","logRatio":0.0,"evidenceType":[true,false,false,false]},{"name":"aquaporin 5","location":"Plasma Membrane","symbol":"AQP5","foldChange":18.4699748917957,"did":"ING:ak2","pvalue":0.0494727,"unmappedId":"AQP5","proteinFamily":"transporter","logRatio":0.0,"evidenceType":[true,false,false,false]},{"name":"SV2 related protein homolog (rat)","location":"Cytoplasm","symbol":"SVOP","foldChange":-75.239064196382,"did":"ING:3qfa","pvalue":0.00978342,"unmappedId":"SVOP","proteinFamily":"transporter","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"cancer/testis antigen family 45, member A2","location":"Unknown","symbol":"CT45A2 (includes others)","foldChange":-96.0410985116979,"did":"ING:2yj2h","pvalue":0.00316446,"unmappedId":"CT45A2 (includes others)","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"NK2 homeobox 2","location":"Nucleus","symbol":"NKX2-2","foldChange":-30.7769849357382,"did":"ING:6kg","pvalue":0.00923742,"unmappedId":"NKX2-2","proteinFamily":"transcription regulator","logRatio":0.0,"evidenceType":[true,false,false,false]},{"name":"phosphoenolpyruvate carboxykinase 1 (soluble)","location":"Cytoplasm","symbol":"PCK1 (includes EG:18534)","foldChange":-113.95970642625,"did":"ING:6kf","pvalue":0.0469653,"unmappedId":"PCK1 (includes EG:18534)","proteinFamily":"kinase","logRatio":0.0,"evidenceType":[true,false,false,false]},{"name":"melanoma antigen family B, 1","location":"Nucleus","symbol":"MAGEB1","foldChange":-13.4770235303441,"did":"ING:3iqr","pvalue":0.0287961,"unmappedId":"MAGEB1","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"muscular LMNA-interacting protein","location":"Nucleus","symbol":"MLIP","foldChange":-45.311332103027,"did":"ING:6l82p","pvalue":0.0437626,"unmappedId":"MLIP","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"cancer/testis antigen family 45, member A5","location":"Unknown","symbol":"CT45A5","foldChange":-80.6168775083104,"did":"ING:3t9p","pvalue":0.00374191,"unmappedId":"CT45A5","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"neurogenin 2","location":"Nucleus","symbol":"NEUROG2","foldChange":-95.9951757688547,"did":"ING:6l4","pvalue":6.45898E-4,"unmappedId":"NEUROG2","proteinFamily":"other","logRatio":0.0,"evidenceType":[true,false,false,false]},{"name":"calcium channel, voltage-dependent, N type, alpha 1B subunit","location":"Plasma Membrane","symbol":"CACNA1B","foldChange":-71.3830678146957,"did":"ING:5d5","pvalue":0.00895309,"unmappedId":"CACNA1B","proteinFamily":"ion channel","logRatio":0.0,"evidenceType":[true,false,true,false]},{"name":"gametocyte specific factor 1","location":"Cytoplasm","symbol":"GTSF1","foldChange":-25.8153991557368,"did":"ING:3vwc","pvalue":0.0146565,"unmappedId":"GTSF1","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"LOC100507203","location":"Unknown","symbol":"LOC100507203","foldChange":-24.7349658063206,"did":"ING:6gdv0","pvalue":0.0382976,"unmappedId":"LOC100507203","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"membrane-associated ring finger (C3HC4) 4, E3 ubiquitin protein ligase","location":"Cytoplasm","symbol":"MARCH4","foldChange":-36.1241065233056,"did":"ING:3r0i","pvalue":0.0316007,"unmappedId":"MARCH4","proteinFamily":"enzyme","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"cholinergic receptor, nicotinic, alpha 2 (neuronal)","location":"Plasma Membrane","symbol":"CHRNA2","foldChange":-102.899345810131,"did":"ING:aas","pvalue":5.09398E-4,"unmappedId":"CHRNA2","proteinFamily":"transmembrane receptor","logRatio":0.0,"evidenceType":[true,false,true,false]},{"name":"synovial sarcoma, X breakpoint 1","location":"Nucleus","symbol":"SSX1","foldChange":-312.92866312208,"did":"ING:3zxo","pvalue":4.25403E-5,"unmappedId":"SSX1","proteinFamily":"transcription regulator","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"adaptor-related protein complex 3, beta 2 subunit","location":"Cytoplasm","symbol":"AP3B2","foldChange":-63.2362538904211,"did":"ING:8sg","pvalue":0.00503847,"unmappedId":"AP3B2","proteinFamily":"transporter","logRatio":0.0,"evidenceType":[true,false,false,false]},{"name":"mucin 6, oligomeric mucus/gel-forming","location":"Extracellular Space","symbol":"MUC6","foldChange":235.452135923702,"did":"ING:5vg","pvalue":0.00254629,"unmappedId":"MUC6","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"additional sex combs like 3 (Drosophila)","location":"Unknown","symbol":"ASXL3","foldChange":-57.3316541661986,"did":"ING:65o","pvalue":0.00202298,"unmappedId":"ASXL3","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"thyrotropin-releasing hormone","location":"Extracellular Space","symbol":"TRH","foldChange":-917.033101191778,"did":"ING:589","pvalue":0.00477135,"unmappedId":"TRH","proteinFamily":"other","logRatio":0.0,"evidenceType":[true,false,false,false]},{"name":"diacylglycerol kinase, beta 90kDa","location":"Cytoplasm","symbol":"DGKB","foldChange":-90.6679021812984,"did":"ING:3ur3","pvalue":0.00199039,"unmappedId":"DGKB","proteinFamily":"kinase","logRatio":0.0,"evidenceType":[true,false,false,true]},{"name":"P antigen family, member 1 (prostate associated)","location":"Unknown","symbol":"PAGE1","foldChange":-200.184990860738,"did":"ING:3ini","pvalue":8.28418E-4,"unmappedId":"PAGE1","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"serine/arginine repetitive matrix 4","location":"Nucleus","symbol":"SRRM4","foldChange":-34.6845196607205,"did":"ING:3wae","pvalue":0.0171985,"unmappedId":"SRRM4","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"cortexin 2","location":"Unknown","symbol":"CTXN2","foldChange":-50.4072729125823,"did":"ING:1oglt","pvalue":0.0453316,"unmappedId":"CTXN2","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"melanoma antigen family A, 3","location":"Unknown","symbol":"MAGEA3/MAGEA6","foldChange":-14.8330153217601,"did":"ING:43me","pvalue":0.0232237,"unmappedId":"MAGEA3/MAGEA6","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"lipoma HMGIC fusion partner-like 4","location":"Unknown","symbol":"LHFPL4","foldChange":-69.9920908153515,"did":"ING:3uaw","pvalue":0.00323567,"unmappedId":"LHFPL4","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"complement factor H-related 2","location":"Extracellular Space","symbol":"CFHR2","foldChange":-37.3255082469756,"did":"ING:423t","pvalue":0.0319482,"unmappedId":"CFHR2","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"LOC388942","location":"Unknown","symbol":"LOC388942","foldChange":32.7733217505953,"did":"ING:2ykvt","pvalue":0.0363859,"unmappedId":"LOC388942","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"LOC389332","location":"Unknown","symbol":"LOC389332","foldChange":-149.530917357919,"did":"ING:3dhtw","pvalue":0.00499955,"unmappedId":"LOC389332","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"glucose-6-phosphatase, catalytic subunit","location":"Cytoplasm","symbol":"G6PC","foldChange":-540.956958623765,"did":"ING:b14","pvalue":3.30824E-5,"unmappedId":"G6PC","proteinFamily":"phosphatase","logRatio":0.0,"evidenceType":[true,false,false,true]},{"name":"ataxia, cerebellar, Cayman type","location":"Unknown","symbol":"ATCAY","foldChange":-63.839170465409,"did":"ING:3yqf","pvalue":0.0247372,"unmappedId":"ATCAY","proteinFamily":"other","logRatio":0.0,"evidenceType":[true,false,false,false]},{"name":"N-acetyltransferase 16 (GCN5-related, putative)","location":"Unknown","symbol":"NAT16","foldChange":-50.9076300875652,"did":"ING:3txh","pvalue":0.0226678,"unmappedId":"NAT16","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"VGF nerve growth factor inducible","location":"Extracellular Space","symbol":"VGF","foldChange":-77.1396128370426,"did":"ING:bgk","pvalue":0.00277648,"unmappedId":"VGF","proteinFamily":"growth factor","logRatio":0.0,"evidenceType":[true,false,false,true]},{"name":"glucagon","location":"Extracellular Space","symbol":"GCG","foldChange":6442.92461783468,"did":"ING:5q4","pvalue":2.74347E-11,"unmappedId":"GCG","proteinFamily":"other","logRatio":0.0,"evidenceType":[true,false,false,false]},{"name":"LOC440173","location":"Unknown","symbol":"LOC440173","foldChange":-14.7887683433536,"did":"ING:46k4j","pvalue":0.0446115,"unmappedId":"LOC440173","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"bassoon (presynaptic cytomatrix protein)","location":"Plasma Membrane","symbol":"BSN","foldChange":-16.8159688867657,"did":"ING:5ou","pvalue":0.0282622,"unmappedId":"BSN","proteinFamily":"other","logRatio":0.0,"evidenceType":[true,false,false,false]},{"name":"Down syndrome critical region gene 4","location":"Unknown","symbol":"DSCR4","foldChange":-36.0783136123344,"did":"ING:3y36","pvalue":0.0214631,"unmappedId":"DSCR4","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"histamine receptor H3","location":"Plasma Membrane","symbol":"HRH3","foldChange":-17.279505184508,"did":"ING:3ro3","pvalue":0.0406478,"unmappedId":"HRH3","proteinFamily":"G-protein coupled receptor","logRatio":0.0,"evidenceType":[true,false,false,true]},{"name":"sarcoglycan, zeta","location":"Plasma Membrane","symbol":"SGCZ","foldChange":-29.5623694031487,"did":"ING:6l81x","pvalue":0.0163116,"unmappedId":"SGCZ","proteinFamily":"other","logRatio":0.0,"evidenceType":[true,false,false,false]},{"name":"S100 calcium binding protein A7","location":"Cytoplasm","symbol":"S100A7","foldChange":38.8052515030744,"did":"ING:b68","pvalue":0.044272,"unmappedId":"S100A7","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,true]},{"name":"secretoglobin, family 1D, member 1","location":"Extracellular Space","symbol":"SCGB1D1","foldChange":-89.0201483563451,"did":"ING:42dp","pvalue":0.00121866,"unmappedId":"SCGB1D1","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"transgelin 3","location":"Extracellular Space","symbol":"TAGLN3","foldChange":-45.8735292697976,"did":"ING:3ooz","pvalue":0.0464276,"unmappedId":"TAGLN3","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"BTB (POZ) domain containing 17","location":"Unknown","symbol":"BTBD17","foldChange":-19.9605559681843,"did":"ING:3wr4","pvalue":0.0331639,"unmappedId":"BTBD17","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"group-specific component (vitamin D binding protein)","location":"Extracellular Space","symbol":"GC","foldChange":-39.4026293696476,"did":"ING:9jm","pvalue":0.029075,"unmappedId":"GC","proteinFamily":"transporter","logRatio":0.0,"evidenceType":[true,false,false,false]},{"name":"potassium voltage-gated channel, shaker-related subfamily, member 1 (episodic ataxia with myokymia)","location":"Plasma Membrane","symbol":"KCNA1","foldChange":-78.6459190073911,"did":"ING:82","pvalue":7.70172E-4,"unmappedId":"KCNA1","proteinFamily":"ion channel","logRatio":0.0,"evidenceType":[true,false,false,true]},{"name":"variable charge, X-linked 2","location":"Unknown","symbol":"VCX2","foldChange":-49.8136769149817,"did":"ING:3vd3","pvalue":0.00590939,"unmappedId":"VCX2","proteinFamily":"other","logRatio":0.0,"evidenceType":[false,false,false,false]},{"name":"homeobox D11","location":"Nucleus","symbol":"HOXD11","foldChange":10.8982908983559,"did":"ING:9tu","pvalue":0.040434,"unmappedId":"HOXD11","proteinFamily":"transcription regulator","logRatio":0.0,"evidenceType":[true,false,false,false]}]
+
+function extRankTable(cols, sorters, id, width, height) {
+    var gridHeight, gridWidth;
+    if (width && height) {
+        gridWidth = width;
+        gridHeight = height;
+    }
+
+    // data store definition
+    var dataStore = new Ext.data.JsonStore({
+        autoDestroy:true,
+        //autoLoad: true,
+        defaultSortDirection:'DESC',
+        // allow the grid to interact with the paging scroller by buffering
+        buffered: true,
+        // Configure the store with a single page of records which will be cached
+        pageSize: 100, //main.chapter[nav._page]._data.length,
+        purgePageCount: 0,
+        leadingBufferZone: 10000,
+        data: myData,
+        proxy: {
+            type: 'memory'
+        },
+        remoteGroup: true,
+        model: myModel,
+        sorters:sorters
+    });
+
+    // build the grid
+    return new Ext.grid.GridPanel({
+        id:id,
+        store:dataStore,
+        columns:cols,
+        stripeRows:true,
+        height:gridHeight,
+        width:gridWidth,
+        menuDisabled:true,
+        sortable:true,
+        trackMouseOver:true,
+        enableColumnResize:false,
+        disableSelection:false,
+        loadMask: true,
+        verticalScroller: {
+            trailingBufferZone: 1,
+            leadingBufferZone: 1,
+            scrollToLoadBuffer: 1,
+            variableRowHeight: true
+        }
+    });
+}
+
+createTable = function() {
+    // create the store data model
+    myModel = Ext.define('geneTable', {
+        extend: 'Ext.data.Model',
+        fields: [
+            {name: 'id'},
+            {name: 'name'},
+            {name: 'foldChange'},
+            {name: 'symbol'}
+        ]
+    });
+
+    // define the columns
+    var cols = [
+        {header:'Symbol: Name', flex:1, sortable:true, menuDisabled:true,
+            dataIndex:'name'},
+        {header:'Fold Change', width:90, sortable:true, menuDisabled:true,
+            dataIndex:'foldChange', possibleSortStates : [ 'DESC', 'ASC' ]},
+        {header:'Notes', width:70, sortable:true, menuDisabled:true,
+            dataIndex:'insights', align:'center', possibleSortStates : [ 'DESC', 'ASC' ]},
+        {header:'Molecular Function', width:120, sortable:true, menuDisabled:true,
+            dataIndex:'proFamily'},
+        {header:'Location', width:70, sortable:true, menuDisabled:true,
+            dataIndex:'location'},
+        {header:'Pathways', width:70, sortable:true, menuDisabled:true,
+            dataIndex:'pathways', align:'center', possibleSortStates : [ 'DESC', 'ASC' ]},
+        {header:'Processes', width:70, sortable:true, menuDisabled:true,
+            dataIndex:'bioProcesses', align:'center', possibleSortStates : [ 'DESC', 'ASC' ]},
+        {header:'Diseases', width:70, sortable:true, menuDisabled:true,
+            dataIndex:'diseases', align:'center', possibleSortStates : [ 'DESC', 'ASC' ]},
+        {header:'Neighbors', width:80, sortable:true, menuDisabled:true,
+            dataIndex:'interaction_count', align:'center', possibleSortStates : [ 'DESC', 'ASC' ]}
+    ];
+
+    // create the grid
+    var sorters = [
+        {property:'foldChange', direction:'DESC'}
+    ];
+    myGrid = extRankTable(cols, sorters, 'genetableRankGrid', 900, 300);
+
+    // render the grid to the specified div in the page
+    myGrid.render(document.body);
+};
+
+function newStore(newData) {
+    return new Ext.data.JsonStore({
+        autoDestroy:true,
+        defaultSortDirection:'DESC',
+        // allow the grid to interact with the paging scroller by buffering
+        buffered: true,
+        // Configure the store with a single page of records which will be cached
+        pageSize: 100,
+        purgePageCount: 0,
+        leadingBufferZone: 100,
+        data: newData,
+        proxy: {
+            type: 'memory'
+        },
+
+        remoteGroup: true,
+        model: myModel
+    });
+}
+Ext.onReady(function () {
+    createTable();
+    Ext.create('Ext.Button', {
+        text: 'Reconfigure with single record, wait, reconfigure with multiple records',
+        renderTo: Ext.getBody(),
+        handler: function() {
+            myGrid.reconfigure(newStore(myData2));
+
+            setTimeout(function() {
+                myGrid.reconfigure(newStore(myData));
+            }, 1000);
+        }
+    });
+});	
+</script>
+</body>
+</html>

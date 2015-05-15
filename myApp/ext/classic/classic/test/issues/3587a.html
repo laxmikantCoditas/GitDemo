@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Test case harness</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<script type="text/javascript" charset="utf-8">
+//temporarily put your test case here to verify it, then follow the instructions above
+
+Ext.require(['*']);
+
+Ext.onReady(function () {
+
+    var myPanel = Ext.create('Ext.panel.Panel', {
+        title: 'Autoheight Panel',
+        frame: true,
+        width: 600,
+        renderTo: document.body,
+        dockedItems: [{
+            xtype: 'container',
+            layout: 'hbox',
+            items: {
+                xtype: 'component',
+                html: 'Docked at top',
+                dock: 'top'
+            }
+        }],
+        html: 'Panel content'
+    });
+    Ext.create('Ext.button.Button', {
+        style: 'margin: 10px',
+        renderTo: document.body,
+        text: 'Layout Panel',
+        handler: function() {
+            myPanel.doComponentLayout();
+        }
+        
+    })
+});
+</script>
+<body style="padding:10px">
+</body>
+</html>

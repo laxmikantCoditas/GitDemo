@@ -1,0 +1,47 @@
+// SenchaToolbox.idl : IDL source for SenchaToolbox
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (SenchaToolbox.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(0336F505-2750-4440-81CC-1B5304DDE80A),
+	dual,
+	nonextensible,
+	helpstring("IToolbox Interface"),
+	pointer_default(unique)
+]
+interface IToolbox : IDispatch{
+    [propget, id(1), helpstring("property milliseconds")] HRESULT milliseconds([out, retval] DOUBLE* pVal);
+    [propget, id(2), helpstring("property microseconds")] HRESULT microseconds([out, retval] DOUBLE* pVal);
+    [propget, id(3), helpstring("property frequency")] HRESULT frequency([out, retval] DOUBLE* pVal);
+    [propget, id(4), helpstring("property ticks")] HRESULT ticks([out, retval] DOUBLE* pVal);
+    [propget, id(5), helpstring("property events")] HRESULT events([out, retval] BSTR* pVal);
+    [propget, id(6), helpstring("property garbageCollectionCounter")] HRESULT garbageCollectionCounter([out, retval] DOUBLE* pVal);
+    [propget, id(7), helpstring("property garbageCollectionMilliseconds")] HRESULT garbageCollectionMilliseconds([out, retval] DOUBLE* pVal);
+    [id(8), helpstring("method getSymbols")] HRESULT getSymbols([in] BSTR libraryName, [out,retval] BSTR* ret);
+    [id(9), helpstring("method debugBreak")] HRESULT debugBreak(void);
+    [id(10), helpstring("method hookGarbageCollector")] HRESULT watchGarbageCollector([in] BOOL log, [out,retval] BSTR* errorMsg);
+    [id(11), helpstring("method unwatchGarbageCollector")] HRESULT unwatchGarbageCollector(void);
+};
+[
+	uuid(DEB3C39B-4DE1-4F15-9344-E061ADACB3E6),
+	version(1.0),
+	helpstring("SenchaToolbox 1.0 Type Library")
+]
+library SenchaToolboxLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(98B196C0-F768-41E3-A2E7-B51E80B80478),
+		helpstring("Toolbox Class")
+	]
+	coclass Toolbox
+	{
+		[default] interface IToolbox;
+	};
+};

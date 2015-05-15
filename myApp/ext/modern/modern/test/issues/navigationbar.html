@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>TOUCH-1075</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script src="../../sencha-touch.js"></script>
+
+        <script type="text/javascript">
+
+Ext.application({
+    name: 'app',      
+    controllers: [],
+    requires: [
+        'Ext.data.*'
+    ],
+    launch: function() {              
+        var view = Ext.create('Ext.navigation.View', {
+            fullscreen: true,
+
+            items: [
+                {
+                    docked: 'bottom',
+                    xtype: 'toolbar',
+                    items: [
+                        {
+                            xtype: 'button',
+                            text: 'Add a random view',
+                            handler: function() {
+                                view.push({
+                                    title: '> ' + Date.now(),
+                                    html: 'test'
+                                });
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            text: 'Toggle NavigationBar',
+                            handler: function() {
+                                var navigationBar = view.getNavigationBar();
+                                navigationBar[(navigationBar.isHidden()) ? 'show' : 'hide']();
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            text: 'Pop the current view',
+                            handler: function() {
+                                view.pop();
+                            }
+                        }
+                    ]
+                },
+                {
+                    title: 'Hello',
+                    layout: 'vbox',
+                    items: [
+                        {
+                            xtype: 'button',
+                            text: 'change',
+                            handler: function() {
+                                view.setActiveItem(1);
+                            }
+                        }
+                    ]
+                },
+                {
+                    title: 'Second',
+                    layout: 'vbox',
+                    items: [
+                        {
+                            xtype: 'button',
+                            text: 'next',
+                            handler: function() {
+                                view.setActiveItem(2);
+                            }
+                        }
+                    ]
+                },
+                {
+                    title: 'third',
+                    layout: 'vbox',
+                    items: [
+                        {
+                            xtype: 'button',
+                            text: 'push another view',
+                            handler: function() {
+                                view.push({
+                                    title: 'new view!',
+                                    items: [
+                                        {
+                                            xtype: 'button',
+                                            text: 'pop this view',
+                                            handler: function() {
+                                                view.pop();
+                                            }
+                                        }
+                                    ]
+                                });
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            text: 'toggle useTitleForBackButtonText',
+                            handler: function() {
+                                view.setUseTitleForBackButtonText(!view.getUseTitleForBackButtonText());
+                            }
+                        }
+                    ]
+                }
+            ]
+        });
+    }
+});
+
+        </script>
+    </head>
+    
+    <body></body>
+</html>

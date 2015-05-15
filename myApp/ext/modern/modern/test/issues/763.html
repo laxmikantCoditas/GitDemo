@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test case template</title>
+        <link rel="stylesheet" href="../../deploy/resources/css/sencha-touch.css"/>
+        <script src="../../deploy/sencha-touch-all-debug.js"></script>
+        
+        <script>
+            Ext.setup({
+                onReady: function() {
+
+                    Ext.create('Ext.Container', {
+                        fullscreen: true,
+                        layout: 'vbox',
+                        items: [{
+                            xtype: 'tabpanel',
+                            flex: 1,
+                            items: {
+                                title: 'Tab',
+                                html: 'This page has two tabpanels, both of which have a listener for ' +
+                                       'the "painted" event which logs to the console. One has a custom id specified ' +
+                                       'and the other does not. The former\'s listener is fired ' +
+                                       'correctly but the latter\'s listener is not. The only difference is the id.'
+                            },
+                            listeners: {
+                                painted: function() {
+                                    console.log('tabpanel 1 was painted');
+                                }
+                            }
+                        }, {
+                            xtype: 'tabpanel',
+                            flex: 1,
+                            id: 'foobar',
+                            items: {
+                                title: 'Tab'
+                            },
+                            listeners: {
+                                painted: function() {
+                                    console.log('tabpanel 2 was painted');
+                                }
+                            }
+                        }]
+                    });
+
+                }
+            });
+        </script>
+    </head>
+    <body>
+        
+    </body>
+</html>

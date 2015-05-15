@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>3943b - Ticket 11378</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript">
+        Ext.application({
+            launch:function () {
+                var chart = Ext.create('Ext.chart.CartesianChart',{
+                    store: {
+                        fields: ['name', 'data1', 'data2', 'data3', 'data4', 'data5'],
+                        data: [
+                            {'name':'metric one', 'data1':10, 'data2':12, 'data3':14, 'data4':8, 'data5':13},
+                            {'name':'metric two', 'data1':7, 'data2':8, 'data3':16, 'data4':10, 'data5':3},
+                            {'name':'metric three', 'data1':5, 'data2':2, 'data3':14, 'data4':12, 'data5':7},
+                            {'name':'metric four', 'data1':2, 'data2':14, 'data3':6, 'data4':1, 'data5':23},
+                            {'name':'metric five', 'data1':27, 'data2':38, 'data3':36, 'data4':13, 'data5':33}
+                        ]
+                    },
+                    legend:{
+                        docked: 'top'
+                    },
+                    innerPadding:{
+                        top: 0, left: 50, right: 80, bottom: 20
+                    },
+                    colors:['red','blue','green'],
+                    axes: [{
+                        type: 'numeric',
+                        position: 'left',
+                        title: {
+                            text: 'Sample Values',
+                            fontSize: 15
+                        },
+                        fields: 'data1',
+                        grid: {
+                            odd: {
+                            }
+                        },
+                    }, {
+                        type: 'category',
+                        position: 'bottom',
+                        title: {
+                            text: 'Sample Values',
+                            fontSize: 15
+                        },
+                        fields: 'name'
+                    }],
+                    series: [{
+                        type: 'bar',
+                        xField: 'name',
+                        yField: ['data1', 'data2', 'data3'],
+                        stacked: false,
+                        highlightCfg: {
+                            strokeStyle: 'red',
+                            lineWidth: 3
+                        },
+                        style: {
+                            stroke: 'rgb(40,40,40)',
+                            maxBarWidth: 50
+                        }
+                    }],
+                    interactions: [
+                        {
+                            type: 'iteminfo',
+                            listeners: {
+                                show: function(me, item, panel) {
+                                    panel.setHtml('Field: '+ item.field+'<br>Value: ' + item.record.get(item.field));
+                                    panel.setWidth('200px');
+                                }
+                            }
+                        }
+                    ]
+
+                });
+                Ext.Viewport.setLayout('fit');
+                Ext.Viewport.add(chart);
+
+            } //launch
+        }); //Ext.application
+    </script>
+</head>
+
+<body></body>
+
+</html>

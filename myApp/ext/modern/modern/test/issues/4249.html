@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4249</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.setup({
+            requires: [
+                'Ext.form.Panel',
+                'Ext.field.Text',
+                'Ext.field.Password'
+            ],
+            onReady:function () {
+                var container = Ext.create('Ext.Container', {
+	                height: '100%',
+	                width: '100%',
+	                items: [
+		                {
+			                xtype: 'formpanel',
+			                height: '100%',
+			                id: 'fpnClienteGeneral',
+			                width: '100%',
+			                items: [
+				                {
+					                xtype: 'fieldset',
+					                title: 'Datos fiscales',
+					                items: [
+						                {
+							                xtype: 'textfield',
+							                id: 'txtClienteGeneralRSocial',
+							                label: 'R.Social'
+						                },
+						                {
+							                xtype: 'textfield',
+							                id: 'txtClienteGeneralComercial',
+							                label: 'Comercial'
+						                },
+						                {
+							                xtype: 'textfield',
+							                id: 'txtClienteGeneralCIF',
+							                label: 'CIF'
+						                },
+						                {
+							                xtype: 'textfield',
+							                id: 'txtClienteGeneralDireccion',
+							                label: 'Dirección'
+						                },
+						                {
+							                xtype: 'textfield',
+							                id: 'txtClienteGeneralNumero',
+							                label: 'Número'
+						                },
+						                {
+							                xtype: 'textfield',
+							                id: 'txtClienteGeneralEscalera',
+							                label: 'Escalera'
+						                },
+						                {
+							                xtype: 'textfield',
+							                id: 'txtClienteGeneralPiso',
+							                label: 'Piso'
+						                },
+						                {
+							                xtype: 'textfield',
+							                id: 'txtClienteGeneralPuerta',
+							                label: 'Puerta'
+						                },
+						                {
+							                xtype: 'textfield',
+							                id: 'txtClienteGeneralCP',
+							                label: 'Código Postal'
+						                },
+						                {
+							                xtype: 'textfield',
+							                id: 'txtClienteGeneralLocalidad',
+							                label: 'Localidad'
+						                },
+						                {
+							                xtype: 'textfield',
+							                id: 'txtClienteGeneralProvincia',
+							                label: 'Provincia'
+						                },
+						                {
+							                xtype: 'textfield',
+							                id: 'txtClienteGeneralTelefono1',
+							                label: 'Teléfono 1'
+						                },
+						                {
+							                xtype: 'textfield',
+							                id: 'txtClienteGeneralTelefono2',
+							                label: 'Teléfono 2'
+						                }
+					                ]
+				                }
+			                ]
+		                }
+	                ]
+                });
+                Ext.Viewport.add(container);
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

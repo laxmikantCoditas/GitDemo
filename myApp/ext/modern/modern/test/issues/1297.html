@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>1297</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.define("TabPanelTest", {
+            extend:'Ext.Panel',
+            xtype:'tabtest',
+            config:{
+                layout:'fit',
+                cls:'swengle-view-tabpaneltest',
+                items:[
+                    {
+                        xtype:'titlebar',
+                        docked:'top',
+                        title:'Test'
+                    },
+                    {
+                        xtype:'tabpanel',
+                        tabBar:{
+                            docked:'bottom',
+                            ui:'light'
+                        },
+                        listeners:{
+                            activeitemchange:function (tabPanel, to, from, opts) {
+                                return false;
+                            },
+                            order:'before'
+                        },
+                        layout:{
+                            animation:{
+                                duration:0
+                            }
+                        },
+                        items:[
+                            {
+                                title:'Tab 1',
+                                html:'Tab 1',
+                                iconCls:'user'
+                            },
+                            {
+                                title:'Tab 2',
+                                html:'Tab 2',
+                                iconCls:'search'
+                            }
+                        ]
+                    }
+                ]
+            }
+        });
+        Ext.application({
+            launch:function () {
+                Ext.Viewport.add({ xtype:'tabtest'});
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

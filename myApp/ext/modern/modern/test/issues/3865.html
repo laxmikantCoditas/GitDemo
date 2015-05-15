@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Test case template</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch-debug.js"></script>
+    <script>
+        Ext.define('M', {
+            extend : 'Ext.data.Model',
+            config : {
+                idProperty : 'foo',
+                fields : ['foo']
+            }
+        });
+
+        Ext.application({
+            launch:function () {
+                var store = Ext.create('Ext.data.Store', {
+                    model : 'M',
+                    data : [{
+                        foo : 5
+                    }]
+                });
+
+                console.log(store.first().internalId);        // => 5
+                store.add([{
+                    foo : 1
+                }]);
+                console.log(store.last().internalId);
+            } //launch
+        }); //Ext.application
+    </script>
+</head>
+
+<body></body>
+
+</html>

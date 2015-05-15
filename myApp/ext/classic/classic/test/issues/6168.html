@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title>Test Case EXTJSIV-6168</title>
+
+<!--local file scheme relative path -->
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext-all.js"></script>
+<!-- live http scheme relative path -->
+<!-- 
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext-all.js"></script>
+-->
+    <script type="text/javascript">
+        Ext.onReady(function () {
+
+
+            Ext.define('Dummy', {
+                extend : 'Ext.data.Model',
+                fields : [
+                    {
+                        name : 'foo',
+                        type : 'string'
+
+                    }
+                ]});
+
+            var store = Ext.create('Ext.data.Store', {
+                autoDestroy : true,
+                model : 'Dummy',
+                proxy : {
+                    type : 'ajax',
+                    url : './6168.json',
+                    reader : {
+                        type : 'json',
+                        root : 'data'
+                    }
+                }
+            });
+
+            store.load();
+
+			Ext.Ajax.on('requestcomplete', function(conn, response, options) {
+			if (response.responseText && response.status === 0) { // we have a response; used 200 for testing
+					response.status = response.text ? 200 : 404;
+				}
+				console.log(response);
+			}, this);
+
+			// check on exception
+			Ext.Ajax.on('requestexception', function(conn, response, options) {
+				// console.log(response);
+				}, this);
+   });
+
+    </script>
+
+</head>
+<body>
+<p><b>You need to launch chrome with --allow-file-access-from-files for this to work.  This is a work
+    around for the test case as we are using phantomjs</b></p>
+<p>View console for output</p>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2583</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.define('MyApp.view.App', {
+            extend:'Ext.Panel',
+            config:{
+                layout:'card',
+                items:[
+                    {
+                        xtype:'tabbar',
+                        id:'bottom-tab-bar',
+                        docked:'bottom',
+                        items:[
+                            {
+                                cls:'x-tab-active',
+                                title:'Left'
+                            },
+                            {
+                                title:'Right'
+                            }
+                        ]
+                    },
+                    {
+                        xtype:'carousel',
+                        directionLock:true,
+                        id:'tabs-carousel',
+                        indicator:false,
+                        items:[
+                            {
+                                html:'Left',
+                                scrollable:{
+                                    direction:'vertical',
+                                    directionLock:true
+                                }
+                            },
+                            {
+                                html:'Right',
+                                scrollable:{
+                                    direction:'vertical',
+                                    directionLock:true
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        });
+
+
+        Ext.application({
+            launch:function () {
+                var navigation = Ext.create('Ext.navigation.View', {
+                    fullScreen:true
+                });
+                navigation.on('push', function (view, value, oldValue) {
+//                    alert('push');
+                    console.log('push');
+                });
+                navigation.on('pop', function (view, value) {
+//                    alert('pop');
+                    console.log('pop');
+                });
+                Ext.Viewport.setActiveItem(navigation);
+                navigation.push({ title:'1', html:'1' });
+                navigation.push(Ext.create('MyApp.view.App'));
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

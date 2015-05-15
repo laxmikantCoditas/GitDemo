@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Testcase</title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all-gray.css"/>
+
+    <script type="text/javascript" src="../../ext-all.js"></script>
+
+    <style type="text/css">
+        ul {border:1px solid black;margin:10px;width:100px;padding:5px;}
+        ul li {cursor:pointer;padding:2px;border:1px solid silver;margin:2px 0;}
+    </style>
+
+    <script type="text/javascript">
+        Ext.require([
+            "Ext.dd.DragZone",
+            "Ext.dd.DropZone"
+        ]);
+        Ext.onReady(function() {
+            var list1 = Ext.get('list1');
+            var list2 = Ext.get('list2');
+
+            // ddGroup1 begin
+            list1.dragZone = new Ext.dd.DragZone(list1, {
+                ddGroup: 'ddGroup1',
+                getDragData: function(e) {
+                    var dragel = e.getTarget('li');
+                    if (dragel) {
+                        var ddel = dragel.cloneNode(true);
+                        return {
+                            ddel: ddel,
+                            sourceEl: dragel,
+                            repairxy: Ext.fly(dragel).getXY()
+                        };
+                    }
+                },
+                getRepairXY: function() {
+                    return this.dragData.repairxy;
+                }
+            });
+
+            list2.dropZone = new Ext.dd.DropZone(list2, {
+                ddGroup: 'ddGroup1',
+                getTargetFromEvent: function(e) {
+                    return target = e.getTarget('ul');
+                },
+                onNodeOver: function(target, dd, e, data) {
+                    return Ext.dd.DropZone.prototype.dropAllowed;
+                },
+                onNodeDrop: function(target, dd, e, data) {
+                    alert('drop ddGroup1');
+                    return true;
+                }
+            });
+            // ddGroup 1 end
+
+            // ddGroup 2 begin
+            list2.dragZone = new Ext.dd.DragZone(list2, {
+                ddGroup: 'ddGroup2',
+                getDragData: function(e) {
+                    var dragel = e.getTarget('li');
+                    if (dragel) {
+                        var ddel = dragel.cloneNode(true);
+                        return {
+                            ddel: ddel,
+                            sourceEl: dragel,
+                            repairxy: Ext.fly(dragel).getXY()
+                        };
+                    }
+                },
+                getRepairXY: function() {
+                    return this.dragData.repairxy;
+                }
+            });
+            
+            list1.dropZone = new Ext.dd.DropZone(list1, {
+                ddGroup: 'ddGroup2',
+                getTargetFromEvent: function(e) {
+                    return target = e.getTarget('ul');
+                },
+                onNodeOver: function(target, dd, e, data) {
+                    return Ext.dd.DropZone.prototype.dropAllowed;
+                },
+                onNodeDrop: function(target, dd, e, data) {
+                    alert('drop ddGroup2');
+                    return true;
+                }
+            });
+            // ddGroup 2 end
+
+        });
+    </script>
+</head>
+<body>
+<ul id="list1">
+    <li>Item1</li>
+    <li>Item2</li>
+    <li>Item3</li>
+    <li>Item4</li>
+</ul>
+
+<ul id="list2">
+    <li>Item1</li>
+    <li>Item2</li>
+    <li>Item3</li>
+    <li>Item4</li>
+</ul>
+</body>
+</html>

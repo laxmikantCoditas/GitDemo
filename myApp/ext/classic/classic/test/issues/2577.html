@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ExtJS 4.0.6 ComponentQuery</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css">
+    <script type="text/javascript" src="../../ext.js"></script>
+    <script>
+        Ext.require(['Ext.panel.Panel']);
+        
+        Ext.define('My.Panel', {
+            extend : 'Ext.panel.Panel',
+            alias  : 'widget.my.panel',
+            
+            html  : 'My XType has a period',
+            title : 'Test'
+        });
+        
+        Ext.define('My.Panel2', {
+            extend : 'Ext.panel.Panel',
+            alias  : 'widget.my_panel',
+            
+            html  : 'My XType has an underscore',
+            title : 'Test'
+        });
+        
+        Ext.onReady(function() {
+            var panel = Ext.create('Ext.panel.Panel', {
+                renderTo : Ext.getBody(),
+                layout  : {
+                    type  : 'hbox',
+                    align : 'stretch'
+                },
+                height  : 300,
+                width   : 600,
+                items   : [
+                    {
+                        xtype : 'my_panel',
+                        flex  : 1
+                    },
+                    {
+                        xtype : 'my.panel',
+                        flex  : 1
+                    }
+                ]
+            });
+            
+            setTimeout(function() {
+                console.log('Query on XType with underscore', panel.down('my_panel'));
+                console.log('Query on XType with period', panel.down('my.panel'));
+            }, 500);
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

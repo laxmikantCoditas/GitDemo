@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2618</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.application({
+            launch:function () {
+                Ext.define("SwipeTest.view.Main", {
+                    extend:'Ext.Container',
+                    xtype:'swipertest',
+
+                    config:{
+                        title:'test',
+                        iconCls:'team',
+                        value:null,
+                        scrollable:false
+                    },
+
+                    constructor:function () {
+                        if (!this.getValue()) {
+                            this.setValue(1);
+                        }
+                        this.setTpl(new Ext.XTemplate(
+                                '<table class="dt-picker-weeks">',
+                                '<tbody class="days">',
+                                '<tr class="day-row">', //start first row
+                                '<tpl for=".">',
+                                '<td class="day-block">{num}</td>',
+                                '</tpl>',
+                                '</tr>',
+                                '</tbody>',
+                                '</table>'
+                        ));
+
+
+                        this.callParent(arguments);
+                        this.refresh();
+                    },
+
+                    initialize:function () {
+                        this.element.on({
+                            tap:this.onSwipe,
+                            scope:this
+                        });
+                        this.callParent(arguments);
+                    },
+
+                    onSwipe:function (e) {
+                        var direction = e.direction === 'left' ? 1 : -1;
+                        this.setValue(this.getValue() + direction);
+                        this.refresh();
+                        console.log('swipe');
+                    },
+
+                    refresh:function () {
+                        this.setData([
+                            {num:this.getValue()}
+                        ]);
+                    }
+                });
+                Ext.Viewport.add({xtype: 'swipertest'});
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

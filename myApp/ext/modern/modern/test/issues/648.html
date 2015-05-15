@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test case template</title>
+        <link rel="stylesheet" href="../../deploy/resources/css/sencha-touch.css"/>
+        <script src="../../deploy/sencha-touch-all-debug.js"></script>
+        
+        <script>
+            Ext.setup({
+                onReady: function() {
+
+                    var sheet = Ext.widget('actionsheet', {
+                        items: {
+                            xtype: 'button',
+                            text: 'Click me to cause an error!',
+                            handler: function() {
+                                sheet.parent.removeAll();
+                            }
+                        }
+                    });
+
+                    sheet.show();
+                }
+            });
+        </script>
+    </head>
+    <body>
+        
+    </body>
+</html>

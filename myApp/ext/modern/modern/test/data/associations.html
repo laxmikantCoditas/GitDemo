@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../sencha-touch-all.js"></script>
+    <script>
+        //debt model
+        Ext.define('Payback.model.Debt', {
+            extend: 'Ext.data.Model',
+            alias: 'model.Debt',
+
+            config: {
+                identifier: {
+                    type: 'uuid'
+                },
+                fields: [
+                    {
+                        name: 'reason'
+                    },
+                    {
+                        name: 'amount'
+                    },
+                    {
+                        convert: function(v, rec) {
+                            var sum = rec.get('amount') - rec.payments().sum('amount');
+                            sum = Math.round(sum*100)/100;
+
+                            return sum;
+                        },
+                        name: 'balance',
+                        type: 'float'
+                    },
+                    {
+                        name: 'date',
+                        type: 'date'
+                    },
+                    {
+                        name: 'person_id'
+                    }
+                ],
+                hasMany: {
+                    model: 'Payback.model.Payment',
+                    autoLoad: true,
+                    autoSync: true,
+                    foreignKey: 'debt_id',
+                    name: 'payments'
+                },
+                proxy: {
+                    type: 'localstorage',
+                    id: 'Debts'
+                }
+            }
+        });
+
+        //payment model
+        Ext.define('Payback.model.Payment', {
+            extend: 'Ext.data.Model',
+
+            config: {
+                identifier: {
+                    type: 'uuid'
+                },
+                fields: [
+                    {
+                        name: 'debt_id'
+                    },
+                    {
+                        name: 'amount',
+                        type: 'float'
+                    },
+                    {
+                        name: 'date',
+                        type: 'date'
+                    },
+                    {
+                        name: 'memo',
+                        type: 'string'
+                    }
+                ],
+                proxy: {
+                    type: 'localstorage',
+                    id: 'Payments'
+                },
+                belongsTo: {
+                    model: 'Payback.model.Debt',
+                    foreignKey: 'debt_id'
+                }
+            }
+        });
+
+        //debt store
+        Ext.define('Payback.store.DebtsStore', {
+            extend: 'Ext.data.Store',
+
+            config: {
+                autoLoad: true,
+                autoSync: true,
+                groupDir: 'DESC',
+                groupField: 'date',
+                model: 'Payback.model.Debt',
+                storeId: 'Debts',
+                grouper: {
+                    groupFn: function(record) {
+                        return record.get('date');
+                    },
+                    direction: 'DESC'
+                }
+            }
+        });
+
+        //payment store
+        Ext.define('Payback.store.PaymentStore', {
+            extend: 'Ext.data.Store',
+
+            config: {
+                autoLoad: true,
+                model: 'Payback.model.Payment',
+                storeId: 'Payments'
+            }
+        });
+
+        Ext.setup({
+            onReady: function () {
+                localStorage.clear();
+
+                var debtStore = Ext.create('Payback.store.DebtsStore');
+                var debt = debtStore.add({
+                    reason: 'Some other reason',
+                    amount: 150,
+                    date: new Date()
+                })[0];
+                var payment = debt.payments().add({
+                    amount: 35,
+                    memo: 'First payment',
+                    date: new Date()
+                });
+
+                console.log(payment);
+
+                // //Payment belongs to Debt
+                // var debt = Ext.getStore('Debts').first();
+                // var values = form.getValues();
+                //
+                // //add new payment
+                // var payment = debt.payments().add(values)[0];
+                // debt.payments().sync();
+                // payment.getDebt(); //bug in framework(reported in TOUCH-3073), associates payment with debt
+                //
+                // //filter is not properly set
+                // Ext.getStore('Payments').clearFilter();
+                // Ext.getStore('Payments').filter("debt_id", debt.get('id'));
+                //
+                // //workaround, delete the store and reassociate
+                // delete debt.paymentsStore;
+                // debt.payments();
+                //
+                // //filter now works correctly
+                // Ext.getStore('Payments').clearFilter();
+                // Ext.getStore('Payments').filter("debt_id", debt.get('id'));
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

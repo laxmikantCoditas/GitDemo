@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript">
+        Ext.require([
+            "Ext.data.JsonStore",
+            "Ext.Panel",
+            "Ext.chart.PolarChart",
+            "Ext.chart.series.Pie",
+            "Ext.Toolbar"
+        ]);
+
+        Ext.setup({
+            onReady : function() {
+                var data0 = [
+                            {'name':'metric one', 'data':0},
+                            {'name':'metric two', 'data':0},
+                            {'name':'metric three', 'data':0},
+                            {'name':'metric four', 'data':0},
+                            {'name':'metric five', 'data':0}
+                        ],
+                        data = [
+                            {'name':'metric one', 'data':1},
+                            {'name':'metric two', 'data':17},
+                            {'name':'metric three', 'data':15},
+                            {'name':'metric four', 'data':8},
+                            {'name':'metric five', 'data':7}
+                        ],
+                        data2 = [
+                            {'name':'metric one', 'data':10},
+                            {'name':'metric two', 'data':1},
+                            {'name':'metric three', 'data':20},
+                            {'name':'metric four', 'data':9},
+                            {'name':'metric five', 'data':15}
+                        ],
+                        data3 = [
+                            {'name':'metric one', 'data':5},
+                            {'name':'metric two', 'data':0},
+                            {'name':'metric three', 'data':0},
+                            {'name':'metric four', 'data':0},
+                            {'name':'metric five', 'data':0}
+                        ],
+                        data4 = [
+                            {'name':'metric one', 'data':5},
+                            {'name':'metric two', 'data':0},
+                            {'name':'metric three', 'data':0},
+                            {'name':'metric four', 'data':0},
+                            {'name':'metric five', 'data':0}
+                        ],
+                        data5 = [
+                            {'name':'metric one', 'data':0},
+                            {'name':'metric two', 'data':10},
+                            {'name':'metric three', 'data':0},
+                            {'name':'metric four', 'data':0},
+                            {'name':'metric five', 'data':0}
+                        ];
+
+                var activeData = data;
+
+                var store = new Ext.data.JsonStore({
+                    fields: ['name', 'data'],
+                    data: activeData
+                });
+
+                Ext.create('Ext.Panel', {
+                    fullscreen : true,
+                    scrollable : {
+                        direction : 'horizontal',
+                        directionLock : true
+                    },
+                    layout : {
+                        type : 'hbox'
+                    },
+
+                    items : [
+                        {
+                            xtype : 'polar',
+                            flex : 1,
+
+                            store : store,
+                            colors: ['#0E3875', '#750E0E', '#0E7538', '#E56717', '#69076A'],
+
+                            series : [
+                                {
+                                    type : 'pie',
+                                    axis : 'left',
+                                    labelField : 'data',
+                                    donut : 25,
+                                    xField : 'data',
+                                    label: {
+                                        font: "24px sans-serif",
+                                    },
+                                    style : {
+                                        labelOverflowPadding : 0,
+                                        miterLimit : 10,
+                                        lineCap : 'miter',
+                                        lineWidth : 2,
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            xtype : 'toolbar',
+                            docked : 'top',
+
+                            items : [
+                                {
+                                    xtype : 'button',
+                                    text : 'Multiple Slices',
+                                    handler : function(button) {
+                                        var panel = button.up('panel'),
+                                                chart = panel.child('polar'),
+                                                store = chart.getStore();
+
+                                        activeData = (activeData == data0) ? data : data0;
+                                        store.setData(activeData);
+                                    }
+                                },
+                                {
+                                    xtype : 'button',
+                                    text : 'One Slice',
+                                    handler : function(button) {
+                                        var panel = button.up('panel'),
+                                                chart = panel.child('polar'),
+                                                store = chart.getStore();
+
+                                        activeData = (activeData == data4) ? data5 : data4;
+                                        store.setData(activeData);
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>
+

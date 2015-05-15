@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+function createPanel() {
+    var xmlText = "<xml>" +
+			"<page>" +
+			    "<textString >catalog</textString>" +
+			    "<textString >Extcat</textString>" +
+			    "<textString >extcat</textString>" +
+			 "</page>" +
+		    "</xml>";
+    var xmlDoc;
+    if (window.DOMParser)
+    {
+	var parser=new DOMParser();
+	xmlDoc=parser.parseFromString(xmlText,"text/xml");
+    }
+    else // Internet Explorer
+    {
+	//xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
+	//xmlDoc=new ActiveXObject("Msxml2.DOMDocument");
+	//xmlDoc=new ActiveXObject("Msxml2.DOMDocument.3.0");
+	xmlDoc=new ActiveXObject("Msxml2.DOMDocument.6.0");
+	xmlDoc.async=false;
+	xmlDoc.loadXML(xmlText);
+    }
+    Ext.DomQuery.selectNode('textString', xmlDoc);
+    Ext.create('Ext.panel.Panel', {
+	title: 'DOM Query testing',
+	width: 200,
+	renderTo: Ext.getBody(),
+	items:[{
+	    xtype:'textfield',
+	    itemId:'searchbox'
+	},{
+	    xtype:'button',
+	    text:"Search",
+	    handler:function(){
+	     var panel =    this.findParentByType('panel');
+	     var searchTerm = panel.getComponent("searchbox").getValue();
+	     var results =  Ext.DomQuery.select("textString:contains(" + searchTerm + ")", xmlDoc);
+	     panel.getComponent("resultlabel").setText(results.length + " results found")
+	    }
+	},{
+	    xtype:'label',
+	    itemId:'resultlabel'
+	}
+	]
+    });
+}
+Ext.onReady(createPanel);
+
+    </script>
+</body>
+</html>

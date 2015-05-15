@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test case template</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script src="../../sencha-touch-debug.js"></script>
+
+        <script>
+        Ext.setup({
+            onReady:function () {
+                Ext.define('ListItem', {
+                    extend: 'Ext.data.Model',
+                    config: {
+                        useCache: false,
+                        fields: [{
+                            name: 'text',
+                            type: 'string'
+                        }]
+                    }
+                });
+
+                var store1 = Ext.create('Ext.data.TreeStore', {
+                    model: 'ListItem',
+                    defaultRootProperty: 'items',
+                    clearOnLoad: false,
+                    proxy: {
+                        type: 'ajax',
+                        url: 'users.json',
+                        reader: {
+                            type: 'json'
+                        }
+
+                    },
+                    autoLoad: true
+                });
+
+                var store2 = Ext.create('Ext.data.TreeStore', {
+                    model: 'ListItem',
+                    defaultRootProperty: 'items',
+                    clearOnLoad: false,
+                    proxy: {
+                        type: 'ajax',
+                        url: 'users.json',
+                        reader: {
+                            type: 'json'
+                        }
+                    },
+                    autoLoad: true
+                });
+
+                var nestedList = Ext.create('Ext.NestedList', {
+                    width: 200,
+                    title: 'Groceries',
+                    displayField: 'text',
+                    store: store1
+                });
+
+                var nestedList2 = Ext.create('Ext.NestedList', {
+                    width: 200,
+                    title: 'Groceries',
+                    displayField: 'text',
+                    store: store2
+                });
+
+                var mainPanel = Ext.create('Ext.Panel', {
+                    fullscreen: true,
+                    layout: 'hbox',
+                    defaults: {
+                        flex: 1
+                    },
+                    items: [
+                        nestedList,nestedList2
+                    ]
+                });
+            }
+        });
+	</script>
+    </head>
+    <body>
+
+    </body>
+</html>

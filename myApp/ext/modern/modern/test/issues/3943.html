@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>3943</title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript">
+        Ext.setup({
+            requires: [
+                'Ext.chart.*',
+                'Ext.Panel',
+                'Ext.Toolbar',
+                'Ext.data.JsonStore'
+            ],
+            onReady:function () {
+
+                store1 = Ext.create('Ext.data.JsonStore', {
+                    fields : [ 'name', 'data1', 'data2', 'data3', 'data4', 'data5', 'data6', 'data7', 'data8', 'data9' ],
+                    data : [
+                        {'data8': 1,'data1': 8, 'data2': 10, 'data3': 17288146955, 'data4': 10, 'data5': 10, 'data6': 10,'data7': 78, 'name': "Q1"},
+                        {'data8': 2,'data1': 6, 'data2': -18, 'data3': 12465205357, 'data4': 17, 'data5': 22, 'data6': 26,'data7': 116, 'name': "Q2"},
+                        {'data8': 3,'data1': 4, 'data2': 23, 'data3': 17616604906, 'data4': 22, 'data5': 29, 'data6': 32,'data7': 133, 'name': "Q3"},
+                        {'data8': 4,'data1': 2, 'data2': -35, 'data3': 15061159274, 'data4': 33, 'data5': 39, 'data6': 43,'data7': 166, 'name': "Q4"},
+                    ]
+                });
+
+                Ext.create('Ext.chart.CartesianChart', {
+                    store: store1,
+                    fullscreen: true,
+                    innerPadding:{
+                        top: 0, left: 50, right: 80, bottom: 20
+                    },
+                    legend:{
+                        docked: 'top'
+                    },
+                    colors: ['red', 'green', 'orange', 'yellow', 'brown', 'blue'],
+                    interactions: [
+                        {
+                            type: 'iteminfo',
+                            listeners: {
+                                show: function(me, item, panel, e) {
+                                    panel.setHtml('Field: '+ item.field+'<br>Value: ' + item.record.get(item.field));
+                                    panel.setWidth('200px');
+                                    console.log(item);
+                                }
+                            }
+                        },
+                        'itemhighlight'
+                    ],
+                    series: [
+                        {
+                            type: 'bar',
+                            xField: 'name',
+                            yField: ['data8', 'data1',],
+                            stacked: true,
+                            highlightCfg: {
+                                strokeStyle: 'red',
+                                lineWidth: 3
+                            },
+                            style: {
+                                stroke: 'blue',
+                                minGapWidth: 60,
+                                maxBarWidth: 190,
+                            }
+                        }
+                    ],
+                    axes: [
+                        {
+                            type: 'numeric',
+                            position: 'left',
+                            fields: ['data8', 'data1', 'data2', 'data3', 'data4', 'data5', 'data6','data7'],
+                            grid: {
+                                stroke: '#aaa'
+                            },
+                            style: {
+                                lineWidth: 2,
+                                stroke: '#777'
+                            }
+                        },
+                        {
+                            type: 'category',
+                            position: 'bottom',
+                            fields: 'name',
+                            dashSize: 10,
+                            style: {
+                                lineWidth: 2,
+                                stroke: '#777'
+                            }
+                        }
+                    ]
+                })
+            }
+        });
+    </script>
+
+</head>
+<body></body>
+</html>

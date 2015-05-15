@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3757</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+    <script type="text/javascript">
+        Ext.application({
+            name: 'ResizeBug',
+
+
+            requires: ['Ext.Button'],
+
+
+            launch: function() {
+                Ext.Viewport.setLayout('auto');
+
+
+                var container = Ext.Viewport.add({
+                    xtype: 'container',
+                    height: 100,
+//                    width: '300px', // uncomment to see normal behavior
+                    width: '300.8px', // uncomment to see incorrect behavior
+                    scrollable: true,
+                    items: [{
+                        height: 50,
+                        html: 'First Content'
+                    }, {
+                        height: 100,
+                        html: 'Second Content'
+                    }]
+                });
+
+
+                container.getScrollable().getScroller().getElement().on('resize', function(scroller, info) {
+                    console.log('resize');
+                });
+
+
+                Ext.Viewport.add({
+                    xtype: 'button',
+                    text: 'Show',
+                    handler: function() {
+                        container.getAt(1).setHidden(false);
+                    }
+                });
+
+
+                Ext.Viewport.add({
+                    xtype: 'button',
+                    text: 'Hide',
+                    handler: function() {
+                        container.getAt(1).setHidden(true);
+                    }
+                });
+            }
+        });
+
+    </script>
+</head>
+<body>
+</body>
+</html>

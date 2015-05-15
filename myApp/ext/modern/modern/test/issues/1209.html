@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>TOUCH-0000</title>
+		<link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+		<script type="text/javascript" src="../../sencha-touch.js"></script>
+
+		<script type="text/javascript">
+			Ext.application({
+				name : 'Test',
+
+				requires : [
+					'Ext.form.Panel',
+					'Ext.field.Text'
+				],
+
+				launch : function () {
+					form = Ext.create('Ext.form.Panel', {
+						fullscreen: true,
+					
+						items: [
+							{
+								xtype: 'textfield',
+							    label: 'Rating',
+								value: 'test'
+							},
+							{
+								xtype: 'selectfield',
+							    name: 'rating',
+							    label: 'Rating',
+							    options: [
+							        {text: 'Three',  value: '3'},
+							        {text: 'Two', value: '2'},
+							        {text: 'One',  value: '1'}
+							    ],
+							    listeners: {
+							        focus: function() {
+							            console.log('focus');
+							        },
+							        show: function() {
+							            console.log('show');
+							        }
+							    }
+							}
+						]
+					});
+				}
+			});
+	</script>
+	</head>
+	<body>
+
+	</body>
+</html>

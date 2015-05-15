@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TOUCH-4855</title>
+
+	<!--<script src="../../sencha-touch-debug.js"></script>-->
+	<!--<link rel="stylesheet" href="../../resources/css/sencha-touch.css">-->
+	<script src="https://extjs.cachefly.net/touch/sencha-touch-2.2.1/gpl/sencha-touch-all.js"></script>
+	<link rel="stylesheet" href="https://extjs.cachefly.net/touch/sencha-touch-2.2.1/gpl/resources/css/sencha-touch.css">
+
+	<script type="text/javascript">
+		Ext.application({
+			name: 'Fiddle',
+
+			requires: ['Ext.MessageBox'],
+
+			launch: function() {
+
+				var nav = Ext.create('Ext.navigation.View', {
+					navigationBar: {
+						height: 55,
+						style: "background-color: #77A22F; background-image:none;",
+						items: [{
+							xtype: 'label',
+							align: 'right',
+							style: 'font-size: 20px;',
+							html: 'Service Req'
+						}, {
+							xtype: 'button',
+							text: 'Next',
+							ui: 'forward',
+							align: 'right',
+							iconMask: false,
+							handler: function() {
+								Ext.Msg.alert('weird button', 'weird button');
+							}
+						}]
+					}
+
+				});
+
+				Ext.Viewport.add(nav);
+			}
+		});
+		// or replace all text with a URL
+	</script>
+</head>
+<body>
+</body>
+</html>

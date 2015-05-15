@@ -1,0 +1,66 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Vbox Strechmax minWidth</title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="../../examples/shared/example.css" />
+
+    <script type="text/javascript" src="../../ext-all.js"></script>
+    <script type="text/javascript" src="../../examples/example-data.js"></script>
+    <script type="text/javascript" src="../../examples/shared/examples.js"></script>
+    <script type="text/javascript">
+		Ext.onReady(function() {
+			Ext.create('Ext.Panel',{
+				width		: 800,
+				height		: 300,
+				autoScroll	: true,
+				renderTo	: Ext.getBody(),
+				title 		: 'Parent Panel with vbox stretchmax',
+				layout		: {
+					type	: 'vbox',
+					align	: 'stretchmax'
+				},
+				items	: [{
+					xtype: 'grid',
+					title: 'Grid with minWidth 1000 and shrinkWrap',
+					minWidth: 1000,
+					shrinkWrap: true,
+					shrinkWrapDock: true,
+					store: Ext.create('Ext.data.Store',{
+						fields: ['text'],
+						data: [{text: 'Data 1'}]
+					}),
+					columns: [{
+						dataIndex: 'text',
+						text: 'Column 1',
+						width: 300
+					}]
+				}]
+			});
+			
+			Ext.create('Ext.Panel',{
+				width		: 800,
+				height		: 300,
+				autoScroll	: true,
+				renderTo	: Ext.getBody(),
+				title 		: 'Parent Panel with vbox stretchmax',
+				layout		: {
+					type	: 'vbox',
+					align	: 'stretchmax'
+				},
+				items	: [{
+					xtype: 'panel',
+					title: 'Panel with minWidth 1000 and shrinkWrap',
+					minWidth: 1000,
+					shrinkWrap: true,
+					shrinkWrapDock: true,
+					html: 'Content...'
+				}]
+			});
+		});
+	</script>
+</head>
+<body>
+</body>
+</html>

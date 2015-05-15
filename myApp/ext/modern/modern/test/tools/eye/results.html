@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Inner Eye Results</title>
+
+    <!-- ExtJS -->
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+    <script type="text/javascript" src="../../bootstrap.js"></script>
+    
+    <script type="text/javascript" charset="utf-8">
+        Ext.require(['Ext.data.Model', 'Ext.DataView']);
+        
+        Ext.define('DiffWindow', {
+            extend: 'Ext.window.Window',
+            height: 800,
+            width : 800,
+            title : 'Diff',
+            layout: 'card',
+            activeItem: 0,
+            
+            /**
+             * @cfg {String} referencePath The path to the full sized reference image
+             */
+            referencePath: '',
+            
+            /**
+             * @cfg {String} snapshotPath The path to the full sized snapshot image
+             */
+            snapshotPath: '',
+            
+            initComponent: function() {
+                Ext.apply(this, {
+                    defaults: {
+                        xtype: 'panel',
+                        border: false,
+                        listeners: {
+                            el: {
+                                scope: this,
+                                click: function() {
+                                    var active = this.items.indexOf(this.layout.getActiveItem());
+                                    
+                                    this.layout.setActiveItem(active == 0 ? 1 : 0);
+                                }
+                            }
+                        }
+                    },
+                    
+                    items: [
+                        {
+                            html: this.formatImg(this.referencePath),
+                            title: 'Reference'
+                        },
+                        {
+                            html: this.formatImg(this.snapshotPath),
+                            title: 'Current'
+                        }
+                    ]
+                });
+                
+                this.callParent();
+            },
+            
+            /**
+             * Builds an img tag for a given url and this window's dimensions
+             * @param {String} url The url to the image
+             * @return {String} The <img> tag
+             */
+            formatImg: function(url) {
+                return Ext.String.format('<img src="{0}" height="{1}" width="{2}" />', url, this.height, this.width);
+            }
+        });
+        
+        Ext.onReady(function() {
+            var format = Ext.String.format;
+            
+            var imageRenderer = function(url) {
+                return format('<img src="{0}" width="250px" height="250px" />', url);
+            };
+            
+            var store = Ext.create('Ext.data.Store', {
+                autoLoad: true,
+                
+                fields: ['example', 'referencePath', 'snapshotPath'],
+                proxy: {
+                    type: 'ajax',
+                    url : 'failures.json',
+                    reader: {
+                        type: 'json',
+                        root: 'failures'
+                    }
+                }
+            });
+            
+            var grid = Ext.create('Ext.grid.Panel', {
+                store: store,
+                forceFit: true,
+                columns: [
+                    {
+                        header: 'Test',
+                        dataIndex: 'example'
+                    },
+                    {
+                        header: 'Reference',
+                        dataIndex: 'referencePath',
+                        renderer: imageRenderer
+                    },
+                    {
+                        header: 'Current',
+                        dataIndex: 'snapshotPath',
+                        renderer: imageRenderer
+                    }
+                ],
+                
+                listeners: {
+                    itemdblclick: function(grid, record) {
+                        Ext.create('DiffWindow', {
+                            referencePath: record.get('referencePath'),
+                            snapshotPath: record.get('snapshotPath')
+                        }).show();
+                    }
+                }
+            });
+            
+            Ext.create('Ext.container.Viewport', {
+                layout: 'fit',
+                items: grid
+            });
+        });
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

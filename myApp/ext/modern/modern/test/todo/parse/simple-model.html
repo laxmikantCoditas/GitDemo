@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Parse - Simple Test</title>
+
+	<script src="http://www.parsecdn.com/js/parse-1.2.9.min.js"></script>
+	<script src="../../../sencha-touch-debug.js"></script>
+	<link rel="stylesheet" href="../../../resources/css/sencha-touch.css">
+
+	<script type="text/javascript">
+		Parse.initialize("6RfVEOtN8WIbsyR2mLhDtfCx6cVmh0skVEsr8kGN", "Yf1TTAXDuvDBDF21nc8ZBZJwokXyFukhaKXaGGD7");
+
+		Ext.setup({
+			requires: [
+				'Ext.ux.parse.Model',
+				'Ext.dataview.List'
+			],
+
+			onReady: function() {
+				var parseId = "5UEigfL9mj"
+
+				//Define Parse Model
+				Ext.define("MyApp.model.Test", {
+					extend: "Ext.ux.parse.Model",
+					config: {
+						fields: [
+							{name: "label", type: "string"},
+							{name: "duration",  type: "int"}
+						]
+					}
+				});
+
+				var view = Ext.create("Ext.Container",
+					{
+						data: Ext.create("MyApp.model.Test"),
+						tpl: new Ext.XTemplate("{label} : {duration}")
+					}
+				);
+
+				var model = window.m = Ext.create("MyApp.model.Test", {id:parseId});
+
+				/*
+				model.load({
+					success: function() {
+						view.setData(model.data);
+						console.log("I got that model with label: " + model.get("label"));
+					}
+				});*/
+
+				//Query one instance of a Model then write back into it
+				 model.load({
+					scope: this,
+					success: function(record){
+						record.set("label", "Sencha Label" + new Date().getTime());
+						record.save({
+							success: function(record) {
+								console.log("I just got that model, then wrote into it the label: " + record.get("label"));
+								view.setData(record.data);
+							}
+						})
+					},
+					failure: function(response, operation){
+						console.log(operation.error);
+					}
+				 });
+
+				// Create a new entry in Parse
+				/*model.set("label", "WooHoo!");
+				model.set("duration", 3000);
+
+				view.setData(model.data);
+				model.save({
+					success: function(record){
+						console.log("Saved that model with label: " + record.get("label"));
+					}
+				});*/
+
+				Ext.Viewport.add(view);
+			}
+		});
+	</script>
+</head>
+<body>
+</body>
+</html>

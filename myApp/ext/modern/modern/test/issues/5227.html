@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-5227</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/bb10.css">
+
+    <script type="text/javascript">
+	    Ext.theme.name = "Blackberry";
+
+        Ext.setup({
+            requires: [
+                'Ext.form.Panel',
+                'Ext.Button',
+                'Ext.field.Password'
+            ],
+            onReady:function () {
+                var form = Ext.create('Ext.form.Panel', {
+                    width:"100%",
+	                flex:1,
+                    items: [
+                        {
+                            xtype: 'passwordfield',
+                            name: 'password',
+                            label: 'Password'
+                        }
+                    ]
+                });
+
+	            var button = Ext.create('Ext.Button',
+		            {
+	                    text:"Submit",
+			            handler: function() {
+				            form.submit({
+					            url: 'nourl',
+					            method: 'POST',
+					            success: function() {
+						            alert('form submitted successfully!');
+					            }
+				            });
+			            }
+                    }
+	            );
+
+	            Ext.Viewport.setLayout("vbox");
+                Ext.Viewport.add(form);
+                Ext.Viewport.add(button);
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

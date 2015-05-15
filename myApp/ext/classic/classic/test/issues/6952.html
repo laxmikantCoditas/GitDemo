@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+Ext.onReady(function() {
+    Ext.create('Ext.form.Panel', {
+        title: 'Report Filters',
+        labelWidth: 75, // label settings here cascade unless overridden
+        frame: false,
+        bodyStyle: 'padding:5px 5px 0',
+        width: 944,
+        renderTo: document.body,
+        items: [
+            {
+                xtype: 'fieldset',
+                width: 464,
+                title: 'Required Filters', 
+                defaults: { anchor: '100%' },
+                layout: 'anchor',
+                margin: '0 4px 0 0',
+                items: [
+                {
+                    increment: 15,
+                    allowBlank: true,
+                    emptyText: "Filter by time",
+                    fieldLabel: "Time Field",
+                    xtype: "timefield",
+                    id: "timeFld",
+                    flex: 0
+                }, {
+                    xtype: 'combo',
+                    fieldLabel: 'Choose State',
+                    emptyText: 'empty combo',
+                    queryMode: 'local',
+                    displayField: 'name',
+                    valueField: 'abbr'
+                }, {
+                    xtype: 'textfield',
+                    inputType: 'password',
+                    fieldLabel: 'Password',
+                    emptyText: 'enter password'
+                }]
+            }
+        ]
+    });
+});
+    </script>
+</body>
+</html>

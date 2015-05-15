@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+Ext.require('*');
+Ext.onReady(function(){
+    Ext.create('Ext.data.Store', {
+        storeId:'simpsonsStore',
+        fields:['name'],
+        data: [["Lisa"], ["Bart"], ["Homer"], ["Marge"]],
+        proxy: {
+            type: 'memory',
+            reader: 'array'
+        }
+    });
+
+    Ext.create('Ext.data.Store', {
+        storeId:'simpsonsStore2',
+        fields:['name'],
+        data: [["Lisa"], ["Bart"], ["Homer"], ["Marge"]],
+        proxy: {
+            type: 'memory',
+            reader: 'array'
+        }
+    });
+
+    Ext.create('Ext.tab.Panel', {
+        title: 'test',
+        renderTo: Ext.getBody(),
+        height: 300,
+        width: 500,
+        layout: 'fit',
+        items: [{
+            xtype: 'grid',
+            itemId: 'grid1',
+            title: 'Grid 1',
+            closable: true,
+            store: 'simpsonsStore',
+            columns: [{
+                header: 'Name',
+                dataIndex: 'name',
+                flex: true
+            }],
+            viewConfig: {
+                plugins: {
+                    ptype: 'gridviewdragdrop',
+                    dragText: 'Drag and drop to reorganize',
+                    containerScroll: true
+                }
+            }
+        }, {
+            xtype: 'grid',
+            title: 'Grid 2',
+            itemId: 'grid2',
+            store: 'simpsonsStore2',
+            columns: [{
+                header: 'Name',
+                dataIndex: 'name',
+                flex: true
+            }],
+            viewConfig: {
+                plugins: {
+                    ptype: 'gridviewdragdrop',
+                    dragText: 'Drag and drop to reorganize',
+                    containerScroll: true
+                }
+            }
+        }]
+    });
+});
+    </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+Ext.onReady(function() {
+    Ext.create('Ext.data.Store', {
+	storeId:'simpleStore',
+	fields:[
+	    {name:'id',type:'int'},
+	    'name'
+	],
+	data:{'items':[
+	    {"id":"1","name":"Lisa"},
+	    {"id":"2","name":"Bart"},
+	    {"id":"3","name":"Homer"},
+	    {"id":"4","name":"Marge"}
+	]},
+	proxy: {
+	    type: 'memory',
+	    reader: {
+		type: 'json',
+		root: 'items'
+	    }
+	}
+    });
+    
+    Ext.create('Ext.grid.Panel', {
+	title: 'Simple Grid',
+	store: Ext.data.StoreManager.lookup('simpleStore'),
+	columns: [
+	    {header: 'Id', dataIndex: 'id', hidden: true },
+	    {header: 'Name', dataIndex: 'name', flex:1, editor: {xtype:'textfield'}}
+	],
+	features: [{
+	    ftype: 'rowbody',
+	    getAdditionalData: function(data,ids,record){
+		var o = Ext.grid.feature.RowBody.prototype.getAdditionalData.apply(this, arguments);
+		
+		o.rowBody = [
+		    '<table class="rowexpand-data">',
+			'<td>&nbsp;&nbsp;NAME: <b>',record.get('name'),'</b>, (double-click here)</td>',
+		    '</table>'
+		].join('');
+		
+		return o;
+	    }
+	},{
+	    ftype: 'rowwrap'
+	}],
+	plugins: [{
+	    clicksToEdit: 2,
+	    ptype: 'cellediting'
+	}],
+	height: 200,
+	width: 500,
+	renderTo: Ext.getBody()
+    });
+});
+        
+    </script>
+</body>
+</html>

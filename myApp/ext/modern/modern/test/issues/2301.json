@@ -1,0 +1,11 @@
+[
+     { "firstName" : "Tommy",   "lastName" : "Maintz" },
+     { "firstName" : "Ed",      "lastName" : "Spencer", "disclose" : false },
+     { "firstName" : "Jamie",   "lastName" : "Avins" },
+     { "firstName" : "Aaron",   "lastName" : "Conran" },
+     { "firstName" : "Dave",    "lastName" : "Kaneda", "disclose" : false },
+     { "firstName" : "Michael", "lastName" : "Mullany" },
+     { "firstName" : "Abraham", "lastName" : "Elias", "disclose" : false },
+     { "firstName" : "Jay",     "lastName" : "Robinson" },
+     { "firstName" : "Ape",     "lastName" : "Evilias" }
+]

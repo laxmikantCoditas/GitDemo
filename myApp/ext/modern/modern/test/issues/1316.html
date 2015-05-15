@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>TOUCH-1316</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script src="../../sencha-touch.js"></script>
+        
+        <script type="text/javascript">
+
+Ext.setup({
+    onReady : function() {
+
+        var list = Ext.create('Ext.dataview.List', {
+            fullscreen : true,
+            itemTpl    : '{company}',
+            store      : Ext.create('Ext.data.Store', {
+                fields : ['company'],
+                data   : [
+                    { company : 'Sencha' },
+                    { company : 'Google' },
+                    { company : 'Apple'  }
+                ]
+            }),
+            listeners : {
+                delay  : 500,
+                select : function() {
+                    console.log('deselecting');
+
+                    list.deselect(1);   // works
+                    //list.deselect([1]); //works
+
+                    //var store = list.getStore(),
+                    //    rec   = store.getAt(1);
+
+                    //list.deselect(rec);   // works
+                    //list.deselect([rec]); //works
+                }
+            }
+        });
+
+        list.select(1);
+
+    }
+});
+
+        </script>
+    </head>
+    
+    <body></body>
+</html>

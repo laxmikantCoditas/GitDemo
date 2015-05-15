@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Test case template</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch-debug.js"></script>
+    <script>
+        Ext.application({
+            name: 'Sencha',
+            launch: function() {
+                Ext.create('Ext.Panel', {
+                    fullscreen: true,
+                    listeners: {
+                        initialize: function() {
+                            Ext.Viewport.onBefore({
+                                orientationchange: function(viewport, orientation){
+                                    this.setHtml('The orientation is ' + orientation);
+                                },
+                                scope: this
+                            });
+                            this.setHtml('The orientation is ' + Ext.Viewport.getOrientation());
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</head>
+
+<body></body>
+
+</html>

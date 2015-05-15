@@ -1,0 +1,311 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>EXTJSIV-7466 Test Case</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+    <script type="text/javascript" src="../../ext.js"></script>
+
+    <script type="text/javascript">
+
+		Ext.require([
+		    'Ext.data.TreeStore',
+		    'Ext.tree.Panel'
+		]);
+
+        Ext.onReady(function() {
+
+            var store = Ext.create('Ext.data.TreeStore', {
+                proxy: {
+                    type: 'ajax',
+                    url: 'get-nodes.php'
+                },
+                root: {
+                    text: 'Ext JS',
+                    id: 'src',
+                    expanded: true,
+                    children:[
+                            {
+                                "text": "AbstractComponent.js",
+                                "id": "src/AbstractComponent.js",
+                                "leaf": true,
+                                "cls": "file"
+                            },
+                            {
+                                "text": "app",
+                                "id": "src/app",
+                                "cls": "folder",
+                                'children': [
+                                    {
+                                        "text": "Application.js",
+                                        "id": "src/app/Application.js",
+                                        "leaf": true,
+                                        "cls": "file"
+                                    },
+                                    {
+                                        "text": "Controller.js",
+                                        "id": "src/app/Controller.js",
+                                        "leaf": true,
+                                        "cls": "file"
+                                    },
+                                    {
+                                        "text": "EventBus.js",
+                                        "id": "src/app/EventBus.js",
+                                        "leaf": true,
+                                        "cls": "file"
+                                    }
+                                ]
+                            },
+                            {
+                                "text": "button",
+                                "id": "src/button",
+                                "cls": "folder",
+                                'children': [
+                                    {
+                                        "text": "Button.js",
+                                        "id": "src/button/Button.js",
+                                        "leaf": true,
+                                        "cls": "file"
+                                    },
+                                    {
+                                        "text": "Cycle.js",
+                                        "id": "src/button/Cycle.js",
+                                        "leaf": true,
+                                        "cls": "file"
+                                    },
+                                    {
+                                        "text": "Split.js",
+                                        "id": "src/button/Split.js",
+                                        "leaf": true,
+                                        "cls": "file"
+                                    }
+                                ]
+                            },
+                            {
+                                "text": "chart",
+                                "id": "src/chart",
+                                "cls": "folder",
+                                'children': [
+                                    {
+                                        "text": "axis",
+                                        "id": "src/chart/axis",
+                                        "cls": "folder",
+                                        'children': [
+                                            {
+                                                "text": "Abstract.js",
+                                                "id": "src/chart/axis/Abstract.js",
+                                                "leaf": true,
+                                                "cls": "file"
+                                            },
+                                            {
+                                                "text": "Axis.js",
+                                                "id": "src/chart/axis/Axis.js",
+                                                "leaf": true,
+                                                "cls": "file"
+                                            },
+                                            {
+                                                "text": "Category.js",
+                                                "id": "src/chart/axis/Category.js",
+                                                "leaf": true,
+                                                "cls": "file"
+                                            },
+                                            {
+                                                "text": "Gauge.js",
+                                                "id": "src/chart/axis/Gauge.js",
+                                                "leaf": true,
+                                                "cls": "file"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "text": "Callout.js",
+                                        "id": "src/chart/Callout.js",
+                                        "leaf": true,
+                                        "cls": "file"
+                                    },
+                                    {
+                                        "text": "series",
+                                        "id": "src/chart/series",
+                                        "cls": "folder",
+                                        'children':[
+                                            {
+                                                "text": "Area.js",
+                                                "id": "src/chart/series/Area.js",
+                                                "leaf": true,
+                                                "cls": "file"
+                                            },
+                                            {
+                                                "text": "Bar.js",
+                                                "id": "src/chart/series/Bar.js",
+                                                "leaf": true,
+                                                "cls": "file"
+                                            },
+                                            {
+                                                "text": "Cartesian.js",
+                                                "id": "src/chart/series/Cartesian.js",
+                                                "leaf": true,
+                                                "cls": "file"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "text": "Shape.js",
+                                        "id": "src/chart/Shape.js",
+                                        "leaf": true,
+                                        "cls": "file"
+                                    },
+                                    {
+                                        "text": "theme",
+                                        "id": "src/chart/theme",
+                                        "cls": "folder",
+                                        'children': [
+                                            {
+                                                "text": "Base.js",
+                                                "id": "src/chart/theme/Base.js",
+                                                "leaf": true,
+                                                "cls": "file"
+                                            },
+                                            {
+                                                "text": "Theme.js",
+                                                "id": "src/chart/theme/Theme.js",
+                                                "leaf": true,
+                                                "cls": "file"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "text": "Tip.js",
+                                        "id": "src/chart/Tip.js",
+                                        "leaf": true,
+                                        "cls": "file"
+                                    },
+                                    {
+                                        "text": "TipSurface.js",
+                                        "id": "src/chart/TipSurface.js",
+                                        "leaf": true,
+                                        "cls": "file"
+                                    }
+                                ]
+                            },
+                            {
+                                "text": "Component.js",
+                                "id": "src/Component.js",
+                                "leaf": true,
+                                "cls": "file"
+                            },
+                            {
+                                "text": "core",
+                                "id": "src/core",
+                                "cls": "folder",
+                                'children': [
+                                    {
+                                        "text": "src",
+                                        "id": "src/core/src",
+                                        "cls": "folder",
+                                        'children': [
+                                            {
+                                                "text": "class",
+                                                "id": "src/core/src/class",
+                                                "cls": "folder",
+                                                'children': [
+                                                    {
+                                                        "text": "Base.js",
+                                                        "id": "src/core/src/class/Base.js",
+                                                        "leaf": true,
+                                                        "cls": "file"
+                                                    },
+                                                    {
+                                                        "text": "Class.js",
+                                                        "id": "src/core/src/class/Class.js",
+                                                        "leaf": true,
+                                                        "cls": "file"
+                                                    },
+                                                    {
+                                                        "text": "ClassManager.js",
+                                                        "id": "src/core/src/class/ClassManager.js",
+                                                        "leaf": true,
+                                                        "cls": "file"
+                                                    },
+                                                    {
+                                                        "text": "Loader.js",
+                                                        "id": "src/core/src/class/Loader.js",
+                                                        "leaf": true,
+                                                        "cls": "file"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "text": "dom",
+                                                "id": "src/core/src/dom",
+                                                "cls": "folder",
+                                                'children': [
+                                                    {
+                                                        "text": "AbstractElement-alignment.js",
+                                                        "id": "src/core/src/dom/AbstractElement-alignment.js",
+                                                        "leaf": true,
+                                                        "cls": "file"
+                                                    },
+                                                    {
+                                                        "text": "AbstractElement-insertion.js",
+                                                        "id": "src/core/src/dom/AbstractElement-insertion.js",
+                                                        "leaf": true,
+                                                        "cls": "file"
+                                                    },
+                                                    {
+                                                        "text": "AbstractElement-position.js",
+                                                        "id": "src/core/src/dom/AbstractElement-position.js",
+                                                        "leaf": true,
+                                                        "cls": "file"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "text": "EventManager.js",
+                                                "id": "src/core/src/EventManager.js",
+                                                "leaf": true,
+                                                "cls": "file"
+                                            },
+                                            {
+                                                "text": "EventObject.js",
+                                                "id": "src/core/src/EventObject.js",
+                                                "leaf": true,
+                                                "cls": "file"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                    ]
+                },
+                folderSort: true,
+                sorters: [{
+                    property: 'text',
+                    direction: 'ASC'
+                }]
+            });
+
+            var tree = Ext.create('Ext.tree.Panel', {
+                store: store,
+                viewConfig: {
+                    plugins: {
+                        ptype: 'treeviewdragdrop',
+                        allowParentInserts: true,
+                        containerScroll: true
+                    }
+                },
+                renderTo: 'tree-div',
+                height: 300,
+                width: 250,
+                title: 'Files',
+                useArrows: true
+            });
+        });
+
+
+    </script>
+</head>
+<body>
+
+    <div id="tree-div"></div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+.ticket-table {
+	empty-cells: show;
+	border-collapse: collapse;
+}
+
+.ticket-table td {
+	padding: 2px 6px;
+}
+
+.ticket-table th {
+	text-align: left;
+}
+
+.ticket-table,
+.ticket-table th,
+.ticket-table td {
+	border: 1px solid black;
+	padding: 2px 6px;
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../../sencha-touch-all.js"></script>
+    <script type="text/javascript">
+        Ext.require([
+            'Ext.draw.Component',
+            'Ext.Panel'
+        ]);
+        var seed = .5;
+
+        function random() {
+            seed *= 15.1;
+            seed -= Math.floor(seed);
+            return seed - 0.5;
+        }
+        Ext.setup({
+            onReady: function () {
+                var cmp = {
+                    xtype: 'draw',
+                    width: 400,
+                    height: 300,
+                    background: 'white',
+                    sprites: [
+                        {
+                            type: 'circle',
+                            x: 30,
+                            y: 30,
+                            radius: 10,
+                            fill: 'black'
+                        }
+                    ]
+                }, activeCmp, surface;
+
+                for (var i = 1; i < 100; i++) {
+                    cmp.sprites[i] = Ext.apply({}, {
+                        x: 30 + i * 10,
+                        y: 30 + i * 5
+                    }, cmp.sprites[0]);
+                }
+
+                function interval() {
+                    if (!activeCmp) {
+                        activeCmp = Ext.Viewport.add(cmp);
+                        surface = activeCmp.getSurface();
+                    } else if (surface.getItems().length == 0) {
+                        activeCmp.destroy();
+                        activeCmp = null;
+                    } else if (surface.getItems().length < 30) {
+                        surface.getItems().clear();
+                        surface.renderFrame();
+                    } else {
+                        surface.getItems().getAt(Math.floor(Math.random() * (surface.getItems().length - 0.5))).destroy();
+                        surface.renderFrame();
+                    }
+                }
+
+                setInterval(interval, 1);
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

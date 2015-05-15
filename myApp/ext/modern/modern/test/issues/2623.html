@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2623</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.define('MyModel', {
+            extend:'Ext.data.Model',
+            config:{
+                fields:[
+                    {name:'id', type:'integer'},
+                    {name:'name', type:'string'},
+                    {name:'dummy1', type:'string'},
+                    {name:'dummy2', type:'float'},
+                    {name:'dummy3', type:'float'},
+                    {name:'order', type:'int', defaultValue:-1}
+                ],
+                proxy:{
+                    type:'localstorage',
+                    id:'my-proxy'
+                },
+                validations:[
+                    {field:'name', type:'custom', message:'nonunique',
+                        fn:function () {
+                            return true;
+                        }},
+                    {field:'dummy2', type:'presence'},
+                    {field:'dummy3', type:'presence'},
+                    {field:'dummy1', type:'presence'}
+                ]
+            }
+        });
+
+        var MyStore = Ext.create('Ext.data.Store', {
+            model:'MyModel',
+            listeners:{
+                load:function (store) {
+                    if (store.getCount() === 0) {
+                        store.add([
+                            Ext.create('MyModel', {name:'Item1', dummy1:'aspdfoij', dummy2:3.3, dummy3:14.1, order:0}),
+                            Ext.create('MyModel', {name:'Item2', dummy1:'zfewefawpdfoij', dummy2:3123.3, dummy3:23423424314.1, order:1}),
+                            Ext.create('MyModel', {name:'Item3', dummy1:'gwregawedfoij', dummy2:153.3, dummy3:12314.1, order:2}),
+                            Ext.create('MyModel', {name:'Item4', dummy1:'3f3fadfoij', dummy2:333.3, dummy3:1235242.1, order:3})
+                        ]);
+                    }
+                }
+            },
+            sorters:[
+                {
+                    property:'order',
+                    direction:'ASC'
+                }
+            ]
+        });
+        MyStore.load();
+
+        var TestView = {
+            id:'arrange',
+            xtype:'panel',
+            title:"Test",
+            layout:'fit',
+            items:[
+                {
+                    xtype:'toolbar',
+                    docked:'top',
+                    title:"Arrange",
+                    items:[
+                        {
+                            id:'arrange-lifts-up-button',
+                            xtype:'button',
+                            text:'up',
+                            ui:'confirm',
+                            handler: function() {
+                                var list = Ext.getCmp('arrange-list'),
+                                    selected = list.getSelection()[0],
+                                    index = MyStore.indexOf(selected),
+                                    originalOrder = selected.get('order'),
+                                    swap;
+                                if (index > 0) {
+                                    swap = MyStore.getAt(index - 1);
+                                    selected.set('order', swap.get('order'));
+                                    swap.set('order', originalOrder);
+                                }
+                            }
+                        },
+                        {
+                            id:'arrange-lifts-down-button',
+                            xtype:'button',
+                            text:'down',
+                            ui:'decline',
+                            handler:function () {
+                                var list = Ext.getCmp('arrange-list'),
+                                    selected = list.getSelection()[0],
+                                    index = MyStore.indexOf(selected),
+                                    originalOrder = selected.get('order'),
+                                    swap;
+                                if (index < MyStore.getData().length - 1) {
+                                    swap = MyStore.getAt(index + 1);
+                                    selected.set('order', swap.get('order'));
+                                    swap.set('order', originalOrder);
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    id:'arrange-list',
+                    xtype:'list',
+                    store:MyStore,
+                    itemTpl:'<div>{name}</div>'
+                }
+            ]
+        };
+
+        Ext.application({
+            launch:function () {
+                Ext.create('Ext.tab.Panel', {
+                    id:'main-tab-panel',
+                    fullscreen:true,
+                    sortable:false,
+                    tabBar:{
+                        docked:'bottom',
+                        layout:{ pack:'center', align:'center' }
+                    },
+                    items:[
+                        TestView
+                    ]
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

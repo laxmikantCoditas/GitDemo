@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        Ext.onReady(function () {
+            var users = [
+                { name: { first: 'ben', last: 'toll', email: null }, job: 'programmer' },
+                { name: { first: 'evan', last: 'trimboli', email: null }, job: 'programmer' },
+                { name: { first: 'greg', last: 'barry', email: null }, job: 'programmer' }
+            ];
+
+            Ext.define('User', {
+                extend: 'Ext.data.Model',
+                fields: [
+                    { name: 'firstname', mapping: 'name.first' },
+                    { name: 'lastname', mapping: 'name.last' },
+                    { name: 'email', mapping: 'name.email' },
+                    { name: 'job', mapping: undefined }
+                ]
+            });
+
+            Ext.onReady(function () {
+                var tpl = new Ext.XTemplate(
+                        '<tpl for=".">',
+                        '<ol>',
+                        '<li>{firstname} {lastname}: {email}, {job}</li>',
+                        '</ol>',
+                        '</tpl>'
+                );
+
+                Ext.create('Ext.view.View', {
+                    store: Ext.create('Ext.data.Store', {
+                        model: 'User',
+                        data: users,
+                        proxy: {
+                            type: 'memory'
+                        }
+                    }),
+                    tpl: tpl,
+                    itemSelector: 'ol',
+                    renderTo: Ext.getBody()
+                });
+            });
+        });
+
+    </script>
+</body>
+</html>

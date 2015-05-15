@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+    <script>
+//        Ext.Loader.setConfig({
+//            enabled: true
+//        });
+
+        Ext.require('Ext.container.Viewport');
+        Ext.onReady(function() {
+            new Ext.container.Viewport({
+                layout: "auto",
+                items: [{
+                    title : "2 columns of the same height",
+                    layout : {
+                        type: "hbox",
+                        align : "stretchmax"
+                    },
+                    items : [{
+                        xtype: "container",
+                        layout: "vbox",
+                        flex : 1,
+                        items: [{
+                            width: 300,
+                            id: "vboxchild",
+                            xtype : "textfield",
+                            fieldLabel : "vbox text field label"
+                        }]
+                    }, {
+                        xtype: "container",
+                        layout: "hbox",
+                        flex : 1,
+                        items: [{
+                            width: 300,
+                            id: "hboxchild",
+                            xtype : "textfield",
+                            fieldLabel : "hbox text field label"
+                        }]
+                    }]
+                }]
+            });
+
+            Ext.getCmp("vboxchild").setFieldLabel("vbox textfield label 1 changed");
+            Ext.getCmp("hboxchild").setFieldLabel("hbox textfield label 2 changed");
+        });
+
+    </script>
+        
+    </script>
+</body>
+</html>

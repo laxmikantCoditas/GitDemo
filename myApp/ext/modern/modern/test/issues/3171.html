@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TOUCH-3171</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script type="text/javascript" src="../../sencha-touch.js"></script>
+
+        <script type="text/javascript">
+            Ext.application({
+                name : 'Test',
+
+                requires : [
+                    'Ext.form.Panel',
+                    'Ext.field.DatePicker',
+                    'Ext.field.TextArea'
+                ],
+
+                launch : function () {
+                    Ext.Viewport.add({
+                            xtype: 'list',
+                            data: [],
+                            itemTpl: '<div>{text}</div>'
+                    });
+                }
+            });
+	</script>
+    </head>
+    <body>
+
+    </body>
+</html>

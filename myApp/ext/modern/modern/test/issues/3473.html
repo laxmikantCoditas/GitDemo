@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3473</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+    <script type="text/javascript">
+
+        Ext.require([
+        ]);
+
+        Ext.application({
+            launch : function () {
+                var panel1 = Ext.create('Ext.Panel', {html: 'One'});
+                var panel2 = Ext.create('Ext.Panel', {html: 'Two'});
+
+                var carousel = Ext.create('Ext.Carousel');
+                carousel.add(panel1);
+                carousel.add(panel2);
+
+                Ext.Viewport.add(carousel);
+            }
+        });
+
+    </script>
+</head>
+<body>
+</body>
+</html>

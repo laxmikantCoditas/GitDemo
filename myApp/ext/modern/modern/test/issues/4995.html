@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4995</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+	    Ext.application({
+		    name: 'Fiddle',
+
+
+		    launch: function() {
+			    var cont = Ext.create('Ext.Container', {
+				    //fullscreen: true,
+				    width: 400,
+				    height: 300,
+				    style: 'border : 2px solid red;',
+				    items: [{
+					    //xtype: 'textareafield',
+					    xtype: 'textfield',
+					    title: 'test',
+					    label: 'Field',
+					    itemId: 'testField',
+					    value: 'check read only...'
+				    }]
+			    });
+
+
+			    Ext.Viewport.add(cont);
+			    /*Change field with read only true*/
+			    cont.down("#testField").setReadOnly(true);
+
+
+			    /*Change field with read only false but field lets not write..*/
+			    cont.down("#testField").setReadOnly(false);
+		    }
+	    });
+    </script>
+</head>
+<body>
+</body>
+</html>

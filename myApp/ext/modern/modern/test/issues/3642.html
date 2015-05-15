@@ -1,0 +1,226 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>TEST CASE FOR TOUCH-3642</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+<script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+<style>
+    .dashboardSparkline, .dashboardStatus {
+        height: 115px;
+        background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#404040), to(#6F6F6F));
+        border-radius: 5px;
+        border: 1px solid;
+        border-top-color: #666666;
+        border-right-color: #232323;
+        border-bottom-color: #232323;
+        border-left-color: #666666;
+        margin: 3px;
+        padding-top: 8px;
+    }
+
+    .dashboardSparklineLabel {
+        background-color: #555555;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        border: 2px solid #555555;
+        border-top: 1px solid #333333;
+        color: #FFFFFF;
+        line-height: 1.25;
+        height: 100%;
+        width: 100%;
+        padding: 5px 5px 7px 5px;
+        margin: 0px;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+        /* text truncation */
+    .textTruncation {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+</style>
+<script type="text/javascript">
+    Ext.require(["Ext.data.Store", "Ext.chart.SpaceFillingChart", "Ext.chart.series.Gauge"]);
+
+    Ext.application({
+        name: 'App',
+        requires: [
+            'Ext.Panel',
+            'Ext.Toolbar',
+            'Ext.Video'
+        ],
+        launch: function () {
+            /**
+             * This is the local data store for the chart
+             */
+            this.store = Ext.create('Ext.data.Store', {
+                storeId: 'gaugeStore',
+                proxy: {
+                    type: 'memory',
+                    id: 'gauge-storage'
+                }
+            });
+
+            /**
+             * This is the gauge chart for the dashboard, with no axes, markers, etc.
+             */
+            var chart = Ext.create('Ext.chart.SpaceFillingChart', {
+                id: 'gaugeCmp',
+                store: 'gaugeStore',
+                insetPadding: {
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0
+                },
+                axes: [],
+                series: [
+                    {
+                        field: 'latestValue',
+                        type: 'gauge',
+                        minimum: 0,
+                        maximum: 100,
+                        donut: 70,
+                        value: 75,
+                        totalAngle: Math.PI / 2,
+                        subStyle: {
+                            fillStyle: ["#339933", "lightgrey"]
+                        },
+                        style: {
+                            miterLimit: 10,
+                            lineCap: 'miter',
+                            lineWidth: 2
+                        }
+                    }
+                ]
+            });
+
+            var mainPanel = Ext.create('Ext.Panel', {
+                fullscreen: true,
+                layout: 'vbox',
+                items: [
+                    {
+                        xtype: 'toolbar',
+                        docked: 'bottom',
+                        items: [
+                            {
+                                xtype: 'title',
+                                title: 'Sample Title'
+                            }
+                        ]
+                    },
+                    {
+                        xtype: 'panel',
+                        layout: {
+                            type: 'vbox',
+                            pack: 'center',
+                            align: 'stretch'
+                        },
+                        height: '100%',
+                        width: '100%',
+                        //flex: 1,
+                        /* This seems to be the problem */
+                        scrollable: {
+                            direction: 'vertical'
+                        },
+                        items: [
+                            {
+                                xtype: 'container',
+                                layout: {
+                                    type: 'hbox',
+                                    pack: 'start',
+                                    align: 'stretch'
+                                },
+                                flex: 1,
+                                defaults: {
+                                    xtype: 'container',
+                                    cls: 'dashboardSparkline',
+                                    layout: {
+                                        type: 'vbox',
+                                        align: 'stretch',
+                                        pack: 'start'
+                                    },
+                                    flex: 1
+                                },
+                                items: [
+                                    {
+                                        items: {
+                                            xtype: 'panel',
+                                            docked: 'bottom',
+                                            html: '<div class="dashboardSparklineLabel textTruncation">1This is my test information that I am inserting into this test case.</div>'
+                                        }
+                                    },
+                                    {
+                                        items: [
+                                            {
+                                                flex: 1,
+                                                layout: 'fit',
+                                                items: [chart]
+                                            },
+                                            {
+                                                xtype: 'panel',
+                                                docked: 'bottom',
+                                                html: '<div class="dashboardSparklineLabel textTruncation">2This is my test GAUGE test case.</div>'
+                                            }
+                                        ]
+
+                                    },
+                                    {
+                                        items: {
+                                            xtype: 'panel',
+                                            docked: 'bottom',
+                                            html: '<div class="dashboardSparklineLabel textTruncation">3This is my test information that I am inserting into this test case.</div>'
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                xtype: 'container',
+                                layout: 'hbox',
+                                flex: 1,
+                                defaults: {
+                                    xtype: 'container',
+                                    cls: 'dashboardSparkline',
+                                    layout: {
+                                        type: 'vbox',
+                                        align: 'stretch',
+                                        pack: 'start'
+                                    },
+                                    flex: 1
+                                },
+                                items: [
+                                    {
+                                        items: {
+                                            xtype: 'panel',
+                                            docked: 'bottom',
+                                            html: '<div class="dashboardSparklineLabel textTruncation">4This is my test information that I am inserting into this test case.</div>'
+                                        }
+                                    },
+                                    {
+                                        items: {
+                                            xtype: 'panel',
+                                            docked: 'bottom',
+                                            html: '<div class="dashboardSparklineLabel textTruncation">5This is my test information that I am inserting into this test case.</div>'
+                                        }
+                                    },
+                                    {
+                                        items: {
+                                            xtype: 'panel',
+                                            docked: 'bottom',
+                                            html: '<div class="dashboardSparklineLabel textTruncation">6This is my test information that I am inserting into this test case.</div>'
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            });
+        }
+    });
+</script>
+</head>
+<body></body>
+</html>

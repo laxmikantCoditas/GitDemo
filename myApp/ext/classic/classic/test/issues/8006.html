@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+			Ext.require('Ext.form.*');
+
+			Ext.onReady(function() {
+				Ext.tip.QuickTipManager.init();
+				
+				var states = Ext.create('Ext.data.Store', {
+					fields: ['abbr', 'name'],
+					data : [
+						{"abbr":"AL", "name":"Alabama"},
+						{"abbr":"AK", "name":"Alaska"},
+						{"abbr":"AZ", "name":"Arizona"},
+						{"abbr":"NC", "name":"North Carolina"},
+						{"abbr":"SC", "name":"South Carolina"}
+					]
+				});
+
+				var form = Ext.createWidget('form', {
+					renderTo:  Ext.getBody(),
+					title: 'Combo box test',
+					bodyPadding: 5,
+					frame: true,
+					width: 340,
+					fieldDefaults: {
+						labelAlign: 'left',
+						labelWidth: 105,
+						anchor: '100%'
+					},
+					items: [{
+							xtype: 'combo',
+							fieldLabel: 'Combo Box:',
+							name: 'cb1',
+							forceSelection: true,
+							displayField: 'name',
+							valueField: 'abbr',
+							store: states,
+							queryMode: 'local'
+						},
+						{
+							xtype: 'textfield',
+							fieldLabel: 'Text Field:',
+							name: 'tf1'
+						}
+					]					
+				});
+				
+				var selectEvent = function(field) {
+					alert(field.getValue());
+				}
+				
+				var combobox = form.down('combo');
+				combobox.on('select', selectEvent, this);
+			});
+        
+    </script>
+</body>
+</html>

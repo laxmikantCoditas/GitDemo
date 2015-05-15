@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<style type="text/css">
+    b { color:red; } 
+    b.ok { color:green; }
+</style>
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <pre id="test">RUNNING TESTS...
+    </pre>
+    <script type="text/javascript" charset="utf-8">
+    Ext.define('Test.view.Viewport', {
+        extend: 'Ext.container.Viewport',
+        id: 'parent',
+        items:{id:'child'}
+    });
+
+    Ext.define('Test.controller.Main', {
+        extend: 'Ext.app.Controller',
+
+        init: function() {
+            this.control({
+                '#parent'         : test('element'),
+                '#parent #child'  : test('descendents'),
+                '#parent  #child' : test('descendents / extra spaces'),
+                '#parent>#child'  : test('direct child'),
+                '#parent >#child' : test('direct child / single space [L]'),
+                '#parent  >#child': test('direct child / extra spaces [L]'),
+                '#parent> #child' : test('direct child / single space [R]'),
+                '#parent>  #child': test('direct child / extra spaces [R]')
+            });
+        }
+
+    });
+
+    Ext.application({
+        autoCreateViewport: true,
+        name: 'Test',
+        controllers: ['Main']
+    });
+
+    var testCount = 0;
+    function test(m) {
+        var N = ++this.testCount, id = 'e'+N;
+        Ext.get('test').insertHtml('beforeEnd',
+          '\n  '+N+'. <b id='+id+'>FAIL</b> - '+m);
+        return {
+            afterrender: function() {
+                Ext.get(id).update('PASS').addCls('ok');
+            }
+        }
+    }
+    </script>
+</body>
+</html>

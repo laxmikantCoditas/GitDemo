@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<!-- 
+<html style="-webkit-text-size-adjust:none">
+ -->
+<html>
+<head>
+<meta charset="UTF-8">
+<title>TOUCH-5164</title>
+<style>
+</style>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+    <script src="../../sencha-touch-all-debug.js"></script>
+<script>
+
+Ext.Loader.require(['Ext.chart.*']);
+
+
+var testStrings = [
+        {   title: "iiii",   string: "iiiiiiii",  comment: "All measurements are wrong. The sprite.bbox is closer to the truth but the div is more consistent (always bigger, proportionally to the font size)."  },
+        {   title: "MMM",    string: "MMMMMM",    comment: "The measureText and sprite.bbox are the same but both too small. The div is exact."    },
+        {   title: "Mi",     string: "MiMiMiM",   comment: "All measurements are wrong. The div is closer to the truth but a bit too big."   },
+        {   title: "MI",     string: "MIMIMIM",   comment: "The measureText and sprite.bbox are the same but sometimes too small, sometimes too big. The div is exact."   },
+        {   title: "Ti",     string: "TiTiTiT",   comment: "Same as Mi. All measurements are wrong. The div is closer to the truth but a bit too big."   },
+        {   title: "TI",     string: "TITITIT",   comment: "Same as MI. The measureText and sprite.bbox are the same but sometimes too small, sometimes too big. The div is exact."   },
+        {   title: "Tx",     string: "TxTxTxT",   comment: "Same as Mi. All measurements are wrong. The div is closer to the truth but a bit too big."   },
+        {   title: "TX",     string: "TXTXTXT",   comment: "Same as MMM. The measureText and sprite.bbox are the same but both too small. The div is exact."   },
+        {   title: "VA",     string: "VAVAVAV",   comment: "The measureText and sprite.bbox are wrong and both too big. The div is closer to the truth but a bit too big."   },
+        {   title: "123",    string: "12345678",  comment: "Same as MI. The measureText and sprite.bbox are the same but sometimes too small, sometimes too big. The div is exact."  },
+        {   title: "quick",  string: "The quick brown fox jumps over the lazy dog+",  comment: "Same as iiii. All measurements are wrong. The sprite.bbox is closer to the truth but the div is more consistent (always bigger, proportionally to the font size)."  },
+        {   title: "QUICK",  string: "THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG+",  comment: "The measureText and sprite.bbox are both wrong and different, sometimes too small, sometimes too big. The div is exact."  },
+    ];
+
+var legend = "<br><br>\
+            * Red dot if sprite.bbox != measureText<br>\
+            * Black dot if div != sprite.bbox<br><br>\
+            div is exact when there is no kerning (uppercase, numbers): [MMM, TX] + [MI, TI, 123] + [QUICK]<br>\
+            div is a bit too big when there is some kerning: [Mi, Ti, Tx] + [VA]<br>\
+            div is bigger but proportionally when there is a lot of kerning (lowercase): [iiii, quick]<br><br>\
+            ";
+
+Ext.application({
+	name: 'CA',
+	launch: function() {
+	
+	    var tabs = [];
+	    var stringIndex, stringCount = testStrings.length,
+	        title, testText, comment, fontSize,
+	        i, len, top, left, canvas, staggered;
+	    
+	    for (stringIndex = 0; stringIndex < stringCount; stringIndex++) {
+	        title = testStrings[stringIndex].title;
+	        testText = testStrings[stringIndex].string;
+	        if (testText.indexOf('+') === -1) {
+                len = testText.length;
+                testText += '+';
+                for (i = len-1; i >= 0; i--) {
+                    testText += testText[i];
+                }
+	        }
+	        staggered = (testText.length > 20);
+	        comment = testStrings[stringIndex].comment || '';
+
+            canvas = new Ext.draw.Component({
+                height : 520 + (staggered ? 110 : 0)
+            });
+
+            for (fontSize = 2; fontSize <= 16; fontSize += 2)
+            {
+                top = Math.floor(fontSize/10) * 250 + 20 + (staggered ? Math.floor(fontSize%10)*25 : 0);
+                left = ((((fontSize-2)/2)%4)+0.5) * 170;
+
+                canvas.getSurface().add({
+                    type: 'text',
+                    font: 'bold 18px Helvetica',
+                    fillStyle: 'blue',
+                    x: left,
+                    y: top+50,
+                    textAlign: 'center',
+                    text: String(fontSize)
+                    });
+
+                var sprite = canvas.getSurface().add({
+                    type: 'text',
+                    font: 'bold '+fontSize+'px Helvetica',
+                    fillStyle: 'blue',
+                    textAlign: 'center',
+                    x: left,
+                    y: top+70,
+                    text: testText
+                    });
+
+                canvas.getSurface().add({
+                    type: 'path',
+                    path: 'M'+left+' '+top+' L'+left+' '+(top+200),
+                    stroke: 'red'
+                    });
+ 
+                var len1 = Ext.draw.TextMeasurer.measureText(testText, 'bold '+fontSize+'px Helvetica').width;
+                canvas.getSurface().add({
+                    type: 'text',
+                    font: 'bold 12px Helvetica',
+                    fillStyle: 'green',
+                    textAlign: 'center',
+                    x: left,
+                    y: top+140,
+                    text: 'measureText = '+len1+''
+                    });
+
+                var len2 = sprite.getBBox().width;
+                canvas.getSurface().add({
+                    type: 'text',
+                    font: 'bold 12px Helvetica',
+                    fillStyle: 'red',
+                    textAlign: 'center',
+                    x: left,
+                    y: top+160,
+                    text: 'sprite.bbox = '+len2+''
+                    });
+ 
+                var len3 = Ext.draw.TextMeasurer.actualMeasureText(testText, 'bold '+fontSize+'px Helvetica').width;
+                canvas.getSurface().add({
+                    type: 'text',
+                    font: 'bold 12px Helvetica',
+                    fillStyle: 'black',
+                    textAlign: 'center',
+                    x: left,
+                    y: top+180,
+                    text: 'div = '+len3+''
+                    });
+
+                canvas.getSurface().add({
+                    type: 'path',
+                    path: 'M'+(left-len1/2)+' '+(top+80)+' L'+(left+len1/2)+' '+(top+80),
+                    stroke: 'green'
+                    });
+ 
+                canvas.getSurface().add({
+                    type: 'path',
+                    path: 'M'+(left-len2/2)+' '+(top+90)+' L'+(left+len2/2)+' '+(top+90),
+                    stroke: 'red'
+                    });
+
+                canvas.getSurface().add({
+                    type: 'path',
+                    path: 'M'+(left-len1/2)+' '+(top+0)+' L'+(left-len1/2)+' '+(top+100),
+                    stroke: 'gray'
+                    });
+
+                canvas.getSurface().add({
+                    type: 'path',
+                    path: 'M'+(left+len1/2)+' '+(top+0)+' L'+(left+len1/2)+' '+(top+100),
+                    stroke: 'gray'
+                    });
+
+                if (len1 != len2) {
+                    canvas.getSurface().add({
+                        type: 'path',
+                        path: 'M'+(left-len2/2)+' '+(top+90)+' L'+(left-len2/2)+' '+(top+60),
+                        stroke: 'red'
+                        });
+ 
+                    canvas.getSurface().add({
+                        type: 'path',
+                        path: 'M'+(left+len2/2)+' '+(top+90)+' L'+(left+len2/2)+' '+(top+60),
+                        stroke: 'red'
+                        });
+
+                    canvas.getSurface().add({
+                        type: 'circle',
+                        cx: left,
+                        cy: top + 200,
+                        r: 6,
+                        fillStyle: 'red'
+                        });
+                }
+                
+                if (len2 != len3){
+                    canvas.getSurface().add({
+                        type: 'path',
+                        path: 'M'+(left-len2/2)+' '+(top+100)+' L'+(left-len2/2+len3)+' '+(top+100),
+                        stroke: 'black'
+                        });
+ 
+                    canvas.getSurface().add({
+                        type: 'path',
+                        path: 'M'+(left-len2/2)+' '+(top+100)+' L'+(left-len2/2)+' '+(top+94),
+                        stroke: 'black'
+                        });
+ 
+                    canvas.getSurface().add({
+                        type: 'path',
+                        path: 'M'+(left-len2/2+len3)+' '+(top+100)+' L'+(left-len2/2+len3)+' '+(top+60),
+                        stroke: 'black'
+                        });
+
+                    canvas.getSurface().add({
+                        type: 'circle',
+                        cx: left,
+                        cy: top + 200,
+                        r: 3,
+                        fillStyle: 'black'
+                        });
+                }
+            }
+
+            tabs.push(
+                {
+                    title: title,
+                    items: [canvas],
+                    html: '<p style="margin:8px; font-size:12px">'+comment+legend+'</p>'
+                }
+            );
+
+	    }
+ 
+		var panel = Ext.Viewport.add(Ext.create('Ext.TabPanel', {
+            fullscreen: true,
+            activeTab: 1,
+            defaults: {
+                flex: 1,
+                scrollable: true
+            },
+            items: tabs
+
+		}));
+
+		Ext.Viewport.add(panel); 
+	}
+});
+
+
+
+</script>
+</head>
+<body>
+</body>
+</html>

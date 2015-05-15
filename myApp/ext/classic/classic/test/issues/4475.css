@@ -1,0 +1,12 @@
+p {
+    margin:5px;
+}
+.settings {
+    background-image:url(../../examples/shared/icons/fam/folder_wrench.png);
+}
+.nav {
+    background-image:url(../../examples/shared/icons/fam/folder_go.png);
+}
+.info {
+    background-image:url(../../examples/shared/icons/fam/information.png);
+}

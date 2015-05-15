@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2301</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+
+    <script>
+Ext.application({
+    requires: [
+        'Ext.data.Store',
+        'Ext.List',
+        'Ext.plugin.PullRefresh'
+    ],
+
+    launch: function() {
+        var listConfiguration = this.getListConfiguration();
+
+        if (!Ext.os.is.Phone) {
+            Ext.Viewport.add({
+                xtype: 'panel',
+                width: 350,
+                height: 370,
+                centered: true,
+                modal: true,
+                hideOnMaskTap: false,
+                layout: 'fit',
+                items: [listConfiguration]
+            });
+        } else {
+            Ext.Viewport.add(listConfiguration);
+        }
+    },
+
+    getListConfiguration: function() {
+        var store = Ext.create('Ext.data.Store', {
+            fields: ['firstName', 'lastName', 'disclose'],
+            sorters: 'firstName',
+            autoLoad: true,
+            grouper: {
+                groupFn: function(record) {
+                    return record.get('firstName')[0];
+                }
+            },
+            proxy: {
+                type: 'ajax',
+                url: '2301.json'
+            }
+        });
+
+        return {
+            xtype: 'list',
+            itemTpl: '<div class="contact2"><strong>{firstName}</strong> {lastName}</div>',
+            disclosure: true,
+            grouped: true,
+            indexBar: true,
+            disclosureProperty: 'disclose',
+            onItemDisclosure: function(record, item, index, e) {
+                e.stopEvent();
+                Ext.Msg.alert('Disclose', 'Disclose more info for ' + record.get('firstName'));
+            },
+            store: store
+        };
+    }
+});
+    </script>
+</head>
+<body></body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sencha Test</title>
+        
+        <script src="../../sencha-touch-all.js"></script>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+        <script type="text/javascript">
+
+Ext.application({
+    requires: ['Ext.MessageBox'],
+    
+    launch: function() {
+        Ext.create("Ext.Panel", {
+            fullscreen: true,
+            items: [{
+                xtype: 'button',
+                text: 'Click me',
+                handler: function() {
+                    var longText = '';
+                    for (var i = 99; i >= 0; i--) {
+                        longText += String(i)+' bottles of beer on the wall<br>';
+                    };
+                    Ext.Msg.alert('too long', longText);
+                }
+            }]
+        });
+    }
+});
+            
+        </script>
+    </head>
+    <body>
+
+    </body>
+</html>

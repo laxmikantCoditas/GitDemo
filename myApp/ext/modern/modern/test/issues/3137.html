@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>TOUCH-000</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script src="../../sencha-touch.js"></script>
+        
+        <script type="text/javascript">
+
+        Ext.application({
+            launch: function() {
+                var fieldset = Ext.Viewport.add({
+                    xtype: 'fieldset',
+                    title: 'test'
+                });
+
+                setTimeout(function() {
+                    fieldset.setTitle('testing');
+                }, 1000);
+            }
+        });
+
+        </script>   
+    </head>
+    
+    <body></body>
+</html>

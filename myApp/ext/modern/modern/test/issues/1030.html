@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>1272</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+        <script src="../../sencha-touch.js"></script>
+
+        <script type="text/javascript">
+
+            Ext.setup({
+                onReady: function() {
+
+                    Ext.create('Ext.tab.Panel', {
+                        fullscreen     : true,
+                        tabBarPosition : 'bottom',
+                        items          : [
+                            {
+                                xtype : 'panel',
+                                title : 'One',
+                                html  : 'One'
+                            },
+                            {
+                                xtype : 'map',
+                                title : 'Map'
+                            }
+                        ]
+                    });
+
+                }
+            });
+
+
+        </script>
+    </head>
+
+    <body></body>
+</html>

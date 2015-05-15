@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        Ext.onReady(function(){
+
+
+            var cb = Ext.create('Ext.Button', {
+                text: 'hallo',
+                menu      : [
+                    {text: 'Item 1', disabled: true},
+                    {text: 'Item 2', disabled: true},
+                    {text: 'Item 3', disabled: true}
+                ],
+                renderTo: Ext.getBody()
+            });
+
+        });
+        
+    </script>
+</body>
+</html>

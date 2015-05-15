@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test case template</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script src="../../sencha-touch.js"></script>
+        
+        <script>
+            /*
+            Here we have a carousel with some items, and a button which calls setActiveItem on that
+            carousel to a random index. Sometimes it works properly, but sometimes it ends up with
+            two items being rendered on top of each other.
+             */
+
+            Ext.setup({
+                onReady: function() {
+                    Ext.Viewport.add({
+                        xtype: 'container',
+                        layout: 'fit',
+                        items: [
+                            {
+                                xtype: 'toolbar',
+                                docked: 'top',
+                                items: {
+                                    xtype: 'button',
+                                    text: 'Switch',
+                                    handler: function() {
+                                        var carousel = Ext.Viewport.down('carousel');
+                                        carousel.setActiveItem(
+                                            Math.floor(Math.random() * carousel.getItems().length)
+                                        );
+                                    }
+                                }
+                            },
+                            {
+                                xtype: 'carousel',
+                                items: [
+                                    {html: 'This is the first item'},
+                                    {html: 'This is the second item'},
+                                    {html: 'This is the third item'},
+                                    {html: 'This is the fourth item'}
+                                ]
+                            }
+                        ]
+                    });
+                }
+            });
+        </script>
+    </head>
+    <body>
+        
+    </body>
+</html>

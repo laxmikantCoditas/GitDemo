@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript">
+        Ext.require([
+            "Ext.data.JsonStore",
+            "Ext.Panel",
+            "Ext.chart.PolarChart",
+            "Ext.chart.series.Pie",
+            "Ext.Toolbar"
+        ]);
+
+        Ext.setup({
+            onReady : function() {
+
+                var store = new Ext.data.JsonStore({
+                    fields: ['name', 'data'],
+                    data: [
+                        {'name':'metric one', 'data':1},
+                        {'name':'metric two', 'data':17},
+                        {'name':'metric three', 'data':15},
+                        {'name':'metric four', 'data':8},
+                        {'name':'metric five', 'data':10}
+                    ]
+                });
+
+                Ext.create('Ext.Panel', {
+                    fullscreen : true,
+                    layout : {
+                        type : 'hbox'
+                    },
+
+                    items : [
+                        {
+                            xtype : 'polar',
+                            flex : 1,
+
+                            store : store,
+                            colors: ['#0E3875', '#750E0E', '#0E7538', '#E56717', '#69076A'],
+
+		                    legend: {
+						        position: 'bottom'
+						    },
+
+                            series : [
+                                {
+                                    type : 'pie',
+                                    labelField : 'name',
+                                    donut : 25,
+                                    xField : 'data',
+                                    renderer: function(sprite, config, rendererData, index) {
+                                        var changes = {}, 
+                                            store = rendererData.store,
+                                            field = rendererData.field,
+                                            curentRecord = store.getData().items[index],
+                                            previousRecord = store.getData().items[Math.max(index - 1, 0)],
+                                            currentValue = curentRecord[field].data,
+                                            previousValue = previousRecord[field].data;
+                                        if (config.type == "label") {   // In Pie charts, the type can be "label" or "sector"
+                                            if (currentValue < previousValue) {
+                                                changes.strokeStyle = 'red';
+                                                changes.fillStyle = 'pink';
+                                            } else if (currentValue > previousValue) {
+                                                changes.strokeStyle = 'green';
+                                                changes.fillStyle = 'palegreen';
+                                            } else {
+                                                changes.strokeStyle = 'gray';
+                                                changes.fillStyle = 'lightgray';
+                                            }
+                                            changes.lineWidth = 1;
+                                            changes.text = '$' + config.text;
+                                            changes.fontSize = 36;
+                                        }
+                                        return changes;
+                                    },                                            
+                                    style : {
+                                        labelOverflowPadding : 0,
+                                        miterLimit : 10,
+                                        lineCap : 'miter',
+                                        lineWidth : 2
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                });
+            }
+        });
+    </script>
+
+</head>
+<body><p>Labels are green if the value is greater than the previous one, red if smaller, and gray if equal.</p></body>
+</html>

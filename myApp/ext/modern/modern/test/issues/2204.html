@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2204</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+
+    <script>
+        Ext.application({
+                name: 'Sencha',
+                launch: function() {
+                        var elem = Ext.fly('foo');
+                        console.log('Testing without synchronize');
+                        elem.select('.bar').each(function (el,c,idx) {
+                                console.log(el.hasCls('baz'))
+                        });
+                        console.log('Testing with synchronize');
+                        elem.select('.bar').each(function (el,c,idx) {
+                                el.synchronize();
+                                console.log(el.hasCls('baz'))
+                        });
+                }
+        });
+    </script>
+</head>
+<body>
+<div id="foo">
+  <div class="bar baz"></div>
+  <div class="bar quux"></div>
+</div>
+</body>
+</html>

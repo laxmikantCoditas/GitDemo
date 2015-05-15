@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>3668</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+<!--<script type="text/javascript" src="3668.js"></script>-->
+<script>
+Ext.require(['Ext.data.Store', 'Ext.data.StoreManager', 'Ext.grid.Panel']);
+Ext.onReady(function () {
+  
+  var myData = [{username:'jonathan', location:'sanjose', division:'billing'},
+    {username:'david', location:'cupertino', division:'HumanResources'},
+    {username:'crystal', location:'sunnyvale', division:'admin'},
+    {username:'crystal', location:'sunnyvale', division:'admin'},
+    {username:'crystal', location:'sunnyvale', division:'admin'},
+    {username:'crystal', location:'sunnyvale', division:'admin'},
+    {username:'jessica', location:'mountainview', division:'Research'}];
+
+  var fields = [{name:'username'},{name:'location'},{name:'division'}];
+
+  var store = Ext.create('Ext.data.Store', {
+    id: 'store',
+    fields: fields,
+    data: myData
+  });
+
+  var grid = Ext.create('Ext.grid.Panel',{
+    store: store,
+    id: 'testGrid',
+    frame:false,
+    height: 180,
+    width: 380,
+    columns: [
+      {header: 'User', width:150, dataIndex:'username'},
+      {header: 'Location', dataIndex:'location'},
+      {header: 'Department', dataIndex:'division' }
+    ],                                  
+    viewConfig: {
+      deferEmptyText: false,
+      stripeRows:true,
+      emptyText: 'No data found.'
+    },
+    bbar: [{
+      text: "Add 1 Row",
+      handler: function () {
+        var grid = this.up("gridpanel");
+        grid.store.loadData([{username: "new row"}], true);
+      }
+    }],
+    renderTo: Ext.getBody()
+  });
+});
+</script>
+</head>
+<body>
+    <div id="grid-example"></div>
+</body>
+</html>

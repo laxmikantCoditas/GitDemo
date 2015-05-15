@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Bar Chart Highlight Test Case</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript">
+        Ext.setup({
+            requires: [
+                'Ext.data.JsonStore',
+                'Ext.chart.CartesianChart',
+                'Ext.chart.axis.Numeric',
+                'Ext.chart.axis.Category',
+                'Ext.chart.series.Bar',
+                'Ext.chart.interactions.ItemHighlight'
+            ],
+            onReady:function () {
+                var store = new Ext.data.JsonStore({
+                    fields: ['name', 'data1'],
+                    data: [
+                        {'name':'metric one', 'data1':-10},
+                        {'name':'metric two', 'data1':7},
+                        {'name':'metric three', 'data1':-5},
+                        {'name':'metric four', 'data1':2},
+                        {'name':'metric five', 'data1':27}
+                    ]
+                });
+        
+                var chart = new Ext.chart.CartesianChart({
+                    store: store,
+                    flipXY: true,
+                    interactions: [
+                        'itemhighlight'
+                    ],
+                    axes: [{
+                        type: 'numeric',
+                        position: 'bottom',
+                        title: {
+                            text: 'Sample Values',
+                            fontSize: 15
+                        }
+                    }, {
+                        type: 'category',
+                        position: 'left',
+                        title: {
+                            text: 'Sample Values',
+                            fontSize: 15
+                        }
+                    }],
+                    series: [{
+                        type: 'bar',
+                        xField: 'name',
+                        yField: 'data1',
+                        labelField: 'name',
+                        style: {
+                            fill: 'blue'
+                        },
+                        highlightCfg: {
+                            strokeStyle: 'red',
+                            lineWidth: 3
+                        },
+                        label: {
+                            
+                        }
+                    }]
+                });
+                Ext.Viewport.setLayout('fit');
+                Ext.Viewport.add(chart);
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

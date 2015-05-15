@@ -1,0 +1,49 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ExtJS 4 XTemplate</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+    <script src="../../ext.js"></script>
+</head>
+<body>
+
+<script type="text/javascript">
+
+    Ext.onReady(function() {
+
+        var panel = Ext.create('Ext.panel.Panel', {
+            renderTo : Ext.getBody(),
+            height : 200,
+            width  : 200,
+            closable : true,
+
+            dockedItems : [
+                {
+                    xtype : 'toolbar',
+                    dock : 'top',
+                    items : [
+                        {
+                            xtype : 'button',
+                            text  : 'Show',
+                            handler : function() {
+                                Ext.ComponentQuery.query('panel')[0].tools[0].show();
+                            }
+                        },
+                        {
+                            xtype : 'button',
+                            text  : 'Hide',
+                            handler : function() {
+                                Ext.ComponentQuery.query('panel')[0].tools[0].hide();
+                            }
+                        }
+                    ]
+                }
+            ]
+        });
+
+    });
+
+</script>
+
+</body>
+</html>

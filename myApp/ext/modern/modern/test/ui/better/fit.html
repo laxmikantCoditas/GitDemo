@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Better Components</title>
+
+    <link rel="stylesheet" href="../../../resources/css/sencha-touch.css" type="text/css" />
+
+    <script type="text/javascript" src="../../../sencha-touch-all.js"></script>
+    <script type="text/javascript">
+        Ext.setup({
+            requires: [
+                'Ext.Component',
+                'Ext.Container',
+                'Ext.Button'
+            ],
+
+            viewport: null,
+
+            onReady: function() {
+                var start = Date.now();
+
+                container = new Ext.Container({
+                    width: 'inherit',
+                    height: 'inherit',
+                    layout: 'fit',
+                    items: [
+                        {
+                            layout: {
+                                type: 'hbox'
+                            },
+                            items: [
+                                {
+                                    flex: 1,
+                                    layout: {
+                                        type: 'vbox'
+                                    },
+        //                            width: 'inherit',
+                                    items: [
+                                        {
+                                            ui: 'forward',
+                                            xtype: 'button',
+                                            text: 'Foo Longer Very Long',
+                                            iconMask: true,
+                                            iconCls: 'refresh',
+                                            badgeText: '10',
+                                            flex: 1
+                                        },
+                                        {
+                                            ui: 'decline',
+                                            xtype: 'button',
+                                            text: 'Baz',
+                                            flex: 1
+                                        }
+                                    ]
+                                },
+                                {
+                                    ui: 'confirm',
+                                    xtype: 'button',
+                                    id: 'bar',
+                                    text: 'Bar Longer Text',
+                                    flex: 1
+                                },
+                                {
+                                    ui: 'decline',
+                                    xtype: 'button',
+                                    text: 'Baz',
+                                    flex: 1
+                                }
+                            ]
+                        },
+                        {
+                            centered: true,
+                            id: 'container2',
+                            layout: {
+                                type: 'vbox'
+                            },
+                            height: 300,
+                            items: [
+                                {
+                                    ui: 'action',
+                                    xtype: 'button',
+                                    text: 'Foo safas fasdfj lkasdfjklsdjfkl',
+                                    iconMask: true,
+                                    iconCls: 'refresh',
+                                    badgeText: '10',
+                                    flex: 3
+                                },
+                                {
+                                    ui: 'confirm',
+                                    xtype: 'button',
+                                    text: 'Bar Longer Text',
+                                    flex: 2
+                                },
+                                {
+                                    ui: 'decline',
+                                    xtype: 'button',
+                                    text: 'Baz',
+                                    flex: 1
+                                }
+                            ]
+                        }
+                    ]
+                });
+
+                container.render(document.body);
+//                alert(Date.now() - start);
+            }
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

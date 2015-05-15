@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title></title>
+    <script type="text/javascript">
+        window.onload = function() {
+            document.getElementById('test').addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log(1);
+
+                return false;
+            }, false);
+
+            document.getElementById('test').addEventListener('click', function(e) {
+                console.log(2);
+            }, false);
+
+            document.addEventListener('click', function(e) {
+                console.log(3);
+            }, false);
+        };
+
+    </script>
+</head>
+<body>
+    <div id="test" style="border: 1px solid red; width: 400px; height: 400px"></div>
+</body>
+</html>

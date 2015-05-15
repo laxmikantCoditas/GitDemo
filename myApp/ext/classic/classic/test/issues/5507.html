@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+
+        Ext.Loader.setConfig({
+            enabled: true
+        });
+        Ext.Loader.setPath({
+            'Ext.ux'            : '../AMDA-NG/js/lib/ext/examples/ux'
+        });
+
+        Ext.onReady(function(){
+            var storeExplorer = Ext.create('Ext.data.TreeStore',
+                    {
+                        root: {
+                            expanded: true,
+                            children: [
+                                {text: "Node 1", leaf: true},
+                                {text: "Node 2", leaf: true}
+                            ]
+                        }
+                    });
+
+            var treePanel = Ext.create('Ext.tree.Panel', {
+                title: 'Explorer',
+                width: 300,
+                height: 400,
+                viewConfig:
+                {
+                    plugins:
+                    {
+                        ptype: 'treeviewdragdrop',
+                        enableDrag:true,
+                        enableDrop:true,
+                        ddGroup:'explorerTree',
+                        pluginId : 'ddplugin'
+                    },
+                    listeners :
+                    {
+                        beforedrop : function(node, data, overModel, dropPosition)
+                        {
+                            console.log('beforedrop');
+                        },
+                        drop : function(node, data, overModel, dropPosition, dropFunction, eOpts)
+                        {
+                            console.log('drop');
+                        }
+                    }
+                },
+                store: storeExplorer,
+                rootVisible: false,
+                renderTo: Ext.getBody()
+            });
+
+            var win1 = Ext.create('Ext.window.Window', {
+                title : 'Win 1',
+                width : 300,
+                height : 300,
+                layout : 'fit',
+                items : [
+                    {
+                        xtype : 'textarea',
+                        listeners :
+                        {
+                            render : function(o,op)
+                            {
+                                var me = this;
+                                var meEl = me.bodyEl;
+                                var dropTarget = Ext.create('Ext.dd.DropTarget', meEl, {
+                                    ddGroup: 'explorerTree',
+                                    notifyEnter : function(ddSource, e, data)
+                                    {
+                                        console.log('notifyEnter - Win 1');
+                                    },
+                                    notifyOver  : function(ddSource, e, data)
+                                    {
+                                        this.valid = true;
+                                        return this.dropAllowed;
+                                    },
+                                    notifyDrop  : function(ddSource, e, data)
+                                    {
+                                        console.log('notifyDrop - Win 1');
+                                    }
+                                });
+
+                            }
+                        }
+                    }
+                ]
+            });
+
+            win1.show();
+
+
+            var win2 = Ext.create('Ext.window.Window', {
+                title : 'Win 2',
+                width : 300,
+                height : 300,
+                layout : 'fit',
+                items : [
+                    {
+                        xtype : 'textarea',
+                        listeners :
+                        {
+                            render : function(o,op)
+                            {
+                                var me = this;
+                                var meEl = me.bodyEl;
+                                var dropTarget = Ext.create('Ext.dd.DropTarget', meEl, {
+                                    ddGroup: 'explorerTree',
+                                    notifyEnter : function(ddSource, e, data)
+                                    {
+                                        console.log('notifyEnter - Win 2');
+                                    },
+                                    notifyOver  : function(ddSource, e, data)
+                                    {
+                                        this.valid = true;
+                                        return this.dropAllowed;
+                                    },
+                                    notifyDrop  : function(ddSource, e, data)
+                                    {
+                                        console.log('notifyDrop - Win 2');
+                                    }
+                                });
+
+                            }
+                        }
+                    }
+                ]
+            });
+
+            win2.show();
+
+        });
+
+
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Tab Bar</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <link rel="stylesheet" href="../../../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../../../sencha-touch.js"></script>
+    <script>
+        Ext.setup({
+            onReady: function(){
+                var bar1 = Ext.create('Ext.tab.Bar', {
+                    docked: 'bottom',
+                    activeTab: 0,
+                    items: [{
+                        iconCls: 'download',
+                        title: 'Download'
+                    }, {
+                        iconCls: 'bookmarks',
+                        title: 'Bookmarks'
+                    }]
+                });
+
+                bar1.setActiveTab(1);
+
+                var bar2 = Ext.create('Ext.tab.Bar', {
+                    docked: 'bottom',
+                    items: [{
+                        iconCls: 'download',
+                        title: 'Download'
+                    }, {
+                        iconCls: 'bookmarks',
+                        title: 'Bookmarks'
+                    }]
+                });
+                bar2.setActiveTab(1);
+
+                var bar3 = Ext.create('Ext.tab.Bar', {
+                    docked: 'bottom',
+                    items: [{
+                        iconCls: 'download',
+                        title: 'Download'
+                    }, {
+                        iconCls: 'bookmarks',
+                        title: 'Bookmarks'
+                    }],
+                    listeners: {
+                        afterrender: function() {
+                            this.setActiveTab(1);
+                        }
+                    }
+                });
+
+                var bar4 = Ext.create('Ext.tab.Bar', {
+                    docked: 'bottom',
+                    activeTab: 'bookmarks1',
+                    items: [{
+                        title: 'Download',
+                        iconCls: 'download'
+                    }, {
+                        title: 'Bookmarks',
+                        id: 'bookmarks1',
+                        iconCls: 'bookmarks'
+                    }]
+                });
+
+                var bar5 = Ext.create('Ext.tab.Bar', {
+                    docked: 'top',
+                    activeTab: 1,
+                    items: [{
+                        iconCls: 'download',
+                        title: 'Download'
+                    }, {
+                        iconCls: 'bookmarks',
+                        title: 'Bookmarks'
+                    }]
+                });
+
+                var bar6 = Ext.create('Ext.tab.Bar', {
+                    docked: 'top'
+                });
+
+                var bar7 = Ext.create('Ext.tab.Bar', {
+                    docked: 'top'
+                });
+                bar7.add([{
+                    title: 'Download'
+                }, {
+                    title: 'Bookmarks'
+                }, {
+                    title: 'Test'
+                }]);
+
+                Ext.Viewport.add(bar1);
+                Ext.Viewport.add(bar2);
+                Ext.Viewport.add(bar3);
+                Ext.Viewport.add(bar4);
+                Ext.Viewport.add(bar5);
+                Ext.Viewport.add(bar6);
+                Ext.Viewport.add(bar7);
+
+                bar6.add([{
+                    iconCls: 'download',
+                    title: 'Download'
+                }, {
+                    iconCls: 'bookmarks',
+                    title: 'Bookmarks'
+                }]);
+                bar6.setActiveTab(1);
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

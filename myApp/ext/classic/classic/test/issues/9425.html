@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Test Case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+		Ext.require([
+			'Ext.data.Store',
+			'Ext.grid.Panel',
+			'Ext.grid.feature.Grouping'
+		]);
+
+		Ext.onReady(function () {
+			
+			// create a grouped empty store with remoteGroup
+			var store = Ext.create('Ext.data.Store', {
+			    storeId:'employeeStore',
+			    fields:['name', 'seniority', 'department'],
+				groupField: 'department',
+				remoteGroup: true,
+			    proxy: {
+			        type: 'memory',
+					data: { root: [] },
+					reader: {
+						type: 'json',
+						root: 'root'
+					}
+			    }
+			});
+			
+			// create grouped grid with summary row and remoteRoot
+			var grid = Ext.create('Ext.grid.Panel', {
+			    store: store,
+				width: 500,
+			    height: 275,
+			    renderTo: Ext.getBody(),
+			    columns: [
+			        { text: 'Name',     dataIndex: 'name', flex: 1 },
+			        { text: 'Seniority', dataIndex: 'seniority' }
+			    ],
+			    features: [{
+					ftype:'grouping',
+					showSummaryRow: true,
+					remoteRoot: 'summaryData'
+				}]
+			});
+			
+			// 1. load store empty, will throw error
+			store.load();
+			
+			// 2. there's a difference between groupers & groups
+			// at this state, loading data with summary will refresh the grid
+			// and throw an error
+			console.log('Store groupers.lenght =' + store.groupers.lenth + ', groups.length = ' + store.groups.length);
+			store.getProxy().data = {
+				"total":0,
+				"summaryData":[
+					{"name":"Test", "seniority": 1}
+				],
+				"root":[]
+			};
+			store.load();
+
+			// 3. removing all groups and feeding with data
+			// also throw errors
+			store.clearGrouping();			
+			store.load();
+		});
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

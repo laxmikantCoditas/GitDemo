@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TOUCH-3115</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script type="text/javascript" src="../../sencha-touch.js"></script>
+
+        <script type="text/javascript">
+            Ext.application({
+                name : 'Test',
+
+                launch : function () {
+                    Ext.Viewport.add({
+                        xtype : 'container',
+                        cls   : 'overlay-footer',
+                        test  : 'dang yo',
+                        items : [
+                            {
+                                html : 'Imprint',
+                                cls  : 'overlay-footer-item overlay-footer-imprint'
+                            },
+                            {
+                                xtype   : 'button',
+                                text    : 'Run Tests',
+                                ui      : 'action',
+                                handler : function() {
+                                    console.log(Ext.ComponentQuery.query('container[cls~="overlay-footer-imprint"]'));  //should return 1 component
+                                    console.log(Ext.ComponentQuery.query('container[test~="yo"]'));                     //should return 1 component
+                                    console.log(Ext.ComponentQuery.query('container[test~="ng"]'));                     //should return 0 components
+                                }
+                            }
+                        ]
+                    });
+                }
+            });
+	</script>
+    </head>
+    <body>
+
+    </body>
+</html>

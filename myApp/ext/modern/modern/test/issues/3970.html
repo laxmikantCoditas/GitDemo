@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3970</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.define("MyPullRefresh", {
+            extend: 'Ext.plugin.PullRefresh',
+
+            fetchLatest: function() {
+                var store = Ext.getStore("myStore"),
+                        operation;
+
+                operation = Ext.create('Ext.data.Operation', {
+                    page: 1,
+                    start: 0,
+                    model: store.getModel(),
+                    limit: store.getPageSize(),
+                    action: 'read',
+                    filters: store.getRemoteFilter() ? store.getFilters() : []
+                });
+
+                var m = new (store.getModel())();
+                m.setData({
+                    name: 'rdougan',
+                    img: 'http://a0.twimg.com/profile_images/1261180556/171265_10150129602722922_727937921_7778997_8387690_o_reasonably_small.jpg',
+                    text: 'JavaScript development'
+                });
+
+	            var me = this;
+	            Ext.defer(function() {
+                    operation.setRecords([m,m,m]);
+		            me.onLatestFetched(operation);
+	            }, 2000);
+
+            }
+        });
+
+
+        Ext.setup({ 
+            requires: [
+                'Ext.data.Store','Ext.dataview.List'
+            ],
+            onReady: function() {
+                var store = Ext.create('Ext.data.Store', {
+                    storeId: "myStore",
+                    fields: ['name', 'img', 'text'],
+                    data: [
+                        {
+                            name: 'rdougan',
+                            img: 'http://a0.twimg.com/profile_images/1261180556/171265_10150129602722922_727937921_7778997_8387690_o_reasonably_small.jpg',
+                            text: 'JavaScript development'
+                        }
+                    ]
+                });
+
+                Ext.create('Ext.dataview.List', {
+                    fullscreen: true,
+
+                    store: store,
+                    itemHeight:181,
+
+                    plugins: [
+                        {
+                            xclass: 'MyPullRefresh',
+//                            xclass: 'Ext.plugin.PullRefresh',
+                            autoSnapBack:false,
+                            snappingAnimationDuration: 500,
+                            overpullSnapBackDuration: 100,
+                            listeners:{
+	                            latestfetched: function(){
+                                    if(!this.getAutoSnapBack()){
+                                        var me = this,
+                                            runner = Ext.create("Ext.fx.Runner");
+                                            fadeOut = Ext.create("Ext.fx.animation.FadeOut", {
+                                                duration:500,
+                                                element:this.messageEl,
+                                                onEnd: function(){
+                                                   me.snapBack();
+                                                   me.messageEl.setStyle({opacity:0});
+                                                   Ext.defer(function() {me.messageEl.setStyle({opacity:1});}, me.getSnappingAnimationDuration());
+                                                }
+                                            });
+                                        runner.run(fadeOut);
+                                    }
+                                }
+                            }
+                        }
+                    ],
+
+                    itemTpl: [
+                        '<img src="{img}" alt="{name} photo" />',
+                        '<div class="tweet"><b>{name}:</b> {text}</div>'
+                    ]
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

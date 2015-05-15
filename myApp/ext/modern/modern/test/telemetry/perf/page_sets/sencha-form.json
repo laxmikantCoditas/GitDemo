@@ -1,0 +1,9 @@
+{
+    "description": "Sencha - Form",
+    "archive_data_file": "../data/sencha-form.json",
+    "pages": [
+        {
+            "url": "http://127.0.0.1:8060/touch/test/telemetry/tests/sencha-form.html"
+        }
+    ]
+}

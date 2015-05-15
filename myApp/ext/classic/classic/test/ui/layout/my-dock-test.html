@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Absolute Layout Example</title>
+<link rel="stylesheet" type="text/css" href="../../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../../ext.js"></script>
+<script type="text/javascript">
+Ext.require(['*']);
+function doDock() {
+    var start = new Date(),
+        panel; /* = Ext.create('Ext.panel.Panel', {
+            width: 400,
+            height: 400,
+            id: 'outerPanel',
+            //resizable: true,
+            renderTo: document.body,
+            bodyStyle: 'background-color:red',
+            dockedItems: [{
+                xtype: 'component',
+                id: 'topDock',
+                html: 'Top<br>test',
+                dock: 'top',
+                style: 'border: 1px solid'
+            }, {
+                xtype: 'component',
+                id: 'rightDock',
+                html: 'Right test',
+                dock: 'right',
+                style: 'border: 1px solid'
+            }, {
+                xtype: 'component',
+                id: 'bottomDock',
+                html: 'Bottom<br>test',
+                dock: 'bottom',
+                style: 'border: 1px solid'
+            }, {
+                xtype: 'component',
+                id: 'leftDock',
+                html: 'Left test',
+                dock: 'left',
+                style: 'border: 1px solid'
+                }],
+            layout: {
+                type: 'hbox'
+            },
+            items: [{
+                flex: 1,
+                height: 100,
+                id: 'leftFlex',
+                bodyStyle: 'background-color:green'
+            }, {
+                flex: 1,
+                height: 100,
+                id: 'rightFlex',
+                bodyStyle: 'background-color:blue'
+            }]
+        }); */
+
+    var items = [];
+    for (var y = 0; y < 10; y++) {
+        var row = {
+            flex: 1,
+            layout: {
+                type: 'hbox',
+                align: 'stretch'
+            },
+            items: []
+        }
+        for (var x = 0; x < 5; x++) {
+            var title = 'Panel ' + (x + 1) + ',' + (y + 1);
+            row.items.push(new Ext.Panel({
+                flex: 1,
+                title: title,
+                id: title,
+                bodyStyle: 'background-color: blue;'
+            }));
+        }
+        items.push(row);
+    }
+
+    new Ext.container.Viewport({
+        layout: {
+            type: 'vbox',
+            align: 'stretch'
+        },
+        items: items
+    })
+    
+//    var title = 'The Panel';
+//    new Ext.Panel({
+//        width: 400,
+//        height: 200,
+//        title: title,
+//        id: title,
+//        bodyStyle: 'background-color: blue;',
+//        renderTo: document.body
+//    });
+
+    //alert(new Date() - start);
+}
+Ext.onReady(function() {
+    Ext.Perf.setup();
+    Ext.Perf.monitor('onReady', function () {
+        doDock();
+    });
+});
+</script>
+</head>
+<body>
+</body>
+</html>

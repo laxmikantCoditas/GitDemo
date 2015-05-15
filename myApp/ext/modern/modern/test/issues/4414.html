@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript">
+        Ext.setup({
+            onReady: function () {
+                Ext.create('Ext.Carousel', {
+                    fullscreen: true,
+                    items: [
+                        {
+                            xtype: 'img',
+                            width: 800,
+                            height: 600,
+                            mode: null,
+                            src: 'http://fc08.deviantart.net/fs71/i/2012/133/4/d/x_files___i_want_to_believe_by_ramaelk-d4zlmrd.jpg'
+                        },
+                        {
+                            xtype: 'img',
+                            width: 800,
+                            height: 600,
+                            mode: null,
+                            src: 'http://www.prosportstickers.com/product_images/u/dr_who_wallpaper_1__60932.jpg'
+                        },
+                        {
+                            xtype: 'img',
+                            width: 800,
+                            height: 600,
+                            mode: null,
+                            src: 'http://images4.alphacoders.com/417/41788.jpg'
+                        }
+                    ]
+                });
+            }
+        });
+    </script>
+
+</head>
+<body></body>
+</html>

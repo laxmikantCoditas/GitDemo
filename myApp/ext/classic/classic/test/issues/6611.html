@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>EXTJSIV-6611 - Column chart with date axis does not render properly</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+		<link type="text/css" rel="stylesheet" href="../../resources/css/ext-all.css"/>
+		<script type="text/javascript" src="../../ext-all.js"></script>
+
+	</head>
+	<body>
+
+		<script type="text/javascript">
+
+Ext.require([
+    'Ext.data.Model',
+    'Ext.data.JsonStore',
+    'Ext.chart.Chart',
+    'Ext.chart.series.Column',
+    'Ext.chart.series.Line',
+    'Ext.chart.axis.Numeric',
+    'Ext.chart.axis.Time'
+]);
+
+
+Ext.onReady(function () {
+    Ext.define('model', {
+        extend : 'Ext.data.Model',
+        fields : [
+            'date', 'value'
+        ]
+    });
+
+    var store1 = new Ext.data.JsonStore({
+        model : 'model',
+        data : [
+            { date : new Date(2012, 5,  2), value : 20 },
+            { date : new Date(2012, 5, 22), value : 50 }
+        ]
+    });
+    console.log(store1.first().get('date'));
+    var chart = Ext.create('Ext.chart.Chart', {
+        xtype: 'chart',
+        store: store1,
+
+        axes: [{
+            type: 'Numeric',
+            position: 'left',
+            fields: ['value'],
+            grid: true,
+            title: 'Value'
+        }, {
+            type: 'Time',
+            position: 'bottom',
+            fields: ['date'],
+            grid: true,
+            title: 'Day',
+            dateFormat: 'M d',
+            fromDate: new Date(2012, 5, 1),
+            toDate: new Date(2012, 6, 1)
+        }],
+        series: [{
+            type: 'column',
+            axis: 'bottom',
+            xField: 'date',
+            yField: 'value',
+            style: {width: 20, "stroke-width": 1, stroke:"blue"}
+        },{
+            type: 'line',
+            axis: 'bottom',
+            xField: 'date',
+            yField: 'value',
+            style: {"stroke-width": 1, stroke:"red"},
+            showMarkers: false
+        }]
+    });
+ 
+    var win = Ext.create('Ext.Window', {
+        width: 900,
+        height: 600,
+        layout: 'fit',
+        items: chart
+    });
+
+    win.show();
+});
+
+
+		</script>
+	</body>
+</html>

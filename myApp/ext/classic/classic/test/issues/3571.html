@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>3571</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+Ext.require('Ext.data.TreeStore');
+
+Ext.onReady(function () {
+    Ext.define("Task", {
+        extend: "Ext.data.Model",
+        fields: [
+            {name: "task", mapping :"task",     type: "string"},
+            {name: "id", mapping :"task",     type: "string"},
+            {name: "user",     type: "string"},
+            {name: "duration", type: "string"}
+        ]
+    });
+
+    var store = Ext.create("Ext.data.TreeStore", {
+        model: "Task",
+        autoSync : true,
+        proxy: {
+            type: "ajax",
+            //the store will get the content from the .json file
+            api:{ read : "3571.js" }
+        },
+        folderSort: true
+    });
+
+  var tree1 = Ext.create("Ext.tree.Panel", {
+    width: 300,
+    height: 300,
+    title: "Core Team Projects",
+    useArrows: true,
+    rootVisible: false,
+    store: store,
+    multiSelect: true,
+    singleExpand: true,
+    columns: [{
+      xtype: "treecolumn", //this is so we know which column will show the tree
+      text: "Task",
+      flex: 2,
+      sortable: true,
+      dataIndex: "task"
+    }],
+    renderTo: Ext.getBody()
+  });
+        
+  var tree2 = Ext.create("Ext.tree.Panel", {
+    width: 300,
+    height: 300,
+    title: "Core Team Projects2",
+    useArrows: true,
+    rootVisible: false,
+    store: store,
+    multiSelect: true,
+    singleExpand: true,
+    columns: [{
+      xtype: "treecolumn", //this is so we know which column will show the tree
+      text: "Task",
+      flex: 2,
+      sortable: true,
+      dataIndex: "task"
+    }],
+    renderTo: Ext.getBody()
+  });
+});
+    </script>
+</body>
+</html>

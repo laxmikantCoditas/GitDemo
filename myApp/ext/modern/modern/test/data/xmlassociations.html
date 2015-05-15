@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../sencha-touch-all.js"></script>
+    <script>
+        Ext.define('MyApp.model.Group', {
+            extend: 'Ext.data.Model',
+
+            config: {
+                fields: ['name'],
+                proxy: {
+                    type: 'ajax',
+                    url: 'userxml.xml',
+                    reader: {
+                        type: 'xml',
+                        rootProperty: 'groups',
+                        record: 'group'
+                    }
+                },
+                hasMany: {
+                    model: 'MyApp.model.User',
+                    associationKey: 'groupusers',
+                    name: 'users',
+                    reader: {
+                        type: 'xml',
+                        record: 'user'
+                    }
+                }
+            }
+        });
+
+        Ext.define('MyApp.model.User', {
+            extend: 'Ext.data.Model',
+
+            config: {
+                fields: ['name'],
+                belongsTo: {
+                    model: 'MyApp.model.Group',
+                    name: 'group'
+                }
+            }
+        });
+
+        Ext.setup({
+            onReady: function() {
+                var store = Ext.create('Ext.data.Store', {
+                    model: 'MyApp.model.Group',
+                    autoLoad: true
+                });
+
+                console.log(store);
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

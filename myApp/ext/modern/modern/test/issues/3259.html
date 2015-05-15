@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TOUCH-3259</title>
+
+        <script src="../../sencha-touch-debug.js"></script>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+        <script type="text/javascript">
+
+            Ext.setup({
+                onReady: function () {
+                    var data = {
+                        text: 'Groceries',
+                        items: [{
+                            text: 'Drinks',
+                            items: [{
+                                text: 'Water',
+                                items: [{
+                                    text: 'Sparkling',
+                                    leaf: true
+                                }, {
+                                    text: 'Still',
+                                    leaf: true
+                                }, {
+                                    text: 'Deep',
+                                    leaf: true
+                                }, {
+                                    text: 'Muddy',
+                                    leaf: true
+                                }]
+                            }]
+                        }]
+                    };
+
+                    Ext.define('ListItem', {
+                        extend: 'Ext.data.Model',
+                        config: {
+                            fields: [{
+                                name: 'text',
+                                type: 'string'
+                            }]
+                        }
+                    });
+
+                    var store = Ext.create('Ext.data.TreeStore', {
+                        model: 'ListItem',
+                        defaultRootProperty: 'items',
+                        root: data
+                    });
+
+                    var nestedList = Ext.create('Ext.NestedList', {
+                        fullscreen: true,
+                        title: 'Groceries',
+                        displayField: 'text',
+                        store: store,
+                        listeners: {
+                            leafitemtap: function (nlist, list, index, element, record, e, opts) {
+                                //record.parentNode.appendChild({ "text": "Added", "leaf": true });
+                                record.parentNode.insertChild(index, { "text": "Inserted", "leaf": true });
+//                                if (false) {
+                                    // should work but does not
+                                    nlist.getStore().sort([{ "property": "text", "direction": "ASC"}]);
+//                                }
+                                if (false) {
+                                    // Does work
+                                    record.parentNode.sort(function (rec1, rec2) {
+                                        var val1 = rec1.get("text");
+                                        var val2 = rec2.get("text");
+                                        if (val1 > val2) { return 1; }
+                                        if (val1 = val2) { return 0; }
+                                        return -1;
+                                    }, false, false);
+                                }
+                                if (false) {
+                                    // Also should work but does not
+                                    record.parentNode.sort([{ "property": "text", "direction": "ASC"}]);
+                                }
+                            }
+                        }
+
+                    });
+                }
+            });
+
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

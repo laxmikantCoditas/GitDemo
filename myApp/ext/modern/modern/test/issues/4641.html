@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Test Case</title>
+    <link href="../../resources/css/sencha-touch.css" rel="stylesheet"/>
+    <script src="../../sencha-touch-all.js"></script>
+
+    <script type="text/javascript">
+        Ext.define('Message', {
+            extend   : 'Ext.data.Model',
+            requires : [
+                'Ext.data.identifier.Uuid'
+            ],
+            config   : {
+                fields     : [
+                    {name : 'myId', type : 'int'}
+                ],
+                identifier : {type : 'uuid'},
+                proxy      : {
+                    type               : 'localstorage',
+                    enablePagingParams : true,
+                    id                 : 'messages'
+                }
+            }
+        });
+
+        Ext.setup({
+            requires : [
+	    	'Ext.dataview.List',
+		'Ext.data.Store',
+		'Ext.tab.Panel'
+	    ],
+            onReady  : function () {
+
+                var store = Ext.create('Ext.data.Store', {
+                    storeId         : 'MessagesStore',
+                    model           : 'Message',
+//	                remoteSort      : true,
+                    sorters         : [
+                        {
+                            property  : 'myId',
+                            direction : 'DESC'
+                        }
+                    ],
+                    pageSize        : 4,
+                    clearOnPageLoad : false
+                });
+
+                var tabpanel = Ext.create('Ext.tab.Panel', {
+                    fullscreen     : true,
+                    tabBarPosition : 'bottom',
+                    items          : [
+                        {
+                            title      : 'Welcome',
+                            iconCls    : 'home',
+                            scrollable : true,
+                            items : [
+                                {
+                                    html : 'Click on the button to initiate the data'
+                                },
+                                {
+                                    xtype   : 'button',
+                                    text    : 'Data',
+                                    handler : function () {
+                                        var messageModel,
+                                                store = Ext.getStore('MessagesStore'),
+                                                messages = [
+                                                    {
+                                                        myId    : 1
+                                                    },
+                                                    {
+                                                        myId    : 2
+                                                    },
+                                                    {
+                                                        myId    : 3
+                                                    },
+                                                    {
+                                                        myId    : 4
+                                                    },
+                                                    {
+                                                        myId    : 5
+                                                    },
+                                                    {
+                                                        myId    : 6
+                                                    },
+                                                    {
+                                                        myId    : 7
+                                                    }
+                                                ];
+                                        store.load({
+                                            callback : function (records, operation) {
+                                                /* Comment Out Here */
+                                                Ext.Array.each(messages, function (messageData) {
+                                                    messageModel = Ext.create('Message', {
+                                                        myId    : messageData.myId
+                                                    });
+
+                                                    store.add(messageModel);
+                                                });
+                                                /* End Comment Out*/
+                                                store.sync();
+                                                tabpanel.setActiveItem(1);
+                                            }
+                                        });
+                                    }
+                                },
+                                {
+                                    html : 'Then go to the list page'
+                                }
+                            ]
+                        },
+                        {
+			    iconCls : 'Home',
+			    title   : 'My List',
+                            xtype   : 'list',
+                            itemTpl : [
+                                '{myId}'
+                            ],
+                            store   : store
+                        }
+                    ]
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>
+

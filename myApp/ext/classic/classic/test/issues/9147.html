@@ -1,0 +1,445 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Failed test case</title>
+        <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+        <script type="text/javascript" src="../../ext.js"></script>
+    </head>
+    
+    <body>
+        <div id="grid"></div>
+        <script type="text/javascript" charset="utf-8">
+            Ext.scopeResetCSS = true; // requires ext-all.css but fixes issues with: .x-border-box box-sizing: content-box;
+
+            Ext.onReady(function () {
+
+                function waitlisted(value, metadata, record, rowIndex, colIndex, store) {
+                    if (value == 0) {
+                        return '<span style="color: #008000;">No</span>';
+                    } else if (value == 1) {
+                        return '<span style="color: #f00;">Yes</span>';
+                    }
+                }
+
+                // if I wanted to use images I'd have to preload them so when the record is updated they would display
+
+                function registered(value, metadata, record, rowIndex, colIndex, store) {
+                    if (value == 1) {
+                        return '<span style="color: #090;">Yes</span>';
+                    } else if (value == 0) {
+                        return '<span style="color: #f00;">No</span>';
+                    } else {
+                        return '';
+                    }
+                }
+
+                function w9received(value, metadata, record, rowIndex, colIndex, store) {
+                    if (value == 1) {
+                        return '<span style="color: #090;">Yes</span>';
+                    } else if (value == 0) {
+                        return '<span style="color: #f00;">No</span>';
+                    } else {
+                        return '';
+                    }
+                }
+
+                Ext.define('Users', {
+                    extend: 'Ext.data.Model',
+                    idProperty: 'id',
+                    fields: [{
+                        name: 'id'
+                    }, {
+                        name: 'w9received',
+                        type: 'int'
+                    }, {
+                        name: 'invitationcode'
+                    }, {
+                        name: 'lastname'
+                    }, {
+                        name: 'firstname'
+                    }, {
+                        name: 'email'
+                    }, {
+                        name: 'phone'
+                    }, {
+                        name: 'registereddate',
+                        type: 'date',
+                        dateFormat: 'Y-m-d'
+                    }, {
+                        name: 'startDate',
+                        type: 'date',
+                        dateFormat: 'Y-m-d'
+                    }]
+                });
+
+                var myData = [
+                    ["1", "1", "a", "Smith", "Bob", "blah@comcast.net", "555", "2012-11-19", "2013-01-04"],
+                    ["2", "1", "b", "Afshar", "Anne", "blah@gmail.com", "666", "2013-02-06", "2013-04-06"],
+                    ["3", "1", "c", "Cohen", "Nancy", "blah@hotmail.com", "777", "2013-01-23", "2013-02-01"],
+                    ["4", "1", "a", "Smith", "Bob", "email4@comcast.net", "444", "2014-11-44", "2013-01-04"],
+                    ["5", "1", "a", "Smith", "Bob", "email5@comcast.net", "555", "2015-11-55", "2013-01-05"],
+                    ["6", "1", "a", "Smith", "Bob", "email6@comcast.net", "666", "2016-11-66", "2013-01-06"],
+                    ["7", "1", "a", "Smith", "Bob", "email7@comcast.net", "777", "2017-11-77", "2013-01-07"],
+                    ["8", "1", "a", "Smith", "Bob", "email8@comcast.net", "888", "2018-11-88", "2013-01-08"],
+                    ["9", "1", "a", "Smith", "Bob", "email9@comcast.net", "999", "2019-11-99", "2013-01-09"],
+                    ["10", "1", "a", "Smith", "Bob", "email10@comcast.net", "111", "2011-11-11", "2013-01-01"],
+                    ["11", "1", "a", "Smith", "Bob", "email11@comcast.net", "111", "2011-11-11", "2013-01-01"],
+                    ["12", "1", "a", "Smith", "Bob", "email12@comcast.net", "222", "2011-11-12", "2013-01-02"],
+                    ["13", "1", "a", "Smith", "Bob", "email13@comcast.net", "333", "2011-11-13", "2013-01-03"],
+                    ["14", "1", "a", "Smith", "Bob", "email14@comcast.net", "444", "2011-11-14", "2013-01-04"],
+                    ["15", "1", "a", "Smith", "Bob", "email15@comcast.net", "555", "2011-11-15", "2013-01-05"],
+                    ["16", "1", "a", "Smith", "Bob", "email16@comcast.net", "666", "2011-11-16", "2013-01-06"],
+                    ["17", "1", "a", "Smith", "Bob", "email17@comcast.net", "777", "2011-11-17", "2013-01-07"],
+                    ["18", "1", "a", "Smith", "Bob", "email18@comcast.net", "888", "2011-11-18", "2013-01-08"],
+                    ["19", "1", "a", "Smith", "Bob", "email19@comcast.net", "999", "2011-11-19", "2013-01-09"],
+                    ["20", "1", "a", "Smith", "Bob", "email20@comcast.net", "222", "2012-11-22", "2013-01-02"],
+                    ["21", "1", "a", "Smith", "Bob", "email21@comcast.net", "111", "2012-11-21", "2013-01-01"],
+                    ["22", "1", "a", "Smith", "Bob", "email22@comcast.net", "222", "2012-11-22", "2013-01-02"],
+                    ["23", "1", "a", "Smith", "Bob", "email23@comcast.net", "333", "2012-11-23", "2013-01-03"],
+                    ["24", "1", "a", "Smith", "Bob", "email24@comcast.net", "444", "2012-11-24", "2013-01-04"],
+                    ["25", "1", "a", "Smith", "Bob", "email25@comcast.net", "555", "2012-11-25", "2013-01-05"],
+                    ["26", "1", "a", "Smith", "Bob", "email26@comcast.net", "666", "2012-11-26", "2013-01-06"],
+                    ["27", "1", "a", "Smith", "Bob", "email27@comcast.net", "777", "2012-11-27", "2013-01-07"],
+                    ["28", "1", "a", "Smith", "Bob", "email28@comcast.net", "888", "2012-11-28", "2013-01-08"],
+                    ["29", "1", "a", "Smith", "Bob", "email29@comcast.net", "999", "2012-11-29", "2013-01-09"],
+                    ["30", "1", "a", "Smith", "Bob", "email30@comcast.net", "333", "2013-11-33", "2013-01-03"],
+                    ["31", "1", "a", "Smith", "Bob", "email31@comcast.net", "111", "2013-11-31", "2013-01-01"],
+                    ["32", "1", "a", "Smith", "Bob", "email32@comcast.net", "222", "2013-11-32", "2013-01-02"],
+                    ["33", "1", "a", "Smith", "Bob", "email33@comcast.net", "333", "2013-11-33", "2013-01-03"],
+                    ["34", "1", "a", "Smith", "Bob", "email34@comcast.net", "444", "2013-11-34", "2013-01-04"],
+                    ["35", "1", "a", "Smith", "Bob", "email35@comcast.net", "555", "2013-11-35", "2013-01-05"],
+                    ["36", "1", "a", "Smith", "Bob", "email36@comcast.net", "666", "2013-11-36", "2013-01-06"],
+                    ["37", "1", "a", "Smith", "Bob", "email37@comcast.net", "777", "2013-11-37", "2013-01-07"],
+                    ["38", "1", "a", "Smith", "Bob", "email38@comcast.net", "888", "2013-11-38", "2013-01-08"],
+                    ["39", "1", "a", "Smith", "Bob", "email39@comcast.net", "999", "2013-11-39", "2013-01-09"],
+                    ["40", "1", "a", "Smith", "Bob", "email40@comcast.net", "444", "2014-11-44", "2013-01-04"],
+                    ["41", "1", "a", "Smith", "Bob", "email41@comcast.net", "111", "2014-11-41", "2013-01-01"],
+                    ["42", "1", "a", "Smith", "Bob", "email42@comcast.net", "222", "2014-11-42", "2013-01-02"],
+                    ["43", "1", "a", "Smith", "Bob", "email43@comcast.net", "333", "2014-11-43", "2013-01-03"],
+                    ["44", "1", "a", "Smith", "Bob", "email44@comcast.net", "444", "2014-11-44", "2013-01-04"],
+                    ["45", "1", "a", "Smith", "Bob", "email45@comcast.net", "555", "2014-11-45", "2013-01-05"],
+                    ["46", "1", "a", "Smith", "Bob", "email46@comcast.net", "666", "2014-11-46", "2013-01-06"],
+                    ["47", "1", "a", "Smith", "Bob", "email47@comcast.net", "777", "2014-11-47", "2013-01-07"],
+                    ["48", "1", "a", "Smith", "Bob", "email48@comcast.net", "888", "2014-11-48", "2013-01-08"],
+                    ["49", "1", "a", "Smith", "Bob", "email49@comcast.net", "999", "2014-11-49", "2013-01-09"],
+                    ["50", "1", "a", "Smith", "Bob", "email50@comcast.net", "555", "2015-11-55", "2013-01-05"],
+                    ["51", "1", "a", "Smith", "Bob", "email51@comcast.net", "111", "2015-11-51", "2013-01-01"],
+                    ["52", "1", "a", "Smith", "Bob", "email52@comcast.net", "222", "2015-11-52", "2013-01-02"],
+                    ["53", "1", "a", "Smith", "Bob", "email53@comcast.net", "333", "2015-11-53", "2013-01-03"],
+                    ["54", "1", "a", "Smith", "Bob", "email54@comcast.net", "444", "2015-11-54", "2013-01-04"],
+                    ["55", "1", "a", "Smith", "Bob", "email55@comcast.net", "555", "2015-11-55", "2013-01-05"],
+                    ["56", "1", "a", "Smith", "Bob", "email56@comcast.net", "666", "2015-11-56", "2013-01-06"],
+                    ["57", "1", "a", "Smith", "Bob", "email57@comcast.net", "777", "2015-11-57", "2013-01-07"],
+                    ["58", "1", "a", "Smith", "Bob", "email58@comcast.net", "888", "2015-11-58", "2013-01-08"],
+                    ["59", "1", "a", "Smith", "Bob", "email59@comcast.net", "999", "2015-11-59", "2013-01-09"],
+                    ["60", "1", "a", "Smith", "Bob", "email60@comcast.net", "666", "2016-11-66", "2013-01-06"],
+                    ["61", "1", "a", "Smith", "Bob", "email61@comcast.net", "111", "2016-11-61", "2013-01-01"],
+                    ["62", "1", "a", "Smith", "Bob", "email62@comcast.net", "222", "2016-11-62", "2013-01-02"],
+                    ["63", "1", "a", "Smith", "Bob", "email63@comcast.net", "333", "2016-11-63", "2013-01-03"],
+                    ["64", "1", "a", "Smith", "Bob", "email64@comcast.net", "444", "2016-11-64", "2013-01-04"],
+                    ["65", "1", "a", "Smith", "Bob", "email65@comcast.net", "555", "2016-11-65", "2013-01-05"],
+                    ["66", "1", "a", "Smith", "Bob", "email66@comcast.net", "666", "2016-11-66", "2013-01-06"],
+                    ["67", "1", "a", "Smith", "Bob", "email67@comcast.net", "777", "2016-11-67", "2013-01-07"],
+                    ["68", "1", "a", "Smith", "Bob", "email68@comcast.net", "888", "2016-11-68", "2013-01-08"],
+                    ["69", "1", "a", "Smith", "Bob", "email69@comcast.net", "999", "2016-11-69", "2013-01-09"],
+                    ["70", "1", "a", "Smith", "Bob", "email70@comcast.net", "777", "2017-11-77", "2013-01-07"],
+                    ["71", "1", "a", "Smith", "Bob", "email71@comcast.net", "111", "2017-11-71", "2013-01-01"],
+                    ["72", "1", "a", "Smith", "Bob", "email72@comcast.net", "222", "2017-11-72", "2013-01-02"],
+                    ["73", "1", "a", "Smith", "Bob", "email73@comcast.net", "333", "2017-11-73", "2013-01-03"],
+                    ["74", "1", "a", "Smith", "Bob", "email74@comcast.net", "444", "2017-11-74", "2013-01-04"],
+                    ["75", "1", "a", "Smith", "Bob", "email75@comcast.net", "555", "2017-11-75", "2013-01-05"],
+                    ["76", "1", "a", "Smith", "Bob", "email76@comcast.net", "666", "2017-11-76", "2013-01-06"],
+                    ["77", "1", "a", "Smith", "Bob", "email77@comcast.net", "777", "2017-11-77", "2013-01-07"],
+                    ["78", "1", "a", "Smith", "Bob", "email78@comcast.net", "888", "2017-11-78", "2013-01-08"],
+                    ["79", "1", "a", "Smith", "Bob", "email79@comcast.net", "999", "2017-11-79", "2013-01-09"],
+                    ["80", "1", "a", "Smith", "Bob", "email80@comcast.net", "888", "2018-11-88", "2013-01-08"],
+                    ["81", "1", "a", "Smith", "Bob", "email81@comcast.net", "111", "2018-11-81", "2013-01-01"],
+                    ["82", "1", "a", "Smith", "Bob", "email82@comcast.net", "222", "2018-11-82", "2013-01-02"],
+                    ["83", "1", "a", "Smith", "Bob", "email83@comcast.net", "333", "2018-11-83", "2013-01-03"],
+                    ["84", "1", "a", "Smith", "Bob", "email84@comcast.net", "444", "2018-11-84", "2013-01-04"],
+                    ["85", "1", "a", "Smith", "Bob", "email85@comcast.net", "555", "2018-11-85", "2013-01-05"],
+                    ["86", "1", "a", "Smith", "Bob", "email86@comcast.net", "666", "2018-11-86", "2013-01-06"],
+                    ["87", "1", "a", "Smith", "Bob", "email87@comcast.net", "777", "2018-11-87", "2013-01-07"],
+                    ["88", "1", "a", "Smith", "Bob", "email88@comcast.net", "888", "2018-11-88", "2013-01-08"],
+                    ["89", "1", "a", "Smith", "Bob", "email89@comcast.net", "999", "2018-11-89", "2013-01-09"],
+                    ["90", "1", "a", "Smith", "Bob", "email90@comcast.net", "999", "2019-11-99", "2013-01-09"],
+                    ["91", "1", "a", "Smith", "Bob", "email91@comcast.net", "111", "2019-11-91", "2013-01-01"],
+                    ["92", "1", "a", "Smith", "Bob", "email92@comcast.net", "222", "2019-11-92", "2013-01-02"],
+                    ["93", "1", "a", "Smith", "Bob", "email93@comcast.net", "333", "2019-11-93", "2013-01-03"],
+                    ["94", "1", "a", "Smith", "Bob", "email94@comcast.net", "444", "2019-11-94", "2013-01-04"],
+                    ["95", "1", "a", "Smith", "Bob", "email95@comcast.net", "555", "2019-11-95", "2013-01-05"],
+                    ["96", "1", "a", "Smith", "Bob", "email96@comcast.net", "666", "2019-11-96", "2013-01-06"],
+                    ["97", "1", "a", "Smith", "Bob", "email97@comcast.net", "777", "2019-11-97", "2013-01-07"],
+                    ["98", "1", "a", "Smith", "Bob", "email98@comcast.net", "888", "2019-11-98", "2013-01-08"],
+                    ["99", "1", "a", "Smith", "Bob", "email99@comcast.net", "999", "2019-11-99", "2013-01-09"],
+                    ["100", "1", "a", "Smith", "Bob", "email100@comcast.net", "111", "2011-11-11", "2013-01-01"],
+                    ["101", "1", "a", "Smith", "Bob", "email101@comcast.net", "111", "2011-11-11", "2013-01-01"],
+                    ["102", "1", "a", "Smith", "Bob", "email102@comcast.net", "222", "2011-11-11", "2013-01-02"],
+                    ["103", "1", "a", "Smith", "Bob", "email103@comcast.net", "333", "2011-11-11", "2013-01-03"],
+                    ["104", "1", "a", "Smith", "Bob", "email104@comcast.net", "444", "2011-11-11", "2013-01-04"],
+                    ["105", "1", "a", "Smith", "Bob", "email105@comcast.net", "555", "2011-11-11", "2013-01-05"],
+                    ["106", "1", "a", "Smith", "Bob", "email106@comcast.net", "666", "2011-11-11", "2013-01-06"],
+                    ["107", "1", "a", "Smith", "Bob", "email107@comcast.net", "777", "2011-11-11", "2013-01-07"],
+                    ["108", "1", "a", "Smith", "Bob", "email108@comcast.net", "888", "2011-11-11", "2013-01-08"],
+                    ["109", "1", "a", "Smith", "Bob", "email109@comcast.net", "999", "2011-11-11", "2013-01-09"],
+                    ["110", "1", "a", "Smith", "Bob", "email110@comcast.net", "111", "2011-11-11", "2013-01-01"],
+                    ["111", "1", "a", "Smith", "Bob", "email111@comcast.net", "111", "2011-11-11", "2013-01-01"],
+                    ["112", "1", "a", "Smith", "Bob", "email112@comcast.net", "222", "2011-11-11", "2013-01-02"],
+                    ["113", "1", "a", "Smith", "Bob", "email113@comcast.net", "333", "2011-11-11", "2013-01-03"],
+                    ["114", "1", "a", "Smith", "Bob", "email114@comcast.net", "444", "2011-11-11", "2013-01-04"],
+                    ["115", "1", "a", "Smith", "Bob", "email115@comcast.net", "555", "2011-11-11", "2013-01-05"],
+                    ["116", "1", "a", "Smith", "Bob", "email116@comcast.net", "666", "2011-11-11", "2013-01-06"],
+                    ["117", "1", "a", "Smith", "Bob", "email117@comcast.net", "777", "2011-11-11", "2013-01-07"],
+                    ["118", "1", "a", "Smith", "Bob", "email118@comcast.net", "888", "2011-11-11", "2013-01-08"],
+                    ["119", "1", "a", "Smith", "Bob", "email119@comcast.net", "999", "2011-11-11", "2013-01-09"],
+                    ["120", "1", "a", "Smith", "Bob", "email120@comcast.net", "222", "2011-11-12", "2013-01-02"],
+                    ["121", "1", "a", "Smith", "Bob", "email121@comcast.net", "111", "2011-11-12", "2013-01-01"],
+                    ["122", "1", "a", "Smith", "Bob", "email122@comcast.net", "222", "2011-11-12", "2013-01-02"],
+                    ["123", "1", "a", "Smith", "Bob", "email123@comcast.net", "333", "2011-11-12", "2013-01-03"],
+                    ["124", "1", "a", "Smith", "Bob", "email124@comcast.net", "444", "2011-11-12", "2013-01-04"],
+                    ["125", "1", "a", "Smith", "Bob", "email125@comcast.net", "555", "2011-11-12", "2013-01-05"],
+                    ["126", "1", "a", "Smith", "Bob", "email126@comcast.net", "666", "2011-11-12", "2013-01-06"],
+                    ["127", "1", "a", "Smith", "Bob", "email127@comcast.net", "777", "2011-11-12", "2013-01-07"],
+                    ["128", "1", "a", "Smith", "Bob", "email128@comcast.net", "888", "2011-11-12", "2013-01-08"],
+                    ["129", "1", "a", "Smith", "Bob", "email129@comcast.net", "999", "2011-11-12", "2013-01-09"],
+                    ["130", "1", "a", "Smith", "Bob", "email130@comcast.net", "333", "2011-11-13", "2013-01-03"],
+                    ["131", "1", "a", "Smith", "Bob", "email131@comcast.net", "111", "2011-11-13", "2013-01-01"],
+                    ["132", "1", "a", "Smith", "Bob", "email132@comcast.net", "222", "2011-11-13", "2013-01-02"],
+                    ["133", "1", "a", "Smith", "Bob", "email133@comcast.net", "333", "2011-11-13", "2013-01-03"],
+                    ["134", "1", "a", "Smith", "Bob", "email134@comcast.net", "444", "2011-11-13", "2013-01-04"],
+                    ["135", "1", "a", "Smith", "Bob", "email135@comcast.net", "555", "2011-11-13", "2013-01-05"],
+                    ["136", "1", "a", "Smith", "Bob", "email136@comcast.net", "666", "2011-11-13", "2013-01-06"],
+                    ["137", "1", "a", "Smith", "Bob", "email137@comcast.net", "777", "2011-11-13", "2013-01-07"],
+                    ["138", "1", "a", "Smith", "Bob", "email138@comcast.net", "888", "2011-11-13", "2013-01-08"],
+                    ["139", "1", "a", "Smith", "Bob", "email139@comcast.net", "999", "2011-11-13", "2013-01-09"],
+                    ["140", "1", "a", "Smith", "Bob", "email140@comcast.net", "444", "2011-11-14", "2013-01-04"],
+                    ["141", "1", "a", "Smith", "Bob", "email141@comcast.net", "111", "2011-11-14", "2013-01-01"],
+                    ["142", "1", "a", "Smith", "Bob", "email142@comcast.net", "222", "2011-11-14", "2013-01-02"],
+                    ["143", "1", "a", "Smith", "Bob", "email143@comcast.net", "333", "2011-11-14", "2013-01-03"],
+                    ["144", "1", "a", "Smith", "Bob", "email144@comcast.net", "444", "2011-11-14", "2013-01-04"],
+                    ["145", "1", "a", "Smith", "Bob", "email145@comcast.net", "555", "2011-11-14", "2013-01-05"],
+                    ["146", "1", "a", "Smith", "Bob", "email146@comcast.net", "666", "2011-11-14", "2013-01-06"],
+                    ["147", "1", "a", "Smith", "Bob", "email147@comcast.net", "777", "2011-11-14", "2013-01-07"],
+                    ["148", "1", "a", "Smith", "Bob", "email148@comcast.net", "888", "2011-11-14", "2013-01-08"],
+                    ["149", "1", "a", "Smith", "Bob", "email149@comcast.net", "999", "2011-11-14", "2013-01-09"],
+                    ["150", "1", "a", "Smith", "Bob", "email150@comcast.net", "555", "2011-11-15", "2013-01-05"],
+                    ["151", "1", "a", "Smith", "Bob", "email151@comcast.net", "111", "2011-11-15", "2013-01-01"],
+                    ["152", "1", "a", "Smith", "Bob", "email152@comcast.net", "222", "2011-11-15", "2013-01-02"],
+                    ["153", "1", "a", "Smith", "Bob", "email153@comcast.net", "333", "2011-11-15", "2013-01-03"],
+                    ["154", "1", "a", "Smith", "Bob", "email154@comcast.net", "444", "2011-11-15", "2013-01-04"],
+                    ["155", "1", "a", "Smith", "Bob", "email155@comcast.net", "555", "2011-11-15", "2013-01-05"],
+                    ["156", "1", "a", "Smith", "Bob", "email156@comcast.net", "666", "2011-11-15", "2013-01-06"],
+                    ["157", "1", "a", "Smith", "Bob", "email157@comcast.net", "777", "2011-11-15", "2013-01-07"],
+                    ["158", "1", "a", "Smith", "Bob", "email158@comcast.net", "888", "2011-11-15", "2013-01-08"],
+                    ["159", "1", "a", "Smith", "Bob", "email159@comcast.net", "999", "2011-11-15", "2013-01-09"],
+                    ["160", "1", "a", "Smith", "Bob", "email160@comcast.net", "666", "2011-11-16", "2013-01-06"],
+                    ["161", "1", "a", "Smith", "Bob", "email161@comcast.net", "111", "2011-11-16", "2013-01-01"],
+                    ["162", "1", "a", "Smith", "Bob", "email162@comcast.net", "222", "2011-11-16", "2013-01-02"],
+                    ["163", "1", "a", "Smith", "Bob", "email163@comcast.net", "333", "2011-11-16", "2013-01-03"],
+                    ["164", "1", "a", "Smith", "Bob", "email164@comcast.net", "444", "2011-11-16", "2013-01-04"],
+                    ["165", "1", "a", "Smith", "Bob", "email165@comcast.net", "555", "2011-11-16", "2013-01-05"],
+                    ["166", "1", "a", "Smith", "Bob", "email166@comcast.net", "666", "2011-11-16", "2013-01-06"],
+                    ["167", "1", "a", "Smith", "Bob", "email167@comcast.net", "777", "2011-11-16", "2013-01-07"],
+                    ["168", "1", "a", "Smith", "Bob", "email168@comcast.net", "888", "2011-11-16", "2013-01-08"],
+                    ["169", "1", "a", "Smith", "Bob", "email169@comcast.net", "999", "2011-11-16", "2013-01-09"],
+                    ["170", "1", "a", "Smith", "Bob", "email170@comcast.net", "777", "2011-11-17", "2013-01-07"],
+                    ["171", "1", "a", "Smith", "Bob", "email171@comcast.net", "111", "2011-11-17", "2013-01-01"],
+                    ["172", "1", "a", "Smith", "Bob", "email172@comcast.net", "222", "2011-11-17", "2013-01-02"],
+                    ["173", "1", "a", "Smith", "Bob", "email173@comcast.net", "333", "2011-11-17", "2013-01-03"],
+                    ["174", "1", "a", "Smith", "Bob", "email174@comcast.net", "444", "2011-11-17", "2013-01-04"],
+                    ["175", "1", "a", "Smith", "Bob", "email175@comcast.net", "555", "2011-11-17", "2013-01-05"],
+                    ["176", "1", "a", "Smith", "Bob", "email176@comcast.net", "666", "2011-11-17", "2013-01-06"],
+                    ["177", "1", "a", "Smith", "Bob", "email177@comcast.net", "777", "2011-11-17", "2013-01-07"],
+                    ["178", "1", "a", "Smith", "Bob", "email178@comcast.net", "888", "2011-11-17", "2013-01-08"],
+                    ["179", "1", "a", "Smith", "Bob", "email179@comcast.net", "999", "2011-11-17", "2013-01-09"],
+                    ["180", "1", "a", "Smith", "Bob", "email180@comcast.net", "888", "2011-11-18", "2013-01-08"],
+                    ["181", "1", "a", "Smith", "Bob", "email181@comcast.net", "111", "2011-11-18", "2013-01-01"],
+                    ["182", "1", "a", "Smith", "Bob", "email182@comcast.net", "222", "2011-11-18", "2013-01-02"],
+                    ["183", "1", "a", "Smith", "Bob", "email183@comcast.net", "333", "2011-11-18", "2013-01-03"],
+                    ["184", "1", "a", "Smith", "Bob", "email184@comcast.net", "444", "2011-11-18", "2013-01-04"],
+                    ["185", "1", "a", "Smith", "Bob", "email185@comcast.net", "555", "2011-11-18", "2013-01-05"],
+                    ["186", "1", "a", "Smith", "Bob", "email186@comcast.net", "666", "2011-11-18", "2013-01-06"],
+                    ["187", "1", "a", "Smith", "Bob", "email187@comcast.net", "777", "2011-11-18", "2013-01-07"],
+                    ["188", "1", "a", "Smith", "Bob", "email188@comcast.net", "888", "2011-11-18", "2013-01-08"],
+                    ["189", "1", "a", "Smith", "Bob", "email189@comcast.net", "999", "2011-11-18", "2013-01-09"],
+                    ["190", "1", "a", "Smith", "Bob", "email190@comcast.net", "999", "2011-11-19", "2013-01-09"],
+                    ["191", "1", "a", "Smith", "Bob", "email191@comcast.net", "111", "2011-11-19", "2013-01-01"],
+                    ["192", "1", "a", "Smith", "Bob", "email192@comcast.net", "222", "2011-11-19", "2013-01-02"],
+                    ["193", "1", "a", "Smith", "Bob", "email193@comcast.net", "333", "2011-11-19", "2013-01-03"],
+                    ["194", "1", "a", "Smith", "Bob", "email194@comcast.net", "444", "2011-11-19", "2013-01-04"],
+                    ["195", "1", "a", "Smith", "Bob", "email195@comcast.net", "555", "2011-11-19", "2013-01-05"],
+                    ["196", "1", "a", "Smith", "Bob", "email196@comcast.net", "666", "2011-11-19", "2013-01-06"],
+                    ["197", "1", "a", "Smith", "Bob", "email197@comcast.net", "777", "2011-11-19", "2013-01-07"],
+                    ["198", "1", "a", "Smith", "Bob", "email198@comcast.net", "888", "2011-11-19", "2013-01-08"],
+                    ["199", "1", "a", "Smith", "Bob", "email199@comcast.net", "999", "2011-11-19", "2013-01-09"],
+                    ["200", "1", "a", "Smith", "Bob", "email200@comcast.net", "222", "2012-11-22", "2013-01-02"],
+                    ["201", "1", "a", "Smith", "Bob", "email201@comcast.net", "111", "2012-11-22", "2013-01-01"],
+                    ["202", "1", "a", "Smith", "Bob", "email202@comcast.net", "222", "2012-11-22", "2013-01-02"],
+                    ["203", "1", "a", "Smith", "Bob", "email203@comcast.net", "333", "2012-11-22", "2013-01-03"],
+                    ["204", "1", "a", "Smith", "Bob", "email204@comcast.net", "444", "2012-11-22", "2013-01-04"],
+                    ["205", "1", "a", "Smith", "Bob", "email205@comcast.net", "555", "2012-11-22", "2013-01-05"],
+                    ["206", "1", "a", "Smith", "Bob", "email206@comcast.net", "666", "2012-11-22", "2013-01-06"],
+                    ["207", "1", "a", "Smith", "Bob", "email207@comcast.net", "777", "2012-11-22", "2013-01-07"],
+                    ["208", "1", "a", "Smith", "Bob", "email208@comcast.net", "888", "2012-11-22", "2013-01-08"],
+                    ["209", "1", "a", "Smith", "Bob", "email209@comcast.net", "999", "2012-11-22", "2013-01-09"],
+                    ["210", "1", "a", "Smith", "Bob", "email210@comcast.net", "111", "2012-11-21", "2013-01-01"],
+                    ["211", "1", "a", "Smith", "Bob", "email211@comcast.net", "111", "2012-11-21", "2013-01-01"],
+                    ["212", "1", "a", "Smith", "Bob", "email212@comcast.net", "222", "2012-11-21", "2013-01-02"],
+                    ["213", "1", "a", "Smith", "Bob", "email213@comcast.net", "333", "2012-11-21", "2013-01-03"],
+                    ["214", "1", "a", "Smith", "Bob", "email214@comcast.net", "444", "2012-11-21", "2013-01-04"],
+                    ["215", "1", "a", "Smith", "Bob", "email215@comcast.net", "555", "2012-11-21", "2013-01-05"],
+                    ["216", "1", "a", "Smith", "Bob", "email216@comcast.net", "666", "2012-11-21", "2013-01-06"],
+                    ["217", "1", "a", "Smith", "Bob", "email217@comcast.net", "777", "2012-11-21", "2013-01-07"],
+                    ["218", "1", "a", "Smith", "Bob", "email218@comcast.net", "888", "2012-11-21", "2013-01-08"],
+                    ["219", "1", "a", "Smith", "Bob", "email219@comcast.net", "999", "2012-11-21", "2013-01-09"],
+                    ["220", "1", "a", "Smith", "Bob", "email220@comcast.net", "222", "2012-11-22", "2013-01-02"],
+                    ["221", "1", "a", "Smith", "Bob", "email221@comcast.net", "111", "2012-11-22", "2013-01-01"],
+                    ["222", "1", "a", "Smith", "Bob", "email222@comcast.net", "222", "2012-11-22", "2013-01-02"],
+                    ["223", "1", "a", "Smith", "Bob", "email223@comcast.net", "333", "2012-11-22", "2013-01-03"],
+                    ["224", "1", "a", "Smith", "Bob", "email224@comcast.net", "444", "2012-11-22", "2013-01-04"],
+                    ["225", "1", "a", "Smith", "Bob", "email225@comcast.net", "555", "2012-11-22", "2013-01-05"],
+                    ["226", "1", "a", "Smith", "Bob", "email226@comcast.net", "666", "2012-11-22", "2013-01-06"],
+                    ["227", "1", "a", "Smith", "Bob", "email227@comcast.net", "777", "2012-11-22", "2013-01-07"],
+                    ["228", "1", "a", "Smith", "Bob", "email228@comcast.net", "888", "2012-11-22", "2013-01-08"],
+                    ["229", "1", "a", "Smith", "Bob", "email229@comcast.net", "999", "2012-11-22", "2013-01-09"],
+                    ["230", "1", "a", "Smith", "Bob", "email230@comcast.net", "333", "2012-11-23", "2013-01-03"],
+                    ["231", "1", "a", "Smith", "Bob", "email231@comcast.net", "111", "2012-11-23", "2013-01-01"],
+                    ["232", "1", "a", "Smith", "Bob", "email232@comcast.net", "222", "2012-11-23", "2013-01-02"],
+                    ["233", "1", "a", "Smith", "Bob", "email233@comcast.net", "333", "2012-11-23", "2013-01-03"],
+                    ["234", "1", "a", "Smith", "Bob", "email234@comcast.net", "444", "2012-11-23", "2013-01-04"],
+                    ["235", "1", "a", "Smith", "Bob", "email235@comcast.net", "555", "2012-11-23", "2013-01-05"],
+                    ["236", "1", "a", "Smith", "Bob", "email236@comcast.net", "666", "2012-11-23", "2013-01-06"],
+                    ["237", "1", "a", "Smith", "Bob", "email237@comcast.net", "777", "2012-11-23", "2013-01-07"],
+                    ["238", "1", "a", "Smith", "Bob", "email238@comcast.net", "888", "2012-11-23", "2013-01-08"],
+                    ["239", "1", "a", "Smith", "Bob", "email239@comcast.net", "999", "2012-11-23", "2013-01-09"],
+                    ["240", "1", "a", "Smith", "Bob", "email240@comcast.net", "444", "2012-11-24", "2013-01-04"],
+                    ["241", "1", "a", "Smith", "Bob", "email241@comcast.net", "111", "2012-11-24", "2013-01-01"],
+                    ["242", "1", "a", "Smith", "Bob", "email242@comcast.net", "222", "2012-11-24", "2013-01-02"],
+                    ["243", "1", "a", "Smith", "Bob", "email243@comcast.net", "333", "2012-11-24", "2013-01-03"],
+                    ["244", "1", "a", "Smith", "Bob", "email244@comcast.net", "444", "2012-11-24", "2013-01-04"],
+                    ["245", "1", "a", "Smith", "Bob", "email245@comcast.net", "555", "2012-11-24", "2013-01-05"],
+                    ["246", "1", "a", "Smith", "Bob", "email246@comcast.net", "666", "2012-11-24", "2013-01-06"],
+                    ["247", "1", "a", "Smith", "Bob", "email247@comcast.net", "777", "2012-11-24", "2013-01-07"],
+                    ["248", "1", "a", "Smith", "Bob", "email248@comcast.net", "888", "2012-11-24", "2013-01-08"],
+                    ["249", "1", "a", "Smith", "Bob", "email249@comcast.net", "999", "2012-11-24", "2013-01-09"],
+                    ["250", "1", "a", "Smith", "Bob", "email250@comcast.net", "555", "2012-11-25", "2013-01-05"], ];
+
+                Ext.create('Ext.data.Store', {
+                    storeId: 'usersstore',
+                    // destroy the store if the grid is destroyed
+                    autoDestroy: true,
+                    model: 'Users',
+                    sorters: [{
+                        property: 'lastname',
+                        direction: 'ASC'
+                    }],
+                    data: myData
+                });
+
+                var grid = Ext.create('Ext.grid.Panel', {
+                    store: Ext.data.StoreManager.lookup('usersstore'),
+                    title: 'W-9 Confirmation',
+                    columns: [{
+                        header: "W-9 Received",
+                        width: 60,
+                        align: 'center',
+                        sortable: true,
+                        renderer: w9received,
+                        dataIndex: 'w9received',
+                        editor: new Ext.form.ComboBox({
+                            store: new Ext.data.SimpleStore({
+                                fields: ['abbr', 'full'],
+                                data: [
+                                    ['1', 'Yes'],
+                                    ['0', 'No']
+                                ]
+                            }),
+                            valueField: 'abbr',
+                            displayField: 'full',
+                            editable: false,
+                            forceSelection: true,
+                            mode: 'local',
+                            triggerAction: 'all',
+                            allowBlank: false
+                        })
+                    }, {
+                        header: "Invitation Code",
+                        width: 90,
+                        sortable: true,
+                        dataIndex: 'invitationcode'
+                    }, {
+                        header: "Last Name",
+                        width: 90,
+                        sortable: true,
+                        dataIndex: 'lastname'
+                    }, {
+                        header: "First Name",
+                        width: 90,
+                        sortable: true,
+                        dataIndex: 'firstname'
+                    }, {
+                        header: "Email",
+                        width: 180,
+                        sortable: true,
+                        dataIndex: 'email'
+                    }, {
+                        header: "Phone",
+                        width: 100,
+                        sortable: true,
+                        dataIndex: 'phone'
+                    }, {
+                        header: "Registration Date",
+                        width: 100,
+                        sortable: true,
+                        renderer: Ext.util.Format.dateRenderer('Y-m-d'),
+                        dataIndex: 'registereddate'
+                    }, {
+                        header: "Course Date",
+                        width: 100,
+                        sortable: true,
+                        renderer: Ext.util.Format.dateRenderer('Y-m-d'),
+                        dataIndex: 'startDate'
+                    }],
+                    tbar: [{
+                        xtype: 'button',
+                        text: 'Clear Changes',
+                        iconCls: 'icon-undo',
+                        handler: function () {
+                            Ext.data.StoreManager.lookup('usersstore').rejectChanges();
+                            Ext.get('dirtyDataText').update(''); // clear changes have been made message
+                        }
+                    }, '-', {
+                        xtype: 'tbtext',
+                        id: 'dirtyDataText',
+                        text: '.', // if some data is not put here the update() will put padding around the text so it is pushed down
+                        style: {
+                            color: '#f00'
+                        }
+                    }],
+                    stripeRows: true,
+                    width: 1200,
+                    height: 500,
+                    selModel: {
+                        selType: 'cellmodel'
+                    },
+                    plugins: [
+                    Ext.create('Ext.grid.plugin.CellEditing', {
+                        clicksToEdit: 1
+                    })],
+                    viewConfig: {
+                        forceFit: true
+                    },
+                    renderTo: 'grid',
+                    listeners: {
+                        edit: function (editor, e) {
+                            Ext.get('dirtyDataText').update('Changes have been made. Remember to save when finished.');
+                        }
+                    }
+                });
+            });
+        </script>
+    </body>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3803</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.setup({ 
+
+            requires: [
+                'Ext.Button'
+            ],
+            onReady: function() {
+                var btn = Ext.create('Ext.Button', 
+                    {
+                        width:200,
+                        height:200,
+                        iconCls:"action",
+                        iconMask:true,
+                        text:"YAY!"
+                    }
+                );
+
+                  var iconBtn = Ext.create('Ext.Button', 
+                    {
+                        y:500,
+                        width:200,
+                        height:200,
+                        icon:"../../resources/images/icon1.png",
+                        iconMask:true,
+                        text:"YAY!"
+                    }
+                );
+
+                  Ext.Viewport.setLayout("vbox");
+
+                Ext.Viewport.add(btn);
+                Ext.Viewport.add(iconBtn);
+
+                setTimeout(
+                    function(){
+                        btn.setIconCls(null);
+                        iconBtn.setIcon(null);
+                    },
+                    1000
+                );
+
+                setTimeout(
+                    function(){
+                        //iconBtn.setIcon("../../resources/images/icon2.png");
+                        btn.setIconCls("info");
+                    },
+                    2000
+                );
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

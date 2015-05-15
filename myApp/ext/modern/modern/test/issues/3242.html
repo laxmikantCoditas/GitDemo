@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TOUCH-3242</title>
+
+        <script src="../../sencha-touch-debug.js"></script>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+        <script type="text/javascript">
+
+            Ext.application({
+                name: 'App',
+                launch: function () {
+                    Ext.Viewport.add(Ext.create('Ext.Panel', {
+                        fullscreen: true,
+                        items: {
+                            xtype: 'toolbar',
+                            title: 'title',
+                            docked: 'top',
+                            items: {
+                                text: 'Button'
+                            }
+                        }
+                    }));
+                }
+            });
+
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

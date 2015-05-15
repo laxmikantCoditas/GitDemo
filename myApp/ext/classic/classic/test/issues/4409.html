@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+Ext.require("Ext.form.*");
+Ext.onReady(function() {
+
+/*
+    Ext.override(Ext.layout.component.field.Text, {
+    adjustForGrow: function(width, height) {
+        var me = this,
+            owner = me.owner,
+            inputEl, value, calcWidth, max, min,
+            result = [width, height];
+
+        if (owner.grow) {
+            inputEl = owner.inputEl;
+
+            // Find the width that contains the whole text value
+            value = (inputEl.dom.value || (owner.hasFocus ? '' : owner.emptyText) || '') + owner.growAppend;
+            calcWidth = inputEl.getTextWidth(value) + inputEl.getBorderWidth("lr") + inputEl.getPadding("lr");
+
+            // first make sure that the user config value isn't greater than the default max
+            max = Math.min(owner.growMax, Ext.form.field.Text.prototype.growMax);
+            min = Math.min(max, Ext.isNumber(width) ? width : Infinity);
+            max = Math.max(owner.growMin, max, min);
+
+            // Constrain
+            result[0] = Ext.Number.constrain(calcWidth, owner.growMin, max);
+        }
+
+        return result;
+    }
+    });
+    */
+
+    Ext.create("Ext.form.Panel", {
+        defaultType: 'textfield',
+        //autoScroll: true,
+        //items  : textFields,
+        items  : [{
+            fieldLabel: 'Name',
+            name: 'userName',
+            grow: true,
+            growMax: 770,
+            growMin: 10,
+            //value: "asdf blah foobar"
+            value: "as",
+            //value: "aasdf aasdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf sdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf sdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf"
+        }, {
+            xtype: 'textareafield',
+	    grow: true,
+	    growMax: 700,
+	    growMin: 55,
+	    //value: "asdf",
+            //value: "asdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf sdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf sdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf",
+            value: "aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf aasdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf sdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf sdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf",
+	    name: 'message',
+	    fieldLabel: 'Message'
+	}],
+        frame: true,
+        buttons: [{
+            text: "Set text",
+            handler: function() {
+                this.up('form').items.items[0].setValue("aasdf aasdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf sdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf sdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf");
+                //this.up('form').items.items[0].setValue("aa");
+                //this.up('form').items.items[0].setValue("a");
+            }
+        }],
+        renderTo: Ext.getBody()
+    });
+
+});
+        
+    </script>
+</body>
+</html>

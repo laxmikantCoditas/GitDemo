@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+<script type="text/javascript" charset="utf-8">
+Ext.require('*');
+Ext.onReady(function() {
+    var p = Ext.create('Ext.form.Panel', {
+        title: 'Test Form',
+        style: {
+            margin: '20px'
+        },
+        bodyStyle: {
+            padding: '10px 10px 0 10px'
+        },
+        width: 500,
+        items: [{
+            xtype: 'fieldset',
+            anchor: '100%',
+            layout: 'hbox',
+            items: [{
+                xtype: 'datefield',
+                name: 'due',
+                fieldLabel: 'Due Date',
+                labelWidth: 80,
+                width: 185,
+                margin: '0 15 0 0'
+            }, {
+                xtype: 'timefield',
+                name: 'time',
+                fieldLabel: 'Time',
+                labelWidth: 60,
+                flex: 1
+            }]
+        }],
+        renderTo: Ext.getBody()
+    });
+    var f = p.child('fieldset');
+    if (f.getHeight() !== 49) {
+        p.body.dom.style.backgroundColor = 'red';
+        p.setTitle('Fields report incorrect size to Fieldset which ends up too tall');
+    }
+});
+</script>
+</body>
+</html>

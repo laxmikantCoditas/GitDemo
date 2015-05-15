@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4771</title>
+	
+	<script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+	    Ext.setup({
+		    requires: ['Ext.form.Panel', 'Ext.form.FieldSet', 'Ext.field.Number'],
+		    onReady: function() {
+			    Ext.create('Ext.form.Panel', {
+				    fullscreen: true,
+				    items: [{
+					    xtype: 'fieldset',
+					    title: 'Select',
+					    items: [{
+						    xtype: 'numberfield',
+						    label: 'Age',
+						    placeHolder: 'How old are you?'
+					    }]
+				    }]
+			    });
+		    }
+	    });
+
+    </script>
+</head>
+<body>
+</body>
+</html>

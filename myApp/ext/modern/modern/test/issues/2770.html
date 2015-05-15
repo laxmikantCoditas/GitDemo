@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sencha Test</title>
+        
+        <script src="../../sencha-touch-debug.js"></script>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+        <script type="text/javascript">
+
+            Ext.application({
+                name: 'Test',
+
+                requires : [
+                    'Ext.form.Panel',
+                    'Ext.form.FieldSet',
+                    'Ext.field.Radio'
+                ],
+            
+                launch: function() {
+                    new Ext.form.Panel({
+                        fullscreen : true,
+                        items      : [
+                            {
+                                xtype       : 'fieldset',
+                                title       : 'Checkboxes',
+                                defaultType : 'checkboxfield',
+                                defaults    : {
+                                    listeners : {
+                                        change : function (field, newValue, oldValue) {
+                                            console.log(field.getLabel(), 'New:', newValue, 'Old:', oldValue);
+                                        }
+                                    }
+                                },
+                                items       : [
+                                    {
+                                        label : 'Check 1'
+                                    },
+                                    {
+                                        label : 'Check 2'
+                                    },
+                                    {
+                                        label : 'Check 3'
+                                    }
+                                ]
+                            },
+                            {
+                                xtype       : 'fieldset',
+                                title       : 'Radios',
+                                defaultType : 'radiofield',
+                                defaults    : {
+                                    listeners : {
+                                        change : function (field, newValue, oldValue) {
+                                            console.log(field.getLabel(), 'New:', newValue, 'Old:', oldValue);
+                                        }
+                                    }
+                                },
+                                items       : [
+                                    {
+                                        label : 'Radio 1',
+                                        name  : 'radio'
+                                    },
+                                    {
+                                        label : 'Radio 2',
+                                        name  : 'radio'
+                                    },
+                                    {
+                                        label : 'Radio 3',
+                                        name  : 'radio'
+                                    }
+                                ]
+                            },
+                            {
+                                xtype     : 'spinnerfield',
+                                label     : 'Spinner',
+                                listeners : {
+                                    change : function(field, newValue, oldValue) {
+                                        console.log(field.getLabel(), 'New:', newValue, 'Old:', oldValue);
+                                    }
+                                }
+                            }
+                        ]
+                    });
+                }
+            });
+            
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

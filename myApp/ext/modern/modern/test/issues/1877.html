@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test case template</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script src="../../sencha-touch.js"></script>
+
+        <script>
+            Ext.define('TestPanel', {
+                extend: 'Ext.Panel',
+
+                config: {
+                    items: [
+                        {
+                            xtype: 'button',
+                            itemId: 'loginButton',
+                            text: 'Login'
+                        }
+                    ],
+                    listeners: [
+                        {
+                            fn: 'onLoginButtonTap',
+                            event: 'tap',
+                            // Change the delegate to 'button' and it starts working as expected.
+                            delegate: '#loginButton'
+                        }
+                    ]
+                },
+
+                onLoginButtonTap: function(button, e, options) {
+                    alert('Tapped!')
+                }
+            });
+
+            Ext.setup({
+                onReady: function() {
+                    Ext.Viewport.add(
+                        Ext.create('TestPanel', {
+                            // Remove this itemId and it starts working as expected.
+                            itemId: 'foo'
+                        })
+                    );
+                }
+            });
+        </script>
+    </head>
+    <body></body>
+</html>

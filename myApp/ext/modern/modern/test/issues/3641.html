@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test case template</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script src="../../sencha-touch-all-debug.js"></script>
+
+        <script>
+            Ext.setup({
+                onReady: function () {
+                    var data = {
+                        text: 'Groceries',
+                        items: [{
+                            text: 'Drinks',
+                            gp: 'D',
+                            items: [{
+                                text: 'Water',
+                                gp: "W",
+                                items: [{
+                                    text: 'Sparkling',
+                                    gp: "S",
+                                    leaf: true
+                                }, {
+                                    text: 'Still',
+                                    gp: "S",
+                                    leaf: true
+                                }, {
+                                    text: 'Deep',
+                                    gp: "D",
+                                    leaf: true
+                                }, {
+                                    text: 'Muddy',
+                                    gp: "M",
+                                    leaf: true
+                                }]
+                            }, {
+                                text: 'Ale',
+                                gp: 'A',
+                                leaf: true
+                            }]
+
+                        }, {
+                            text: 'Lager',
+                            gp: "L",
+                            leaf: true
+                        }]
+                    };
+
+                    Ext.define('ListItem', {
+                        extend: 'Ext.data.Model',
+                        config: {
+                            fields: [{
+                                name: 'text',
+                                type: 'string'
+                            }, {
+                                name: 'gp',
+                                type: 'string'
+                            }]
+                        }
+                    });
+
+                    var store = Ext.create('Ext.data.TreeStore', {
+                        model: 'ListItem',
+                        defaultRootProperty: 'items',
+                        root: data
+                    });
+
+                    var nestedList = Ext.create('Ext.NestedList', {
+                        fullscreen: true,
+                        title: 'Groceries',
+                        displayField: 'text',
+                        store: store,
+                        listeners: {
+                            listchange: function (nlist, list) {
+                                debugger;
+                                var liststore = list.getStore();
+                                liststore.setGrouper({
+                                    groupFn: function (record) {
+                                        return record.get("gp");
+                                    }
+                                });
+                                list.setGrouped(true);
+                            }
+                        }
+
+                    });
+                }
+            });
+        </script>
+    </head>
+    <body>
+
+    </body>
+</html>

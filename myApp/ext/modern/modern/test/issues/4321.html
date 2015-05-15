@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sencha Touch Issue Template</title>
+		<link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+		<script type="text/javascript" src="../../sencha-touch.js"></script>
+
+		<script type="text/javascript">
+			Ext.application({
+				name : 'Test',
+
+				requires : [
+
+				],
+
+				launch : function () {
+                    Ext.Viewport.add({
+                        xtype   : 'list',
+                        ui      : 'round',
+                        grouped : true,
+                        itemTpl : '{foo}',
+                        store   : {
+                            fields     : ['foo', 'group'],
+                            groupField : 'group',
+                            data       : [
+                                { foo : 'a', group : 1 },
+                                { foo : 'b', group : 2 },
+                                { foo : 'c', group : 2 }
+                            ]
+                        }
+                    });
+				}
+			});
+		</script>
+	</head>
+</html>

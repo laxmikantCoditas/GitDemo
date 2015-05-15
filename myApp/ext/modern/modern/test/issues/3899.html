@@ -1,0 +1,410 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Renderer Demos</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript">
+        Ext.setup({
+            requires: [
+                'Ext.Panel',
+                'Ext.TitleBar',
+                'Ext.chart.SpaceFillingChart',
+                'Ext.chart.series.Gauge'
+            ],
+            onReady:function () {
+                var value = 300;
+
+                var store1 = Ext.create('Ext.data.JsonStore', {
+                    fields : [ 'name', 'data1', 'data2', 'data3', 'data4', 'data5', 'data6', 'data7', 'data8', 'data9' ],
+                    data : [
+                        {'data1': 49, 'data2': 10, 'data3': 17288146955, 'data4': 10, 'data5': 18, 'data6': 30,'data7': 78, 'name': "Q1"},
+                        {'data1': 49, 'data2': -18, 'data3': 12465205357, 'data4': 17, 'data5': 22, 'data6': 45,'data7': 116, 'name': "Q2"},
+                        {'data1': 50, 'data2': 23, 'data3': 17616604906, 'data4': 22, 'data5': 47, 'data6': 32,'data7': 133, 'name': "Q3"},
+                        {'data1': 50, 'data2': -35, 'data3': 15061159274, 'data4': 33, 'data5': 39, 'data6': 47,'data7': 166, 'name': "Q4"},
+                        {'data1': 51, 'data2': 45, 'data3': 18526463121, 'data4': 44, 'data5': 68, 'data6': 60,'data7': 209, 'name': "Q5"},
+                        {'data1': 49, 'data2': -16, 'data3': 11944552179, 'data4': 48, 'data5': 56, 'data6': 63,'data7': 214, 'name': "Q6"},
+                        {'data1': 51, 'data2': 47, 'data3': 9632227788, 'data4': 50, 'data5': 51, 'data6': 68, 'data7': 220,'name': "Q7"},
+                        {'data1': 50, 'data2': -32, 'data3': 15061159274, 'data4': 55, 'data5': 60, 'data6': 69, 'data7': 225,'name': "Q8"},
+                    ]
+                });
+
+                var drawPerimeter = function (color, width) {
+                    return {strokeStyle:color, strokeOpacity:1, lineWidth:width, fillOpacity:0};
+                };
+
+                var drawStroke = function (color, width) {
+                    return {strokeStyle:color, strokeOpacity:1, lineWidth:width*2};
+                };
+
+                Ext.create("Ext.Panel", {
+                    fullscreen: true,
+                    layout: 'fit',
+                    items: [
+                        //----------------------------------------------------------------
+                        // Gauge #1: simple gauge based on customer's test case.
+                        //----------------------------------------------------------------
+                        {
+                            xtype: 'spacefilling',
+                            height: 400,
+                            width: 500,
+                            margin: 10,
+                            border: 2,
+                            style: 'border: 1px solid black',
+                            animate: {
+                                easing: 'elasticIn',
+                                duration: 1000
+                            },
+                            series: [{
+                                type: 'gauge',
+                                value: value,
+                                minimum: 0,
+                                maximum: 1000,
+                                donut: 30,
+                                colors: ["#115fa6", "lightgrey"],
+                                renderer: function(sprite,config,rendererData,index){
+                                    console.log('Gauge renderer');
+                                }
+                            }]
+                        },
+                        //----------------------------------------------------------------
+                        // Gauge #2: temperature gauge with sectors, titles and custom needle.
+                        //----------------------------------------------------------------
+                        {
+                            xtype: 'spacefilling',
+                            left: 510,
+                            height: 400,
+                            width: 600,
+                            margin: 10,
+                            border: 2,
+                            style: 'border: 1px solid black',
+                            animate: true,
+                            series: [{
+                                type: 'gauge',
+                                donut: 40,
+                                value: 60,
+                                needle: true,
+                                needleLength: 90,
+                                needleWidth: 8,
+                                colors: ['maroon', 'blue', 'lightgray', 'red'],
+                                sectors: [20,80],
+                                sectors: [ 
+                                    {end:20,  label:'Cold',  color:'dodgerblue'}, {end:20,  style:drawStroke('black', 2)},
+                                    {end:80,  label:'Temp.', color:'lightgray'},  {end:80,  style:drawStroke('black', 2)},
+                                    {end:100, label:'Hot',   color:'tomato'},     {start:0, style:drawPerimeter('gray', 4)}
+                                ],
+                                label: {fontSize:24, color:'white'},
+                                renderer: function(sprite, config, rendererData, spriteIndex) {
+                                    var surface = sprite.getParent(),
+                                        circleSprite, circleConfig;
+                                    // This renderer function draws the "Temp." label in big letters,
+                                    // the "Cold" label in blue, the "Hot" label in red, and it paints
+                                    // a maroon circle at the tip of the gauge needle.
+                                    if (config.type == "label") {
+                                        switch (spriteIndex) {
+                                            case 1: return {color:'blue'};
+                                            case 3: return {fontSize:32, color:'white', strokeStyle:'black'};
+                                            case 5: return {color:'darkred', x:config.x + 16};
+                                        }
+                                    } else if (config.type == "sector" && spriteIndex == 0) {
+                                        circleSprite = surface.circleSprite;
+                                        if (!circleSprite) {
+                                            circleSprite = surface.circleSprite = surface.add({type:'circle'});
+                                        }
+        
+                                        var series = rendererData.series;
+                                        var wholeDisk = series.getWholeDisk(),
+                                            halfTotalAngle = wholeDisk ? Math.PI : series.getTotalAngle() / 2,
+                                            needleAngle = config.startAngle + halfTotalAngle,
+                                            endRho = config.endRho;
+        
+                                        circleSprite.setAttributes({
+                                            cx: config.centerX - endRho * Math.cos(needleAngle),
+                                            cy: config.centerY - endRho * Math.sin(needleAngle),
+                                            r: 12,
+                                            color: sprite.attr.fillStyle
+                                        }, true);
+        
+                                        circleSprite.render(surface, surface.contexts[0]);
+                                    }
+                                },
+                            }]
+                        },
+                        //----------------------------------------------------------------
+                        // Bar chart
+                        //----------------------------------------------------------------
+                        {
+                            xtype: 'chart',
+                            top: 410,
+                            height: 400,
+                            width: 600,
+                            margin: 10,
+                            border: 2,
+                            style: 'border: 1px solid black',
+                            animate: true,
+                            store: store1,
+                            series: [
+                                {
+                                    type: 'bar',
+                                    xField: 'name',
+                                    yField: ['data6'],
+                                    colors: 'palegreen',
+                                    fill: false,
+                                    style: {
+                                        lineWidth: 2,
+                                        maxBarWidth: 30,
+                                        stroke: 'dodgerblue',
+                                        opacity: 0.6
+                                    },
+                                    renderer: function(sprite, config, rendererData, index) {
+                                        var store = rendererData.store,
+                                            storeItems = store.getData().items,
+                                            record = storeItems[index].getData(),
+                                            diff = record['data5'] - record['data6'],
+                                            last = storeItems.length - 1,
+                                            surface = sprite.getParent(),
+                                            changes = {},
+                                            lineSprites, firstColumnConfig, firstData, lastData, growth, string;
+                                        // This renderer function paints the back column red instead  
+                                        // of palegreen if series #2 is greater than series #1.
+                                        changes.fillStyle = (diff > 0  ? 'tomato' : undefined);
+                                        // Make the first and last columns larger.
+                                        if (index == 0 || index == last) {
+                                            changes.x = config.x - config.width * 0.4;
+                                            changes.y = config.y;
+                                            changes.width = config.width * 1.8;
+                                            changes.lineWidth = 4;
+                                            // Draw a line between the first and last columns
+                                            lineSprites = surface.myLineSprites;
+                                            if (!lineSprites) {
+                                                lineSprites = surface.myLineSprites = [];
+                                                lineSprites[0] = surface.add({type:'path'});
+                                                lineSprites[1] = surface.add({type:'text'});
+                                            }
+                                            if (index == 0) {
+                                                firstColumnConfig = surface.myFirstColumnConfig = Ext.clone(changes);
+                                            } else if (index == last) {
+                                                firstColumnConfig = surface.myFirstColumnConfig;
+                                                var x1 = firstColumnConfig.x + firstColumnConfig.width,
+                                                    y1 = firstColumnConfig.y,
+                                                    x2 = changes.x,
+                                                    y2 = changes.y;
+                                                lineSprites[0].setAttributes({
+                                                    lineWidth: 1,
+                                                    stroke: 'blue',
+                                                    zIndex: 10000,
+                                                    opacity: 0.4,
+                                                    path: "M" + x2 + " " + y2 + " L" + x1 + " " + y1 + " L" + x2 + " " + y1 + " M" + x2 + " " + y2 + " Z"
+                                                });
+                                                firstData = storeItems[0].data['data6'];
+                                                lastData = storeItems[last].data['data6'];
+                                                growth = Math.round(100 * (lastData - firstData) / (firstData || 1));
+                                                string = (growth > 0 ? "+ " : "- ") + Math.abs(growth) + " %";
+                                                lineSprites[1].setAttributes({
+                                                    text: string,
+                                                    x: changes.x - 12,
+                                                    y: firstColumnConfig.y + (changes.y - firstColumnConfig.y)/2 - 10,
+                                                    fill: '#00c',
+                                                    fontSize: 20,
+                                                    zIndex: 10000,
+                                                    opacity: 0.6,
+                                                    scalingY: -1,
+                                                    textAlign: "center",
+                                                    rotate: -90
+                                                });
+                                            }
+                                        } else {
+                                            changes.lineWidth = 2;
+                                        }
+                                        return changes;
+                                    }
+                                },
+                                {
+                                    type: 'bar',
+                                    xField: 'name',
+                                    yField: ['data5'],
+                                    fill: false,
+                                    style: {
+                                        lineWidth: 2,
+                                        maxBarWidth: 12,
+                                        stroke: 'tomato',
+                                        fill: 'lightyellow',
+                                        radius: 20
+                                    },
+                                    renderer: function(sprite, config, rendererData, index) {
+                                        var store = rendererData.store,
+                                            storeItems = store.getData().items,
+                                            record = storeItems[index].getData(),
+                                            diff = record['data5'] - record['data6'],
+                                            surface = sprite.getParent(),
+                                            textSprites, textSprite, rectSprite;
+                                        // This renderer function draws a red label if series #2 is greater than series #1.
+                                        // The label displays the difference between the values of series #1 and series #2.
+                                        //
+                                        // Note: The two renderer functions in this test case cannot be consolidated. The red labels
+                                        // are rendered here because they are positioned relatively to the series #2 columns.
+                                        if (diff > 0) {
+                                            textSprites = surface.myTextSprites;
+                                            if (!textSprites) {
+                                                textSprites = surface.myTextSprites = [];
+                                            }
+                                            textSprite = textSprites[index];
+                                            if (!textSprite) {
+                                                textSprite = textSprites[index] = surface.add({type:'text'});
+                                                rectSprite = textSprite.rectSprite = surface.add({type:'rect'});
+                                            } else {
+                                                rectSprite = textSprite.rectSprite;
+                                            }
+                                    
+                                            rectSprite.setAttributes({
+                                                x: config.x + 20,
+                                                y: config.y - 36,
+                                                width: 36 + (diff >= 10 ? 10 : 0),
+                                                height: 22,
+                                                fill: 'tomato',
+                                                stroke: 'black',
+                                                radius: 4,
+                                                opacity: 1,
+                                                zIndex: 10000
+                                            });
+                                    
+                                            textSprite.setAttributes({
+                                                text: "+ " + diff,
+                                                x: config.x + 28,
+                                                y: config.y - 20,
+                                                fill: 'black',
+                                                fontSize: 16,
+                                                zIndex: 10001,
+                                                scalingY: -1,
+                                            });
+                                        }
+                                        return null;
+                                    }
+                                }
+                            ],
+                            axes: [
+                                {
+                                    type: 'numeric',
+                                    position: 'left',
+                                    fields: ['data1', 'data2', 'data3', 'data4', 'data5', 'data6','data7'],
+                                    maximum: 70
+                                },
+                                {
+                                    type: 'category',
+                                    position: 'bottom',
+                                    fields: 'name'
+                                }
+                            ]
+                        },
+                        //----------------------------------------------------------------
+                        // Line chart
+                        //----------------------------------------------------------------
+                        {
+                            xtype: 'chart',
+                            top: 410,
+                            left: 610,
+                            height: 400,
+                            width: 500,
+                            margin: 10,
+                            border: 2,
+                            style: 'border: 1px solid black',
+                            animate: true,
+                            store: store1,
+                            series: [
+                                {
+                                    type: 'line',
+                                    xField: 'name',
+                                    yField: ['data5'],
+                                    fill: true,
+//                                    step:true,
+//                                    smooth: true,
+                                    style: {
+                                        lineWidth: 4,
+                                        stroke: 'purple',
+                                        fill: 'pink',
+                                    },
+                                    marker: {
+                                        type: 'circle',
+                                        fill: 'yellow',
+                                        size: 10,
+                                        radius: 10,
+                                    },
+                                    renderer: function(sprite, config, rendererData, index) {
+                                        var store = rendererData.store,
+                                            storeItems = store.getData().items,
+                                            current = storeItems[index].data['data5'],
+                                            previous = (index > 0 ? storeItems[index-1].data['data5'] : current),
+                                            changes = {};
+                                        switch(config.type) {
+                                            case "marker":
+                                                if (index == 0 || index == storeItems.length-1) {
+                                                    return null; // keep the default style for the first and last markers
+                                                }
+                                                changes.strokeStyle = 'black';
+                                                changes.fillStyle = (current >= previous ? 'limegreen' : 'tomato');
+                                                break;
+                                            case "line":
+                                                changes.strokeStyle = (current >= previous ? 'green' : 'red');
+                                                changes.fillStyle = (current >= previous ? 'limegreen' : 'tomato');
+                                                changes.fillOpacity = .4;
+                                                break;
+                                        }
+                                        return changes;
+                                    }
+                                }
+                            ],
+                            axes: [
+                                {
+                                    type: 'numeric',
+                                    position: 'left',
+                                    fields: ['data1', 'data2', 'data3', 'data4', 'data5', 'data6','data7'],
+                                    minimum: 0,
+                                    maximum: 70,
+                                    grid: true,
+                                },
+                                {
+                                    type: 'category',
+                                    position: 'bottom',
+                                    fields: 'name',
+                                    grid: true,
+                                }
+                            ]
+                        },
+                        //----------------------------------------------------------------
+                        // Legend
+                        //----------------------------------------------------------------
+                        {
+                            xtype: 'component',
+                            top: 820,
+                            left: 0,
+                            height: 88,
+                            width: 1110,
+                            margin: 10,
+                            border: 2,
+                            style: 'border: 1px solid black; font-size: 16px; padding: 4px;',
+                            html: "\
+                            - Gauge #1: Simple gauge based on a customer test case.<br>\
+                            - Gauge #2: Temperature gauge with sectors, custom titles and custom needle.<br>\
+                            - Bar chart: Columns with custom widths and colors, and sprites to add lines and labels.<br>\
+                            - Line chart: Lines, markers and areas with custom colors depending on whether the values go up or down."
+                        }
+                    ]
+
+                });
+
+                setInterval(function() {
+                    for (var i = 0; i < 2; i++) {
+                        var series = Ext.ComponentQuery.query('spacefilling')[i].getSeries()[0],
+                            max = series.getMaximum(),
+                            min = series.getMinimum();
+                        series.setValue(Math.random() * (max - min) + min);
+                    };
+                }, 2000);
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>
+
+

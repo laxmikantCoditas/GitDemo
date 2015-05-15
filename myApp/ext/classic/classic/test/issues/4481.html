@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+    <script type="text/javascript">
+Ext.onReady(function () {
+    Ext.create('Ext.button.Button', {
+        text: 'Example',
+        menuAlign: 'tl-bl?',
+        renderTo: document.body,
+        style: 'position: absolute; right: 0',
+        initComponent: function () {
+            this.callParent(arguments);
+            var that = this,
+                submenu = Ext.create('Ext.menu.Menu', {
+                    items: [{
+                        text: 'Item 1'
+                    }, {
+                        text: 'Item 2'
+                    }, {
+                        text: 'Item 3'
+                    }]
+                }),
+
+                menu = Ext.create('Ext.menu.Menu', {
+                    items: [{
+                        text: 'Item 1',
+                        menu: submenu
+                    }, {
+                        text: 'Item 2'
+                    }, {
+                        text: 'Item 3'
+                    }],
+                    listeners: {
+                        beforeshow: function (me) {
+                            // Mimic the code that calculates [x,y] for showAt... 
+                            var a1 = me.getEl().getAnchorXY('tr', true),
+                                a2 = that.getEl().getAnchorXY('br', false),
+                                xy = [a2[0] - a1[0], a2[1] - a1[1]],
+                                region = that.getTargetEl().getViewRegion(),
+                                finalxy = [xy[0] - region.x, xy[1] - region.y];
+
+                            if (window.console !== undefined) {
+                                console.group('Calculated coords in beforeshow:');
+                                console.log('calculated xy: ', xy);
+                                console.log('finalxy after correcting for region: ', finalxy);
+                                console.log('width & height: ', [me.getWidth(), me.getHeight()]);
+                                console.groupEnd();
+                            } else {
+                                alert('xy = [' + xy[0] + ', ' + xy[1] + '], finalxy = [' + finalxy[0] + ', ' + finalxy[1] + "]\nwidth: " + me.getWidth() + ', height: ' +
+
+                                me.getHeight());
+                            }
+                        }
+                    }
+                });
+            that.menu = menu;
+        }
+    });
+});
+    </script>
+</head>
+<body>
+Type : test case
+Module: Grid
+Ticket: EXTJSIV-4481
+Changelog: no
+Comments: Click on button, open menu and submenu. The first time submenu is aligned above parent, the second is aligned on the right</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2406</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+
+    Ext.application({
+        viewport: {
+            layout: 'default'
+        },
+        name: 'Sencha',
+        launch: function() {
+            var number = Ext.Viewport.add({
+                xtype: 'numberfield',
+                name: 'phn',
+                id: 'phn',
+                label: 'Phone:',
+                placeHolder:'123-456-7890',
+                required: true,
+                clearIcon: true
+            });
+
+            Ext.Viewport.add([
+                {
+                    xtype: 'button',
+                    text: 'setValue(0)',
+                    handler: function() {
+                        number.setValue(0);
+                    }
+                },
+                {
+                    xtype: 'button',
+                    text: 'setValue(123)',
+                    handler: function() {
+                        number.setValue(123);
+                    }
+                },
+                {
+                    xtype: 'button',
+                    text: 'setValue(-123)',
+                    handler: function() {
+                        number.setValue(-123);
+                    }
+                },
+                {
+                    xtype: 'button',
+                    text: 'setValue(\'-123\')',
+                    handler: function() {
+                        number.setValue('-123');
+                    }
+                },
+                {
+                    xtype: 'button',
+                    text: 'setValue(\'123\')',
+                    handler: function() {
+                        number.setValue('123');
+                    }
+                },
+                {
+                    xtype: 'button',
+                    text: 'getValue()',
+                    handler: function() {
+                        alert(number.getValue());
+                    }
+                }
+            ]);
+        }
+    });
+
+    </script>
+</head>
+<body></body>
+</html>

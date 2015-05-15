@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4722</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+	    Ext.setup({
+		    onReady: function() {
+			    var viewport = this;
+			    viewport.add({
+				    xtype: 'numberfield',
+				    label: 'Number',
+				    listeners: {
+					    blur: function(f) {
+						    console.log("Value: " + f.getValue());
+					    }
+				    }
+			    });
+		    }
+	    });
+    </script>
+</head>
+<body>
+</body>
+</html>

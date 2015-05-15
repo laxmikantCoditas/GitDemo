@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Tab Bar</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <link rel="stylesheet" href="../../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../../sencha-touch.js"></script>
+    <script>
+        Ext.setup({
+            viewport: null,
+            
+            onReady: function(){
+                var container1 = Ext.create('Ext.Container', {
+                    activeItem: 1,
+                    layout: 'card',
+                    items: [{
+                        style: 'background-color: rgba(255, 0, 0, 0.5)'
+                    }, {
+                        style: 'background-color: rgba(0, 255, 0, 0.5)'
+                    }],
+                    docked: 'top',
+                    height: 50
+                });
+
+                var container2 = Ext.create('Ext.Container', {
+                    layout: 'card',
+                    activeItem: 0,
+                    items: [{
+                        style: 'background-color: rgba(0, 255, 0, 0.5)'
+                    }, {
+                        style: 'background-color: rgba(255, 0, 0, 0.5)'
+                    }],
+                    docked: 'top',
+                    height: 50
+                });
+
+                var container3 = Ext.create('Ext.Container', {
+                    layout: 'card',
+                    items: [{
+                        id: 'first-item',
+                        style: 'background-color: rgba(255, 0, 0, 0.5)'
+                    }, {
+                        id: 'second-item',
+                        style: 'background-color: rgba(0, 255, 0, 0.5)'
+                    }],
+                    docked: 'top',
+                    height: 50
+                });
+                container3.setActiveItem(1);
+
+                container4 = Ext.create('Ext.Container', {
+                    layout: 'card',
+                    docked: 'top',
+                    height: 50
+                });
+
+                container4.addAll([{
+                    style: 'background-color: rgba(255, 0, 0, 0.5)'
+                }, {
+                    style: 'background-color: rgba(0, 255, 0, 0.5)'
+                }]);
+                
+                container4.setActiveItem(1);
+
+
+                var container5 = Ext.create('Ext.Container', {
+                    layout: 'card',
+                    docked: 'top',
+                    height: 50,
+                    style: 'background-color: rgba(0, 255, 0, 0.5)'
+                });
+
+                container1.render(document.body);
+                container2.render(document.body);
+                container3.render(document.body);
+                container4.render(document.body);
+                container5.render(document.body);
+
+//                Ext.Viewport.add(container1);
+//                Ext.Viewport.add(container2);
+//                Ext.Viewport.add(container3);
+//                Ext.Viewport.add(container4);
+//                Ext.Viewport.add(container5);
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

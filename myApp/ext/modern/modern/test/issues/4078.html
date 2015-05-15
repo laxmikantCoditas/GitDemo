@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+
+    <style>
+        .x-field input{
+            background-color: #000000;
+            color: #FFFFFF !important;
+        }
+    </style>
+
+    <script type="text/javascript">
+        Ext.setup({
+            onReady:function () {
+                var panel = Ext.create('Ext.form.Panel', {
+                    fullscreen: true,
+                    items: [
+                        {
+                            xtype: 'fieldset',
+                            title: 'Enter your name',
+                            items: [
+                                {
+                                    xtype: 'textfield',
+                                    label: 'First Name',
+                                    name: 'firstName'
+                                }
+                            ]
+                        }
+                    ]
+                });
+
+            }
+        });
+    </script>
+
+</head>
+<body></body>
+</html>

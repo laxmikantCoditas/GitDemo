@@ -1,0 +1,736 @@
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Scroller</title>
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            font-family: Helvetica;
+            /*-webkit-perspective: 1;*/
+        }
+
+        body * {
+            -webkit-box-sizing: border-box;
+        }
+
+        body, p {
+            padding: 0;
+            margin: 0;
+            /*border: 1px solid red;*/
+        }
+
+        body {
+            background-color: #FFF;
+        }
+
+        textarea {
+            height: 100px;
+        }
+
+        #scrollContainer {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #scroller {
+            width: 100%;
+        }
+
+        .x-android input, .x-android textarea {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+
+        #scroller > * {
+            padding: 10px;
+            margin-bottom: 5px;
+            font-weight: bold;
+            -webkit-border-radius: 8px;
+            /*-webkit-box-shadow: 3px 3px 3px #666;*/
+        }
+
+        #scroller > :nth-child(2n+1) {
+            background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(orange), to(red));;
+            /*background-color: blue;*/
+        }
+
+        #scroller > :nth-child(2n) {
+            background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#1A82F7), to(#2F2727));
+            /*background-color: orange;*/
+            color: #FFF;
+        }
+
+        a {
+            color: #AAA;
+        }
+
+        #mainContainer {
+            height: 100%;
+        }
+    </style>
+    <script type="text/javascript" src="../../../sencha-touch.js"></script>
+    <script type="text/javascript">
+        Ext.require('Ext.scroll.Scroller');
+
+        Ext.setup({
+            onReady: function() {
+                new Ext.scroll.Scroller({
+                    element: document.getElementById('scroller')
+                });
+            }
+        })
+    </script>
+</head>
+<body>
+<div id="mainContainer">
+<div id="scrollContainer" class="animate">
+<div id="scroller">
+<div>
+    <input type="text" id="recovery"/>
+    <input type="password"/>
+    <textarea></textarea>
+</div>
+<div class="list-tweet" id="tweet_68835855481049089">
+    <a href="http://mobile.twitter.com/senchajp"><img alt="senchajp" class="list-tweet-img"
+                                                      src="http://a3.twimg.com/profile_images/1277474990/Sencha_japan_avatar_normal.png"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/senchajp">senchajp</a></strong>
+        <span class="status">[再掲] <a href="/searches?q=%23CSS3">#CSS3</a> アニメーション作成ツールのSencha Animatorのベータ版がリリースされました。ダウンロードはこちらから：http://bit.ly/kvmp23</span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/senchajp/status/68835855481049089" class="status_link">about 2 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+<div class="list-tweet" id="tweet_68832986086379521">
+    <a href="http://mobile.twitter.com/rafael_neri"><img alt="rafael_neri" class="list-tweet-img"
+                                                         src="http://a1.twimg.com/profile_images/637146223/DSC03848_normal.jpg"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/rafael_neri">rafael_neri</a></strong>
+        <span class="status">“@phonegap: Nice! RT @<a href="/sencha">sencha</a>: IGN Dominate on the App Store, great looking <a
+                href="/searches?q=%23SenchaTouch">#SenchaTouch</a> @<a href="/phonegap">phonegap</a> app! <a
+                href="http://t.co/UTWyPBT”" target="_blank">http://t.co/UTWyPBT”</a> best choice!</span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/rafael_neri/status/68832986086379521" class="status_link">about 2 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+<div class="list-tweet" id="tweet_68831938537979904">
+    <a href="http://mobile.twitter.com/allblackberry"><img alt="AllBlackBerry" class="list-tweet-img"
+                                                           src="http://a3.twimg.com/profile_images/614635016/blackberry_storm2_normal.jpg"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/allblackberry">AllBlackBerry</a></strong>
+        <span class="status">Sencha Animator Now in Beta: Create Powerful Animations for Web Browsers and ...: CSS3 is an HTML5 family techno... <a
+                href="http://bit.ly/lAxXor" target="_blank">http://bit.ly/lAxXor</a></span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/allblackberry/status/68831938537979904" class="status_link">about 2 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+<div class="list-tweet" id="tweet_68831113170272256">
+    <a href="http://mobile.twitter.com/kennyma"><img alt="kennyma" class="list-tweet-img"
+                                                     src="http://a2.twimg.com/profile_images/1133471825/new_icon_normal.jpg"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/kennyma">kennyma</a></strong>
+        <span class="status">@<a href="/Sencha">Sencha</a> @<a href="/phonegap">phonegap</a> Techcrunch article about IGN Dominate that also mentioned Touch and PhoneGap <a
+                href="http://techcrunch.com/2011/05/12/ign-dominate" target="_blank">http://techcrunch.com/2011/05/12/ign-dominate</a></span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/kennyma/status/68831113170272256" class="status_link">about 2 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+<div>
+    <input type="text"/>
+    <input type="password"/>
+    <textarea></textarea>
+</div>
+<div class="list-tweet" id="tweet_68830529071484928">
+    <a href="http://mobile.twitter.com/phonegap"><img alt="phonegap" class="list-tweet-img"
+                                                      src="http://a2.twimg.com/profile_images/1179422400/phonegap_dp2_normal.png"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/phonegap">phonegap</a></strong>
+        <span class="status">Nice! RT @<a href="/sencha">sencha</a>: IGN Dominate on the App Store, great looking <a
+                href="/searches?q=%23SenchaTouch">#SenchaTouch</a> @<a href="/phonegap">phonegap</a> app! <a
+                href="http://t.co/FcAGhip" target="_blank">http://t.co/FcAGhip</a></span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/phonegap/status/68830529071484928" class="status_link">about 2 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+<div class="list-tweet" id="tweet_68830296006594560">
+    <a href="http://mobile.twitter.com/landonmassey"><img alt="landonmassey" class="list-tweet-img"
+                                                          src="http://a1.twimg.com/profile_images/1349470217/StopStaring_normal.jpg"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/landonmassey">landonmassey</a></strong>
+        <span class="status">It can be done! IGN builds Check-In App in Sencha Touch to go cross-platform.  <a
+                href="http://flpbd.it/jF7l" target="_blank">http://flpbd.it/jF7l</a> RT @<a
+                href="/techcrunch">techcrunch</a></span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/landonmassey/status/68830296006594560" class="status_link">about 2 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+<div class="list-tweet" id="tweet_68830110278619136">
+    <a href="http://mobile.twitter.com/sencha"><img alt="sencha" class="list-tweet-img"
+                                                    src="http://a2.twimg.com/profile_images/1233097698/sencha-blue_normal.png"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/sencha">sencha</a></strong>
+        <span class="status">Tutorial day @<a href="/T3con11sf">T3con11sf</a> in June in San Francisco. Half day on <a
+                href="/searches?q=%23ExtJS">#ExtJS</a>, half day on <a
+                href="/searches?q=%23SenchaTouch">#SenchaTouch</a> <a
+                href="http://t.co/mSJxO6c" target="_blank">http://t.co/mSJxO6c</a></span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/sencha/status/68830110278619136" class="status_link">about 2 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+<div class="list-tweet" id="tweet_68829275922505728">
+    <a href="http://mobile.twitter.com/bb_cheap"><img alt="bb_cheap" class="list-tweet-img"
+                                                      src="http://a1.twimg.com/profile_images/1314134412/bb_red_normal.jpg"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/bb_cheap">bb_cheap</a></strong>
+        <span class="status">Sencha Animator Now in Beta: Create Powerful Animations for Web Browsers and ...  <a
+                href="http://bit.ly/hp8Yz5" target="_blank">http://bit.ly/hp8Yz5</a></span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/bb_cheap/status/68829275922505728" class="status_link">about 2 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+<div class="list-tweet" id="tweet_68829033097478145">
+    <a href="http://mobile.twitter.com/marutama_seicha"><img alt="marutama_seicha" class="list-tweet-img"
+                                                             src="http://a2.twimg.com/profile_images/1120738339/seicha_normal.png"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/marutama_seicha">marutama_seicha</a></strong>
+        <span class="status">[まるたまの今日の朝茶] 特上新茶 玉響 <a href="http://t.co/Ck07tAS" target="_blank">http://t.co/Ck07tAS</a> を淹れました。みるい茶葉の、青みがかった若い香りが身上。ぬるめのお湯で淹れました。長浜・大正楼さんの小鮎煎餅を添えて。鮎のかたちをした玉子せんべいです。今日のブログにてご紹介させていただきます。</span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/marutama_seicha/status/68829033097478145" class="status_link">about 2 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+<div class="list-tweet" id="tweet_68828998792261633">
+    <a href="http://mobile.twitter.com/vscarpenter"><img alt="vscarpenter" class="list-tweet-img"
+                                                         src="http://a2.twimg.com/profile_images/48540942/vinny-thumbnail-rounded_normal.jpg"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/vscarpenter">vscarpenter</a></strong>
+        <span class="status">RT @<a href="/JamesPearce">JamesPearce</a>: IGN Dominate <a href="http://bit.ly/lqK8Ah"
+                                                                                         target="_blank">http://bit.ly/lqK8Ah</a> - more proof of the combined awesomeness of Sencha Touch, PhoneGap &amp; web tech.</span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/vscarpenter/status/68828998792261633" class="status_link">about 2 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+<div class="list-tweet" id="tweet_68828843141640192">
+    <a href="http://mobile.twitter.com/onlinewebtips"><img alt="OnlineWebTips" class="list-tweet-img"
+                                                           src="http://a1.twimg.com/profile_images/1124843536/business_team_normal.jpg"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/onlinewebtips">OnlineWebTips</a></strong>
+        <span class="status">Sencha Animator Now in Beta: Create Powerful Animations for Web Browsers and ... <a
+                href="http://bit.ly/mFilhj" target="_blank">http://bit.ly/mFilhj</a></span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/onlinewebtips/status/68828843141640192" class="status_link">about 2 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+<div class="list-tweet" id="tweet_68828609107861504">
+    <a href="http://mobile.twitter.com/hylec"><img alt="HyleC" class="list-tweet-img"
+                                                   src="http://a3.twimg.com/profile_images/987178679/hylecartoon_normal.jpg"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/hylec">HyleC</a></strong>
+        <span class="status">RT @<a href="/sencha">sencha</a>: Sencha Animator, our <a
+                href="/searches?q=%23CSS3">#CSS3</a> animation builder, hits Beta 1! Read the blog post and download today! <a
+                href="http://t.co/Wv3s6nN" target="_blank">http://t.co/Wv3s6nN</a></span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/hylec/status/68828609107861504" class="status_link">about 2 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+<div class="list-tweet" id="tweet_68826763714756608">
+    <a href="http://mobile.twitter.com/mwbrooks"><img alt="mwbrooks" class="list-tweet-img"
+                                                      src="http://a3.twimg.com/profile_images/150059217/michael01_normal.png"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/mwbrooks">mwbrooks</a></strong>
+        <span class="status">Watch this right now: <a href="http://t.co/Qin8moV" target="_blank">http://t.co/Qin8moV</a> <a
+                href="/searches?q=%23phonegap">#phonegap</a> <a href="/searches?q=%23sencha">#sencha</a> <a
+                href="/searches?q=%23mobile">#mobile</a></span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/mwbrooks/status/68826763714756608" class="status_link">about 3 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+<div class="list-tweet" id="tweet_68823922392563712">
+    <a href="http://mobile.twitter.com/sencha"><img alt="sencha" class="list-tweet-img"
+                                                    src="http://a2.twimg.com/profile_images/1233097698/sencha-blue_normal.png"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/sencha">sencha</a></strong>
+        <span class="status">IGN Dominate on the App Store, great looking <a
+                href="/searches?q=%23SenchaTouch">#SenchaTouch</a> @<a
+                href="/PhoneGap">PhoneGap</a> app! <a href="http://t.co/FcAGhip"
+                                                      target="_blank">http://t.co/FcAGhip</a></span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/sencha/status/68823922392563712" class="status_link">about 3 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+<div class="list-tweet" id="tweet_68823528916520960">
+    <a href="http://mobile.twitter.com/fannymontouri68"><img alt="FannyMontouri68" class="list-tweet-img"
+                                                             src="http://a3.twimg.com/sticky/default_profile_images/default_profile_2_normal.png"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/fannymontouri68">FannyMontouri68</a></strong>
+        <span class="status">✓ Sencha Animator Now in Beta: Create Powerful Animations for Web Browsers and ...  <a
+                href="http://bit.ly/e9CHyZ" target="_blank">http://bit.ly/e9CHyZ</a></span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/fannymontouri68/status/68823528916520960" class="status_link">about 3 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+<div class="list-tweet" id="tweet_68822740819378176">
+    <a href="http://mobile.twitter.com/eswat2"><img alt="eswat2" class="list-tweet-img"
+                                                    src="http://a0.twimg.com/profile_images/372482443/eswat2_normal.png"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/eswat2">eswat2</a></strong>
+        <span class="status">Sencha Animator Beta 1 | Blog | Sencha <a href="http://t.co/AhLuIRV" target="_blank">http://t.co/AhLuIRV</a></span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/eswat2/status/68822740819378176" class="status_link">about 3 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+<div class="list-tweet" id="tweet_68821408393871360">
+    <a href="http://mobile.twitter.com/benarent"><img alt="benarent" class="list-tweet-img"
+                                                      src="http://a1.twimg.com/profile_images/544014355/eComm_copy_normal.jpg"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/benarent">benarent</a></strong>
+        <span class="status">@<a href="/aquigley">aquigley</a> Thanks. It's only v0.1 designed and built in 3 weeks using Sencha Touch.</span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/benarent/status/68821408393871360" class="status_link">about 3 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+<div class="list-tweet" id="tweet_68819946406285312">
+    <a href="http://mobile.twitter.com/jamespearce"><img alt="JamesPearce" class="list-tweet-img"
+                                                         src="http://a3.twimg.com/profile_images/1321386360/James_head_320_normal.png"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/jamespearce">JamesPearce</a></strong>
+        <span class="status">IGN Dominate <a href="http://bit.ly/lqK8Ah" target="_blank">http://bit.ly/lqK8Ah</a> - more proof of the combined awesomeness of Sencha Touch, PhoneGap &amp; web tech.</span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/jamespearce/status/68819946406285312" class="status_link">about 3 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+<div class="list-tweet" id="tweet_68818940842885121">
+    <a href="http://mobile.twitter.com/mwbrooks"><img alt="mwbrooks" class="list-tweet-img"
+                                                      src="http://a3.twimg.com/profile_images/150059217/michael01_normal.png"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/mwbrooks">mwbrooks</a></strong>
+        <span class="status">@<a href="/ChadEmm">ChadEmm</a> Most frameworks are made for list and content. jQTouch / Sencha Touch / Jo (<a
+                href="http://t.co/jguMiKc" target="_blank">http://t.co/jguMiKc</a>). Jo is the most flexible.</span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/mwbrooks/status/68818940842885121" class="status_link">about 3 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+<div class="list-tweet" id="tweet_68814846984077312">
+    <a href="http://mobile.twitter.com/gotnosugarbaby"><img alt="GotNoSugarBaby" class="list-tweet-img"
+                                                            src="http://a3.twimg.com/profile_images/1224437900/Jamie_normal.jpg"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/gotnosugarbaby">GotNoSugarBaby</a></strong>
+        <span class="status">RT @<a href="/sencha">sencha</a>: <a
+                href="/searches?q=%23SenchaAnimator">#SenchaAnimator</a>, our desktop <a
+                href="/searches?q=%23CSS3">#CSS3</a> animation builder, hits Beta 1! <a href="http://t.co/Wv3s6nN"
+                                                                                        target="_blank">http://t.co/Wv3s6nN</a></span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/gotnosugarbaby/status/68814846984077312" class="status_link">about 3 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+
+<div>
+    <input type="text"/>
+    <input type="password"/>
+    <textarea></textarea>
+</div>
+<div>
+    <input type="text"/>
+    <input type="password"/>
+    <textarea></textarea>
+</div>
+<div class="list-tweet" id="tweet_68835855481049089">
+    <a href="http://mobile.twitter.com/senchajp"><img alt="senchajp" class="list-tweet-img"
+                                                      src="http://a3.twimg.com/profile_images/1277474990/Sencha_japan_avatar_normal.png"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/senchajp">senchajp</a></strong>
+        <span class="status">[再掲] <a href="/searches?q=%23CSS3">#CSS3</a> アニメーション作成ツールのSencha Animatorのベータ版がリリースされました。ダウンロードはこちらから：http://bit.ly/kvmp23</span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/senchajp/status/68835855481049089" class="status_link">about 2 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+<div class="list-tweet" id="tweet_68832986086379521">
+    <a href="http://mobile.twitter.com/rafael_neri"><img alt="rafael_neri" class="list-tweet-img"
+                                                         src="http://a1.twimg.com/profile_images/637146223/DSC03848_normal.jpg"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/rafael_neri">rafael_neri</a></strong>
+        <span class="status">“@phonegap: Nice! RT @<a href="/sencha">sencha</a>: IGN Dominate on the App Store, great looking <a
+                href="/searches?q=%23SenchaTouch">#SenchaTouch</a> @<a href="/phonegap">phonegap</a> app! <a
+                href="http://t.co/UTWyPBT”" target="_blank">http://t.co/UTWyPBT”</a> best choice!</span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/rafael_neri/status/68832986086379521" class="status_link">about 2 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+<div class="list-tweet" id="tweet_68831938537979904">
+    <a href="http://mobile.twitter.com/allblackberry"><img alt="AllBlackBerry" class="list-tweet-img"
+                                                           src="http://a3.twimg.com/profile_images/614635016/blackberry_storm2_normal.jpg"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/allblackberry">AllBlackBerry</a></strong>
+        <span class="status">Sencha Animator Now in Beta: Create Powerful Animations for Web Browsers and ...: CSS3 is an HTML5 family techno... <a
+                href="http://bit.ly/lAxXor" target="_blank">http://bit.ly/lAxXor</a></span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/allblackberry/status/68831938537979904" class="status_link">about 2 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+<div class="list-tweet" id="tweet_68831113170272256">
+    <a href="http://mobile.twitter.com/kennyma"><img alt="kennyma" class="list-tweet-img"
+                                                     src="http://a2.twimg.com/profile_images/1133471825/new_icon_normal.jpg"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/kennyma">kennyma</a></strong>
+        <span class="status">@<a href="/Sencha">Sencha</a> @<a href="/phonegap">phonegap</a> Techcrunch article about IGN Dominate that also mentioned Touch and PhoneGap <a
+                href="http://techcrunch.com/2011/05/12/ign-dominate" target="_blank">http://techcrunch.com/2011/05/12/ign-dominate</a></span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/kennyma/status/68831113170272256" class="status_link">about 2 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+<div>
+    <input type="text"/>
+    <input type="password"/>
+    <textarea></textarea>
+</div>
+<div class="list-tweet" id="tweet_68830529071484928">
+    <a href="http://mobile.twitter.com/phonegap"><img alt="phonegap" class="list-tweet-img"
+                                                      src="http://a2.twimg.com/profile_images/1179422400/phonegap_dp2_normal.png"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/phonegap">phonegap</a></strong>
+        <span class="status">Nice! RT @<a href="/sencha">sencha</a>: IGN Dominate on the App Store, great looking <a
+                href="/searches?q=%23SenchaTouch">#SenchaTouch</a> @<a href="/phonegap">phonegap</a> app! <a
+                href="http://t.co/FcAGhip" target="_blank">http://t.co/FcAGhip</a></span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/phonegap/status/68830529071484928" class="status_link">about 2 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+<div class="list-tweet" id="tweet_68830296006594560">
+    <a href="http://mobile.twitter.com/landonmassey"><img alt="landonmassey" class="list-tweet-img"
+                                                          src="http://a1.twimg.com/profile_images/1349470217/StopStaring_normal.jpg"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/landonmassey">landonmassey</a></strong>
+        <span class="status">It can be done! IGN builds Check-In App in Sencha Touch to go cross-platform.  <a
+                href="http://flpbd.it/jF7l" target="_blank">http://flpbd.it/jF7l</a> RT @<a
+                href="/techcrunch">techcrunch</a></span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/landonmassey/status/68830296006594560" class="status_link">about 2 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+<div class="list-tweet" id="tweet_68830110278619136">
+    <a href="http://mobile.twitter.com/sencha"><img alt="sencha" class="list-tweet-img"
+                                                    src="http://a2.twimg.com/profile_images/1233097698/sencha-blue_normal.png"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/sencha">sencha</a></strong>
+        <span class="status">Tutorial day @<a href="/T3con11sf">T3con11sf</a> in June in San Francisco. Half day on <a
+                href="/searches?q=%23ExtJS">#ExtJS</a>, half day on <a
+                href="/searches?q=%23SenchaTouch">#SenchaTouch</a> <a
+                href="http://t.co/mSJxO6c" target="_blank">http://t.co/mSJxO6c</a></span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/sencha/status/68830110278619136" class="status_link">about 2 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+<div class="list-tweet" id="tweet_68829275922505728">
+    <a href="http://mobile.twitter.com/bb_cheap"><img alt="bb_cheap" class="list-tweet-img"
+                                                      src="http://a1.twimg.com/profile_images/1314134412/bb_red_normal.jpg"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/bb_cheap">bb_cheap</a></strong>
+        <span class="status">Sencha Animator Now in Beta: Create Powerful Animations for Web Browsers and ...  <a
+                href="http://bit.ly/hp8Yz5" target="_blank">http://bit.ly/hp8Yz5</a></span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/bb_cheap/status/68829275922505728" class="status_link">about 2 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+<div class="list-tweet" id="tweet_68829033097478145">
+    <a href="http://mobile.twitter.com/marutama_seicha"><img alt="marutama_seicha" class="list-tweet-img"
+                                                             src="http://a2.twimg.com/profile_images/1120738339/seicha_normal.png"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/marutama_seicha">marutama_seicha</a></strong>
+        <span class="status">[まるたまの今日の朝茶] 特上新茶 玉響 <a href="http://t.co/Ck07tAS" target="_blank">http://t.co/Ck07tAS</a> を淹れました。みるい茶葉の、青みがかった若い香りが身上。ぬるめのお湯で淹れました。長浜・大正楼さんの小鮎煎餅を添えて。鮎のかたちをした玉子せんべいです。今日のブログにてご紹介させていただきます。</span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/marutama_seicha/status/68829033097478145" class="status_link">about 2 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+<div class="list-tweet" id="tweet_68828998792261633">
+    <a href="http://mobile.twitter.com/vscarpenter"><img alt="vscarpenter" class="list-tweet-img"
+                                                         src="http://a2.twimg.com/profile_images/48540942/vinny-thumbnail-rounded_normal.jpg"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/vscarpenter">vscarpenter</a></strong>
+        <span class="status">RT @<a href="/JamesPearce">JamesPearce</a>: IGN Dominate <a href="http://bit.ly/lqK8Ah"
+                                                                                         target="_blank">http://bit.ly/lqK8Ah</a> - more proof of the combined awesomeness of Sencha Touch, PhoneGap &amp; web tech.</span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/vscarpenter/status/68828998792261633" class="status_link">about 2 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+<div class="list-tweet" id="tweet_68828843141640192">
+    <a href="http://mobile.twitter.com/onlinewebtips"><img alt="OnlineWebTips" class="list-tweet-img"
+                                                           src="http://a1.twimg.com/profile_images/1124843536/business_team_normal.jpg"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/onlinewebtips">OnlineWebTips</a></strong>
+        <span class="status">Sencha Animator Now in Beta: Create Powerful Animations for Web Browsers and ... <a
+                href="http://bit.ly/mFilhj" target="_blank">http://bit.ly/mFilhj</a></span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/onlinewebtips/status/68828843141640192" class="status_link">about 2 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+<div class="list-tweet" id="tweet_68828609107861504">
+    <a href="http://mobile.twitter.com/hylec"><img alt="HyleC" class="list-tweet-img"
+                                                   src="http://a3.twimg.com/profile_images/987178679/hylecartoon_normal.jpg"></a>
+
+    <div class="inner-w-img">
+        <span>
+        <strong><a href="http://mobile.twitter.com/hylec">HyleC</a></strong>
+        <span class="status">RT @<a href="/sencha">sencha</a>: Sencha Animator, our <a
+                href="/searches?q=%23CSS3">#CSS3</a> animation builder, hits Beta 1! Read the blog post and download today! <a
+                href="http://t.co/Wv3s6nN" target="_blank">http://t.co/Wv3s6nN</a></span>
+        </span>
+
+        <div class="list-tweet-status">
+            <a href="/hylec/status/68828609107861504" class="status_link">about 2 hours ago</a>
+
+        </div>
+        <div class="list-tweet-actions">
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

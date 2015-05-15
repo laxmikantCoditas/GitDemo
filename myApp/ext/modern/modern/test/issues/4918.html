@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4918</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+	    Ext.application({
+		    name: 'Fiddle',
+
+		    launch: function() {
+			    Ext.create('Ext.TabPanel', {
+				    fullscreen: true,
+				    tabBarPosition: 'bottom',
+
+				    defaults: {
+					    styleHtmlContent: true
+				    },
+
+				    items: [{
+					    title: 'Home',
+					    iconCls: 'home',
+					    items: [{
+						    //xtype: 'formpanel',
+						    //items: [{
+						    xtype: 'textfield',
+						    name: 'name',
+						    label: 'Name'
+					    }, {
+						    xtype: 'emailfield',
+						    name: 'email',
+						    label: 'Email'
+					    }, {
+						    xtype: 'passwordfield',
+						    name: 'password',
+						    label: 'Password'
+						    // }]
+					    }]
+				    }]
+			    });
+		    }
+	    });
+    </script>
+</head>
+<body>
+</body>
+</html>

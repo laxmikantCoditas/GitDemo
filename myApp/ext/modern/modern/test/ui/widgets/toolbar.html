@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Tab Bar</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <link rel="stylesheet" href="../../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../../sencha-touch.js"></script>
+    <script>
+        Ext.setup({
+            requires: 'Ext.Toolbar',
+
+            onReady: function(){
+                var toolbar = Ext.create('Ext.Toolbar', {
+                    docked: 'top',
+                    title: 'Very very very very very very very very long test title',
+                    items: [{
+                        text: 'Back',
+                        ui: 'back',
+                        align: 'left'
+                    }, {
+                        text: 'Send',
+                        ui: 'action',
+                        align: 'right',
+                        handler: function() {
+                            var start = new Date();
+                            for (var i = 0; i < 1000; i++) {
+                                new Ext.Button({
+                                    text: 'Button'
+                                });
+                            }
+                            console.log('Instantiation time for a 1000 toolbars', (new Date()) - start);
+                        }
+                    }]
+                });
+
+                Ext.Viewport.add(toolbar);
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

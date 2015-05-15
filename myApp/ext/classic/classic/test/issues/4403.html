@@ -1,0 +1,207 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Failed test case</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css"/>
+    <style>
+        div#log {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            border: 1px solid #000;
+            overflow: auto;
+            width: 160px;
+            height: 500px;
+        }
+    </style>
+    <script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+<script type="text/javascript" charset="utf-8">
+    function logger(str) {
+        var p = document.createElement("p");
+        p.appendChild(document.createTextNode(str));
+        document.getElementById("log").appendChild(p);
+    }
+    Ext.application({
+        name: 'DEMO',
+        requires: [
+            'Ext.view.View',
+            'Ext.dd.DragZone',
+            'Ext.dd.DropZone'
+        ],
+        launch: function () {
+
+            // Code from EXT4 documentation for Ext.view.View
+            // Modified with "render" event handling
+            // -->
+            Ext.define('Image', {
+                extend: 'Ext.data.Model',
+                fields: [
+                    { name: 'src', type: 'string' },
+                    { name: 'caption', type: 'string' }
+                ]
+            });
+            Ext.create('Ext.data.Store', {
+                id: 'imagesStore',
+                model: 'Image',
+                data: [
+                    { src: 'http://www.sencha.com/img/20110215-feat-drawing.png', caption: 'Drawing & Charts' },
+                    { src: 'http://www.sencha.com/img/20110215-feat-data.png', caption: 'Advanced Data' },
+                    { src: 'http://www.sencha.com/img/20110215-feat-html5.png', caption: 'Overhauled Theme' },
+                    { src: 'http://www.sencha.com/img/20110215-feat-perf.png', caption: 'Performance Tuned' }
+                ]
+            });
+            var imageTpl = Ext.create("Ext.XTemplate",
+                '<tpl for=".">',
+                '<div style="margin-bottom: 10px;" class="thumb-wrap">',
+                '<img src="{src}" />',
+                '<br/><span>{caption}</span>',
+                '</div>',
+                '</tpl>'
+            );
+            var myView = Ext.create('Ext.view.View', {
+                store: Ext.data.StoreManager.lookup('imagesStore'),
+                tpl: imageTpl,
+                border: true,
+                itemSelector: 'div.thumb-wrap',
+                emptyText: 'No images available',
+                width: 200
+            });
+            // <--
+            myView.on('render', function (v) {
+                //DFT: Code from EXT4 documentation for Ext.dd.DragZone
+                // -->
+                myView.dragZone = Ext.create("Ext.dd.DragZone", v.getEl(), {
+                    getDragData: function (e) {
+
+                        var sourceEl = e.getTarget(v.itemSelector, 10);
+                        if (sourceEl) {
+                            var d = sourceEl.cloneNode(true);
+                            d.id = Ext.id();
+                            return {
+                                ddel: d,
+                                sourceEl: sourceEl,
+                                repairXY: Ext.fly(sourceEl).getXY(),
+                                sourceStore: v.store,
+                                draggedRecord: v.getRecord(sourceEl)
+                            }
+                        }
+                    },
+                    getRepairXY: function () {
+                        return this.dragData.repairXY;
+                    }
+                });
+                // <--
+            });
+
+
+            // Drag container
+            var myContainer = Ext.widget('container', {
+                id: 'myContainer',
+                width: 300,
+                height: 50,
+                style: 'border: 1px solid #000000',
+                html: 'container 1'
+            });
+            myContainer.on('render', function (v) {
+                //DFT: Code from EXT4 documentation for Ext.dd.DragZone
+                // -->
+                myContainer.dragZone = Ext.create("Ext.dd.DragZone", v.getEl(), {
+                    getDragData: function (e) {
+                        var sourceEl = e.getTarget(v.itemSelector, 10);
+                        if (sourceEl) {
+                            var d = sourceEl.cloneNode(true);
+                            d.id = Ext.id();
+                            return {
+                                ddel: d,
+                                sourceEl: sourceEl,
+                                repairXY: Ext.fly(sourceEl).getXY(),
+                                draggedRecord: v
+                            }
+                        }
+                    },
+                    getRepairXY: function () {
+                        return this.dragData.repairXY;
+                    }
+                });
+                // <--
+            });
+
+
+            // Drop Canvas
+            var dropCanvas = Ext.create('Ext.Panel', {
+                flex: 1,
+                height: 200
+            });
+            dropCanvas.on('render', function (v) {
+                dropCanvas.dropZone = Ext.create("Ext.dd.DropZone", v.getEl(),
+                    {
+                        ownerCt: this,
+                        onContainerOver: function (_ddSource, _e, _data) {
+                            return this.activeSprite ? this.dropAllowed : this.dropNotAllowed;
+                        },
+                        onContainerDrop: function (_ddSource, _e, _data) {
+                            return !!this.activeSprite;
+                        }
+                    })
+            });
+            dropCanvas.on('DROPZONE_ENTER', function (_sprite, _event) {
+                this.activeSprite = _sprite;
+            });
+            dropCanvas.on('DROPZONE_EXIT', function (_sprite, _event) {
+                this.activeSprite = null;
+            });
+
+
+            var myWin = Ext.widget('window', {
+                title: 'Test Drag/Dropzone',
+                x: 30,
+                y: 100,
+                width: 700,
+                height: 500,
+                layout: {
+                    type: 'hbox',
+                    align: 'stretch'
+                },
+                items: [
+                    {
+                        width: 200,
+                        items: [myContainer]
+                    },
+                    dropCanvas,
+                    myView
+                ]
+            });
+            myWin.show();
+
+
+            var sprite1 = Ext.create('Ext.Panel', {
+                style: 'background: red',
+                margin: 40,
+                width: 40,
+                height: 40
+            });
+
+            dropCanvas.add(sprite1);
+
+            sprite1.addEvents({
+                'DROPZONE_ENTER': true,
+                'DROPZONE_EXIT': true
+            });
+            var sprite1El = sprite1.getEl();
+            sprite1El.on('mouseover', function () {
+                logger('sprite1 onMouseover');
+                sprite1.fireEvent('DROPZONE_ENTER', this);
+            });
+            sprite1El.on('mouseout', function () {
+                logger('sprite1 onMouseout');
+                sprite1.fireEvent('DROPZONE_EXIT', this);
+            });
+        }
+    });
+</script>
+<div id="log"></div>
+</body>
+</html>

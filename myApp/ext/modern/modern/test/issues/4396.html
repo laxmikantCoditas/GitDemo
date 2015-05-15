@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript">
+        Ext.Loader.setConfig({
+            enabled: true
+        });
+
+        Ext.application({
+            name: ('SF' || 'SenchaFiddle'),
+            requires: [
+                'Ext.field.Text',
+                'Ext.Panel',
+                'Ext.form.Panel'
+            ],
+            launch: function () {
+                Ext.create('Ext.Container', {
+                    fullscreen: true,
+                    layout: 'vbox',
+                    defaults: {
+                        flex: 1
+                    },
+                    items: [
+                        {
+                            xtype: 'panel',
+                            layout: 'vbox',
+                            items: [
+                                {
+                                    xtype: 'textfield',
+                                    label: 'in panel'
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'formpanel',
+                            layout: 'vbox',
+                            items: [
+                                {
+                                    xtype: 'textfield',
+                                    label: 'in form panel'
+                                }
+                            ]
+                        }
+                    ]
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>localStorage IDs</title>
+
+    <link rel="stylesheet" href="../../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../../sencha-touch.js"></script>
+    
+    <script type="text/javascript" charset="utf-8">
+        Ext.require(['Ext.data.Model', 'Ext.data.proxy.LocalStorage'], function() {
+            Ext.define('MyModel', {
+                extend: 'Ext.data.Model',
+
+                config: {
+                    fields: ['id', 'name'],
+
+                    proxy: {
+                        type: 'localstorage',
+                        id: 'data-sandbox-mymodel'
+                    }
+                }
+            });
+            
+            var user1 = new MyModel({
+                id: 'bah',
+                name: 'Ed Spencer'
+            });
+
+            user1.save();
+            
+            console.log(user1.getId());
+        });
+    </script>
+</head>
+<body></body>
+</html>

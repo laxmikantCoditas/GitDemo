@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Labels in Ext.chart.series.Line</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+
+    <script type="text/javascript" src="../../ext-all.js"></script>
+    
+    <script type="text/javascript">
+        Ext.require('Ext.chart.*');
+        Ext.require(['Ext.Window', 
+            'Ext.fx.target.Sprite', 
+            'Ext.layout.container.Border', 
+            'Ext.layout.container.Card', 
+            'Ext.window.MessageBox', 
+            'Ext.data.*']);
+        
+        Ext.onReady(function () {
+            
+            Ext.define('SinlgeM', {
+                extend: 'Ext.data.Model',
+                idProperty: 'Zt',
+                fields: [
+                    {
+                        name: 'Zt',
+                        dateFormat: 'd.m.Y H:i',
+                        type: 'date'
+                    },
+                    {
+                        name: 'Bm',
+                        type: 'int'
+                    }
+                ]
+            });          
+                
+            var data1 = [{"Zt":"22.11.2012 06:50","Bm":"6"},
+                {"Zt":"22.11.2012 07:00","Bm":"13"},{"Zt":"22.11.2012 07:10","Bm":"19"},
+                {"Zt":"22.11.2012 07:20","Bm":"25"},{"Zt":"22.11.2012 07:30","Bm":"31"},
+                {"Zt":"22.11.2012 07:40","Bm":"37"},{"Zt":"22.11.2012 07:50","Bm":"42"},
+                {"Zt":"22.11.2012 08:00","Bm":"46"},{"Zt":"22.11.2012 08:10","Bm":"48"},
+                {"Zt":"22.11.2012 08:20","Bm":"54"},{"Zt":"22.11.2012 08:30","Bm":"60"},
+                {"Zt":"22.11.2012 08:40","Bm":"62"},{"Zt":"22.11.2012 08:50","Bm":"66"},
+                {"Zt":"22.11.2012 09:00","Bm":"70"},{"Zt":"22.11.2012 09:10","Bm":"74"},
+                {"Zt":"22.11.2012 09:20","Bm":"76"},{"Zt":"22.11.2012 09:40","Bm":"81"},
+                {"Zt":"22.11.2012 09:50","Bm":"87"},{"Zt":"22.11.2012 10:00","Bm":"92"},
+                {"Zt":"22.11.2012 10:10","Bm":"98"},{"Zt":"22.11.2012 10:20","Bm":"103"},
+                {"Zt":"22.11.2012 10:30","Bm":"108"},{"Zt":"22.11.2012 10:40","Bm":"109"},
+                {"Zt":"22.11.2012 10:50","Bm":"115"},{"Zt":"22.11.2012 11:00","Bm":"121"},
+                {"Zt":"22.11.2012 11:10","Bm":"126"},{"Zt":"22.11.2012 11:20","Bm":"132"},
+                {"Zt":"22.11.2012 11:30","Bm":"136"},{"Zt":"22.11.2012 11:40","Bm":"138"},
+                {"Zt":"22.11.2012 11:50","Bm":"144"},{"Zt":"22.11.2012 12:00","Bm":"149"},
+                {"Zt":"22.11.2012 12:50","Bm":"155"},{"Zt":"22.11.2012 13:00","Bm":"161"},
+                {"Zt":"22.11.2012 13:10","Bm":"165"}];
+                
+
+            var store = Ext.create('Ext.data.JsonStore', {
+                storeId: 'SingleS',
+                model: 'SinlgeM',
+                data: data1,
+            });
+            
+            var chart = Ext.create('Ext.chart.Chart', {
+                    style: 'background:#fff',
+                    animate: true,
+                    store: store,
+                    insetPadding: 20,
+                    background: {
+                        fill: '#fff'
+                    },
+                    axes: [
+                        {
+                            type: 'Numeric',
+                            fields: [
+                                'Bm'
+                            ],
+                            grid: true,
+                            majorTickSteps: 7,
+                            minorTickSteps: 1,
+                            position: 'left',
+                            title: 'Betriebsminuten',
+                            maximum: 480,
+                            minimum: 0
+                        },
+                        {
+                            type: 'Time',
+                            fields: [
+                                'Zt'
+                            ],
+                            position: 'bottom',
+                            title: 'Zeit',
+                            constrain: false,
+                            dateFormat: 'H:i',
+                            step: [
+                                'h',
+                                1
+                            ]
+                        }
+                    ],
+                    series: [
+                        {
+                            type: 'line',
+                            highlight: {
+                                size: 5,
+                                radius: 5
+                            },
+                            label: {
+                                display: 'outside',
+                                //color: '#000',
+                                //contrast: true,
+                                field: 'Bm',
+                                minMargin:50,
+                                //font: '10px Arial, sans-serif'
+                            },
+                            showInLegend: false,
+                            tips: {
+                                trackMouse: true,
+                                width: 220,
+                                height: 28,
+                                renderer: function(storeItem, item) {
+                                this.setTitle(Ext.Date.format(storeItem.get('Zt'),'H:i') + ' Uhr -> ' + storeItem.get('Bm') + ' Betriebsminuten');
+                            }
+                            },
+                            xField: 'Zt',
+                            yField: [
+                                'Bm'
+                            ],
+                            markerConfig: {
+                                type: 'circle',
+                                radius: 4,
+                                size: 5,
+                                fill: '#115FA6',
+                                'stroke-width': 0
+                            },
+                            smooth: 3
+                        }
+                    ]
+                });
+        
+            Ext.create('Ext.container.Viewport', {
+                layout: 'border',
+                autoShow:true,
+                items: [{
+                    region: 'north',
+                    xtype: 'container',
+                    height : 80,
+                    items:[{
+                        xtype: 'button',
+                        text: 'Refresh Chart to render Series Labels',
+                        handler: function() {
+                            chart.refresh();
+                            //chart.redraw();
+                        }
+                        }]
+                },{
+                    region: 'center',
+                    xtype: 'container',
+                    layout:'card',
+                    activeItem: 0,
+                    items: [chart]
+                }]
+            });
+            
+        });
+
+    </script>
+</head>
+<body>
+</body>
+</html>

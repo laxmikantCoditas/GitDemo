@@ -1,0 +1,16 @@
+{
+    success: true,
+    data: [
+        {	
+			"id" : "1", 
+			"name" : "Some Name",
+			"type" : "Some Type",
+			"op" : "Some op",
+			"tg" : "Some tg",
+			"m" : "Some m",
+			"lc" : "Some lc",
+			"en" : "Some en",
+			"as" : "Some as",
+		}
+    ]
+}

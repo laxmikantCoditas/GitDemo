@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Touch Bug</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript">
+        Ext.application({
+            name: 'App',
+            launch: function() {
+                console.log('LAUNCH');
+                var phoneTest =  Ext.os.is.Phone;
+                var padTest   =  Ext.os.is.Tablet;
+
+                alert('Is Phone: ' + phoneTest);
+                alert('Is Tablet: ' + padTest);
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>
+

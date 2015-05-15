@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2511</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.application({
+            launch:function () {
+                var isPhone = Ext.os.deviceType == 'Phone';
+                var overlay = Ext.create('Ext.Panel', {
+                    hideOnMaskTap:true,
+                    modal:true,
+                    centered:true,
+                    hidden: true,
+                    showAnimation:{
+                        type:"popIn",
+                        duration:300,
+                        easing:"ease-out"
+                    },
+                    hideAnimation:{
+                        type:"popOut",
+                        duration:300,
+                        easing:"ease-out"
+                    },
+                    scrollable:true,
+                    width:isPhone ? 310 : 400,
+                    height:isPhone ? 300 : 400,
+                    styleHtmlContent:true,
+                    html:'<p>This is a test</p>'
+                });
+                Ext.Viewport.add({
+                    xtype: 'container',
+                    items: {
+                        xtype: 'button',
+                        text: 'Show Overlay',
+                        handler: function() {
+                            overlay.show();
+                        }
+                    }
+                }, overlay);
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>TOUCH-5005</title>
+    <style></style>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+    <script src="../../sencha-touch-all-debug.js"></script>
+    <script>
+        Ext.require([
+            'Ext.chart.CartesianChart',
+            'Ext.chart.interactions.Crosshair',
+            'Ext.chart.series.Line',
+            'Ext.chart.axis.Numeric',
+            'Ext.chart.axis.Category'
+        ]);
+        Ext.setup({
+            onReady: function () {
+                var lineChart = Ext.create('Ext.chart.CartesianChart', {
+                    innerPadding: {
+                        top: 20,
+                        right: 40,
+                        bottom: 60,
+                        left: 80
+                    },
+                    interactions: [{
+                        type: 'crosshair',
+                        axes: {
+                            left: {
+                                label: {
+                                    fillStyle: 'white'
+                                },
+                                rect: {
+                                    fillStyle: 'brown',
+                                    lineWidth: 1,
+                                    strokeStyle: 'black',
+                                    radius: 20
+                                }
+                            },
+                            bottom: {
+                                label: {
+                                    fontSize: '14px',
+                                    fontWeight: 'bold'
+                                },
+                                rect: {
+                                    fillStyle: 'white'
+                                }
+                            }
+                        },
+                        lines: {
+                            horizontal: {
+                                strokeStyle: 'brown',
+                                lineWidth: 2,
+                                fillStyle: 'rgba(255, 192, 203, 0.3)',
+                                height: 3000,
+                                lineDash: [20, 2, 2, 2, 2, 2, 2, 2]
+                            }
+                        }
+                    }],
+                    store: {
+                        fields: ['name', 'data'],
+                        data: [
+                            {name: 'apple', data: 300},
+                            {name: 'orange', data: 900},
+                            {name: 'banana', data: 800},
+                            {name: 'pear', data: 400},
+                            {name: 'grape', data: 500}
+                        ]
+                    },
+                    axes: [{
+                        type: 'numeric',
+                        position: 'left',
+                        fields: ['data'],
+                        title: {
+                            text: 'Value',
+                            fontSize: 15
+                        },
+                        grid: true,
+                        label: {
+                            rotationRads: -Math.PI / 4
+                        }
+                    }, {
+                        type: 'category',
+                        position: 'bottom',
+                        fields: ['name'],
+                        title: {
+                            text: 'Category',
+                            fontSize: 15
+                        }
+                    }],
+                    series: [{
+                        type: 'line',
+                        style: {
+                            strokeStyle: 'black'
+                        },
+                        xField: 'name',
+                        yField: 'data',
+                        marker: {
+                            type: 'circle',
+                            radius: 5,
+                            fillStyle: 'yellow'
+                        }
+                    }]
+                });
+                Ext.Viewport.setLayout('fit');
+                Ext.Viewport.add(lineChart);
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

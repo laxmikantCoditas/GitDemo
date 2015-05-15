@@ -1,0 +1,17 @@
+h2 {
+    color:#083772 !important;
+    margin: 10px 0 10px 0!important;
+    padding: 5px;
+    background:#eee;
+}
+
+/*buttons*/
+.x-btn-default-large .add {
+    background-image: url(../shared/icons/user_add.gif) !important;
+}
+.x-btn-default-small .add {
+    background-image: url(../shared/icons/user_add16.gif) !important;
+}
+.x-btn-default-medium .add {
+    background-image: url(../shared/icons/user_add24.gif) !important;
+}

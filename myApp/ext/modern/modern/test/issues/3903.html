@@ -1,0 +1,199 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript">
+        Ext.application({
+            name: 'Exec',
+            data: {"name":"Test-Minute Of The Day Metric 2","id":7,"min":"- - -","max":"- - -","avg":"- - -","latestTimeStamp":null,"unitOfMeasure":"UnitOfMeasure.No unit of measure.ShortDisplayName","latestValue":"- - -","absChange":"- - -","pctChange":"- - -","resourceURI":"/restfulapi/resources/bizindicators/7","duration":"HOUR","percentChange":"- - -","durationDisplay":"1H"},
+            requires: [
+                'Ext.Panel',
+                'Ext.Toolbar',
+                'Ext.chart.SpaceFillingChart',
+                'Ext.chart.series.Gauge',
+                'Ext.field.Text'
+            ],
+            launch: function() {
+
+            	this.gauge = Ext.create('Ext.chart.SpaceFillingChart', {
+        			itemId: 'gaugeCmp',
+        			flex: 1,
+//                  animate:false,
+        			width: '50%',
+        			insetPadding: {
+        				left: 0,
+        				right: 0,
+        				top: 0,
+        				bottom: 0
+        			},
+        			axes: [],
+        			series: [{
+        		        type: 'gauge',
+        		        minimum: 0,
+        		        maximum: 100,
+        		        value: 40,
+        		        donut: 20,
+                        needle: false,
+                        needleWidth: 8,
+        		        needleLength: 85,
+        		        totalAngle: Math.PI,
+
+                        colors: ['rgba(0,192,0,.9)', 'purple', 'maroon', 'orange'],
+
+                        sectors: [{
+                              end: 25,
+                              label: 'Cold',
+                              color: 'aqua',
+                              style: { strokeStyle:'black', strokeOpacity:1, lineWidth:1 }
+                          },
+                          {
+                              end: 75,
+                              label: 'Temp.',
+                              color: 'lightgray',
+                              style: { strokeStyle:'black', strokeOpacity:1, lineWidth:1 }
+                          },
+                          {
+                              label: 'Hot',
+                              color: 'tomato',
+                              style: { strokeStyle:'black', strokeOpacity:1, lineWidth:1 }
+                          }]
+        		    }]
+        		});
+
+				this.gaugeValueCmp = Ext.create('Ext.Component', {
+					data: this.data,
+					tpl: Ext.create('Ext.XTemplate','<div id="gauge-value" class="indicator-gauge-value">',
+								'{[values.latestValue]}',
+							'</div>'),
+				    pack: 'end',
+				    align: 'stretch'
+				});
+
+        		this.mainPanel = Ext.create('Ext.Panel', {
+                    fullscreen: true,
+                    layout: 'fit',
+                    items: [
+                    {
+						xtype: 'panel',
+						layout: {
+							type: 'vbox',
+							pack: 'center',
+							align: 'stretch'
+						},
+						height: 400,
+						width: 800,
+						padding: 10,
+						scrollable: {
+							direction: 'vertical'
+						},
+						items: [
+							{
+								xtype: 'container',
+								layout: {
+									type: 'hbox',
+									pack: 'start',
+									align: 'stretch'
+								},
+								flex: 1,
+								defaults: {
+									xtype: 'container',
+									cls: 'dashboardSparkline',
+									layout: {
+										type: 'vbox',
+										align: 'center',
+										pack: 'start'
+									},
+									flex: 1
+								},
+								items: [
+									{
+										items: [
+										    this.gauge,
+										    this.gaugeValueCmp,
+										]
+									}
+								]
+							},
+							{
+								xtype: 'container',
+								layout: 'hbox',
+								padding: 10,
+								defaults: {
+									xtype: 'container',
+									padding: 10,
+									layout: {
+										type: 'vbox',
+										align: 'stretch',
+										pack: 'start'
+									},
+								},
+								items: [
+									{
+                                        xtype: 'button',
+                                        width: 100,
+                                        height: 60,
+                                        margin: 10,
+                                        text: 'Needle',
+                                        handler: function() {
+                                                var series = this.gauge.getSeries()[0];
+                                                series.setNeedle(!series.getNeedle());
+                                            },
+                                        scope: this
+									},
+									{
+                                        xtype: 'button',
+                                        id: 'setvalue',
+                                        itemId: 'setvalue',
+                                        width: 180,
+                                        height: 60,
+                                        margin: 10,
+                                        text: 'Set Gauge<br>Value & Color',
+                                        handler: this.setGaugeValue,
+                                        scope: this
+									},
+									{
+                                        xtype: 'textfield',
+                                        id: 'value',
+                                        itemId: 'valueField',
+                                        margin: 10,
+                                        width: 220,
+                                        label: 'Value'
+									},
+									{
+                                        xtype: 'textfield',
+                                        id: 'color',
+                                        itemId: 'colorField',
+                                        margin: 10,
+                                        width: 220,
+                                        label: 'Color'
+									}
+								]
+							}
+						]
+                    }],
+                    
+                });
+            },
+            setGaugeValue: function() {
+            	var valueField = this.mainPanel.query('#valueField');
+            	var colorField = this.mainPanel.query('#colorField');
+            	
+            	var value = valueField[0].getValue();
+            	var color = colorField[0].getValue();
+            	
+            	var series = this.gauge.getSeries()[0];
+            	if (value) {
+                    series.setValue(value);
+                    this.gaugeValueCmp.setData({latestValue: value});
+            	}
+            	if (color) {
+                    series.setColors([color]);
+            	}
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

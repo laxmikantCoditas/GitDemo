@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>2390</title>
+<link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+<script src="../../sencha-touch.js"></script>
+<script>
+
+    Ext.define('App.Toolbar', {
+        extend: 'Ext.Toolbar',
+        config: {
+            docked: 'top',
+            items: [
+                {
+                    xtype: 'button',
+                    centered: true,
+                    itemId: 'setScrollable',
+                    text: 'now: vertical',
+                    listeners: {
+                        tap: function(){
+                            var viewport = this.up('viewport'),
+                            dataview = viewport.down('dataview'),
+                            direction = dataview.getScrollable().getScroller().getDirection();
+                            if(direction === 'horizontal'){
+                                this.setText('now: vertical');
+                                dataview.setScrollable('vertical');
+//                                dataview.setScrollable({
+//                                    direction: 'vertical',
+//                                    directionLock: true
+//                                });
+                            }else{
+                                this.setText('now: horizontal');
+                                dataview.setScrollable('horizontal');
+//                                dataview.setScrollable({
+//                                    direction: 'horizontal',
+//                                    directionLock: true
+//                                });
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    });
+    Ext.define('App.AdataView', {
+        extend: 'Ext.dataview.DataView',
+        config: {
+            store: {
+                fields: ['name', 'age'],
+                data: [
+                    {name: 'Jamie',  age: 100},
+                    {name: 'Rob',   age: 21},
+                    {name: 'Tommy', age: 24},
+                    {name: 'Jacky', age: 24},
+                    {name: 'Ed',   age: 26}
+                ]
+            },
+            itemTpl: '<div>{name} is {age} years old</div>'
+        }
+    });
+    Ext.application({
+        name: 'App',
+        launch: function() {
+            Ext.Viewport.add(Ext.create('App.Toolbar'));
+            Ext.Viewport.add(Ext.create('App.AdataView'));
+        }
+    });
+</script>
+</head>
+<body></body>
+</html>

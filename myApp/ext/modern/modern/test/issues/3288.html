@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3288</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+    <script type="text/javascript">
+
+        Ext.application({
+            name:'Test',
+            launch:function () {
+                var cont = Ext.create('Ext.Container', {
+                    width:100,
+                    height:100,
+                    left:30,
+                    top:30,
+                    style:'border : 1px dashed red;',
+                    draggable:{
+                        listeners:{
+                            dragstart:{
+                                fn:function (component, event, offsetX, offsetY, listener) {
+                                    console.log("Drag Start Container:  left=" + cont.getLeft() + "  right=" + cont.getRight() + " top=" + cont.getTop() + "  width=" + cont.getWidth());
+                                    console.log("Drag Start Container element:  left=" + cont.element.getLeft() + "  right=" + cont.element.getRight() + " top=" + cont.element.getTop() + "  width=" + cont.element.getWidth());
+                                },
+                                order:'before',
+                                scope:this
+                            },
+                            dragend:{
+                                fn:function (component, event, offsetX, offsetY, listener) {
+                                    console.log("Drag end Container:  left=" + cont.getLeft() + "  right=" + cont.getRight() + " top=" + cont.getTop() + "  width=" + cont.getWidth());
+                                    console.log("Drag end Container element:  left=" + cont.element.getLeft() + "  right=" + cont.element.getRight() + " top=" + cont.element.getTop() + "  width=" + cont.element.getWidth());
+
+
+                                },
+                                order:'after',
+                                scope:this
+                            }
+                        }
+                    }
+                });
+                Ext.Viewport.add(cont);
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

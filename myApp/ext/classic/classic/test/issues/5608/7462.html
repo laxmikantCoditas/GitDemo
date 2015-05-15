@@ -1,0 +1,43 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../../../../SDK/extjs/resources/css/ext-all.css" />
+<script src="./../../../../SDK/extjs/ext.js"></script>
+</head>
+
+<body>
+<script type="text/javascript">
+Ext.onReady(function () {
+    var w = Ext.create('Ext.container.Viewport', {
+	layout: 'fit',
+	items: {
+	    html: 'Hi',
+	    tbar: [{
+		text: 'Stop load',
+		handler: function () {
+		    p.setLoading(false);
+		}
+	    }]
+	}
+    }),
+    p = Ext.create('Ext.window.Window', {
+        title: 'Floating window',
+        modal: true,
+	width: 200,
+	height: 200,
+	tbar: [{
+	    text: "Do load",
+	    handler: function () {
+	    //debugger;
+	        //p.setLoading("Loading", true);
+	        p.setLoading("Loading");
+	    }
+	}]
+    });
+
+    w.show();
+    p.show();
+
+});
+</script>
+</body>
+</html>

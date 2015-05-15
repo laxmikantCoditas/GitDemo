@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>TOUCH-4780</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+    <script src="../../sencha-touch-all-debug.js"></script>
+    <script>
+        Ext.require([
+            'Ext.data.JsonStore',
+            'Ext.chart.*'
+        ]);
+
+        Ext.setup({
+            onReady: function () {
+                Ext.define('Ext.overrides.chart.series.Series', {
+                    override: 'Ext.chart.series.Series',
+
+                    updateLabelData: function () {
+                        var me = this,
+                                store = me.getStore(),
+                                items = store.getData().items,
+                                sprites = me.getSprites(),
+                                labelField = me.getLabelField(),
+                                i, ln, labels;
+                        if (sprites.length > 0 && labelField) {
+                            labels = [];
+                            for (i = 0, ln = items.length; i < ln; i++) {
+                                labels.push(items[i].get(labelField));
+                            }
+
+                            console.group('updateLabelData');
+                            console.groupCollapsed('Stack trace');
+                            console.trace();
+                            console.groupEnd();
+                            console.log(sprites.length, sprites[0].getId(), sprites[0].$className.split('.').pop(), labels);
+                            console.groupEnd();
+
+                            for (i = 0, ln = sprites.length; i < ln; i++) {
+                                sprites[i].setAttributes({labels: labels});
+                            }
+                        }
+                    }
+                });
+
+                var store = Ext.create('Ext.data.JsonStore', {
+                    data: [
+                        {
+                            year: '2010',
+                            thisStore: 50520,
+                            otherStore: 25199
+                        }
+                    ]
+                });
+
+                Ext.Viewport.add({
+                    fullscreen: true,
+                    xtype: 'chart',
+                    store: store,
+                    axes: [
+                        {
+                            type: 'category',
+                            fields: ['year'],
+                            label: {
+                                x: 0,
+                                y: 0,
+                                textBaseline: 'middle',
+                                textAlign: 'center',
+                                font: '14px Verdana',
+                                rotate: {
+                                    rads: Math.PI * -0.15
+                                }
+                            }
+                        },
+                        {
+                            type: 'numeric',
+                            position: 'left',
+                            label: {
+                                x: 0,
+                                y: 0,
+                                display: 'rotate',
+                                textBaseline: 'middle',
+                                textAlign: 'center',
+                                fontSize: 12,
+                                fontFamily: 'Verdana'
+                            },
+                            labelInSpan: true
+                        }
+                    ],
+                    series: [
+                        {
+                            type: 'bar',
+                            colors: ['#c8b08e'],
+                            label: {
+                                font: '14px Verdana',
+                                fontWeight: 'normal',
+                                textAlign: 'left'
+                            },
+                            labelField: 'thisStore',
+                            xField: 'year',
+                            yField: ['thisStore'],
+                            stacked: false
+                        },
+                        {
+                            type: 'bar',
+                            colors: ['#542E1D'],
+                            label: {
+                                font: '14px Verdana',
+                                fontWeight: 'bold',
+                                textAlign: 'center'
+                            },
+                            labelField: 'otherStore',
+                            xField: 'year',
+                            yField: ['otherStore'],
+                            stacked: false
+                        }
+                    ]
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

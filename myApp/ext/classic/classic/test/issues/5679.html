@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+    <script>
+        Ext.require('Ext.container.Viewport');
+
+        Ext.onReady(function() {
+            var viewport = new Ext.container.Viewport({
+                layout : {
+                    type: "hbox",
+                    align : "stretchmax"
+                },
+                items: [{
+                    style: "border:1px solid red",
+                    xtype: "container",
+                    id: "containerid",
+                    layout: "vbox",
+                    minHeight: 5,
+                    flex: 1
+                }, {
+                    style: "border:1px solid red",
+                    xtype: "container",
+                    id: "column2id",
+                    layout: "vbox",
+                    minHeight: 5,
+                    flex: 1
+                }]
+            });
+
+            // container will not grow
+            Ext.getCmp("containerid").add({
+                xtype : "component",
+                html: "container child 1"
+            });
+            Ext.getCmp("containerid").add({
+                xtype : "component",
+                html: "container child 2"
+            });
+
+//             The box will stretch if both columns are not empty.
+//            Ext.getCmp("column2id").add({
+//                xtype : "component",
+//                html: "container child 3"
+//            });
+
+        });
+    </script>
+        
+    </script>
+</body>
+</html>

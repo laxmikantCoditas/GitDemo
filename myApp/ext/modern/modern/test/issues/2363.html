@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2363</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+
+    <script>
+        Ext.define('App.MainPanel', {
+            extend:'Ext.Panel',
+            config:{
+                id:'mainPanel',
+                items:[
+                    {
+                        xtype:'toolbar',
+                        docked:'bottom',
+                        items:[
+                            {
+                                xtype:'spacer'
+                            },
+                            {
+                                xtype:'button',
+                                itemId:'createNavigation',
+                                text:'new panel with NavigationView',
+                                listeners:{
+                                    tap:function () {
+                                        var innerPanel = Ext.create('App.InnerPanel');
+                                        this.up('#mainPanel').add(innerPanel);
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        });
+        Ext.define('App.InnerPanel', {
+            extend:'Ext.Panel',
+            config:{
+                layout:'fit',
+                id:'morePanel',
+                width:300,
+                height:268,
+                centered:true,
+                modal:true,
+                items:[
+                    {
+                        xtype:'navigationview'
+                    },
+                    {
+                        xtype:'toolbar',
+                        docked:'bottom',
+                        items:[
+                            {
+                                xtype:'spacer'
+                            },
+                            {
+                                xtype:'button',
+                                itemId:'close',
+                                text:'close',
+                                listeners:{
+                                    tap:function () {
+                                        this.up('#morePanel').destroy();
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        });
+        Ext.application({
+            name:'App',
+            launch:function () {
+                var panel = Ext.create('App.MainPanel');
+                Ext.Viewport.add(panel);
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<!--
+
+  Created using /
+  Source can be edited via /urapuf/11/edit
+
+-->
+<head>
+    <title></title>
+    <script type="text/javascript" src="../../ext-all.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css">
+</head>
+<body><script>
+Ext.require('*');
+Ext.onReady(function(){
+Ext.create("Ext.window.Window", {
+    width:500,
+    height:500,
+    layout:"fit",
+    items:[
+        {
+            xtype:"panel",
+            layout:"fit",
+            items:[
+                {
+                    xtype:"chart",
+                    store:{
+                        proxy:{
+                            type:"memory",
+                            reader:{
+                                type:"json"
+                            }
+                        },
+                        model:Ext.define("MyModel", {
+                            extend:"Ext.data.Model",
+                            fields:[
+                                "name",
+                                "value"
+                            ]
+                        }) && "MyModel",
+                        data:[
+                            {
+                                name:"1",
+                                value:10
+                            },
+                            {
+                                name:"2",
+                                value:20
+                            },
+                            {
+                                name:"3",
+                                value:30
+                            },
+                            {
+                                name:"4",
+                                value:40
+                            },
+                            {
+                                name:"5",
+                                value:50
+                            }
+                        ]
+                    },
+                    animate:true,
+                    axes:[
+                        {
+                            type:"Numeric",
+                            position:"left",
+                            fields:["value"]
+                        },
+                        {
+                            type:"Category",
+                            position:"bottom",
+                            fields:["name"]
+                        }
+                    ],
+                    series:[
+                        {
+                            type:"column",
+                            axis:"left",
+                            xField:"name",
+                            yField:"value"
+                        }
+                    ]
+                }
+            ],
+            dockedItems:[
+                {
+                    xtype:"toolbar",
+                    dock:"top",
+                    items:[
+                        {
+                            text:"Click to change text",
+                            handler:function()    {
+                                this.setText("My text has changed.");
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}).show();
+});
+</script>
+</body>
+</html>
+

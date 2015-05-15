@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>3038</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.application({
+            requires : [
+                'Ext.form.Panel',
+                'Ext.Button',
+                'Ext.field.Toggle'
+            ],
+
+            launch : function () {
+                new Ext.form.Panel({
+                    fullscreen : true,
+                    items      : [
+                        {
+                            xtype : 'togglefield'
+                        },
+                        {
+                            xtype   : 'button',
+                            text    : 'Check isDirty',
+                            handler : function (button) {
+                                var form = button.up('formpanel'),
+                                        field = form.down('togglefield'),
+                                        isDirty = field.isDirty();
+
+                                console.log(isDirty);
+                            }
+                        }
+                    ]
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

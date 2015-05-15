@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4826</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+    <script src="../../sencha-touch-all-debug.js"></script>
+    <script>
+        Ext.require([
+            'Ext.chart.*',
+            'Ext.Toolbar',
+            'Ext.data.JsonStore'
+        ]);
+        Ext.setup({
+            onReady: function () {
+                var store = Ext.create('Ext.data.JsonStore', {
+                    data: [
+                        {
+                            year: '2010',
+                            field1: 50520,
+                            field2: 40199
+                        },
+                        {
+                            year: '2011',
+                            field1: 62505,
+                            field2: 30156
+                        },
+                        {
+                            year: '2012',
+                            field1: 21523,
+                            field2: 14423
+                        }
+                    ]
+                });
+
+                var isFlipped = false;
+
+                function createView() {
+                    var chart = Ext.create('Ext.chart.CartesianChart', {
+                        fullscreen: true,
+                        animate: true,
+                        store: store,
+                        flipXY: isFlipped,
+                        legend: {
+                            position: 'right',
+                            width: 80
+                        },
+                        axes: [
+                            {
+                                type: 'category',
+                                position: isFlipped ? 'left' : 'bottom',
+                                fields: [
+                                    'year'
+                                ],
+                                label: {
+                                    x: 0,
+                                    y: 0,
+                                    textBaseline: 'middle',
+                                    textAlign: 'center',
+                                    font: '14px Verdana',
+                                    rotate: {
+                                        rads: Math.PI * -0.2
+                                    }
+                                }
+                            },
+                            {
+                                type: 'numeric',
+                                position: isFlipped ? 'bottom' : 'left',
+                                label: {
+                                    x: 0,
+                                    y: 0,
+                                    display: 'rotate',
+                                    textBaseline: 'middle',
+                                    textAlign: 'center',
+                                    fontSize: 12,
+                                    fontFamily: 'Verdana'
+                                },
+                                labelInSpan: true
+                            }
+                        ],
+                        series: [
+                            {
+                                type: 'bar',
+                                showInLegend: true,
+                                colors: ['#c8b08e'],
+                                style: {
+                                    stroke: '#c8b08e'
+                                },
+                                label: {
+                                    field: 'field1',
+                                    display: 'insideEnd',
+                                    font: '14px Verdana',
+                                    fontWeight: 'normal',
+                                    textAlign: 'center',
+                                    renderer: function (text, sprite, config, options, index) {
+                                        return index === 1 ? 'a very long label' : text;
+                                    }
+                                },
+                                xField: 'year',
+                                yField: [
+                                    'field1'
+                                ]
+                            },
+                            {
+                                type: 'line',
+                                showInLegend: true,
+                                xField: 'year',
+                                yField: ['field2'],
+                                label: {
+                                    field: 'field2',
+                                    display: 'over'
+                                },
+                                colors: ['red'],
+                                style: {
+                                    stroke: 'red'
+                                }
+                            }
+                        ]
+                    });
+
+                    var toolbar = Ext.create('Ext.Toolbar', {
+                        docked: 'top',
+                        items: [{
+                            xtype: 'button',
+                            text: 'flipXY: ' + isFlipped,
+                            listeners: {
+                                tap: function () {
+                                    isFlipped = !isFlipped;
+                                    updateViewport();
+                                }
+                            }
+                        }]
+                    });
+                    return [chart, toolbar];
+                }
+
+                function updateViewport() {
+                    Ext.Viewport.removeAll(true, true);
+                    Ext.Viewport.add(createView());
+                }
+
+                updateViewport();
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

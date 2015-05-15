@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TOUCH-3570</title>
+
+        <script src="../../sencha-touch-debug.js"></script>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+        <script type="text/javascript">
+
+            Ext.define('Contact', {
+                extend : 'Ext.data.Model',
+
+                config : {
+                    fields : ['firstName', 'lastName']
+                }
+            });
+
+            Ext.application({
+            	name : 'default',
+
+                requires : ['Ext.dataview.List', 'Ext.Toolbar', 'Ext.data.Store'],
+
+            	launch : function() {
+
+                    var store = Ext.create('Ext.data.Store', {
+                        model   : 'Contact',
+                        sorters : 'lastName',
+
+                        grouper : {
+                            groupFn : function (record) {
+                                return record.get('lastName')[0];
+                            }
+                        },
+
+                        data : [
+                            { firstName : 'Tommy', lastName : 'Maintz'  },
+                            { firstName : 'Rob', lastName : 'Dougan'  },
+                            { firstName : 'Ed', lastName : 'Spencer' },
+                            { firstName : 'Jamie', lastName : 'Avins'   },
+                            { firstName : 'Aaron', lastName : 'Conran'  },
+                            { firstName : 'Dave', lastName : 'Kaneda'  },
+                            { firstName : 'Jacky', lastName : 'Nguyen'  },
+                            { firstName : 'Abraham', lastName : 'Elias'   },
+                            { firstName : 'Jay', lastName : 'Robinson'},
+                            { firstName : 'Nigel', lastName : 'White'   },
+                            { firstName : 'Don', lastName : 'Griffin' },
+                            { firstName : 'Nico', lastName : 'Ferrero' },
+                            { firstName : 'Jason', lastName : 'Johnston'}
+                        ]
+                    });
+
+                    Ext.create('Ext.dataview.List', {
+                        fullscreen : true,
+                        itemTpl    : '<div class="contact">{firstName} <strong>{lastName}</strong></div>',
+                        store      : store,
+                        grouped    : true,
+                        items      : [
+                            {
+                                xtype : 'toolbar',
+                                docked : 'top',
+                                items  : [
+                                    {
+                                        text    : 'Ungroup',
+                                        handler : function (btn) {
+                                            var list = btn.up('list');
+
+                                            list.setGrouped(false);
+                                        }
+                                    },
+                                    {
+                                        text    : 'Group',
+                                        handler : function (btn) {
+                                            var list = btn.up('list');
+
+                                            list.setGrouped(true);
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    });
+
+            	}
+            });
+
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

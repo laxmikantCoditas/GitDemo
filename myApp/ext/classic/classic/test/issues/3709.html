@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>3709</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<!--<script type="text/javascript" src="../../ext.js"></script>-->
+<script type="text/javascript" src="http://dev.sencha.com/deploy/ext-4.0.2a/ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+Ext.onReady(function () {
+  var dh = Ext.core.DomHelper;
+  for (var i = 0; i < 100; i++) {
+    dh.append(document.body,
+      {tag: "p", html: "some text"});
+  }
+  var mask = new Ext.LoadMask(Ext.getBody(), {
+    msg : "Processing your request, Please wait..."
+  });
+
+/*
+  // this will extend the x-mask element by setting its height equal to the body's
+  mask.on("show", function (mask) {
+    Ext.query(".x-mask")[0].style.height = Ext.get(document.body).getHeight() + "px";
+  });
+*/
+
+  mask.show();
+});
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4308</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.setup({ 
+            requires: ['Ext.data.Types'],
+            onReady: function() {
+	            console.log("'1': " + Ext.data.Types.BOOL.convert('1'));
+	            console.log("'0': " + Ext.data.Types.BOOL.convert('0'));
+	            console.log("'true': " + Ext.data.Types.BOOL.convert('true'));
+	            console.log("'false': " + Ext.data.Types.BOOL.convert('false'));
+	            console.log("true: " + Ext.data.Types.BOOL.convert(true));
+	            console.log("false: " + Ext.data.Types.BOOL.convert(false));
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

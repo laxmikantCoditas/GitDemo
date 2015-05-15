@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>1540</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script src="../../sencha-touch.js"></script>
+
+        <script type="text/javascript">
+            Ext.setup({
+                onReady: function() {
+                    v = Ext.Viewport.add({
+                        layout: {
+                            type: 'card',
+                            animation: {
+                                type: 'slide',
+                                duration: 500,
+                                direction: 'left'
+                            }
+                        },
+                        items: [
+                            {
+                                html: 'one'
+                            },
+                            {
+                                html: 'two'
+                            }
+                        ]
+                    });
+
+                    setTimeout(function() {
+                        v.animateActiveItem(1, { type: 'fade', duration: 1000 });
+                    }, 1000);
+                }
+            });
+        </script>
+    </head>
+    <body></body>
+</html>

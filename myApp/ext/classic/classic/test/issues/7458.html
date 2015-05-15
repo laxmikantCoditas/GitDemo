@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+
+        Ext.Loader.setConfig({enabled:true});
+        Ext.require([
+            'Ext.chart.series.Pie',
+            'Ext.chart.Chart',
+            'Ext.data.Store'
+        ]);
+        Ext.onReady(function () {
+
+            Ext.define('User', {
+                extend:'Ext.data.Model',
+                fields:[
+                    {name:'name', type:'string'},
+                    {name:'number', type:'int'}
+                ]
+            });
+
+            var mystore = Ext.create('Ext.data.Store', {
+                model:'User',
+                autoLoad:true,
+                proxy:{
+                    type:'ajax',
+                    url:'tasks.json'
+                }
+            });
+
+            Ext.create('Ext.chart.Chart', {
+                renderTo:Ext.getBody(),
+                animate:true,
+                shadow:true,
+                insetPadding:30,
+                store:mystore,
+                theme:'Base:gradients',
+                width: 500,
+                height: 350,
+                legend:{
+                    position:'bottom'
+                },
+                series:[
+                    {
+                        type:'pie',
+                        field:'number',
+                        showInLegend:true,
+                        colorSet:['#3d8dcb', '#f8981d' , '#2bb34b'],
+                        tips:{
+                            trackMouse:true,
+                            width:140,
+                            height:28,
+                            renderer:function (storeItem, item) {
+                                //calculate percentage.
+                                var me = this;
+                                var total = 0;
+                                storeItem.store.each(function (rec) {
+                                    total += rec.get('number');
+                                });
+                                var percentNumber = Number(Math.round(storeItem.get('number')) / total).toFixed(2);
+                                me.setTitle(storeItem.get('name') + ': ' + (percentNumber * 100) + '%');
+                            }
+                        },
+                        highlight:{
+                            segment:{
+                                margin:20
+                            }
+                        },
+                        label:{
+                            field:'name',
+                            display:'rotate',
+                            contrast:true
+                        }
+                    }
+                ]
+            });
+        });
+        
+    </script>
+</body>
+</html>

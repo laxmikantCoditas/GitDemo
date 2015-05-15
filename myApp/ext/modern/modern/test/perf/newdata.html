@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Tab Bar</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../sencha-touch-all.js"></script>
+
+
+    <script>
+        Ext.define('TestModel', {
+            extend: 'Ext.newdata.Model',
+            config: {
+                fields: [{
+                    name: 'field1',
+                    defaultValue: 'Field',
+                    type: 'string'
+                }, {
+                    name: 'field2',
+                    defaultValue: 100,
+                    type: 'int'
+                }, {
+                    name: 'field3',
+                    defaultValue: 2.5,
+                    type: 'float'
+                }, {
+                    name: 'field4',
+                    defaultValue: true,
+                    type: 'boolean'
+                }, {
+                    name: 'field5',
+                    defaultValue: 'Field'
+                }, {
+                    name: 'field6',
+                    defaultValue: 100
+                }, {
+                    name: 'field7',
+                    defaultValue: 2.5
+                }, {
+                    name: 'field8',
+                    defaultValue: true
+                }, {
+                    name: 'field9'
+                }]
+            }
+        });
+
+        Ext.setup({
+            onReady: function() {
+                var store = Ext.create('Ext.newdata.Store', {
+                        model: 'TestModel'
+                    }),
+                    records = [],
+                    ln = 50000,
+                    start = new Date(),
+                    i;
+
+                // We begin by testing record instantiation time
+                for (i = 0; i < ln; i++) {
+                    records.push(new TestModel({
+                        field1: 'Field-' + i,
+                        field2: i,
+                        field3: 1.5 + i,
+                        field4: false,
+                        field9: 'blaat'
+                        // The rest uses all its default values
+                    }));
+                }
+
+                console.log('Creating ' + ln + ' records:', new Date() - start);
+
+                // Then we test how long it takes to add these records
+                start = new Date();
+                for (i = 0; i < ln; i++) {
+                    store.add(records[i]);
+                }
+                console.log('Adding ' + ln + ' records to store:', new Date() - start);
+
+                // Now lets update all these records
+                start = new Date();
+                for (i = 0; i < ln; i++) {
+                    records[i].set({
+                        field5: 'Field-' + i,
+                        field6: i,
+                        field7: 1.5 + i,
+                        field8: false
+                    });
+                }
+                console.log('Updating 4 fields on ' + ln + ' records:', new Date() - start);
+
+                // And lets remove them from the store
+                start = new Date();
+                for (i = 0; i < ln; i++) {
+                    store.remove(records[i]);
+                }
+                console.log('Removing ' + ln + ' records from store:', new Date() - start);
+
+                // Now lets add and remove them in bulk
+                start = new Date();
+                store.add(records);
+                console.log('Adding ' + ln + ' records to store as array:', new Date() - start);
+
+                start = new Date();
+                store.remove(records);
+                console.log('Removing ' + ln + ' records to store as array:', new Date() - start);
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

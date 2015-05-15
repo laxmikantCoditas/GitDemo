@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3284</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.define('User', {
+            extend: 'Ext.data.Model',
+
+            config: {
+                fields: ['id', 'name', 'email', { name: 'StartDate', type: 'date', dateFormat: "MS" }],
+                proxy: {
+                    type: 'rest',
+                    url : '/users'
+                }
+            }
+        });
+        Ext.setup({ 
+            requires: [
+                'Ext.tab.Panel'
+            ],
+            onReady: function() {
+                var user = Ext.create('User', {name: 'Ed Spencer', email: 'ed@sencha.com', StartDate:new Date()});
+
+                user.save(); //POST /users
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

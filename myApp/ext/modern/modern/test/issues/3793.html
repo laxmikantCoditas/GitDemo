@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3793</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.setup({
+            requires: [
+                'Ext.dataview.DataView',
+                'Ext.Button'
+            ],
+            onReady: function() {
+                Ext.Viewport.add({
+                    xtype   : 'dataview',
+                    itemTpl : '{test}',
+                    store   : {
+                        fields : ['test'],
+                        data   : [
+                            { test : 'foo' }
+                        ]
+                    },
+                    items   : [
+                        {
+                            xtype   : 'button',
+                            docked  : 'top',
+                            text    : 'setStore',
+                            ui      : 'confirm',
+                            handler : function(btn) {
+                                var dv = btn.up('dataview');
+
+                                dv.setStore(null);
+
+                                console.log(dv.getStore());
+                            }
+                        }
+                    ]
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

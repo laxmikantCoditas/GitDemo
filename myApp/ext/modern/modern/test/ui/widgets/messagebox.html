@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ext.MessageBox</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" href="../../../resources/css/sencha-touch.css" type="text/css">
+
+        <script type="text/javascript" src="../../../sencha-touch.js"></script>
+        <script type="text/javascript">
+            Ext.require([
+                'Ext.MessageBox'
+            ]);
+
+            /**
+             * Show all the configs
+             */
+            Ext.setup({
+                tabletStartupScreen: 'tablet_startup.png',
+                phoneStartupScreen: 'phone_startup.png',
+                icon: 'icon.png',
+                glossOnIcon: false,
+
+                onReady: function() {
+                    var msg = Ext.create('Ext.MessageBox', {
+                         title       : 'test',
+                         msg         : 'testingd ',
+                         buttons     : Ext.MessageBox.OKCANCEL
+                         // multiline: true
+                         // iconCls: Ext.MessageBox.INFO
+                    });
+                    msg.show();
+
+                    // Ext.Msg.show({
+                    //     title: 'test',
+                    //     msg: 'testing ',
+                    //     buttons: Ext.MessageBox.OKCANCEL
+                    // });
+
+                    // Ext.Msg.alert('Alert!', 'my message', function() {
+                    //     alert('asdasd');
+                    // });
+
+                    //Ext.Msg.confirm("title", "Asdasdasd", function(){});
+                    // Ext.Msg.show({
+                    //     title: 'test',
+                    //     msg  : 'hmmm'
+                    // });
+
+                    // var sheet = Ext.create('Ext.Sheet', {
+                    //     height: 100,
+                    //     enter: 'left',
+                    //     html:'asdasd'
+                    // });
+
+                    // sheet.show();
+                }
+            });
+        </script>
+    </head>
+<body>
+
+</body>
+</html>

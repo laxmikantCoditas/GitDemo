@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>EXTJS-4429</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css"/>
+    <script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+<script type="text/javascript" charset="utf-8">
+    Ext.require([
+        'Ext.data.Store',
+        'Ext.chart.theme.Base',
+        'Ext.chart.series.Pie',
+        'Ext.chart.Chart'
+    ]);
+
+
+    Ext.onReady(function () {
+        var store = Ext.create('Ext.data.Store', {
+            fields: [ 'name', 'data' ],
+            data: [
+                { name: 'Field 0',  data: 0 },
+                { name: 'Field 1',  data: 1 }
+            ]
+        });
+
+        var panel = Ext.create('widget.panel', {
+            width: 450,
+            height: 400,
+            renderTo: Ext.getBody(),
+            layout: 'fit',
+            items: {
+                xtype: 'chart',
+                insetPadding: 5,
+                store: store,
+                theme: 'Base:gradients',
+                series: [{
+                    type: 'pie',
+                    field: 'data',
+                    showInLegend: true,
+                    label: {
+                        display: 'rotate',
+                        contrast: true
+                    }
+                }]
+            }
+        });
+    });
+
+</script>
+</body>
+</html>

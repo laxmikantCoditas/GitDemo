@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+Ext.require('Ext.data.Store');
+Ext.require('Ext.grid.RowEditor');
+
+Ext.onReady(function(){
+
+/*
+Ext.override(Ext.grid.RowEditor, {
+    onCtScroll: function(e, target) {
+        var me = this,
+            scrollTop  = target.scrollTop,
+            scrollLeft = target.scrollLeft,
+	    combobox = Ext.ComponentQuery.query("combobox")[0];
+
+        if (scrollTop !== me.lastScrollTop) {
+            me.lastScrollTop = scrollTop;
+            if ((me.tooltip && me.tooltip.isVisible()) || me.hiddenTip) {
+                me.repositionTip();
+            }
+        }
+        if (scrollLeft !== me.lastScrollLeft) {
+            me.lastScrollLeft = scrollLeft;
+            me.reposition();
+        }
+
+	if (combobox && combobox.picker && combobox.picker.pickerField && combobox.picker.pickerField.isExpanded) {
+	    combobox.picker.pickerField.collapse();
+	}
+    }
+});
+*/
+
+    var data, emailData, store, rowEditing, selModel, grid;
+ 
+    Ext.define('Employee', {
+        extend: 'Ext.data.Model',
+        fields: [
+            'name',
+            'email',
+            { name: 'salary', type: 'float' }
+        ]
+    });
+ 
+    data = [{
+        name: 'Jones',
+        email: 'a@b.c',
+        salary: 12323.4
+    }, {
+        name: 'Smith',
+        email: 'a@b.c',
+        salary: 1213.4
+    }, {
+        name: 'Tod',
+        email: 'a@b.c',
+        salary: 3413.4
+    }, {
+        name: 'Smith',
+        email: 'a@b.c',
+        salary: 1213.4
+    }, {
+        name: 'Tod',
+        email: 'a@b.c',
+        salary: 3413.4
+    }, {
+        name: 'Smith',
+        email: 'a@b.c',
+        salary: 1213.4
+    }, {
+        name: 'Tod',
+        email: 'a@b.c',
+        salary: 3413.4
+    }];
+ 
+    store = Ext.create('Ext.data.Store', {
+        autoDestroy: true,
+        model: 'Employee',
+        proxy: {
+            type: 'memory'
+        },
+        data: data
+    });
+ 
+    emailData = [ 'a@b.c', 'b@c.d', 'c@d.e', 'd@e.f' ];
+ 
+    rowEditing = Ext.create('Ext.grid.plugin.RowEditing', {
+        clicksToMoveEditor: 1,
+        autoCancel: false
+    });
+ 
+    // create the grid and specify what field you want
+    // to use for the editor at each column.
+    grid = Ext.create('Ext.grid.Panel', {
+        store: store,
+        columns: [{
+            header: 'Name',
+            dataIndex: 'name',
+            flex: 1,
+            editor: {
+                allowBlank: false
+            }
+        }, {
+            header: 'Email',
+            dataIndex: 'email',
+            width: 160,
+            editor: {
+                xtype: 'combobox',
+                store: emailData
+            }
+        }, {
+            xtype: 'numbercolumn',
+            header: 'Salary',
+            dataIndex: 'salary',
+            format: '$0,0',
+            width: 90,
+            editor: {
+                xtype: 'numberfield',
+                allowBlank: false,
+                minValue: 1,
+                maxValue: 150000
+            }
+        }],
+        renderTo: Ext.getBody(),
+        width: 600,
+        height: 150,
+        title: 'Employee Salaries',
+        frame: true,
+        plugins: [rowEditing]
+    });
+});
+        
+    </script>
+</body>
+</html>

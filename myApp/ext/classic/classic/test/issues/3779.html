@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>3779 Message Box Dialog - Page is grayed out and not allowed to update the page when quickly double-clicking on Icon Show button.</title>
+    <link href="../../resources/css/ext-all.css" charset="UTF-8" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" charset="UTF-8" src="../../ext.js"></script>
+    <script type="text/javascript">
+        Ext.require('Ext.window.MessageBox');
+
+
+        Ext.onReady(function() {
+            var showups = 0;
+            function showIt() {
+                Ext.MessageBox.show({
+                    title: '3779, showup = ' + (++showups),
+                    msg: 'Wait a second for a new Message...',
+                    animateTarget: 'test-button',
+                    closable: false
+                });
+            }
+
+            function showIt2() {
+                Ext.MessageBox.show({
+                    title: 'Relayout',
+                    icon: Ext.MessageBox.INFO,
+                    msg: 'A very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very long text.',
+                    animateTarget: 'ends'
+                });
+            }
+            Ext.get('test-button').on('click', function() {
+                showIt();
+                setTimeout(function() {
+                    showIt();
+                }, 300);
+                setTimeout(function() {
+                    showIt2();
+                }, 1000);
+            });
+        });
+    </script>
+</head>
+<body style="padding: 15px" class="x-reset">
+    <h1>Issue <a href="https://sencha.jira.com/browse/EXTJSIV-3779" target="_blank">3779</a> <br/></h1>
+    Message Box Dialog - Showing MessageBox during its showing animation grays out the page.<br/>
+    <button id="test-button">Starts here</button> <br/>
+    <br/><br/><br/><br/><br/>
+    <div id="ends" style="border: 1px dashed black; display: inline;">Ends here</div>
+</body>
+</html>

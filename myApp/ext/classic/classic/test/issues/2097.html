@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>EXTJS-2097</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css"/>
+    <script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+<script type="text/javascript" charset="utf-8">
+    Ext.require(['Ext.draw.Component', 'Ext.Window']);
+    Ext.onReady(function () {
+        var cmp = Ext.create('Ext.draw.Component', {
+            viewBox: true,
+            padding: 10,
+            items: [{
+                type: 'path',
+                id: "red",
+                group: "path",
+                stroke: "blue",
+                "stroke-width": 3,
+                fill: "red",
+                path: 'M60 10L100 10L100 50L60 50L60 10Z'
+            }, {
+                type: 'rect',
+                id: "yellow",
+                group: "coord",
+                x: 10,
+                y: 10,
+                width: 25,
+                height: 50,
+                stroke: "blue",
+                "stroke-width": 3,
+                fill: "yellow"
+            }, {
+                type: 'rect',
+                id: "green",
+                group: "coord",
+                x: 50,
+                y: 60,
+                width: 20,
+                height: 60,
+                stroke: "blue",
+                "stroke-width": 3,
+                fill: 'green'
+            }]
+        });
+
+        Ext.create('Ext.Window', {
+            width: 300,
+            height: 300,
+            layout: 'fit',
+            items: [cmp]
+        }).show();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Pie</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <link rel="stylesheet" href="../../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../../sencha-touch-all.js"></script>
+    <script src="data.js"></script>
+    <script>
+        Ext.require(['Ext.chart.PolarChart',
+                     'Ext.Toolbar',
+                     'Ext.TitleBar',
+                     'Ext.chart.series.Pie',
+                     'Ext.Button']);
+        Ext.setup({
+            onReady: function () {
+                var store = new OrderItems(),
+                        colors = [];
+                store.generateData(10);
+                for (var i = 0; i < 30; i++) {
+                    colors.push(Ext.draw.Color.fly(Math.random() * 155 + 50, Math.random() * 55 + 150, Math.random() * 105 + 100, 1).toString());
+                }
+                var cmp = new Ext.chart.PolarChart({
+                    store: store,
+                    colors: colors,
+                    innerPadding: 20,
+                    insetPadding: 10,
+                    interactions: ['rotate', 'itemhighlight'],
+                    series: [
+                        {
+                            type: 'pie',
+                            field: 'g1',
+                            donut: 30
+                        }
+                    ]
+                });
+                Ext.Viewport.add({
+                    layout: 'fit',
+                    items: [
+                        {
+                            xtype: 'titlebar',
+                            docked: 'top',
+                            title: 'Pie Chart',
+                            items: {
+                                text: 'Refresh',
+                                handler: function () {
+                                    store.generateData(10);
+                                }
+                            }
+                        },
+                        cmp
+                    ]
+                });
+            }
+        });
+
+    </script>
+</head>
+<body>
+</body>
+</html>

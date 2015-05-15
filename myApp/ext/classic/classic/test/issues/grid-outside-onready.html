@@ -1,0 +1,274 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+
+<script type="text/javascript" charset="utf-8">
+  Ext.require(['*']);
+
+  var Grid = Ext.create('Ext.grid.Panel', {
+    title: 'Simpsons',
+	autoScroll: true,
+    store: Ext.create('Ext.data.Store', {
+        storeId:'simpsonsStore',
+        fields:['name', 'email', 'phone'],
+        data:{
+            'items':[
+
+            {
+                "name":"Lisa", 
+                "email":"lisa@simpsons.com", 
+                "phone":"555-111-1224"
+            },
+
+            {
+                "name":"Bart", 
+                "email":"bart@simpsons.com", 
+                "phone":"555--222-1234"
+            },
+
+            {
+                "name":"Homer", 
+                "email":"home@simpsons.com", 
+                "phone":"555-222-1244"
+            },
+
+            {
+                "name":"Homer", 
+                "email":"home@simpsons.com", 
+                "phone":"555-222-1244"
+            },
+
+            {
+                "name":"Homer", 
+                "email":"home@simpsons.com", 
+                "phone":"555-222-1244"
+            },
+
+            {
+                "name":"Homer", 
+                "email":"home@simpsons.com", 
+                "phone":"555-222-1244"
+            },
+
+            {
+                "name":"Homer", 
+                "email":"home@simpsons.com", 
+                "phone":"555-222-1244"
+            },
+
+            {
+                "name":"Homer", 
+                "email":"home@simpsons.com", 
+                "phone":"555-222-1244"
+            },
+
+            {
+                "name":"Homer", 
+                "email":"home@simpsons.com", 
+                "phone":"555-222-1244"
+            },
+
+            {
+                "name":"Homer", 
+                "email":"home@simpsons.com", 
+                "phone":"555-222-1244"
+            },
+
+            {
+                "name":"Homer", 
+                "email":"home@simpsons.com", 
+                "phone":"555-222-1244"
+            },
+
+            {
+                "name":"Homer", 
+                "email":"home@simpsons.com", 
+                "phone":"555-222-1244"
+            },
+
+            {
+                "name":"Homer", 
+                "email":"home@simpsons.com", 
+                "phone":"555-222-1244"
+            },
+
+            {
+                "name":"Homer", 
+                "email":"home@simpsons.com", 
+                "phone":"555-222-1244"
+            },
+
+            {
+                "name":"Homer", 
+                "email":"home@simpsons.com", 
+                "phone":"555-222-1244"
+            },
+
+            {
+                "name":"Homer", 
+                "email":"home@simpsons.com", 
+                "phone":"555-222-1244"
+            },
+
+            {
+                "name":"Homer", 
+                "email":"home@simpsons.com", 
+                "phone":"555-222-1244"
+            },
+
+            {
+                "name":"Homer", 
+                "email":"home@simpsons.com", 
+                "phone":"555-222-1244"
+            },
+
+            {
+                "name":"Homer", 
+                "email":"home@simpsons.com", 
+                "phone":"555-222-1244"
+            },
+
+            {
+                "name":"Homer", 
+                "email":"home@simpsons.com", 
+                "phone":"555-222-1244"
+            },
+
+            {
+                "name":"Homer", 
+                "email":"home@simpsons.com", 
+                "phone":"555-222-1244"
+            },
+
+            {
+                "name":"Homer", 
+                "email":"home@simpsons.com", 
+                "phone":"555-222-1244"
+            },
+
+            {
+                "name":"Homer", 
+                "email":"home@simpsons.com", 
+                "phone":"555-222-1244"
+            },
+
+            {
+                "name":"Homer", 
+                "email":"home@simpsons.com", 
+                "phone":"555-222-1244"
+            },
+
+            {
+                "name":"Homer", 
+                "email":"home@simpsons.com", 
+                "phone":"555-222-1244"
+            },
+
+            {
+                "name":"Homer", 
+                "email":"home@simpsons.com", 
+                "phone":"555-222-1244"
+            },
+
+            {
+                "name":"Homer", 
+                "email":"home@simpsons.com", 
+                "phone":"555-222-1244"
+            },
+
+            {
+                "name":"Homer", 
+                "email":"home@simpsons.com", 
+                "phone":"555-222-1244"
+            },
+
+            {
+                "name":"Homer", 
+                "email":"home@simpsons.com", 
+                "phone":"555-222-1244"
+            },
+
+            {
+                "name":"Homer", 
+                "email":"home@simpsons.com", 
+                "phone":"555-222-1244"
+            },
+
+            {
+                "name":"Marge", 
+                "email":"marge@simpsons.com", 
+                "phone":"555-222-1254"
+            }            
+            ]
+            },
+        proxy: {
+            type: 'memory',
+            reader: {
+                type: 'json',
+                root: 'items'
+            }
+        }
+    }),
+    columns: [
+    {
+        header: 'Name',  
+        dataIndex: 'name'
+    },
+
+    {
+        header: 'Email', 
+        dataIndex: 'email', 
+        flex:1
+    },
+
+    {
+        header: 'Phone', 
+        dataIndex: 'phone'
+    }
+    ]
+});
+
+Ext.onReady(function() {
+    var cw;
+    
+    Ext.create('Ext.Viewport', {
+        layout: {
+            type: 'border'
+        },
+        items: [{
+            region: 'west',
+            collapsible: true,
+            split:true,
+            width: 200,
+            autoScroll: true,
+            title: 'Applications'
+        },{
+            region: 'center',
+            xtype: 'tabpanel',
+            maxTabWidth: 135,
+            minTabWidth: 50,
+            deferredRender:false,
+            activeTab: 0,
+            autoScroll: true,
+            defaults: {
+                padding:10,
+                layout:'fit',
+                closable: true,
+				autoScroll: true,
+                border:true
+            },
+            items: [{
+                title:'Panel',
+                items: [Grid]
+            }]
+        }]
+    });
+});
+</script>
+</head>
+<body>
+</body>
+</html>

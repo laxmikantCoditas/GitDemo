@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<script src="../../builds/4.0.7/ext-all-debug.js"></script>
+<script>
+/*
+Ext.util.History.add = function (token, preventDup) {
+    var me = this;
+
+    if (preventDup !== false) {
+	if (me.getToken() === token) {
+	    return true;
+	}
+    }
+
+    if (me.oldIEMode) {
+	return me.updateIFrame(token);
+    } else {
+	window.location.hash = token;
+	return true;
+    }
+};
+*/
+</script>
+<body>
+<p>
+<a href="#test">Simple &lt;a href="#test"&gt;, will not cause a top document redirect</a>
+</p>
+<p>
+<a onclick="Ext.util.History.add('test2')">Ext.util.History.add('test2') SHOULD NOT (but will) cause a top document redirect </a>
+</p>
+</body>
+</html>

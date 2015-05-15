@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>TOUCH-5253 (polar charts, for cartesian see Plot Chart in the Kitchen Sink)</title>
+<style></style>
+<link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+<script src="../../sencha-touch-all-debug.js"></script>
+<script>
+Ext.require([
+    'Ext.chart.*',
+    'Ext.dataview.List',
+    'Ext.Toolbar',
+    'Ext.Sheet',
+    'Ext.SegmentedButton'
+]);
+Ext.setup({
+    onReady: function () {
+        Ext.define('Extras.ToggleButton', {
+            extend: 'Ext.Button',
+            xtype: 'togglebtn',
+            config: {
+                isPressed: false
+            },
+            initialize: function () {
+                this.callParent( arguments );
+                this.on('tap', this.onButtonPress, this);
+                this.getIsPressed() ? this.addCls( this.getPressedCls() ) : this.removeCls( this.getPressedCls() );
+            },
+
+            onButtonPress: function () {
+                this.setIsPressed( ! this.getIsPressed() );
+                this.getIsPressed() ? this.addCls( this.getPressedCls() ) : this.removeCls( this.getPressedCls() );
+            }
+
+        });
+
+        var container, radar, notes;
+        var isSvg = false;
+
+        var toolbar = Ext.Viewport.add({
+            xtype: 'toolbar',
+            id: 'mmm',
+            docked: 'top',
+            items: [
+                {
+                    xtype: 'button',
+                    text: 'Refresh',
+                    handler: function () {
+                        store.setData(generateData(10));
+                    }
+                },
+                {
+                    xtype: 'segmentedbutton',
+                    defaults: {
+                        width: 70
+                    },
+                    items: [
+                        {
+                            text: 'Canvas',
+                            pressed: !isSvg,
+                            handler: function () {
+                                isSvg = false;
+                                updateChart();
+                            }
+                        },
+                        {
+                            text: 'SVG',
+                            pressed: isSvg,
+                            handler: function () {
+                                isSvg = true;
+                                updateChart();
+                            }
+                        }
+                    ]
+                }
+            ]
+        });
+
+
+        var store = Ext.create('Ext.data.Store', {
+            fields: ['name', 'g1', 'g2', 'g3', 'g4', 'g5']
+        });
+
+        function generateData(count) {
+            var data = [];
+            for (var i = 0; i < count; i++) {
+                data.push({
+                    name: 'Item-' + i,
+                    g1: 10 + Math.random() * 40,
+                    g2: 10 + Math.random() * 40,
+                    g3: 10 + Math.random() * 40,
+                    g4: 10 + Math.random() * 40,
+                    g5: 10 + Math.random() * 40
+                });
+            }
+            return data;
+        }
+
+
+        function updateChart() {
+            Ext.Viewport.remove(container);
+
+            store.setData(generateData(10));
+
+            container = Ext.Viewport.add({
+                xtype: 'container',
+                layout: 'vbox'
+            });
+
+            radar = container.add({
+                xtype: 'polar',
+                flex: 1,
+                insetPadding: 20,
+                innerPadding: 80,
+                store: store,
+                interactions: 'rotate',
+                axes: [
+                    {
+                        type: 'category',
+                        position: 'angular',
+                        id: 'main-angular-axis',
+                        grid: true,
+                        style: {
+                            majorTickSize: 20,
+                            strokeStyle: 'rgb(73,112,142)'
+                        },
+                        margin: 20
+                    },
+                    {
+                        type: 'category',
+                        position: 'angular',
+                        linkedTo: 'main-angular-axis',
+                        label: {
+                            fillStyle: 'none'
+                        },
+                        style: {
+                            majorTickSize: 50,
+                            lineWidth: 7,
+                            strokeStyle: '#49708E',
+                            lineCap: 'round'
+                        }
+                    },
+                    {
+                        type: 'category',
+                        position: 'angular',
+                        linkedTo: 'main-angular-axis',
+                        label: {
+                            strokeStyle: 'maroon'
+                        },
+                        style: {
+                            strokeStyle: 'maroon'
+                        },
+                        floating: {
+                            value: 30,
+                            alongAxis: 'radial-axis'
+                        }
+                    },
+                    {
+                        type: 'numeric',
+                        id: 'radial-axis',
+                        position: 'radial',
+                        // Titles are not supported for the radial axes.
+                        title: {
+                            text: 'Radial axis'
+                        },
+                        label: {
+                            strokeStyle: 'rgb(73,112,142)',
+                            fontWeight: 'normal'
+                        },
+                        grid: {
+                            strokeStyle: 'rgba(73,112,142,0.5)'
+                        },
+                        listeners: {
+                            rangechange: function (range) {
+                                var fAxis = radar && radar.getAxis('fahrenheit-axis');
+                                if (fAxis) {
+                                    fAxis.setMinimum(range[0] * 1.8 + 32);
+                                    fAxis.setMaximum(range[1] * 1.8 + 32);
+                                }
+                            }
+                        },
+                        floating: {
+                            value: 'Item-6',
+                            alongAxis: 'main-angular-axis'
+                        }
+                    }
+                ],
+                series: [{
+                    type: 'radar',
+                    xField: 'name',
+                    yField: 'g1',
+                    style: {
+                        fillStyle: 'rgba(133,214,109,0.3)',
+                        strokeStyle: 'black',
+                        lineWidth: 1
+                    },
+                    marker: {
+                        type: 'circle',
+                        fill: 'yellow',
+                        radius: 10
+                    }
+                }]
+            });
+        }
+
+        updateChart();
+    }
+});
+</script>
+</head>
+<body>
+</body>
+</html>

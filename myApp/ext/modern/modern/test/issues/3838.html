@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>TOUCH-3838</title>
+    <link href="../../resources/css/sencha-touch.css" rel="stylesheet" />
+    <script src="../../sencha-touch-all.js"></script>
+    <script type="text/javascript">
+        Ext.application({
+            name : 'Test',
+
+            eventPublishers : {
+                touchGesture : {
+                    recognizers : {
+                        verticalswipe : {
+                            xclass : 'Ext.event.recognizer.VerticalSwipe'
+                        }
+                    }
+                }
+            },
+
+            launch : function () {
+
+                Ext.Viewport.add({
+                    html      : 'Swipe away in any direction!',
+                    listeners : {
+                        element : 'element',
+                        swipe   : function (e) {
+                            this.setHtml('That was a swipe in the direction of: ' + e.direction);
+                        }
+                    }
+                });
+
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

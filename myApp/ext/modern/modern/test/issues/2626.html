@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+
+    <head>
+        <title>
+            2406
+        </title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css" type="text/css">
+        <script src="../../sencha-touch-debug.js" type="text/javascript">
+
+        </script>
+        <script type="text/javascript">
+
+Ext.setup({
+    viewport: {
+        layout: 'default'
+    },
+
+    onReady: function () {
+        Ext.Viewport.add({
+            xtype: 'radiofield',
+            name: 'test',
+            listeners: {
+                check: function() {
+                    console.log('check');
+                },
+                uncheck: function() {
+                    console.log('uncheck');
+                }
+            }
+        });
+
+        Ext.Viewport.add({
+            xtype: 'radiofield',
+            name: 'test',
+            listeners: {
+                check: function() {
+                    console.log('check');
+                },
+                uncheck: function() {
+                    console.log('uncheck');
+                }
+            }
+        });
+    }
+});
+
+        </script>
+    </head>
+
+    <body>
+    </body>
+
+</html>

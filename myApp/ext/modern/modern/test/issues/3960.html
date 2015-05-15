@@ -1,0 +1,171 @@
+<!DOCTYPE HTML>
+<html manifest="" lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>TOUCH-3960</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <script>
+        Ext.require([
+            'Ext.Panel',
+            'Ext.data.JsonStore',
+            'Ext.chart.*',
+            'Ext.util.DelayedTask',
+            'Ext.Toolbar'
+        ]);
+
+        Ext.setup({
+            onReady: function () {
+                window.generateData = function(n){
+                    var data = [],
+                            p = (Math.random() *  11) + 1,
+                            i;
+
+                    for (i = 0; i < (n || 12); i++) {
+                        data.push({
+                            name: Ext.Date.monthNames[i % 12],
+                            data1: Math.floor( Math.random() * 20 + 20 ),
+                            data2: Math.floor( Math.random() * 20 + 60 ),
+                            data3: Math.floor( Math.random() * 20 + 100 )
+                        });
+                    }
+                    return data;
+                };
+
+                window.store = Ext.create('Ext.data.JsonStore', {
+                    fields: ['name', 'data1', 'data2', 'data3'],
+                    data: generateData(8)
+                });
+
+                window.loadTask = new Ext.util.DelayedTask();
+
+                var markerConfig = {
+                    type: 'circle',
+                    fill: 'yellow',
+                    radius: 4
+                };
+
+                var chart = Ext.create('Ext.chart.CartesianChart', {
+                    style: 'background: #fff',
+                    animate: true,
+                    store: {},
+                    shadow: true,
+                    theme: 'Category1',
+                    legend: {
+                        position: 'right'
+                    },
+                    axes: [{
+                        type: 'numeric',
+                        minimum: 0,
+                        position: 'left',
+                        fields: ['data1', 'data2', 'data3'],
+                        title: 'Number of Hits',
+                        minorTickSteps: 1,
+                        grid: {
+                            odd: {
+                                opacity: 1,
+                                fill: '#ddd',
+                                stroke: '#bbb',
+                                strokeWidth: 0.5
+                            }
+                        }
+                    }, {
+                        type: 'category',
+                        position: 'bottom',
+                        fields: ['name'],
+                        title: 'Month of the Year'
+                    }],
+                    series: [{
+                        type: 'line',
+                        style: {
+                            stroke: 'rgb(40,40,40)',
+                            strokeWidth: 3,
+                            strokeStyle: 'red'
+                        },
+                        highlight: {
+                            size: 7,
+                            radius: 7
+                        },
+                        axis: 'left',
+                        xField: 'name',
+                        yField: 'data1',
+                        marker: markerConfig,
+                        label: {
+                            field: 'data1',
+                            display: 'over'
+                        }
+                    }, {
+                        type: 'line',
+                        style: {
+                            stroke: 'rgb(40,40,40)',
+                            strokeWidth: 3,
+                            strokeStyle: 'green'
+                        },
+                        highlight: {
+                            size: 7,
+                            radius: 7
+                        },
+                        axis: 'left',
+                        smooth: true,
+                        xField: 'name',
+                        yField: 'data2',
+                        marker: markerConfig,
+                        label: {
+                            field: 'data2',
+                            display: 'over'
+                        }
+                    }, {
+                        type: 'line',
+                        highlight: {
+                            size: 7,
+                            radius: 7
+                        },
+                        axis: 'left',
+                        smooth: true,
+                        fill: true,
+                        xField: 'name',
+                        yField: 'data3',
+                        style: {
+                            stroke: 'rgb(40,40,40)',
+                            strokeWidth: 3,
+                            strokeStyle: 'blue',
+                            opacity: 0.3
+                        },
+                        marker: markerConfig,
+                        label: {
+                            field: 'data3',
+                            display: 'over'
+                        }
+                    }]
+                });
+
+                chart.setStore(store);
+
+                var toolbar = Ext.create('Ext.Toolbar', {
+                    docked: 'top',
+                    items: [
+                        {
+                            text: 'Reload Data',
+                            handler: function() {
+                                // Add a short delay to prevent fast sequential clicks
+                                window.loadTask.delay(100, function() {
+                                    store.setData(generateData(8));
+                                });
+                            }
+                        }
+                    ]
+                });
+
+                var panel = Ext.create('Ext.Panel', {
+                    layout: 'fit',
+                    items: [toolbar, chart]
+                });
+
+                Ext.Viewport.add(panel);
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

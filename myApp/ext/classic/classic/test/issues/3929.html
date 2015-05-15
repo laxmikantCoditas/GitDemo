@@ -1,0 +1,179 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        
+Ext.require([
+    'Ext.grid.*',
+    'Ext.data.*',
+    'Ext.util.*',
+]);
+
+Ext.onReady(function() {
+    Ext.QuickTips.init();
+
+	Ext.define('testmodel', {
+		extend: 'Ext.data.Model',
+		idProperty: 'item_id',
+		fields: [
+			{
+				name: 'item_id',
+				type: 'int'
+			},
+			{
+				name: 'description'
+			},
+			{
+				name: 'quantity',
+				type: 'float'
+			},
+			{
+				name: 'rate',
+				type: 'float'
+			},
+			{
+				name: 'cost',
+				type: 'float'
+			}
+		]
+	});
+
+    var testdata = [
+		{
+			item_id:1,
+			description: 'Engineering',
+			rate: 50,
+			quantity: 1000,
+			cost: 50000
+		},
+		{
+			item_id:2,
+			description: 'Drafting',
+			rate: 40,
+			quantity: 1100,
+			cost: 44000
+		},
+		{
+			item_id:3,
+			description: 'Inspection',
+			rate: 100,
+			quantity: 200,
+			cost: 20000
+		}
+    ];
+
+	var teststore = new Ext.data.Store({
+		model: 'testmodel',
+		proxy: {
+			type: 'memory',
+			reader: {
+				type: 'json',
+				idProperty: 'item_id'
+			}
+		},
+		data: testdata
+	});
+
+    var grid1 = Ext.create('Ext.grid.Panel', {
+        store: teststore,
+        columns: [
+            {
+                text     : 'Description',
+                flex     : 1,
+                sortable : false,
+                dataIndex: 'description'
+            },
+			{
+				defaults: {
+					width: 75
+				},
+				text: 'group',
+				columns: [
+	            {
+	                text     : 'Quantity',
+	                dataIndex: 'quantity'
+	            },
+	            {
+	                text     : 'Rate',
+	                dataIndex: 'rate'
+	            },
+	            {
+	                text     : 'Cost',
+	                dataIndex: 'cost'
+	            }
+
+				]
+			}
+
+        ],
+        height: 350,
+        width: 600,
+        title: 'Grid',
+        renderTo: 'grid1',
+        viewConfig: {
+            stripeRows: true
+        }
+    });
+
+    var grid2 = Ext.create('Ext.grid.Panel', {
+        store: teststore,
+        columns: [
+            {
+                text     : 'Description',
+                flex     : 1,
+                sortable : false,
+                dataIndex: 'description'
+            },
+			{
+				defaults: {
+				},
+				text: 'group',
+				columns: [
+	            {
+	                text     : 'Quantity',
+					width: 75,
+	                dataIndex: 'quantity'
+	            },
+	            {
+	                text     : 'Rate',
+					width: 75,
+	                dataIndex: 'rate'
+	            },
+	            {
+	                text     : 'Cost',
+					width: 75,
+	                dataIndex: 'cost'
+	            }
+
+				]
+			}
+
+        ],
+        height: 350,
+        width: 600,
+        title: 'Grid',
+        renderTo: 'grid2',
+        viewConfig: {
+            stripeRows: true
+        }
+    });
+});
+        
+    </script>
+    <h1>Ticket 5589</h1>
+
+	<p><b>Issue: </b> Grid with grouped header and defaults: width: shows extra width</p>
+
+	<h2>Grid 1 - With defaults: width:</h2>
+	<div id="grid1"></div>
+
+	<h2>Grid 2 - without</h2>
+    <div id="grid2"></div>
+</body>
+</html>

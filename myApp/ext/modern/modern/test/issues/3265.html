@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3265</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+    <script type="text/javascript">
+
+        Ext.setup({
+            onReady: function () {
+
+                var data = {
+                    text: 'Groceries',
+                    items: [{
+                        text: 'Drinks',
+                        items: [{
+                            text: 'Water',
+                            items: [{
+                                text: 'Sparkling',
+                                leaf: true
+                            }, {
+                                text: 'Still',
+                                leaf: true
+                            }, {
+                                text: 'Deep',
+                                leaf: true
+                            }, {
+                                text: 'Muddy',
+                                leaf: true
+                            }]
+                        }]
+                    }]
+                };
+
+                Ext.define('ListItem', {
+                    extend: 'Ext.data.Model',
+                    config: {
+                        fields: [{
+                            name: 'text',
+                            type: 'string'
+                        }]
+                    }
+                });
+
+                var store = Ext.create('Ext.data.TreeStore', {
+                    model: 'ListItem',
+                    defaultRootProperty: 'items',
+                    root: data
+                });
+
+                var detailCard = null;
+                var showDetail = true;
+
+                var nestedList = Ext.create('Ext.NestedList', {
+                    fullscreen: true,
+                    title: 'Groceries',
+                    displayField: 'text',
+                    store: store,
+                    listeners: {
+                        leafitemtap: function (nlist, list, index, element, record, e, opts) {
+                            if (showDetail) {
+                                detailCard = {
+                                    xtype: 'container',
+                                    items: [
+                                        {
+                                            xtype: 'button',
+                                            text: 'hi ' + record.get('text')
+                                        }
+                                    ]
+                                }
+                                nlist.setDetailCard(detailCard);
+                            } else {
+                                // Cancel the DetailCard
+                                nlist.setDetailCard(null);
+                            }
+                            // toggle whether we are showing or not.
+                            showDetail = !showDetail;
+                        }
+                    }
+
+                });
+            }
+        });
+
+    </script>
+</head>
+<body>
+</body>
+</html>

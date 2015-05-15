@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3938</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.setup({ 
+            requires: [
+                'Ext.form.Panel'
+            ],
+            onReady: function() {
+                Ext.create('Ext.form.Panel', {
+                    fullscreen: true,
+                    items: [
+                        {
+                            xtype: 'fieldset',
+                            title: 'Select',
+                            items: [
+                                {
+                                    xtype: 'selectfield',
+                                    label: 'Choose one',
+                                    usePicker : true,
+                                    options: [
+                                        {text: 'Option 1',  value: 'first'},
+                                        {text: 'Option 2', value: 'second'},
+                                        {text: 'Option',  value: 'third'}
+                                    ],
+                                    listeners : {
+                                        change : function(me, newVal, oldVal){
+                                            alert("Old value : " + oldVal + " // New Value : " + newVal);
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

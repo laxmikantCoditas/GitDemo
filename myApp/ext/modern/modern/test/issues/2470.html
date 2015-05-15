@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>2470</title>
+<link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+<script src="../../sencha-touch.js"></script>
+<script>
+    //Code for the model:
+    Ext.define('app.model.TodoModel', {
+        extend:'Ext.data.Model',
+        config:{
+            sorters:'parent',
+            //fields: ['id', 'text', 'parent'],
+            fields:[
+                {name:"id", type:"string"},
+                {name:"text", type:"string"},
+                {name:"parent", type:"string"}
+            ],
+            proxy:{
+                type:'ajax', //type: 'memory',//rest, ajax
+                url:'todolist',
+                reader:{
+                    type:'json',
+                    rootProperty:'todo'
+                },
+                autoLoad:true
+            }
+        }
+    });
+
+    //code for the list view:
+    Ext.define('app.list.TodoList',{
+        extend:'Ext.dataview.List',
+        xtype:'todolist',
+        config:{
+            itemTpl:'{text}',
+            ui:'light',
+            width:250,
+            store:'storelist',
+            scrollable:true,
+            allowDeselect:false,
+            grouped:true
+        }
+    });
+
+    //code for the store:
+    Ext.define('app.store.Todo', {
+        extend:'Ext.data.Store',
+        id:'storelist',
+        config:{
+            model:'app.model.TodoModel',
+            sorters:'id',
+            grouped:true,
+            grouper:function (record) {
+                return record.get('parent');
+            },
+            data:[
+                { id:'1', text:'A', parent:'alpha' },
+                { id:'1', text:'Aa', parent:'alpha' },
+                { id:'1', text:'Aaa', parent:'alpha' },
+
+                { id:'2', text:'B', parent:'beta'},
+                { id:'2', text:'Bb', parent:'beta'},
+                { id:'2', text:'Bbb', parent:'beta'},
+
+                { id:'3', text:'C', parent:'gamma'},
+                { id:'3', text:'Cc', parent:'gamma'},
+                { id:'3', text:'Ccc', parent:'gamma'}
+            ]
+        }
+    });
+
+    Ext.application({
+        launch:function () {
+            Ext.create('app.store.Todo');
+
+            var listpanel = Ext.create('Ext.Panel', {
+                xtype:'panel',
+                layout:'hbox',
+                id:'listpanel',
+                //hidden: true,
+                //style: "background-color: red; color: red;",
+                //flex:,
+                items:[
+                    {
+                        xtype:'segmentedbutton',
+                        defaults:{
+                            flex:1
+                        },
+                        height:44,
+                        width:250,
+                        docked:'top',
+                        items:[
+                            {
+                                text:'Full Charts',
+                                pressed:true,
+                                ui:'dark'
+                            },
+                            {
+                                text:'Template'
+                            }
+                        ]
+                    },
+                    {
+                        xtype:'todolist', // This is where I am calling my list view
+                        width:250
+                    },
+                    {
+                        xtype:'toolbar',
+                        title:'',
+                        ui:'dark',
+                        docked:'bottom',
+                        items:[
+                            {
+                                xtype:'button',
+                                text:'Activity Log',
+                                //ui: 'action',
+                                //flex:1,
+                                width:100
+                            },
+                            {
+                                xtype:'button',
+                                text:'Signatures',
+                                //ui: 'action',
+                                //flex:1,
+                                width:90
+                            }
+                        ]
+                    }
+                ]
+            });
+            Ext.Viewport.add(listpanel);
+
+            //code for the overlay list
+            var mainMenu = Ext.create('Ext.Panel', {
+                requires:['Todo', 'app.model.TodoModel', 'menuList'],
+                hideOnMaskTap:true,
+                modal:true,
+                id:'mainMenu',
+                layout:'fit',
+                left:0,
+                //padding: 10,
+                //width: 253,
+                height:400,
+                //dock: 'left',
+                centered:false,
+                items:[
+                    {
+                        xtype:'segmentedbutton',
+                        defaults:{
+                            flex:1
+                        },
+                        height:44,
+                        width:240,
+                        docked:'top',
+                        items:[
+                            {
+                                text:'Full Charts',
+                                pressed:true,
+                                ui:'dark',
+                                items:[
+                                    {xtype:'menuList', width:200}
+                                ]
+                            },
+                            {
+                                text:'Template'
+                            }
+                        ]
+                    },
+                    {
+                        xtype:'todolist', // This is where I am calling my list.
+                        //xtype: 'todolist',
+                        /* This gives a warning: Registering a component with a id (`todo-list`) which has already been used. Please ensure the existing component has been destroyed (`Ext.Component#destroy()`.
+                         */
+                        store:'storelist', //Passing the store
+                        itemTpl:'{text}' //Template for displaying
+                        //width: 250,
+                    },
+                    {
+                        xtype:'toolbar',
+                        title:'',
+                        ui:'dark',
+                        docked:'bottom',
+                        items:[
+                            {xtype:'button', text:'Activity Log', width:100 },
+                            {xtype:'button', text:'Signatures', width:90}
+                        ]
+                    }
+                ]
+            });
+            Ext.Viewport.add(mainMenu);
+        }
+    });
+</script>
+</head>
+<body></body>
+</html>

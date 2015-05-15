@@ -1,0 +1,180 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>TOUCH-3976: grid is not aligned</title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript">
+
+        Ext.require([
+            'Ext.data.JsonStore',
+            'Ext.chart.*'
+        ]);
+
+        Ext.setup({
+            onReady:function () {
+                Ext.define('Extras.ToggleButton', {
+                    extend: 'Ext.Button',
+                    xtype: 'togglebtn',
+                    config: {
+                        isPressed: false
+                    },
+                    initialize: function () {
+                        this.callParent( arguments );
+                        this.on('tap', this.onButtonPress, this);
+                        this.getIsPressed() ? this.addCls( this.getPressedCls() ) : this.removeCls( this.getPressedCls() );
+                    },
+
+                    onButtonPress: function () {
+                        this.setIsPressed( ! this.getIsPressed() );
+                        this.getIsPressed() ? this.addCls( this.getPressedCls() ) : this.removeCls( this.getPressedCls() );
+                    }
+
+                });
+
+                var store1 = Ext.create('Ext.data.JsonStore', {
+                    fields : [ 'name', 'data1', 'data2', 'data3', 'data4', 'data5',
+                        'data6', 'data7', 'data8', 'data9' ],
+                    data : [
+                        {'data1': 49, 'data2': 10, 'data3': 17288146955, 'data4': 10, 'data5': 18, 'data6': 30,'data7': 78, 'name': "Q1"},
+                        {'data1': 49, 'data2': -18, 'data3': 12465205357, 'data4': 17, 'data5': 22, 'data6': 45,'data7': 116, 'name': "Q2"},
+                        {'data1': 50, 'data2': 23, 'data3': 17616604906, 'data4': 22, 'data5': 47, 'data6': 32,'data7': 133, 'name': "Q3"},
+                        {'data1': 50, 'data2': -35, 'data3': 15061159274, 'data4': 33, 'data5': 39, 'data6': 47,'data7': 166, 'name': "Q4"},
+                        {'data1': 51, 'data2': 45, 'data3': 18526463121, 'data4': 44, 'data5': 68, 'data6': 60,'data7': 209, 'name': "Q5"},
+                        {'data1': 49, 'data2': -16, 'data3': 11944552179, 'data4': 48, 'data5': 56, 'data6': 63,'data7': 214, 'name': "Q6"},
+                        {'data1': 51, 'data2': 47, 'data3': 9632227788, 'data4': 50, 'data5': 54, 'data6': 68, 'data7': 220,'name': "Q7"},
+                    ]
+                });
+
+                var xFill = false,
+                    yFill = false,
+                    showAxisIssue = false,// when set to 'true', tick marks should not continue beyond the minimum/maximum
+                    chart, toolbar, panZoomToggle;
+
+                toolbar = Ext.Viewport.add({
+                    xtype: 'toolbar',
+                    docked: 'top',
+                    defaults: {
+                        xtype: 'togglebtn'
+                    },
+                    items: [
+                        {
+                            text: 'Fill X',
+                            handler: function () {
+                                xFill = !xFill;
+                                updateChart();
+                            }
+                        },
+                        {
+                            text: 'Fill Y',
+                            handler: function () {
+                                yFill = !yFill;
+                                updateChart();
+                            }
+                        },
+                        {
+                            text: 'Highlight axis issue',
+                            handler: function () {
+                                showAxisIssue = !showAxisIssue;
+                                updateChart();
+                            }
+                        }
+                    ]
+                });
+
+                function updateChart() {
+                    Ext.Viewport.remove(chart, true);
+                    toolbar.remove(panZoomToggle, true);
+                    chart = Ext.Viewport.add({
+                        xtype: 'chart',
+                        fullscreen: true,
+                        store: store1,
+                        background: 'white',
+                        margin: 50,
+                        innerPadding: showAxisIssue ? 200 : {  // <<<<<<< THE GRID IS ALIGNED IF YOU REMOVE THIS
+                            top: 10,
+                            left: 20,
+                            right: 30,
+                            bottom: 40
+                        },
+                        interactions: [{
+                            type: 'panzoom',
+                            zoomOnPanGesture: false
+                        }],
+                        series: [
+                            {
+                                type: 'line',
+                                xField: 'name',
+                                yField: ['data5'],
+                                fill: false,
+                                smooth: true,
+                                style: {
+                                    lineWidth: 4,
+                                    maxBarWidth: 50,
+                                    stroke: 'limegreen'
+                                },
+                                marker: {
+                                    type: 'circle',
+                                    fill: 'yellow',
+                                    size: 10,
+                                    radius: 10
+                                },
+                                renderer: function() { return null; }
+                            }
+                        ],
+                        axes: [
+                            {
+                                type: 'numeric',
+                                position: 'left',
+                                fields: ['data1', 'data2', 'data3', 'data4', 'data5', 'data6','data7'],
+                                minimum: showAxisIssue ? 10 : 0,
+                                maximum: 70,
+                                grid: yFill ? {
+                                    odd: {
+                                        fill: 'rgba(255,165,0,0.5)'
+                                    },
+                                    even: {
+                                        fill: 'rgba(255,69,0,0.5)'
+                                    }
+                                } : true,
+                                title: {
+                                    text: 'Value',
+                                    font: '20px sans-serif'
+                                },
+                                titleMargin: 20
+                            },
+                            {
+                                type: 'category',
+                                position: 'bottom',
+                                fields: 'name',
+                                grid: xFill ? {
+                                    odd: {
+                                        fill: 'rgba(119,136,153,0.5)'
+                                    },
+                                    even: {
+                                        fill: 'rgba(176,196,222,0.5)'
+                                    }
+                                } : true,
+                                title: {
+                                    text: 'Quarter',
+                                    font: '20px sans-serif'
+                                }
+                            }
+                        ]
+                    });
+                    var interaction = chart.getInteractions()[0];
+                    if (interaction && !interaction.isMultiTouch()) {
+                        panZoomToggle = toolbar.add(interaction.getModeToggleButton());
+                    }
+                }
+
+                updateChart();
+            }
+        });
+    </script>
+
+</head>
+<body>
+</body>
+</html>

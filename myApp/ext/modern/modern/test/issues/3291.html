@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TOUCH-3291</title>
+
+        <script src="../../sencha-touch-debug.js"></script>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+        <script type="text/javascript">
+
+            Ext.application({
+                name : 'Test',
+
+                requires : [
+                    'Ext.form.Panel',
+                    'Ext.field.Number',
+                    'Ext.Button'
+                ],
+
+                launch : function () {
+
+                    new Ext.form.Panel({
+                        fullscreen : true,
+                        items      : [
+                            {
+                                xtype : 'numberfield',
+                                label : 'Test',
+                                value : '03'
+                            },
+                            {
+                                xtype   : 'button',
+                                text    : 'Reset Field',
+                                handler : function (button) {
+                                    var form  = button.up('formpanel'),
+                                        field = form.down('numberfield');
+
+                                    //will show 03 instead of 3
+                                    field.reset();
+                                }
+                            }
+                        ]
+                    });
+
+                }
+            });
+
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

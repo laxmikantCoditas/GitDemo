@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3451</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.application({
+            name : 'Test',
+            launch : function () {
+                var supported = Ext.feature.has.LocalStorage;
+
+                Ext.Viewport.add({
+                    html : supported ? 'LocalStorage is available and can write to' : 'LocalStorage is not available or cannot be written to'
+                });
+            }
+        });
+
+    </script>
+</head>
+<body>
+</body>
+</html>

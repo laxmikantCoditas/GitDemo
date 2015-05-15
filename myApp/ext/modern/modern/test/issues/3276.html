@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3288</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+
+    <script type="text/javascript">
+
+        Ext.application({
+            name:'Test',
+            launch:function () {
+                Ext.Viewport.add({
+                	xtype: 'segmentedbutton',
+                	allowDepress: true,
+                	items: [{
+                		text: 'One',
+                		itemId: 'one',
+                		pressed: true
+                	},{
+                		text: 'Two',
+                		itemId: 'two'
+                	}],
+                	listeners: {
+                		toggle: function(segmentedbutton, button, isPressed) {
+                			console.log('toggle');
+                		}
+                	}
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

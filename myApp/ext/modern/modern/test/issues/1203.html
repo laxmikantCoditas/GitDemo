@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Template</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script src="../../sencha-touch.js"></script>
+        <!--<script src="../../../../sencha-touch-2.0.0-pr2/sencha-touch-all-debug.js"></script>-->
+        <!--<script src="../../../../sencha-touch-2.0.0-pr3/sencha-touch-all-debug.js"></script>-->
+        <!--<script src="../../build/sencha-touch-all-debug-with-comments.js"></script>-->
+
+        <script type="text/javascript">
+
+Ext.define('Item', {
+    extend: 'Ext.data.Model',
+
+    config: {
+        fields: ['name']
+    }
+});
+
+var proxy = {
+    type: 'jsonp',
+    url: 'http://localhost:4567/'
+};
+
+Ext.setup({
+    onReady: function() {
+        Ext.Viewport.add({
+            xtype: 'list',
+            itemTpl: 'item',
+            emptyText: 'hello',
+            // deferEmptyText: false,
+            store: {
+                model: 'Item',
+                autoLoad: true,
+                proxy: proxy
+            }
+        }, {
+            docked: 'top',
+            xtype: 'toolbar',
+            items: [
+                {
+                    xtype: 'button',
+                    text: 'refresh',
+                    handler: function() {
+                        proxy.extraParams.number_of_items = 0;
+                        Ext.Viewport.down('list').getStore().setProxy(proxy);
+                        Ext.Viewport.down('list').getStore().load();
+                    }
+                }
+            ]
+        });
+    }
+});
+
+        </script>
+    </head>
+    
+    <body></body>
+</html>

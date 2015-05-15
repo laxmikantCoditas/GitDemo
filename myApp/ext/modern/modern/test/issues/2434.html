@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2434</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.application({
+            launch:function () {
+                var picker = Ext.create('Ext.Picker', {
+                    slots:[
+                        {
+                            name:'limit_speed',
+                            title:'Speed',
+                            data:[
+                                {text:'50 KB/s', value:50},
+                                {text:'100 KB/s', value:100},
+                                {text:'200 KB/s', value:200},
+                                {text:'300 KB/s', value:300}
+                            ]
+                        }
+                    ],
+                    listeners:{
+                        pick:function (picker, The) {
+                            console.log('pick', The.limit_speed);
+                        },
+                        change:function (picker, The) {
+                            console.log('change', The.limit_speed);
+                        }
+                    }
+                });
+                Ext.Viewport.add(picker);
+                picker.show();
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

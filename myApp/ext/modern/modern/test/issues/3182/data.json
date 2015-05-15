@@ -1,0 +1,17 @@
+{
+    "persons": [{
+        "id": 1,
+        "name": "Alan",
+        "address": {
+            "id": 101,
+            "display": "1234 fake street"
+        }
+    }, {
+        "id": 2,
+        "name": "Nick",
+        "address": {
+            "id": 102,
+            "display": "4321 fake street"
+        }
+    }]
+}

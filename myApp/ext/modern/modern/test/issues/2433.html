@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2433</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+</head>
+<body>
+    <div class="clazz">
+            <p>This is a paragraph.</p>
+    </div>
+    <script type="text/javascript">
+            var paragraphs = Ext.getBody().query('.clazz');
+
+            Ext.each(paragraphs, function(el) {
+                    var paragraph = Ext.fly(el);
+
+                    // works
+                    var height = paragraph.getHeight();
+
+                    // some functions that don't work
+                    var lineHeight = paragraph.getStyle("line-height");
+                    var height = paragraph.getHeight(true);
+                    var padding = paragraph.getPadding("tb");
+
+                    console.log(lineHeight);
+                    console.log(height);
+                    console.log(padding);
+            });
+    </script>
+</body>
+</html>

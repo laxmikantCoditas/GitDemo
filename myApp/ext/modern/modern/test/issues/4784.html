@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-4784</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+	    Ext.require('*');
+
+	    Ext.setup({
+		    onReady: function() {
+			    var store1 = new Ext.data.Store({
+				    fields: ['foo'],
+				    data: []
+			    });
+
+			    store1.load({
+				    callback: function(records, operation, success) {
+					    console.log('store1', success);
+				    }
+			    });
+
+			    var store2 = new Ext.data.Store({
+				    fields: ['foo'],
+				    data:{}
+			    });
+
+			    store2.load({
+				    callback: function(records, operation, success) {
+					    console.log('store2', success);
+				    }
+			    });
+		    }
+	    });
+
+    </script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+Ext.onReady(function() {
+    Ext.create('Ext.container.Viewport', {
+        layout : 'anchor',
+        items : [{
+            xtype : 'toolbar',
+            items : [{
+                xtype : 'button',
+                text : 'Try to click here before viewing tab 2',
+                handler : function(btn) {
+                    var layout = btn.up('viewport').down('[title=tab2]').getLayout();
+                    layout.setActiveItem(1);
+                }
+            }]
+        }, {
+            anchor : '0',
+            xtype : 'tabpanel',
+            deferredRender : true,
+            items : [{
+                title : 'tab1',
+                html : 'tab1'
+            }, {
+                title : 'tab2',
+                layout : 'card',
+                items : [{
+                    title : 'card 1',
+                    itemId : 'sub-tab-1',
+                    html : 'card 1'
+                }, {
+                    title : 'card 2',
+                    itemId : 'sub-tab-2',
+                    html : 'card 2'
+                }]
+            }]
+        }]
+    });
+});
+        
+    </script>
+</body>
+</html>

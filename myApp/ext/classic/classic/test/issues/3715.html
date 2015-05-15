@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Test horizontal overflow in empty grid</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+<script type="text/javascript">
+Ext.require(['*']);
+
+Ext.onReady(function() {
+    
+    var columns = [],
+        i = 0;
+        
+    for (; i < 30; ++i) {
+        columns.push({
+            dataIndex: 'a',
+            header: 'Col ' + i
+        });
+    }
+    
+    var grid = Ext.create('Ext.grid.Panel', {
+        title: 'Empty grid with 30 overflowing columns',
+        width: 200,
+        height: 300,
+        renderTo: document.body,
+        store: {
+            fields: ['a']
+        },
+        columns: columns
+    });
+    
+});
+</script>
+</head>
+<body style="padding:10px">
+</body>
+</html>

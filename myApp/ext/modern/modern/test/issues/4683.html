@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>TOUCH-4683</title>
+	<link href="../../resources/css/sencha-touch.css" rel="stylesheet"/>
+	<script src="../../sencha-touch-all.js"></script>
+
+	<script type="text/javascript">
+		Ext.define('Message', {
+			extend: 'Ext.data.Model',
+			requires: [
+				'Ext.data.identifier.Uuid'
+			],
+			config: {
+				fields: [
+					{name: 'myId', type: 'int'},
+					{name: 'myDate', type: 'date'}
+				],
+				identifier: {type: 'uuid'},
+				proxy: {
+					type: 'localstorage',
+					enablePagingParams: true,
+					id: 'messages'
+				}
+			}
+		});
+
+		Ext.setup({
+			requires: [
+				'Ext.dataview.List',
+				'Ext.data.Store',
+				'Ext.tab.Panel'
+			],
+			onReady: function() {
+
+				var store = Ext.create('Ext.data.Store', {
+					storeId: 'MessagesStore',
+					model: 'Message',
+	                remoteSort      : true,
+					sorters: [
+						{
+							property: 'myId',
+							direction: 'DESC'
+						}
+					],
+					pageSize: 4,
+					clearOnPageLoad: false
+				});
+
+				var tabpanel = Ext.create('Ext.tab.Panel', {
+					fullscreen: true,
+					tabBarPosition: 'bottom',
+					items: [
+						{
+							title: 'Welcome',
+							iconCls: 'home',
+							scrollable: true,
+							items: [
+								{
+									xtype: 'button',
+									text: 'Init Data',
+									handler: function() {
+										var messageModel,
+												store = Ext.getStore('MessagesStore');
+										store.load({
+											callback: function(records, operation) {
+												for (var i = 1; i <= 7; i++) {
+													messageModel = Ext.create('Message', {
+														myId: i,
+														myDate: new Date()
+													});
+
+													store.add(messageModel);
+												}
+											}
+										});
+										store.sync();
+										tabpanel.setActiveItem(1);
+									}
+								},
+								{
+									xtype: 'button',
+									text: 'Sync Data',
+									handler: function() {
+										store = Ext.getStore('MessagesStore');
+										store.load();
+										store.sync();
+										tabpanel.setActiveItem(1);
+									}
+								}
+							]
+						},
+						{
+							iconCls: 'Home',
+							title: 'My List',
+							xtype: 'list',
+							itemTpl: [
+								'{myId} - {myDate}'
+							],
+							store: store
+						}
+					]
+				});
+			}
+		});
+	</script>
+</head>
+<body></body>
+</html>
+

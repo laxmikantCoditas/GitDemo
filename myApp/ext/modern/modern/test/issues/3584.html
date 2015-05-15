@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3584</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.setup({
+            
+            requires: [
+                'Ext.Container',
+                'Ext.Panel',
+                'Ext.Map',
+                'Ext.TitleBar',
+                'Ext.Spacer'
+            ],
+                   
+            onReady: function() {
+                
+                Ext.define('MainView', {
+                    extend: 'Ext.Container',
+                    xtype: 'mainview',
+                    config: {
+                        layout: 'card',
+                        items: [
+                            {
+                                xtype: 'titlebar',
+                                title: 'Main',
+                                docked: 'top',
+                                items: [
+                                    {
+                                        xtype: 'button',
+                                        text: 'Run Test',
+                                        align: 'right',
+                                        itemId: 'runTestButton'
+                                    }
+                                ]
+                            },
+                            {
+                                xtype: 'panel',
+                                html: '',
+                            },
+                        ],
+                    }
+                });
+                
+                var mainView = Ext.create('MainView');
+                Ext.Viewport.add(mainView);
+
+
+                var debug = function(s) { 
+                    if(!this.debug_count) this.debug_count = 0;
+                    this.debug_count++;
+                    var p = mainView.down("panel");
+                    p.setHtml(this.debug_count + " : " + s);
+                    console.log(s);
+                    p.setStyle(
+                        {
+                            color:'#'+Math.floor(Math.random()*16777215).toString(16)
+                        }
+                    );
+                };
+                var geo = Ext.create('Ext.util.Geolocation', {
+                    autoUpdate : false,
+                    listeners  : {
+                        locationupdate : function (geo) {
+                            debug(geo.getLatitude() + ' : ' + geo.getLongitude());
+                        },
+                        locationerror  : function (geo, bTimeout, bPermissionDenied, bLocationUnavailable, message) {
+                            if (bTimeout) {
+                                debug('Timeout occurred');
+                            } else {
+                                debug('Error occurred');
+                            }
+                        }
+                    }
+                });
+
+                var runTest = function(){
+                    debug("Updating Location")
+                    geo.updateLocation();
+                }
+
+                runTest();
+
+                // Create and show the map
+                Ext.ComponentQuery.query('#runTestButton')[0].on('tap', runTest);
+            },
+        });
+
+
+    </script>
+</head>
+<body>
+</body>
+</html>

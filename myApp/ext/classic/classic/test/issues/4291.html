@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+Ext.define('Ext.ux.CustomSpinner', {
+    extend: 'Ext.form.field.Spinner',
+    alias: 'widget.customspinner',
+
+    // override onSpinUp (using step isn't neccessary)
+    onSpinUp: function() {
+        var me = this;
+        if (!me.readOnly) {
+            var val = parseInt(me.getValue().split(' '))||0; // gets rid of " Pack", defaults to zero on parse failure
+            me.setValue((val + me.step) + ' Pack');
+        }
+    },
+
+    // override onSpinDown
+    onSpinDown: function() {
+        var val, me = this;
+        if (!me.readOnly) {
+            var val = parseInt(me.getValue().split(' '))||0; // gets rid of " Pack", defaults to zero on parse failure
+            if (val <= me.step) {
+                me.setValue('Dry!');
+            } else {
+                me.setValue((val - me.step) + ' Pack');
+            }
+        }
+    }
+});
+
+Ext.onReady(function () {
+  
+  var cellEditing = Ext.create('Ext.grid.plugin.CellEditing', {
+      clicksToEdit: 1
+  });
+
+  var myData = [{name:'jonathan', city:'sanjose', corporate:'billing'},
+    {name:'david', city:'cupertino', corporate:'HumanResources'},
+    {name:'crystal', city:'sunnyvale', corporate:'admin'},
+    {name:'jessica', city:'mountainview', corporate:'Research'}];
+ 
+
+  var store = Ext.create('Ext.data.Store', {
+    id: 'store',
+    fields: [
+      {
+        name: 'username',
+        mapping: 'name'
+      },{
+        name: 'location',
+        mapping: 'city'
+      }, {
+        name: 'division',
+        mapping:'corporate'
+    }],
+    data: myData
+  });
+
+  Ext.define("Divisions", {
+    extend: "Ext.data.Model",
+    fields: [
+      { name: "tid", type: "int" },
+      { name: "location" }
+    ]
+  });
+
+  comboStore = Ext.create("Ext.data.Store", {
+    model: "Divisions",
+    autoLoad: true,
+    data: [
+      { tid: 1, location: "San Jose" },
+      { tid: 2, location: "Mountain View" },
+      { tid: 3, location: "Redwood City" }
+    ]
+  });
+
+  grid = Ext.create('Ext.grid.Panel',{
+    store: store,
+    id: 'testGrid',
+    frame:false,
+    columns: [{
+        header: 'User',
+        width:150,
+        dataIndex:'username'
+      }, {
+        header: 'Location',
+        dataIndex: 'location',
+        field: {
+          xtype: 'combobox',
+          store: [
+              [1, "San Jose"],
+              [2, "Cupertino"],
+              [3, "Mountain View"]
+          ],
+          displayField: 'location',
+          valueField: 'tid',
+        }
+      }, {
+        header: 'Department',
+        dataIndex: 'division'
+      }, {
+        header: "choose",
+        field: {
+          xtype: 'customspinner',
+          step: 6
+        },
+        width: 400
+      }
+    ],                                  
+    layout:'fit',
+    viewConfig: {
+      deferEmptyText: false,
+      stripeRows:true,
+      emptyText: 'No data found.'
+    },
+    renderTo: Ext.getBody(),
+    plugins: [cellEditing]
+  });
+});
+        
+    </script>
+</body>
+</html>

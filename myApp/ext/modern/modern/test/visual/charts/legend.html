@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Legend</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <link rel="stylesheet" href="../../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../../sencha-touch-all.js"></script>
+    <script src="data.js"></script>
+    <script>
+        Ext.require([
+            'Ext.chart.CartesianChart',
+            'Ext.chart.series.Line',
+            'Ext.chart.series.Bar',
+            'Ext.chart.Legend',
+            'Ext.chart.axis.Numeric',
+            'Ext.chart.axis.Time',
+            'Ext.chart.interactions.PanZoom',
+            'Ext.Toolbar',
+            'Ext.TitleBar',
+            'Ext.Button']);
+        Ext.setup({
+            onReady: function () {
+                var store = new OrderItems(),
+                        size = 64;
+                store.generateData(64);
+                var cmp = new Ext.create("Ext.chart.CartesianChart", {
+                    store: store,
+                    animate: false,
+                    interactions: ['panzoom'],
+                    innerPadding: {
+                        left: 12,
+                        top: 0,
+                        right: 12,
+                        bottom: 0
+                    },
+                    series: [
+                        {
+                            type: 'line',
+                            xField: 'id',
+                            yField: 'g1',
+                            title: 'Line1',
+                            style: {
+                                lineWidth: 2,
+                                stroke: 'rgba(0,40,170,0.7)'
+                            }
+                        },
+                        {
+                            type: 'line',
+                            xField: 'id',
+                            yField: 'g2',
+                            title: 'Line2',
+                            style: {
+                                lineWidth: 2,
+                                stroke: 'rgba(80,40,170,0.7)'
+                            }
+                        },
+                        {
+                            type: 'line',
+                            xField: 'id',
+                            yField: 'g3',
+                            title: 'Line3',
+                            style: {
+                                lineWidth: 2,
+                                stroke: 'rgba(180,40,170,0.7)'
+                            }
+                        }
+                    ],
+                    axes: [
+                        {
+                            type: 'numeric',
+                            position: 'left',
+                            fields: 'g1'
+                        },
+                        {
+                            type: 'numeric',
+                            position: 'bottom',
+                            fields: 'id',
+                            visibleRange: [0, 0.5]
+                        }
+                    ]
+                });
+                Ext.Viewport.add({
+                    layout: 'fit',
+                    items: [
+                        {
+                            xtype: 'legend',
+                            docked: 'left'
+                        },
+                        {
+                            xtype: 'legend',
+                            docked: 'right'
+                        },
+                        {
+                            xtype: 'legend',
+                            docked: 'top'
+                        },
+                        {
+                            xtype: 'legend',
+                            docked: 'bottom'
+                        },
+                        cmp
+                    ]
+                });
+                var legends = Ext.ComponentQuery.query('legend');
+                legends[0].setStore(cmp.getLegendStore());
+                legends[1].setStore(cmp.getLegendStore());
+                legends[2].setStore(cmp.getLegendStore());
+                legends[3].setStore(cmp.getLegendStore());
+            }
+        });
+
+    </script>
+</head>
+<body>
+</body>
+</html>

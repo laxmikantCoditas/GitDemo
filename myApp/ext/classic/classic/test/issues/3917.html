@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>3917</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        Ext.require(['Ext.form.field.Radio', 'Ext.form.RadioGroup', 'Ext.form.Panel', 'Ext.toolbar.TextItem']);
+        Ext.onReady(function () {
+            var form = Ext.create('Ext.form.Panel', {
+                title: 'Radio Groups',
+                layout: 'fit',
+                renderTo: Ext.getBody(),
+                height:150,
+                width: 600,
+                items: {
+                    xtype: 'radiogroup',
+                    id: 'rg',
+                    labelStyle: 'padding-left:4px;',
+                    fieldLabel: 'Bools',
+                    items: [
+                        {boxLabel: 'False', name: 'rb-auto', inputValue: false, checked: true},
+                        {boxLabel: 'True', name: 'rb-auto', inputValue: true}
+                    ],
+                    listeners: {
+                        change: check
+                    }
+                },
+                bbar: [
+                    {
+                        text: 'Toggle',
+                        handler: function() {
+                            var val = Ext.getCmp('rg').getValue();
+                            val['rb-auto'] = !val['rb-auto'];
+                            Ext.getCmp('rg').setValue(val);
+                        }
+                    },
+                    'Result:',
+                    {
+                        xtype: 'textfield',
+                        id: 'res',
+                        readOnly: true
+                    }
+                ]
+            });
+            function check() {
+                var val = Ext.getCmp('rg').getValue()['rb-auto'];
+                Ext.getCmp('res').setValue(val);
+            }
+            check();
+        });
+    </script>
+</body>
+</html>

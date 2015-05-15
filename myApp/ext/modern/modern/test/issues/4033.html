@@ -1,0 +1,226 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Gauge Renderer</title>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript">
+
+        Ext.require([
+            'Ext.Toolbar',
+            'Ext.data.JsonStore',
+            'Ext.chart.*'
+        ]);
+
+        Ext.setup({
+            onReady:function () {
+
+                Ext.define('Ext.overrides.draw.engine.Canvas', {
+                    override: 'Ext.draw.engine.Canvas',
+                    renderSprite: function (sprite) {
+                        var className = sprite.$className.split('.').reverse()[0];
+                        console.log('%crenderSprite:', 'color: red', className, sprite.getId());
+                        this.callParent(arguments);
+                    }
+                });
+
+                Ext.define('Ext.overrides.draw.Surface', {
+                    override: 'Ext.draw.Surface',
+                    renderFrame: function () {
+                        this.callParent(arguments);
+                        console.log('%crenderFrame', 'color: green',  this.type);
+                    }
+                });
+
+                Ext.define('Ext.override.draw.Component', {
+                    override: 'Ext.draw.Component',
+                    renderFrame: function () {
+                        this.callParent(arguments);
+                        console.log('-----------------------------------');
+                    }
+                });
+
+                var drawPerimeter = function (color, width) {
+                    return {strokeStyle:color, strokeOpacity:1, lineWidth:width, fillOpacity:0};
+                };
+
+                var drawStroke = function (color, width) {
+                    return {strokeStyle:color, strokeOpacity:1, lineWidth:width*2};
+                };
+
+                var animate = true;
+                var bypassNormalization = true;
+                var renderCircle = true;
+                var timerId;
+
+                function nextValue () {
+                    series.setValue(Math.random() * (max - min) + min);
+                    if (!animate) {
+                        chart.redraw();
+                    }
+                }
+
+                var toolbar = Ext.create('Ext.Toolbar', {
+                    docked: 'bottom',
+                    items: [
+                        {
+                            xtype: 'button',
+                            text: 'Next value',
+                            handler: nextValue
+                        },
+                        {
+                            xtype: 'button',
+                            text: 'animate: ' + animate,
+                            handler: function () {
+                                chart.setAnimate(animate = !animate);
+                                this.setText('animate: ' + animate);
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            text: 'Timer: ' + (timerId ? 'on' : 'off'),
+                            handler: function () {
+                                if (timerId) {
+                                    clearInterval(timerId);
+                                    timerId = null;
+                                } else {
+                                    timerId = setInterval(nextValue, 2000);
+                                }
+                                this.setText('Timer: ' + (timerId ? 'on' : 'off'));
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            text: 'bypassNormalization: ' + bypassNormalization,
+                            handler: function () {
+                                this.setText('bypassNormalization: ' + (bypassNormalization = !bypassNormalization));
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            text: 'circleSprite.render: ' + renderCircle,
+                            handler: function () {
+                                this.setText('circleSprite.render: ' + (renderCircle = !renderCircle));
+                            }
+                        }
+                    ]
+                });
+
+                var chart = Ext.create('Ext.chart.SpaceFillingChart', {
+                    fullscreen: true,
+                    background: '#f0f0f0',
+                    margin: "50 10 10 10",
+                    series: [{
+                        type: 'gauge',
+                        donut: 40,
+                        value: 60,
+                        needle: true,
+                        needleLength: 90,
+                        needleWidth: 8,
+                        colors: ['maroon', 'blue', 'lightgray', 'red'],
+                        sectors: [20,80],
+                        sectors: [ 
+                            {end:20,  label:'Cold',  color:'dodgerblue'}, {end:20,  style:drawStroke('black', 2)},
+                            {end:80,  label:'Temp.', color:'lightgray'},  {end:80,  style:drawStroke('black', 2)},
+                            {end:100, label:'Hot',   color:'tomato'},     {start:0, style:drawPerimeter('gray', 4)}
+                        ],
+                        label: {fontSize:24, color:'white'},
+                        renderer: function(sprite, config, rendererData, spriteIndex) {
+                            console.log('series renderer call');
+                            var surface = sprite.getParent(),
+                                circleSprite, circleConfig;
+                            // This renderer function draws the "Temp." label in big letters,
+                            // the "Cold" label in blue, the "Hot" label in red, and it paints
+                            // a maroon circle at the tip of the gauge needle.
+                            if (config.type == "label") {
+                                switch (spriteIndex) {
+                                    case 1: return {color:'blue'};
+                                    case 3: return {fontSize:32, color:'white', strokeStyle:'black'};
+                                    case 5: return {color:'darkred', x:config.x + 16};
+                                }
+                            } else if (config.type == "sector" && spriteIndex == 0) {
+                                circleSprite = surface.circleSprite;
+                                if (!circleSprite) {
+                                    circleSprite = surface.circleSprite = surface.add({type:'circle'});
+                                }
+
+                                var series = rendererData.series;
+                                var wholeDisk = series.getWholeDisk(),
+                                    halfTotalAngle = wholeDisk ? Math.PI : series.getTotalAngle() / 2,
+                                    needleAngle = config.startAngle + halfTotalAngle,
+                                    endRho = config.endRho;
+
+                                // TODO: Understand three weird things here that need to be cleared up. 
+                                // The last two are most visible if the chart's "animate" flag is turned off.
+                                //
+                                // - If circleSprite.render() below is not called, the circle is not rendered at all, which is
+                                //   weird because the 'circle' sprite has been added to the surface and should automatically render.
+                                //
+                                // - If the 'true' flag below in circleSprite.setAttributes() is omitted or turned to false, the
+                                //   circle is rendered at the former location of the needle, not the current one, which is weird
+                                //   because the only meaning of this flag is to canonize some property names, like converting
+                                //   'color' (which is an alias) to 'fillStyle'.
+                                //   Correction: with 'bypassNormalization' flag omitted or set to 'false', the 'circleSprite'
+                                //   is rendered in both locations: current one (this renderer's circleSprite.render call)
+                                //   and former needle location (surface's renderFrame method).
+                                //   When attributes are normilized, we get 'fillStyle: "canvas"' in circleSprite's dirtyTriggers,
+                                //   which causes Target's (modifier) setDirtyFlags method to add 'fillStyle' to sprite's
+                                //   canvasAttributes (before that canvasAttributes.fillStyle is 'none').
+                                //
+                                // - If afterwards 'bypassNormalization' is set back to 'true', the 'circleSprite' continues to be rendered
+                                //   at the former location of the needle, since canvasAttributes.fillStyle
+                                //   isn't set back to 'none' and remains the value of 'color'.
+                                //
+                                // - Related to the previous point, if the 'color' property above in circleSprite.setAttributes() is
+                                //   changed to its canonical name 'fillStyle', and regardless of the state of the flag, the circle is
+                                //   also rendered at the former location of the needle.
+                                //
+                                // - If 'bypassNormalization' is set to 'false', the 'circleSprite' _is_ rendered
+                                //   at the former location of the needle, starting from the second update of the needle's position,
+                                //   even if 'renderCircle' is 'false'.
+                                //   The sprite renders at the former location because it is rendered inside the Surface's
+                                //   renderFrame loop. And it so happens that by the time this renderer is called,
+                                //   the circleSprite has been already renderered inside that loop, so it will only be
+                                //   renderered again with the attributes we use here next time renderFrame is called.
+                                //   As non-obvious as it may be, it's a reasonable thing to expect.
+                                //   How do we guarantee that a surface's sprite is rendered (as a part of the current renderFrame call)
+                                //   after we set its attributes inside this renderer?
+                                //   Yes, we add the circleSprite to the surface last, but the very next time this renderer is
+                                //   called, it is next to last, and the surface's needle has become the last item instead.
+                                //
+                                // - If 'renderCircle' is 'true', we are rendering the circleSprite twice
+                                //   and get two circles in the final image.
+
+                                circleSprite.setAttributes({
+                                    cx: config.centerX - endRho * Math.cos(needleAngle),
+                                    cy: config.centerY - endRho * Math.sin(needleAngle),
+                                    r: 12,
+                                    color: 'green'
+                                }, bypassNormalization);
+                                console.dir(circleSprite.attr.canvasAttributes);
+
+                                if (renderCircle) {
+                                    circleSprite.render(surface, surface.contexts[0]);
+                                }
+                            }
+                        }
+                    }]
+                });
+
+                Ext.Viewport.add(toolbar);
+                Ext.Viewport.add(chart);
+
+                var series = chart.getSeries()[0],
+                    max = series.getMaximum(),
+                    min = series.getMinimum();
+            }
+        });
+    </script>
+
+</head>
+<body>
+<div style="position:fixed; padding:4px 20px; background-color:lightyellow; z-index:1000; opacity:.7; font-size:12px">
+Gauge chart linked to a store...</div>
+</body>
+</html>

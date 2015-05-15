@@ -1,0 +1,218 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Axes labels Bug</title>
+
+    <link type="text/css" rel="stylesheet" href="../../resources/css/ext-all.css" />
+    
+    <script type="text/javascript" src="../../ext-all.js"></script>
+
+    <script type="text/javascript">
+
+        Ext.define('Ext.chart.series.MyLine', {
+            extend: 'Ext.chart.series.Line',
+            alias: ['series.myline', 'Ext.chart.series.MyLine'],
+            type: 'MYLINE',
+
+            onPlaceLabel: function(label, storeItem, item, i, display, animate){
+                if (storeItem.data.y >= 50) {
+                    label.setAttributes({
+                        fill: "#080",
+                        text: "+" + storeItem.data.y
+                    }, true);
+                }
+                var retVal = this.callParent(arguments);
+                return retVal;
+            }
+        });
+
+        Ext.onReady(function () {
+
+            var contrast = false;
+            var position = 0;
+            var chartType = 0;
+            var stacked = false;
+            var renderer = Ext.identityFn;
+
+            var chartTypes = ["line", "line/renderer", "MYLINE", "area", "scatter", "column", "column/stacked", "pie", "radar"];
+
+            var linePositions   = ["under", "over", "rotate"];
+            var columnPositions = ["insideStart", "insideEnd", "outside"];
+            var piePositions    = ["outside", "rotate"];
+            var radarPositions  = ["outside"];
+
+            function myRendererFunction(value, label, storeItem, item, i, display, animate, index) {
+                if (value >= 50) {
+                    label.setAttributes({fill:'#00f'});
+                }
+                return "$" + value;
+            }
+
+            function getRawChartType() {
+                return (chartTypes[chartType % chartTypes.length]);
+            }
+
+            function getChartType() {
+                var type = getRawChartType(),
+                    splitType = type.split('/');
+
+                type = splitType[0];
+                renderer = (splitType[1] == "renderer" ? myRendererFunction : Ext.identityFn);
+                stacked = (splitType[1] == "stacked" || type == "area");
+                return type;
+            }
+
+            function toggleChartType() {
+                chartType++;
+                return getChartType();
+            }
+
+            function getLabelPosition() {
+                var positionTypes;
+                switch (getChartType()) {
+                    case "line":    positionTypes = linePositions;      break;
+                    case "scatter": positionTypes = linePositions;      break;
+                    case "column":  positionTypes = columnPositions;    break;
+                    case "pie":     positionTypes = piePositions;       break;
+                    case "radar":   positionTypes = radarPositions;     break;
+                    default:        positionTypes = linePositions;      break;
+                }
+                return (positionTypes[position % positionTypes.length]);
+            }
+
+            function toggleLabelPosition() {
+                position++;
+                return getLabelPosition();
+            }
+
+            function createChart(type) {
+                
+                return Ext.create("Ext.chart.Chart", {
+                    insetPadding: (type == "pie" || type == "radar" ? 30 : 10),
+                    axes: [
+                    {
+                        type: "Numeric",
+                        position: "bottom",
+                        title: "X",
+                        fields: ["x"]
+                    }, 
+                    {
+                        type: (type == "radar" ? "Radial" : "Numeric"),
+                        position: (type == "radar" ? "radial" : "left"),
+                        title: "Y",
+                        fields: (type == "area" || type == "column" ? ["y","z"] : "y")
+                    }],
+                    series: [{
+                        type: type,
+                        xField: "x",
+                        yField: (type == "area" || type == "column" ? ["y","z"] : "y"),
+                        stacked: stacked,
+                        field: "y",     // for Pie series
+                        label: {
+                            field: (type == "area" || type == "column" ? ["y","z"] : "y"),
+                            display: getLabelPosition(),
+                            stackedDisplay: "total",
+                            color: "#f00",
+                            font: "bold 36px sans-serif",
+                            contrast: contrast,
+                            renderer: renderer
+                        },
+                        markerConfig: {
+                            radius: 10
+                        }
+                    }],
+                    store: {
+                        fields: [
+                            { name: "x" },
+                            { name: "y" },
+                            { name: "z" }],
+                        autoLoad: true,
+                        proxy: {
+                            type: 'memory',
+                            data: [{
+                                x: 0,
+                                y: 6,
+                                z: 15
+                            }, {
+                                x: 50,
+                                y: 70,
+                                z: 25
+                            }, {
+                                x: 100,
+                                y: 100,
+                                z: 5
+                            }]
+                        }
+                    }
+                });
+            }
+
+            Ext.create('Ext.Panel', {
+                renderTo: Ext.getBody(),
+                height: 60,
+                border: false,
+                items   : [
+                {
+                    xtype: 'button',
+                    x: 100,
+                    y: 20,
+                    text : 'Toggle Contrast = ' + (contrast ? "true" : "false"),
+                    handler: function() {
+                        chart.series.items[0].label.contrast = contrast = !contrast;
+                        chart.redraw();
+                        this.getEl().dom.innerText = 'Toggle Contrast = ' + (contrast ? "true" : "false");
+                    }
+                },
+                {
+                    xtype: 'button',
+                    id: 'positionButton',
+                    x: 150,
+                    y: 20,
+                    text : 'Toggle Label Position = ' + getLabelPosition(),
+                    handler: function() {
+                        chart.series.items[0].label.display = toggleLabelPosition();
+                        chart.redraw();
+                        this.getEl().dom.innerText = 'Toggle Label Position = ' + getLabelPosition();
+                    }
+                },
+                {
+                    xtype: 'button',
+                    x: 200,
+                    y: 20,
+                    text : 'Toggle Chart Type = ' + getChartType(),
+                    handler: function() {
+                        chartPanel.remove(chart);
+                        chart = createChart(toggleChartType());
+                        chartPanel.add(chart);
+                        this.getEl().dom.innerText = 'Toggle Chart Type = ' + getRawChartType();
+                        // Update the name of the label position as it depends on the chart type
+                        Ext.getBody().getById('positionButton', true).innerText = 'Toggle Label Position = ' + getLabelPosition();
+                    }
+                },
+                ]
+            });
+
+            var chart = createChart(getChartType());
+
+            var chartPanel = Ext.create('Ext.panel.Panel', {
+                layout: {
+                    type: 'fit'
+                },
+                x: 20,
+                y: 20,
+                width: 700,
+                height: 500,
+                renderTo: Ext.getBody(),
+                title: 'Chart Labels',
+                resizable: true,
+                resizeHandles: 'all',
+                draggable: true,
+                items: [chart]
+            });
+
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

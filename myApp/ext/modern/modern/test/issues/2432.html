@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2432</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+    <script src="../../sencha-touch.js"></script>
+    <script>
+        Ext.define('Sparckl.view.Scenarios', {
+            extend:'Ext.navigation.View',
+            xtype:'scenarios',
+            config:{
+                useTitleForBackButtonText:true
+            },
+            initialize:function () {
+                this.callParent(arguments);
+                this.getNavigationBar().add({
+                    xtype:'button',
+                    text:'info',
+                    align:'right'
+                });
+            }
+        });
+
+        Ext.application({
+            launch:function () {
+                Ext.Viewport.add({
+                    xtype:'scenarios',
+                    items:[
+                        {
+                            html:'Panel One',
+                            title: 'A very long title, that keeps going'
+                        },
+                        {
+                            title:'Panel Two',
+                            html:'xxx'
+                        }
+                    ]
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

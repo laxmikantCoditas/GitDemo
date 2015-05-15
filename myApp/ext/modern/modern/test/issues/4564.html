@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sencha Touch Issue Template</title>
+		<link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+		<script type="text/javascript" src="../../sencha-touch.js"></script>
+
+		<script type="text/javascript">
+
+Ext.define('testcase.view.Main', {
+    extend: 'Ext.form.Panel',
+    alias: "widget.loginview",
+    requires: ['Ext.Button', 'Ext.form.FieldSet', 'Ext.form.Password', 'Ext.Label', 'Ext.Img'],
+    config: {
+        title: 'Login',
+        items: [
+                    {
+                        xtype: 'image'
+//                        src: Ext.Viewport.getOrientation() == 'portrait' ? '../../../img/login.png' : '../../../img/login-small.png',
+//                        style: Ext.Viewport.getOrientation() == 'portrait' ? 'width:80px;height:80px;margin:auto' : 'width:40px;height:40px;margin:auto'
+                    },
+                    {
+                        xtype: 'label',
+                        html: 'Login failed. Please enter the correct credentials.',
+                        itemId: 'signInFailedLabel',
+                        hidden: true,
+                        hideAnimation: 'fadeOut',
+                        showAnimation: 'fadeIn',
+                        style: 'color:#990000;margin:5px 0px;'
+                    },
+                    {
+                        xtype: 'fieldset',
+                        title: 'Login Example 2.2.1',
+                        items: [
+                            {
+                                xtype: 'textfield',
+                                placeHolder: 'Username',
+                                itemId: 'userNameTextField',
+                                name: 'userNameTextField',
+                                required: true
+                            },
+                            {
+                                xtype: 'passwordfield',
+                                placeHolder: 'Password',
+                                itemId: 'passwordTextField',
+                                name: 'passwordTextField',
+                                required: true
+                            },
+                            {
+                                xtype: 'passwordfield',
+                                placeHolder: 'Password',
+                                itemId: 'passwordTextField1',
+                                name: 'passwordTextField1',
+                                required: true
+                            }, 
+                            {
+                                xtype: 'passwordfield',
+                                placeHolder: 'Password',
+                                itemId: 'passwordTextField2',
+                                name: 'passwordTextField2',
+                                required: true
+                            }
+                        ]
+                    },
+                    {
+                        xtype: 'button',
+                        itemId: 'logInButton',
+                        ui: 'action',
+                        padding: '10px',
+                        text: 'Log In'
+                    }
+         ]
+    }
+});
+
+			Ext.application({
+				name : 'Test',
+
+				requires : [
+
+				],
+
+				launch : function () {
+                    Ext.Viewport.add({ xtype: 'loginview' });
+				}
+			});
+		</script>
+	</head>
+</html>

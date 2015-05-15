@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>suppot-ticket-11568</title>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css" />
+    <script src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript">
+        Ext.Loader.setConfig({
+            enabled: true
+        });
+
+        Ext.application({
+            launch: function () {
+                var form = Ext.create('Ext.form.Panel', {
+                    fullscreen: true,
+                    layout: 'vbox',
+                    submitOnAction: false,
+                    standardSubmit: true,
+                    method: 'put',
+                    url: "http://www.ynet.co.il",
+                    defaults: {
+                        required: true
+                    },
+                    listeners: {
+                        beforesubmit: {
+                            order: 'before',
+                            fn: function (me, formValues, options, e) {
+                                alert('inside beforesubmit');
+                                if (e) {
+                                    e.stopEvent();
+                                }
+                                return false;
+                            }
+                        }
+                    },
+                    items: [
+                        {
+                            xtype: 'textfield',
+                            label: 'text91c',
+                            required: true
+                        },
+                        {
+                            xtype: 'textfield',
+                            label: 'text2',
+                            required: true
+                        },
+                        {
+                            xtype: 'button',
+                            text: 'text2',
+                            listeners: {
+                                tap: function () {
+                                    form.submit();
+                                }
+                            }
+                        }
+                    ]
+                });
+
+                form.show();
+            }
+        });
+    </script>
+</head>
+
+<body></body>
+
+</html>

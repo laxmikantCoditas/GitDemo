@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+        //your test case goes here
+         Ext.onReady(function(){
+            var rowEditingPlugin = Ext.create('Ext.grid.plugin.RowEditing', {
+                clicksToEdit: 1
+            });
+            var store = Ext.create('Ext.data.JsonStore', {
+                fields: ['name', 'data'],
+                data: [
+                       {name: 'Test1',data: 'data1'},
+                       {name: 'Test2',data: 'data2'},
+                       {name: 'Test3',data: 'data3'},
+                       {name: 'Test4',data: 'data4'},
+                       {name: 'Test5',data: 'data5'},
+                       {name: 'Test6',data: 'data6'},
+                       {name: 'Test7',data: 'data7'},
+                       {name: 'Test8',data: 'data8'},
+                       {name: 'Test9',data: 'data9'},
+                       {name: 'Test10',data: 'data10'},
+                       {name: 'Test11',data: 'data11'}
+                ]
+            });
+            var newEntry;
+            
+            Ext.widget('window', {
+                title: 'Test combo row editor',
+                width: 600,
+                height: 300,
+                
+                layout: 'fit',
+                
+                fbar: [{
+                    text: 'Add',
+                    handler: function() {
+                        rowEditingPlugin.cancelEdit();
+                        newEntry = store.add({})[0];
+                        rowEditingPlugin.startEdit(store.indexOf(newEntry), 0);
+                    }
+                },{
+                    text: 'Remove',
+                    handler: function() {
+                        var sm = me.down('gridpanel').getSelectionModel();
+                        rowEditingPlugin.cancelEdit();
+                        store.remove(sm.getSelection());
+                        if ( store.getCount()>0 ) {
+                            sm.select(0);
+                        }
+                    }
+                }],
+                
+                items: [{
+                    xtype: 'grid',
+                    store: store,
+                    columns: [{
+                        header: 'Name',
+                        dataIndex: 'name',
+                        sortable: false,
+                        enableColumnHide: false,
+                        enableColumnResize: false,
+                        enableColumnMove: false,
+                        editor: {
+                            allowBlank: false
+                        },
+                        flex: 1
+                    },{
+                        header: 'Data',
+                        dataIndex: 'data',
+                        sortable: false,
+                        enableColumnHide: false,
+                        enableColumnResize: false,
+                        enableColumnMove: false,
+                        editor: {
+                            xtype: 'combobox',
+                            allowBlank: false,
+                            name: 'package',
+                            store: Ext.create('Ext.data.JsonStore', {
+                                fields: ['name', 'type'],
+                                data: [{
+                                    name: 'Testname',
+                                    type: 'Testtype'
+                                }]
+                            }),
+                            displayField: 'name',
+                            valueField: 'type',
+                            queryMode: 'local',
+                            allowBlank: false,
+                            autoSelect: true,
+                            typeAhead: false,
+                            editable: false
+                        },
+                        flex: 1
+                    }],
+                    plugins: [rowEditingPlugin]
+                }]
+            }).show();
+        });        
+    </script>
+</body>
+</html>

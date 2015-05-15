@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>AJAX timeout test</title>
+
+    <link rel="stylesheet" href="../../../resources/css/sencha-touch.css" type="text/css">
+    <script type="text/javascript" src="../../../sencha-touch.js"></script>
+    
+    <script type="text/javascript" charset="utf-8">
+        Ext.application({
+            requires: ['Ext.Ajax'],
+            
+            launch: function() {
+                var id = Ext.Ajax.request({
+                    url: 'test.php',
+                    timeout: 10000
+                });
+                
+                Ext.Ajax.abort(id);
+                
+                Ext.Ajax.request({
+                    url: 'test.php',
+                    timeout: 2000,
+                    success: function() {
+                        console.log('successful');
+                        console.log(arguments);
+                    },
+                    failure: function() {
+                        console.log('failure');
+                        console.log(arguments);
+                    },
+                    callback: function() {
+                        console.log('callback');
+                        console.log(arguments);
+                    }
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

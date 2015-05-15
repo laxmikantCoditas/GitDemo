@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title></title>
+
+    <link rel='stylesheet' type='text/css' href='../../resources/css/sencha-touch.css'>
+    <script type='text/javascript' src='../../sencha-touch-debug.js'></script>
+    <script type='text/javascript'>
+        Ext.setup({
+            requires: [
+                'Ext.form.Panel',
+                'Ext.Button',
+                'Ext.form.FieldSet',
+                'Ext.form.Text',
+                'Ext.form.TextArea'
+            ],
+            onReady:function () {
+                var panel = Ext.create('Ext.form.Panel', {
+                    layout: 'card',
+                    fullscreen: true,
+                    items: [
+                        {
+                            xtype: 'fieldset',
+                            title: 'About You',
+                            scrollable: 'vertical',
+                            items: [
+                                {
+                                    xtype: 'container',
+                                    name: 'actionButtons',
+                                    defaultType: 'button',
+                                    items: [
+                                        {
+                                            ui: 'forward',
+                                            iconMask: true,
+                                            iconCls: 'next',
+                                            listeners: {
+                                                tap: function(){
+                                                    panel.setActiveItem(1);
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'fieldset',
+                            title: 'About Me',
+                            scrollable: 'vertical',
+                            items: [
+                                {
+                                    xtype: 'textfield',
+                                    label: 'Name',
+                                    name: 'name'
+                                },
+                                {
+                                    xtype: 'textareafield',
+                                    label: 'Bio',
+                                    maxRows: 4,
+                                    name: 'bio'
+                                },
+                                {
+                                    xtype: 'textareafield',
+                                    label: 'Chem',
+                                    maxRows: 4,
+                                    name: 'bio'
+                                },
+                                {
+                                    xtype: 'textareafield',
+                                    label: 'A&P',
+                                    maxRows: 4,
+                                    name: 'bio'
+                                }
+                            ]
+                        }
+                    ]
+                });
+            }
+        });
+    </script>
+
+</head>
+<body></body>
+</html>

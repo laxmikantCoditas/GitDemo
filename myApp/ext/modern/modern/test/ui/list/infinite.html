@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Infinite List</title>
+    <link rel="stylesheet" href="../../../resources/css/sencha-touch.css"/>
+    <style type="text/css">
+        #test {
+            background-color: #FFF;
+        }
+
+        .x-list-item {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            border-bottom: 1px solid #DEDEDE;
+        }
+
+        .x-list-item > .x-innerhtml {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            overflow: hidden;
+            padding: 0.2em 0.5em;
+        }
+
+        .x-list-item img {
+            float: left;
+            margin-right: 0.5em;
+            -webkit-border-radius: 0.4em;
+        }
+
+        .x-list-item .username {
+            font-size: 1em;
+            margin-bottom: 0.2em;
+            font-weight: bold;
+        }
+
+        .x-list-item .text {
+            font-size: .9em;
+        }
+
+        .x-phone .x-list-item .username {
+            font-size: .8em;
+        }
+
+        .x-phone .x-list-item .text {
+            font-size: .7em;
+        }
+    </style>
+    <script src="../../../sencha-touch.js"></script>
+
+    <script type="text/javascript">
+        function randomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        Ext.setup({
+            requires: [
+                'Ext.Ajax',
+                'Ext.list.Infinite'
+            ],
+            onReady: function() {
+                var containerConfig = {
+                        layout: 'fit',
+                        items: [
+                            {
+                                docked: 'top',
+                                xtype: 'toolbar',
+                                layout: {
+                                    pack: 'right'
+                                },
+                                items: [
+                                    {
+                                        xtype: 'title',
+                                        id: 'title',
+                                        text: 'Infinite Tweets',
+                                        left: 0
+                                    },
+                                    {
+                                        xtype: 'button',
+                                        id: 'random',
+                                        text: 'Random'
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    container;
+
+                if (!Ext.is.Phone) {
+                    Ext.apply(containerConfig, {
+                        centered: true,
+                        width: 480,
+                        height: 600
+                    });
+                }
+
+                container = this.add(containerConfig);
+
+                var loadingUrl = 'loading.png';
+
+                Ext.Ajax.request({
+                    url: 'twitter.json',
+                    method: 'GET',
+                    success: function(response) {
+                        var tweets = JSON.parse(response.responseText),
+                            loadedImages = {};
+
+                        var list = container.add({
+                            xclass: 'Ext.list.Infinite',
+                            id: 'test',
+                            itemLength: 100,
+                            itemConfig: {
+                                xtype: 'component',
+                                cls: 'x-list-item',
+                                html: '<img width="48" height="48" /><div class="username"></div><div class="text"></div>'
+                            },
+                            scrollable: {
+                                slotSnapSize: 50
+                            },
+                            listeners: {
+                                itemindexchange: function(list, item, index) {
+                                    var tweet = tweets[index],
+                                        dom = item.element.dom,
+                                        img = dom.querySelector('img'),
+                                        imgSrc = tweet.profile_image_url;
+
+                                    if (item.hasOwnProperty('imageSrcTimer')) {
+                                        clearTimeout(item.imageSrcTimer);
+                                        delete item.imageSrcTimer;
+                                    }
+
+                                    if (loadedImages[imgSrc]) {
+                                        img.src = imgSrc;
+                                    }
+                                    else {
+                                        img.src = loadingUrl;
+                                        item.imageSrcTimer = setTimeout(function() {
+                                            delete item.imageSrcTimer;
+                                            img.src = imgSrc;
+                                            loadedImages[imgSrc] = true;
+                                        }, 300);
+                                    }
+
+                                    dom.querySelector('.username').textContent = tweet.from_user_name;
+                                    dom.querySelector('.text').textContent = tweet.text;
+                                    Ext.getCmp('title').setTitle('Index ' + index + ' / ' + tweets.length);
+                                }
+                            }
+                        });
+
+                        Ext.getCmp('random').setHandler(function() {
+                            var easing = Ext.create('Ext.fx.easing.EaseOut');
+
+                            list.getScrollable().getScroller().scrollTo(0, randomInt(0, 10000), {
+                                duration: 3000,
+                                easing: easing
+                            });
+                        });
+                    }
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

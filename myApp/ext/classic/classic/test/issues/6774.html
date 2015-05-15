@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        Ext.onReady(function () {
+            var ViewPort = Ext.create('Ext.container.Viewport', {
+                layout: 'border',
+                items: [ {
+                    region: 'center',
+                    listeners:{
+                        add: function(){
+                            console.log('bam');
+                        }
+                    }
+                }]
+            });
+
+            var myPanel = Ext.create('Ext.panel.Panel', {
+                title: 'Hello',
+                width: 200,
+                height: 200,
+                html: '<p>World!</p>',
+                floating: true
+            });
+
+            var centerRegion = ViewPort.getComponent(0);
+            centerRegion.add(myPanel);
+            myPanel.show();
+        });
+
+    </script>
+</body>
+</html>

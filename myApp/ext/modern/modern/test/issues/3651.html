@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Series Title Change</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <script type="text/javascript">
+        Ext.application({
+            requires : [
+                'Ext.data.Store',
+                'Ext.chart.*',
+                'Ext.Toolbar'
+            ],
+            launch : function () {
+                var store = new Ext.data.Store({
+                    fields : ['name', 'data1'],
+                    data   : [
+                        { name : 'metric one',   data1 : 10 },
+                        { name : 'metric two',   data1 : 7  },
+                        { name : 'metric three', data1 : 5  },
+                        { name : 'metric four',  data1 : 2  },
+                        { name : 'metric five',  data1 : 27 }
+                    ]
+                });
+
+                var lineChart = new Ext.chart.CartesianChart({
+                    animate : true,
+                    store   : store,
+                    legend  : {
+                        position : 'bottom'
+                    },
+                    axes    : [
+                        {
+                            type     : 'numeric',
+                            position : 'left',
+                            fields   : ['data1'],
+                            title    : {
+                                text     : 'Sample Values',
+                                fontSize : 15
+                            },
+                            grid     : true,
+                            minimum  : 0
+                        },
+                        {
+                            type     : 'category',
+                            position : 'bottom',
+                            fields   : ['name'],
+                            title    : {
+                                text     : 'Sample Values',
+                                fontSize : 15
+                            }
+                        }
+                    ],
+                    series  : [
+                        {
+                            type      : 'line',
+                            highlight : {
+                                size   : 7,
+                                radius : 7
+                            },
+                            style     : {
+                                stroke : 'rgb(143,203,203)'
+                            },
+                            xField    : 'name',
+                            yField    : 'data1',
+                            marker    : {
+                                type      : 'path',
+                                path      : ['M', -2, 0, 0, 2, 2, 0, 0, -2, 'Z'],
+                                stroke    : 'blue',
+                                lineWidth : 0
+                            }
+                        }
+                    ]
+                });
+                Ext.Viewport.setLayout('fit');
+                Ext.Viewport.add([
+                    lineChart,
+                    {
+                        xtype  : 'toolbar',
+                        top    : 0,
+                        right  : 0,
+                        zIndex : 50,
+                        style  : {
+                            background : 'none'
+                        },
+                        items  : [
+                            {
+                                text    : 'Set Title',
+                                handler : function (btn) {
+                                    var chart  = Ext.Viewport.child('chart'),
+                                        series = chart.getSeries()[0];
+
+                                    series.setTitle('Foo');
+                                }
+                            }
+                        ]
+                    }
+                ]);
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

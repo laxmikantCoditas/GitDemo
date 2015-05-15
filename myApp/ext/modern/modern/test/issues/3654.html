@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>DataView Text Wrap Test Case</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/sencha-touch.css">
+    <script type="text/javascript" src="../../sencha-touch-debug.js"></script>
+    <style>
+        .my-dataview .x-scroll-scroller {
+            width: 100% !important;
+        }
+
+        .my-dataview .x-dataview-item {
+            width: 100%;
+            word-wrap: break-word;
+        }
+    </style>
+    <script type="text/javascript">
+        Ext.setup({
+            requires: [
+                'Ext.dataview.DataView'
+            ],
+            onReady:function () {
+                var touchTeam = Ext.create('Ext.DataView', {
+                    fullscreen: true,
+                    width: 250,
+                    cls: 'my-dataview',
+                    store: {
+                        fields: ['name', 'age'],
+                        data: [
+                            {name: 'Jamie',  age: 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmopqr'},
+                            {name: 'Rob',   age: 21},
+                            {name: 'Tommy', age: 24},
+                            {name: 'Jacky', age: 24},
+                            {name: 'Ed',   age: 26}
+                        ]
+                    },
+                    style: {
+                        'border': '1px solid red'
+                    },
+                    itemTpl: '{name} is {age} years old'
+                });
+            }
+        });
+    </script>
+</head>
+<body></body>
+</html>

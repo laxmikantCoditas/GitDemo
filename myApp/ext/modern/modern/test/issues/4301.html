@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sencha Touch Issue Template</title>
+		<link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+		<script type="text/javascript" src="../../sencha-touch.js"></script>
+
+		<script type="text/javascript">
+			Ext.application({
+				name : 'Test',
+
+				launch : function () {
+                    var darkCfg = {
+                        "xtype": "tabpanel",
+                        "items": [
+                            {
+                                "xtype": "container",
+                                "title": "Tab 1"
+                            },
+                            {
+                                "xtype": "container",
+                                "title": "Tab 2"
+                            },
+                            {
+                                "xtype": "container",
+                                "title": "Tab 3"
+                            }
+                        ]
+                    };
+                    var lightCfg = {
+                        "xtype": "tabpanel",
+                        "ui": "light",
+                        "items": [
+                            {
+                                "xtype": "container",
+                                "title": "Tab 1"
+                            },
+                            {
+                                "xtype": "container",
+                                "title": "Tab 2"
+                            },
+                            {
+                                "xtype": "container",
+                                "title": "Tab 3"
+                            }
+                        ]
+                    };
+
+                    Ext.Viewport.add(darkCfg);
+                    Ext.Viewport.removeAll();
+                    Ext.Viewport.add(lightCfg);
+				}
+			});
+		</script>
+	</head>
+</html>

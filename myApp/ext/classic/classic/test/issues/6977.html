@@ -1,0 +1,206 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+
+        Ext.require('Ext.data.Store')
+
+        Ext.onReady(function (){
+
+            ColumnChartReport();
+
+        }) ;
+
+
+
+
+
+        function ColumnChartReport() {
+
+
+
+
+
+            var  jsonStore = new Ext.data.Store({
+
+                proxy: {
+
+                    type: 'memory',
+
+                    reader: 'array'
+
+                },
+
+                fields: [
+
+                    {name: 'month', type: 'string'},
+
+                    {name: 'defects opened',  type: 'int'}
+
+
+
+
+
+                ]  ,
+
+
+
+                data : [ ['jan', 50], ['feb', 20], ['feb', 30], ['mar', 0], ['apr', 0], ['apr', 0], ['may', 0]
+
+
+
+                ]
+
+
+
+            });
+
+
+
+
+
+
+
+            var chart = Ext.create('Ext.chart.Chart', {
+
+
+
+                renderTo:Ext.getBody(),
+
+                animate: false,
+
+                layout:'fit',
+
+                width:500,
+
+                legend:true,
+
+                height:270,
+
+                id:'chartId_',
+
+                store: jsonStore,
+
+                xField:   "month",
+
+                axes: [{
+
+                    type: 'Numeric',
+
+                    position: 'left',
+
+                    fields: ['defects opened'],
+
+                    title: 'defects count',
+
+                    grid: true,
+
+                    minimum:0,
+
+                    label: { renderer: Ext.util.Format.numberRenderer('00.00')}
+
+
+
+
+
+                }, {
+
+                    type: 'Category',
+
+                    position: 'bottom',
+
+                    fields: ['month'],
+
+                    title: "Test"
+
+
+
+
+
+                }],
+
+                series: [{
+
+
+
+                    type: 'line',
+
+
+
+                    axis: 'left',
+
+                    smooth:true,
+
+                    fill:false,
+
+
+
+                    fillOpacity: 0.2,
+
+                    xField:"month",
+
+                    yField: "defects opened",
+
+
+
+                    tips: {
+
+                        trackMouse: true,
+
+                        width: 140,
+
+                        height: 28,
+
+                        renderer: function(storeItem, item) {
+
+
+
+                            title = storeItem.data["month"] + ': ' + storeItem.data["defects opened"] + ' ';
+
+
+
+                            this.setTitle(title);
+
+                            this.setWidth((title.length * 10));
+
+                        }
+
+                    },
+
+                    markerConfig: {
+
+                        type: 'cross',
+
+                        size: 4,
+
+                        radius: 4,
+
+                        'stroke-width': 0
+
+                    }
+
+
+
+                }
+
+                ]
+
+
+
+            });
+
+
+
+        }
+
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+
+        Ext.onReady(function () {
+            Ext.create('Ext.form.Panel', {
+                renderTo: Ext.getBody(),
+                width: 175,
+                height: 200,
+                title: 'Count',
+                items: [{
+                    xtype: 'displayfield',
+                    fieldLabel: 'count to 13',
+                    name: 'home_score',
+                    height:80,
+                    autoScroll:true,
+                    value: '1 <br> 2 <br> 3 <br> 4 <br> <br> 5 <br> 6 <br> 7 <br> <br> 8 <br> 9 <br> 10 <br> <br> 11 <br> 12 <br> 13 <br> '
+                }, {
+                    xtype: 'displayfield',
+                    fieldLabel: 'Count',
+                    name: 'visitor_score',
+                    value: '14'
+                }]
+            });
+
+        });
+        
+    </script>
+</body>
+</html>

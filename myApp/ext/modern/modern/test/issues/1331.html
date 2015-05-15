@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>TOUCH-1331</title>
+        <link rel="stylesheet" href="../../resources/css/sencha-touch.css"/>
+        <script src="../../sencha-touch.js"></script>
+
+    <script type="text/javascript">
+
+Ext.Loader.setConfig({
+    enabled : true
+});
+
+Ext.define('MyContainer', {
+    extend : 'Ext.Container',
+    xtype  : 'mycontainer',
+
+    requires : [
+        'Ext.field.Text'
+    ],
+
+    config : {
+        fullscreen : true,
+        items      : [
+            {
+                xtype     : 'textfield',
+                label     : 'Text',
+                listeners : {
+                    painted : function() {
+                        console.log('painted from listener config');
+                    }
+                }
+            },
+            {
+                html : 'There is a listener on the textfield config and in the control config of the Container.<br><br>Please check your console. You should see a console saying it was fired from the listener config and one that says it is from the control config.<br><br>Please also note the double firing of the one from listener config.'
+            }
+        ],
+
+        control : {
+            'textfield' : {
+                painted : 'onTextfieldPainted'
+            }
+        }
+    },
+
+    onTextfieldPainted : function() {
+        console.log('painted from control config');
+    }
+});
+
+Ext.setup({
+    onReady : function() {
+
+        new MyContainer();
+
+    }
+});
+    </script>
+</head>
+<body>
+</body>
+</html>

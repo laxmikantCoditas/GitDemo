@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<!--
+
+  Created using /
+  Source can be edited via /urapuf/11/edit
+
+-->
+<head>
+    <title></title>
+    <script type="text/javascript" src="../../ext.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css">
+</head>
+<body><script>
+
+Ext.require([
+    'Ext.chart.*',
+    'Ext.container.*',
+    'Ext.data.*',
+    'Ext.data.reader.Json',
+    'Ext.form.*',
+    'Ext.grid.*',
+    'Ext.tip.*',
+    'Ext.tree.*',
+    'Ext.window.*',
+
+    'Ext.Array',
+    'Ext.DomHelper',
+    'Ext.String'
+]);
+
+
+
+Ext.onReady(function () {
+
+	var store1 = new Ext.data.Store({
+		fields: ['volume', 'average', 'percentage', 'date'],
+		proxy: {
+			type: 'ajax',
+			url : '6249.json',
+			reader: {
+				type: 'json',
+				root: 'rows'
+			}
+		}
+	});
+
+    store1.load(function(records, operation, success) {
+        displayChart();
+    });
+
+
+    var gMaskConfig = true;
+    function toggleMaskConfig() {
+        return gMaskConfig = (gMaskConfig === true ? 'horizontal' :  true);
+    }
+    
+    function createChart() {
+        var chart = Ext.create('Ext.chart.Chart', {
+            style: {
+                'background-color': '#eee', 
+                'margin': '40px'
+            },
+            id: 'TestChart',
+            animate: true,
+            enableMask: true,
+            mask: toggleMaskConfig(),
+//             hasListeners:{},
+            listeners: {
+                select: {
+                    fn: function(me, selection) {
+                        me.setZoom(selection);
+                        me.mask.hide();
+                    }
+                }
+            },
+            store: store1,
+            axes: [{
+                position: 'bottom',
+                fields: ['date'],
+                title: 'Day',
+/**/
+                type: 'Time',
+                dateFormat: 'd-M',
+                step: [Ext.Date.MONTH, 1],
+                minorTickSteps: 1
+/*
+                type: 'Category',
+                label : { renderer : Ext.util.Format.dateRenderer('d/M') } 
+/**/
+            }, {
+                type: 'Numeric',
+                position: 'right',
+                fields: ['percentage'],
+                title: '%'
+            }],
+            series: [{
+                type: 'line',
+                axis: 'right',
+                xField: 'date',
+                yField: 'percentage',
+                style: {
+                    fill: '#00FF2A',
+                    stroke: '#00FF2A',
+                    'stroke-width': 2
+                },
+                tips: {
+                    trackMouse: true,
+                    width: 200,
+                    height: 36,
+                    renderer: function (storeItem, item) {
+                        this.setTitle('date: '+ storeItem.get('date') + '<br />%: ' + storeItem.get('percentage'));
+                    }
+                },
+                selectionTolerance: 6,
+                markerConfig: {
+                    type: 'circle',
+                    size: 4,
+                    radius: 4,
+                    'stroke-width': 0
+                }
+            }]
+        });
+        return chart;        
+    }
+
+    function displayChart() {
+
+        var chart = createChart();
+        
+        var win = Ext.create('Ext.Panel', {
+            width: 900,
+            height: 500,
+            x: 80,
+            y: 80,
+            hidden: false,
+            tbar: [{
+                text: 'Reset Zoom',
+                handler: function() {
+                    chart.restoreZoom();
+                }
+            }, {
+                enableToggle: true,
+                pressed: false,
+                text: 'XY-Zoom',
+                toggleHandler: function(btn, pressed) {
+                    var myChart = Ext.getCmp('TestChart');
+                    Ext.destroy(myChart);
+                    chart = createChart();
+                    win.add(chart);
+                }
+            }],
+            maximizable: false,
+            title: 'Chart Test',
+            renderTo: Ext.getBody(),
+            layout: 'fit',
+            items: chart
+        });
+    }
+	
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOUCH-3720</title>
+
+    <script src="../../sencha-touch-debug.js"></script>
+    <link rel="stylesheet" href="../../resources/css/sencha-touch.css">
+
+    <script type="text/javascript">
+        Ext.define('Coordinate', {
+            extend: 'Ext.data.Model',
+            config: {
+                fields: ['lat', 'lon']
+            }
+        });
+        Ext.define('Location', {
+            extend: 'Ext.data.Model',
+            config: {
+                fields: ['name', 'city'],
+                hasMany: {model: 'Coordinate', associationKey: 'coord'}
+            }
+        });
+
+        Ext.setup({
+            requires: ['Ext.data.Store'],
+            onReady: function() {
+                var LocationStore = Ext.create('Ext.data.Store', {
+                    model: 'Location',
+                    data: [
+                        { name: 'Kauppatori', city: 'Helsinki', coord: { lat: 60.167625, lon: 24.952312 } }
+                    ]
+                });
+                LocationStore.load({
+                    callback: function(records, operation, success) {
+                        var location = LocationStore.first();
+                        var coordinate = location.coordinates().first();
+                        location.coordinates().remove(coordinate);
+                        console.log(location.coordinates().getCount());
+                    }
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

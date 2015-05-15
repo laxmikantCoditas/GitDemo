@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>EXTJSIV-6671</title>
+        <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+        <script type="text/javascript" src="../../ext.js"></script>
+        <script type="text/javascript">
+            Ext.require([
+                'Ext.button.Button',
+                'Ext.form.Panel',
+                'Ext.form.field.Text'
+            ]);
+
+            Ext.onReady(function () {
+                new Ext.form.Panel({
+                    renderTo : document.body,
+                    width    : 400,
+                    items    : [
+                        {
+                            xtype      : 'textfield',
+                            fieldLabel : 'Test',
+                            name       : 'foo',
+                            emptyText  : 'bar'
+                        },
+                        {
+                            xtype   : 'button',
+                            text    : 'Submit',
+                            handler : function (button) {
+                                var form = button.up('form');
+
+                                form.submit({
+                                    url : '6671.json'
+                                });
+                            }
+                        }
+                    ]
+                });
+            });
+        </script>
+    </head>
+<body>
+</body>
+</html>

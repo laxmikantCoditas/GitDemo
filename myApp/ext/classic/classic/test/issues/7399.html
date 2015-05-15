@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Failed test case</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<script type="text/javascript" src="../../ext.js"></script>
+</head>
+<body>
+    <script type="text/javascript" charset="utf-8">
+Ext.require('Ext.tip.QuickTipManager');
+Ext.onReady(function () {
+    Ext.tip.QuickTipManager.init();
+     
+    Ext.apply(Ext.tip.QuickTipManager.getQuickTip(), {
+        showDelay: 2000
+    });
+     
+    var store = Ext.create('Ext.data.TreeStore', {
+        root: {
+            expanded: true,
+            children: [{
+                text: "<b>skip</b> detention",
+                leaf: true,
+                qtitle: "hey 1",
+                qtip: "This is my first step."
+            }, {
+                text: "<b>buy</b> lottery tickets",
+                leaf: true,
+                qdata: 'hello world',
+                qtitle: "hey 2",
+                qtip: "Seems like a good plan.",
+                qshowDelay: 5000
+            }, {
+                text: "<b>cash</b> lottery tickets",
+                leaf: true,
+                qtitle: "hey 3",
+                qtip: "Mission accomplished.  I am now rich."
+            }, {
+                text: "<b>reality</b> check",
+                leaf: true,
+                qtitle: "hey 4",
+                qtip: "Ummm... I should just save my money."
+            }]
+        }
+    });
+     
+    Ext.create('Ext.tree.Panel', {
+        title: 'Career Plan',
+        width: 200,
+        height: 150,
+        store: store,
+        rootVisible: false,
+        renderTo: Ext.getBody()
+    });
+});
+        
+    </script>
+</body>
+</html>

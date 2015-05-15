@@ -1,0 +1,38 @@
+{
+    "success": true,
+    "metaData": {
+        "rootProperty": "results",
+        "idProperty": "IDPROPERTY",
+        "fields": [
+            "field1",
+            {"name": "field2", "type": "date", "dateFormat": "timestamp"},
+            {"name": "field3", "mapping": "data.test", "type": "int"}
+        ]
+    },
+    "results": [
+        {
+            "IDPROPERTY": 1,
+            "field1": "blaat1",
+            "field2": 1323124728,
+            "data": {
+                "test": 100
+            }
+        },
+        {
+            "IDPROPERTY": 2,
+            "field1": "blaat2",
+            "field2": 1323125728,
+            "data": {
+                "test": 200
+            }
+        },
+        {
+            "IDPROPERTY": 3,
+            "field1": "blaat3",
+            "field2": 1323126728,
+            "data": {
+                "test": 300
+            }
+        }
+    ]
+}
